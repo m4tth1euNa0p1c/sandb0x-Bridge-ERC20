@@ -53,3 +53,16 @@ Puis RocksDB a refusé de charger sa bibliothèque JNI depuis `/tmp` noexec
 exécutable dédié et borné `/jni-tmp` a été ajouté, sans ouvrir la racine en écriture
 ni donner des capacités Linux supplémentaires. Les échecs restent distincts
 du résultat de la campagne finale.
+
+Première campagne local-fast : 11 contrôles réussis sur le commit 26d03f9.
+La campagne Besu suivante a réussi ses contrôles d'infrastructure, mais échoué
+au scan : la règle generic-api-key prenait le SHA-256 de l'agent `bridge-secrets`
+pour une clé. Détection reproduite en mode verbeux avec valeurs masquées ;
+exception restreinte au chemin de manifeste, au champ et au digest exact.
+Un contrôle positif synthétique vérifie que le scan continue de détecter les
+credentials dans les preuves. Aucun secret réel découvert dans cet incident.
+
+Les rapports JSON sont désormais écrits en LF et `evidence/**` est exclu de la
+normalisation de texte Git : leurs empreintes portent sur les mêmes octets après
+clone Windows/Linux. Ces changements motivent une nouvelle campagne finale ;
+les campagnes antérieures sont conservées comme historiques.

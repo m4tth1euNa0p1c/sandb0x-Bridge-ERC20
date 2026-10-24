@@ -1,3 +1,5 @@
 * text=auto eol=lf
 *.png binary
 *.pdf binary
+# Les empreintes des preuves portent sur leurs octets, même après un clone Windows/Linux.
+evidence/** -text

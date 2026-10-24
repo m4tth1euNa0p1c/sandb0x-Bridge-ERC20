@@ -42,6 +42,14 @@ de destinations effectif pour l'installation, et ne garantit pas de filtrage
 DNS ou de suppression des accès spéciaux à l'hôte Docker Desktop.
 La désactivation du masquerading n'est pas assimilée à un pare-feu de destinations.
 
+Le scan Gitleaks utilise ses règles par défaut. Une exception dans
+`.gitleaks.toml` vise exclusivement la ligne d'inventaire et l'empreinte exacte
+du fichier `bridge-secrets.toml` : son nom déclenchait la règle generic-api-key
+sur un SHA-256 public. Elle ne masque pas un répertoire de preuves entier.
+Un credential synthétique éphémère placé dans un manifeste témoin doit toujours
+être détecté (sortie 1 attendue), sans afficher sa valeur. Les scans ne démontrent
+pas une absence absolue de secrets inconnus de leurs règles.
+
 **Modèle de menace.** Clé executor compromise : mint indu possible. Admin
 compromis : droits et configuration modifiables. RPC malveillant : faux événements
 ou fausse finalité ; vérifier identité, hashes et cohérence ne transforme pas un

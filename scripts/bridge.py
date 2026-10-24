@@ -52,7 +52,7 @@ def read_json(path):
 def write_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
 
 def run(args, *, check=True, timeout=60, env=None, transform=None):
@@ -433,11 +433,20 @@ def scan_secrets():
                 dst = Path(d) / name
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(src, dst)
-        result = run(["docker", "run", "--rm", "--pull", "never", "--network", "none", "--read-only",
+        scanner = ["docker", "run", "--rm", "--pull", "never", "--network", "none", "--read-only",
                       "--user", "10001:10001", "--cap-drop", "ALL", "--security-opt", "no-new-privileges:true",
                       "--memory", "256m", "--cpus", "1", "--pids-limit", "64", "-v", f"{d}:/scan:ro",
-                      lock()["images"]["gitleaks"], "dir", "/scan", "--redact", "--no-banner"], timeout=60)
-    return result
+                      lock()["images"]["gitleaks"], "dir"]
+        options = ["--config", "/scan/.gitleaks.toml", "--redact", "--no-banner", "--verbose"]
+        result = run(scanner + ["/scan", *options], timeout=60)
+        # Faux credential sans validité, créé exclusivement dans la copie temporaire.
+        # Le contrôle assure que l'exception d'empreinte ne masque pas les vrais motifs.
+        control = Path(d) / "evidence/scan-control/manifest.json"
+        write_json(control, {"api_key": "ghp_" + "".join(secrets.choice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") for _ in range(36))})
+        detection = run(scanner + ["/scan/evidence/scan-control", *options], timeout=60, check=False)
+        if detection["exit_code"] != 1:
+            raise BridgeError("Le contrôle positif du détecteur n'a pas reconnu le credential synthétique")
+    return {"project_scan": result, "synthetic_positive_control": detection}
 
 
 def status(name):

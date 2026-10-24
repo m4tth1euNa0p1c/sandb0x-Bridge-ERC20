@@ -17,6 +17,7 @@ au registre d'images et conservés dans `sandbox/versions.lock.json`.
 | Prometheus | [Cycle LTS](https://prometheus.io/docs/introduction/release-cycle/) | Branche 3.13 retenue, métriques métier futures |
 | Grafana | [13.2.4](https://github.com/grafana/grafana/releases/tag/v13.2.4) | Image future épinglée, aucune recette J1 |
 | MkDocs | [Notes 1.6.1](https://www.mkdocs.org/about/release-notes/) | Build strict dans un venv verrouillé |
+| Gitleaks | [Configuration v8.30.1](https://github.com/gitleaks/gitleaks/blob/v8.30.1/README.md) | Règles par défaut, exception ciblée sur une empreinte publique et contrôle positif |
 | Réseaux Ethereum | [Documentation Ethereum](https://ethereum.org/developers/docs/networks/) | Séparation testnets/local ; pas de RPC Sepolia interrogé |
 | Agents Codex | [Agents spécialisés](https://learn.chatgpt.com/docs/agent-configuration/subagents) | Définitions TOML de projet héritant des permissions |
 | Skills Codex | [Skills de dépôt](https://learn.chatgpt.com/docs/build-skills) | Répertoire `.agents/skills`, découverte et descriptions ciblées |
