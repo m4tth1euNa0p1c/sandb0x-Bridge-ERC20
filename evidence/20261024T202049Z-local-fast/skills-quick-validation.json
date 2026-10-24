@@ -1,0 +1,357 @@
+{
+  "utc": "2026-10-24T20:20:48.368853+00:00",
+  "validator_sha256": "6068513d924ed3559e186dfcdead7439129828dcf402167fd925c06dffbf2806",
+  "results": [
+    {
+      "skill": ".agents/skills/bridge-alertes/SKILL.md",
+      "sha256": "b8555f6649374ceec550b8c4f2dfe04fbf043e739b58058560b5b0f99665611e",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-amelioration/SKILL.md",
+      "sha256": "627e999a4cf549bac6d7de59060226d0816100f6f96a6577c46899b65d06fd7f",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-anvil/SKILL.md",
+      "sha256": "48c2e10a86a79a6b8d9b29336dbf27ba36f9934b637220bc420653bc7e1e9799",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-architecture/SKILL.md",
+      "sha256": "4df4dddbad43631494880e97b591fba8394dab1bde203883b45fff321462fc9b",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-besu-qbft/SKILL.md",
+      "sha256": "3ab39afdbd5a5369eaa67546a0a56ef5ccf3619d3028973b223c9c39eb3e6071",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-burn-mint/SKILL.md",
+      "sha256": "1d8870cbd6fe858c51ded9fbcfce5a90da276739b09b30e286374d71760f8a28",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-checkpoints/SKILL.md",
+      "sha256": "df8943d5c4b47630b1412f5e7d6a05052b83025d9b8f66acaeaaf024fa53564c",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-ci/SKILL.md",
+      "sha256": "69977f7eb1276b0c5f551b2b83c6c3649b2470e2ea3ddcd5aac0866000f00138",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-cloisonnement/SKILL.md",
+      "sha256": "6fb73eba68623615cf61f9b9761fdcddb4e72e25ea982e6667651e7ec3a6adc3",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-collecte/SKILL.md",
+      "sha256": "4185f51536722c88e1169c760fe6fb2f3a19f868f32f9480602c7eb978384219",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-compose/SKILL.md",
+      "sha256": "a84a783f8791a4b9f7e3348b027f940d805a9fe42e124535761372f45e38f5cf",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-concurrence/SKILL.md",
+      "sha256": "a9179fba96453e342b4e0213df1654da85d0de810d443fc8eab6e5451ccaab10",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-crash/SKILL.md",
+      "sha256": "d68114f61b102f653f48a5a40851a7416c1c488c968eee6dfc97289b77b52843",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-decimals/SKILL.md",
+      "sha256": "d1fcd93e134f9b28daedf7dd26e7711cfae81fd30244ad635c6a821ad191b9a6",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-dedup/SKILL.md",
+      "sha256": "14799eeeb502c5fe031541e3092e792842fcb975ee3237a1cd3648ebd7ab39ab",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-deploiement/SKILL.md",
+      "sha256": "db6e4c329b1906f4b0bcf9b46de26b7e8678fc3489feb6f98033b4437af8179c",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-doctor/SKILL.md",
+      "sha256": "71f8e46b34d7cf7acc020d8dc363b2a02e5f8fb7fe474a90b527909c063179a5",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-documentation/SKILL.md",
+      "sha256": "9cdf05ed890706cf3137f715656f047407931a294267b4e5198c3c921542c956",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-erc20/SKILL.md",
+      "sha256": "68ca75c8974a9346377baa38511f0d8965be2818ca7baf55224b88291cb8a9fd",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-etat-projet/SKILL.md",
+      "sha256": "238db909f6d7930f02c3719166b812ff1f5b88c0c761f804b6d81654635d6bbb",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-exigences/SKILL.md",
+      "sha256": "d2c7945761a94793100fc9891e0634135e8b42d04fad0e1ffc6068d096412d45",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-finalite/SKILL.md",
+      "sha256": "e95dcaa099ba1d6b44114bcb7625e89756391f4eaad3cee88dfbd97818a91b44",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-fuzz/SKILL.md",
+      "sha256": "29b5e02e619c6f96c53a8a5ed56958ab14ec1e424ae2564fa3eecd86ab28b012",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-grafana/SKILL.md",
+      "sha256": "89e369209055941ff85028fac62edc94227bfebaefd64f874c0bee44850dfb72",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-invariants/SKILL.md",
+      "sha256": "7deb7eb0512c16e4362d29a76fc718533299b92545ad8fd4d42e6a6785505105",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-logs/SKILL.md",
+      "sha256": "1eb6caaec5e5122131d871609e27a0727d8ce2d070f65ec3f3319000ee7a8bdf",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-manifestes/SKILL.md",
+      "sha256": "4d6ee866da0abf905cd625e75850bacf4fa638473fd7b6dff5cb0db15b424fa7",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-menaces/SKILL.md",
+      "sha256": "0aa36ad5efce904031d0c500a7b0d406e2c58e3f68ef04320b47169f9fc0e1e5",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-metriques/SKILL.md",
+      "sha256": "fc0b5eff301070394fe2e791e34421665941f8ff455b289470e8b596f650522f",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-migrations/SKILL.md",
+      "sha256": "4a62d322b03c7d4d09d2aef8a663eda7d641836fae2301fa6a2d43e33459c345",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-nonces/SKILL.md",
+      "sha256": "dcc44b6f8f8ad80fc7b3079637f64f8267a57820bfea085554689e8ba7bff399",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-pause/SKILL.md",
+      "sha256": "e4677df210105c54f68f79e80fbeb26ba507f913eb133e0b79e2fcdc8e1a59fd",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-plafonds/SKILL.md",
+      "sha256": "18407de91813221bc424f1082cc2016f6ed38f55067875cb5dea717fb65e7049",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-postgres-schema/SKILL.md",
+      "sha256": "01f184cb6b6a876bb65b3ddc69ef35f72cae91169793ac548b5b004c88d88731",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-reconciliation/SKILL.md",
+      "sha256": "c2216a475a92e1f5318c87aa0936ea2838d510cf00da3b25a9d4e73dd40a4c5c",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-recus/SKILL.md",
+      "sha256": "36090dbd695513a8ad2c6c5009a1cf8d4bea7e8273c425d0f3e751ca5876012f",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-registre-preuves/SKILL.md",
+      "sha256": "727eac61dd5a919211707dfd9bd6633d6cde6604dfd6bfba6016dd2566bfe25d",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-reorg/SKILL.md",
+      "sha256": "e8e51bfc6c895691c1caf12562ee40b95c552c037250c429caa6ff42e5f0791b",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-reseaux/SKILL.md",
+      "sha256": "c53dfc6d060f15b983f9b3bce92ce16debea5acd7b3493efc338786d933482f7",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-retry/SKILL.md",
+      "sha256": "97fbdbc8e0882ac73b9996ff570e8b4cc1d122857bd8e41d975d0f2c33cae467",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-roles/SKILL.md",
+      "sha256": "5d88e376a18b71c0a4ecf82166b1b6bf4af8388b46af65205a513f5078171e02",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-rpc-pannes/SKILL.md",
+      "sha256": "674c24a2d3e33b89eb099c922380da07d85444056545f9738f10ecabece5cb5a",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-secrets/SKILL.md",
+      "sha256": "8bbd37e31a032c4cae8b8a56f626bfc5a4ecc8c0e765b09250ff8c7cadacb174",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-sepolia-identite/SKILL.md",
+      "sha256": "40a6c0c4d4da166012da821d75fa6a62360f1aa703a896065e1efb2a186224c9",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-signature/SKILL.md",
+      "sha256": "6dd91a0b91d0a5ba01aab6645bc36722986cf40e5b7590ad80bea71dc2473dcd",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-soumission/SKILL.md",
+      "sha256": "b6f3f5d6e109095939bbd657ca95f38d909a604d3fdbf9ffc19e4a5084da5fb0",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-sources/SKILL.md",
+      "sha256": "383a785518da1bbd20b268a1d13010d6c17c5c9284ea3937fa985ad3a0179247",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-tela-identite/SKILL.md",
+      "sha256": "4f58c477144fd29375806df58f51969939b9aba20c3f7519872156c4d7da634b",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-transfer-id/SKILL.md",
+      "sha256": "3877f6b9a2900b27e82935a50f81c8e8bbf8ba2dca2bdcfc98b8112bccf618be",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    },
+    {
+      "skill": ".agents/skills/bridge-versions/SKILL.md",
+      "sha256": "6ccc5e58c4884dedcba316ab942fd84e8dc0fd1fb7ddf6d7974300cfe98310e7",
+      "exit_code": 0,
+      "stdout": "Skill is valid!",
+      "stderr": ""
+    }
+  ],
+  "passed": true
+}

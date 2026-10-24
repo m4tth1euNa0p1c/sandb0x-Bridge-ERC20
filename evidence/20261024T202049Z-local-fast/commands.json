@@ -1,0 +1,1077 @@
+[
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "utc": "2026-10-24T20:20:49Z",
+    "exit_code": 0,
+    "stdout": "26d03f9ba4c478df3252657d46178e5275e036a1",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "ls-files",
+      "--cached",
+      "--others",
+      "--exclude-standard",
+      "-z"
+    ],
+    "utc": "2026-10-24T20:20:49Z",
+    "exit_code": 0,
+    "stdout": ".agents/skills/bridge-alertes/SKILL.md\u0000.agents/skills/bridge-amelioration/SKILL.md\u0000.agents/skills/bridge-anvil/SKILL.md\u0000.agents/skills/bridge-architecture/SKILL.md\u0000.agents/skills/bridge-besu-qbft/SKILL.md\u0000.agents/skills/bridge-burn-mint/SKILL.md\u0000.agents/skills/bridge-checkpoints/SKILL.md\u0000.agents/skills/bridge-ci/SKILL.md\u0000.agents/skills/bridge-cloisonnement/SKILL.md\u0000.agents/skills/bridge-collecte/SKILL.md\u0000.agents/skills/bridge-compose/SKILL.md\u0000.agents/skills/bridge-concurrence/SKILL.md\u0000.agents/skills/bridge-crash/SKILL.md\u0000.agents/skills/bridge-decimals/SKILL.md\u0000.agents/skills/bridge-dedup/SKILL.md\u0000.agents/skills/bridge-deploiement/SKILL.md\u0000.agents/skills/bridge-doctor/SKILL.md\u0000.agents/skills/bridge-documentation/SKILL.md\u0000.agents/skills/bridge-erc20/SKILL.md\u0000.agents/skills/bridge-etat-projet/SKILL.md\u0000.agents/skills/bridge-exigences/SKILL.md\u0000.agents/skills/bridge-finalite/SKILL.md\u0000.agents/skills/bridge-fuzz/SKILL.md\u0000.agents/skills/bridge-grafana/SKILL.md\u0000.agents/skills/bridge-invariants/SKILL.md\u0000.agents/skills/bridge-logs/SKILL.md\u0000.agents/skills/bridge-manifestes/SKILL.md\u0000.agents/skills/bridge-menaces/SKILL.md\u0000.agents/skills/bridge-metriques/SKILL.md\u0000.agents/skills/bridge-migrations/SKILL.md\u0000.agents/skills/bridge-nonces/SKILL.md\u0000.agents/skills/bridge-pause/SKILL.md\u0000.agents/skills/bridge-plafonds/SKILL.md\u0000.agents/skills/bridge-postgres-schema/SKILL.md\u0000.agents/skills/bridge-reconciliation/SKILL.md\u0000.agents/skills/bridge-recus/SKILL.md\u0000.agents/skills/bridge-registre-preuves/SKILL.md\u0000.agents/skills/bridge-reorg/SKILL.md\u0000.agents/skills/bridge-reseaux/SKILL.md\u0000.agents/skills/bridge-retry/SKILL.md\u0000.agents/skills/bridge-roles/SKILL.md\u0000.agents/skills/bridge-rpc-pannes/SKILL.md\u0000.agents/skills/bridge-secrets/SKILL.md\u0000.agents/skills/bridge-sepolia-identite/SKILL.md\u0000.agents/skills/bridge-signature/SKILL.md\u0000.agents/skills/bridge-soumission/SKILL.md\u0000.agents/skills/bridge-sources/SKILL.md\u0000.agents/skills/bridge-tela-identite/SKILL.md\u0000.agents/skills/bridge-transfer-id/SKILL.md\u0000.agents/skills/bridge-versions/SKILL.md\u0000.codex/agents/bridge-alertes.toml\u0000.codex/agents/bridge-amelioration.toml\u0000.codex/agents/bridge-anvil.toml\u0000.codex/agents/bridge-architecture.toml\u0000.codex/agents/bridge-besu-qbft.toml\u0000.codex/agents/bridge-burn-mint.toml\u0000.codex/agents/bridge-checkpoints.toml\u0000.codex/agents/bridge-ci.toml\u0000.codex/agents/bridge-cloisonnement.toml\u0000.codex/agents/bridge-collecte.toml\u0000.codex/agents/bridge-compose.toml\u0000.codex/agents/bridge-concurrence.toml\u0000.codex/agents/bridge-crash.toml\u0000.codex/agents/bridge-decimals.toml\u0000.codex/agents/bridge-dedup.toml\u0000.codex/agents/bridge-deploiement.toml\u0000.codex/agents/bridge-doctor.toml\u0000.codex/agents/bridge-documentation.toml\u0000.codex/agents/bridge-erc20.toml\u0000.codex/agents/bridge-etat-projet.toml\u0000.codex/agents/bridge-exigences.toml\u0000.codex/agents/bridge-finalite.toml\u0000.codex/agents/bridge-fuzz.toml\u0000.codex/agents/bridge-grafana.toml\u0000.codex/agents/bridge-invariants.toml\u0000.codex/agents/bridge-logs.toml\u0000.codex/agents/bridge-manifestes.toml\u0000.codex/agents/bridge-menaces.toml\u0000.codex/agents/bridge-metriques.toml\u0000.codex/agents/bridge-migrations.toml\u0000.codex/agents/bridge-nonces.toml\u0000.codex/agents/bridge-pause.toml\u0000.codex/agents/bridge-plafonds.toml\u0000.codex/agents/bridge-postgres-schema.toml\u0000.codex/agents/bridge-reconciliation.toml\u0000.codex/agents/bridge-recus.toml\u0000.codex/agents/bridge-registre-preuves.toml\u0000.codex/agents/bridge-reorg.toml\u0000.codex/agents/bridge-reseaux.toml\u0000.codex/agents/bridge-retry.toml\u0000.codex/agents/bridge-roles.toml\u0000.codex/agents/bridge-rpc-pannes.toml\u0000.codex/agents/bridge-secrets.toml\u0000.codex/agents/bridge-sepolia-identite.toml\u0000.codex/agents/bridge-signature.toml\u0000.codex/agents/bridge-soumission.toml\u0000.codex/agents/bridge-sources.toml\u0000.codex/agents/bridge-tela-identite.toml\u0000.codex/agents/bridge-transfer-id.toml\u0000.codex/agents/bridge-versions.toml\u0000.env.example\u0000.gitattributes\u0000.github/workflows/verify.yml\u0000.gitignore\u0000AGENTS.md\u0000README.md\u0000contracts/README.md\u0000contracts/foundry.toml\u0000docs/adr/0001-stack-profils.md\u0000docs/adr/0002-protocole.md\u0000docs/adr/0003-reprise-finalite.md\u0000docs/agents.md\u0000docs/architecture.md\u0000docs/claims.yaml\u0000docs/exigences.md\u0000docs/exploitation.md\u0000docs/index.md\u0000docs/informations-manquantes.md\u0000docs/installation.md\u0000docs/journal.md\u0000docs/limites.md\u0000docs/resultats.md\u0000docs/securite.md\u0000docs/sources.md\u0000docs/status/index.md\u0000docs/tests-preuves.md\u0000global.json\u0000mkdocs.yml\u0000observability/metrics-contract.md\u0000requirements-docs.in\u0000requirements-docs.lock\u0000sandbox/besu/qbft.json\u0000sandbox/compose.common.yaml\u0000sandbox/compose.local-besu.yaml\u0000sandbox/compose.local-fast.yaml\u0000sandbox/egress-policy.json\u0000sandbox/loopback_proxy.py\u0000sandbox/profiles/integration-testnet.json\u0000sandbox/profiles/local-besu.json\u0000sandbox/profiles/local-fast.json\u0000sandbox/versions.lock.json\u0000scripts/bridge\u0000scripts/bridge.ps1\u0000scripts/bridge.py\u0000scripts/validate_capabilities.py\u0000src/README.md\u0000tests/integration/README.md\u0000tests/test_tooling.py\u0000",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all"
+    ],
+    "utc": "2026-10-24T20:20:49Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "utc": "2026-10-24T20:20:49Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_compose_environment_cannot_redirect_project_or_config (test_tooling.CleanupBoundaryTests.test_compose_environment_cannot_redirect_project_or_config) ... ok\ntest_down_keeps_volumes_and_selects_only_the_requested_project (test_tooling.CleanupBoundaryTests.test_down_keeps_volumes_and_selects_only_the_requested_project) ... ok\ntest_authorized_bind_cannot_be_mounted_writable_or_at_another_target (test_tooling.ComposeMountPolicyTests.test_authorized_bind_cannot_be_mounted_writable_or_at_another_target) ... ok\ntest_home_subdirectory_and_other_unapproved_binds_are_rejected (test_tooling.ComposeMountPolicyTests.test_home_subdirectory_and_other_unapproved_binds_are_rejected) ... ok\ntest_read_only_site_mount_is_authorized_for_docs (test_tooling.ComposeMountPolicyTests.test_read_only_site_mount_is_authorized_for_docs) ... ok\ntest_site_bind_cannot_be_granted_to_an_unrelated_service (test_tooling.ComposeMountPolicyTests.test_site_bind_cannot_be_granted_to_an_unrelated_service) ... ok\ntest_artifact_reference_cannot_leave_its_campaign (test_tooling.EvidenceStatusTests.test_artifact_reference_cannot_leave_its_campaign) ... ok\ntest_besu_claim_accepts_only_its_matching_besu_evidence (test_tooling.EvidenceStatusTests.test_besu_claim_accepts_only_its_matching_besu_evidence) ... ok\ntest_changed_assertion_scope_requires_a_new_verification (test_tooling.EvidenceStatusTests.test_changed_assertion_scope_requires_a_new_verification) ... ok\ntest_changed_source_makes_previous_evidence_obsolete (test_tooling.EvidenceStatusTests.test_changed_source_makes_previous_evidence_obsolete) ... ok\ntest_failure_or_missing_check_never_counts_as_verified (test_tooling.EvidenceStatusTests.test_failure_or_missing_check_never_counts_as_verified) ... ok\ntest_incomplete_manifest_with_valid_checksum_is_obsolete (test_tooling.EvidenceStatusTests.test_incomplete_manifest_with_valid_checksum_is_obsolete) ... ok\ntest_local_proof_cannot_be_labelled_tela_or_besu (test_tooling.EvidenceStatusTests.test_local_proof_cannot_be_labelled_tela_or_besu) ... ok\ntest_manifest_from_different_profile_is_not_reused (test_tooling.EvidenceStatusTests.test_manifest_from_different_profile_is_not_reused) ... ok\ntest_manifest_reference_cannot_leave_the_repository (test_tooling.EvidenceStatusTests.test_manifest_reference_cannot_leave_the_repository) ... ok\ntest_manifest_tampering_invalidates_integrity (test_tooling.EvidenceStatusTests.test_manifest_tampering_invalidates_integrity) ... ok\ntest_matching_claim_and_passing_evidence_preserve_verified_status (test_tooling.EvidenceStatusTests.test_matching_claim_and_passing_evidence_preserve_verified_status) ... ok\ntest_missing_checksum_or_invalid_json_is_not_verification (test_tooling.EvidenceStatusTests.test_missing_checksum_or_invalid_json_is_not_verification) ... ok\ntest_missing_or_changed_artifact_invalidates_integrity (test_tooling.EvidenceStatusTests.test_missing_or_changed_artifact_invalidates_integrity) ... ok\ntest_missing_proof_never_counts_as_verified (test_tooling.EvidenceStatusTests.test_missing_proof_never_counts_as_verified) ... ok\ntest_unverified_claim_is_not_promoted_by_an_existing_manifest (test_tooling.EvidenceStatusTests.test_unverified_claim_is_not_promoted_by_an_existing_manifest) ... ok\ntest_disabled_profile_can_be_inspected_without_activation (test_tooling.IntegrationGateTests.test_disabled_profile_can_be_inspected_without_activation) ... ok\ntest_editing_enabled_cannot_activate_integration (test_tooling.IntegrationGateTests.test_editing_enabled_cannot_activate_integration) ... ok\ntest_integration_execution_paths_reject_before_any_external_action (test_tooling.IntegrationGateTests.test_integration_execution_paths_reject_before_any_external_action) ... ok\ntest_confirmation_depth_requires_a_bounded_positive_integer (test_tooling.ProfilePolicyTests.test_confirmation_depth_requires_a_bounded_positive_integer) ... ok\ntest_confirmation_policy_cannot_replace_besu_qbft_silently (test_tooling.ProfilePolicyTests.test_confirmation_policy_cannot_replace_besu_qbft_silently) ... ok\ntest_external_and_ambiguous_rpc_endpoints_are_rejected (test_tooling.ProfilePolicyTests.test_external_and_ambiguous_rpc_endpoints_are_rejected) ... ok\ntest_known_local_profiles_are_accepted (test_tooling.ProfilePolicyTests.test_known_local_profiles_are_accepted) ... ok\ntest_mainnet_and_unapproved_chain_pairs_are_rejected (test_tooling.ProfilePolicyTests.test_mainnet_and_unapproved_chain_pairs_are_rejected) ... ok\ntest_missing_or_unknown_finality_is_rejected (test_tooling.ProfilePolicyTests.test_missing_or_unknown_finality_is_rejected) ... ok\ntest_non_test_profile_is_rejected (test_tooling.ProfilePolicyTests.test_non_test_profile_is_rejected) ... ok\ntest_qbft_policy_cannot_be_applied_to_anvil (test_tooling.ProfilePolicyTests.test_qbft_policy_cannot_be_applied_to_anvil) ... ok\ntest_unknown_profile_is_rejected_before_reading_configuration (test_tooling.ProfilePolicyTests.test_unknown_profile_is_rejected_before_reading_configuration) ... ok\ntest_unsupported_decimals_and_evm_target_are_rejected (test_tooling.ProfilePolicyTests.test_unsupported_decimals_and_evm_target_are_rejected) ... ok\ntest_existing_code_reference_is_accepted (test_tooling.RegistryReferenceTests.test_existing_code_reference_is_accepted) ... ok\ntest_nonexistent_code_reference_fails_lint (test_tooling.RegistryReferenceTests.test_nonexistent_code_reference_fails_lint) ... ok\ntest_missing_genesis_or_head_is_not_a_healthy_chain (test_tooling.RpcIdentityTests.test_missing_genesis_or_head_is_not_a_healthy_chain) ... ok\ntest_observation_retains_network_and_block_identifiers (test_tooling.RpcIdentityTests.test_observation_retains_network_and_block_identifiers) ... ok\ntest_rpc_keeps_response_result_without_sending_transactions (test_tooling.RpcIdentityTests.test_rpc_keeps_response_result_without_sending_transactions) ... ok\ntest_rpc_rejects_mismatched_id_errors_and_missing_result (test_tooling.RpcIdentityTests.test_rpc_rejects_mismatched_id_errors_and_missing_result) ... ok\ntest_wrong_chain_identity_is_rejected_before_reading_blocks (test_tooling.RpcIdentityTests.test_wrong_chain_identity_is_rejected_before_reading_blocks) ... ok\ntest_wrong_client_is_rejected_before_reading_blocks (test_tooling.RpcIdentityTests.test_wrong_client_is_rejected_before_reading_blocks) ... ok\ntest_content_changes_and_file_deletion_change_source_fingerprint (test_tooling.SourceFingerprintTests.test_content_changes_and_file_deletion_change_source_fingerprint) ... ok\ntest_file_hash_is_the_hash_of_exact_bytes (test_tooling.SourceFingerprintTests.test_file_hash_is_the_hash_of_exact_bytes) ... ok\ntest_inventory_order_and_duplicate_entries_do_not_change_fingerprint (test_tooling.SourceFingerprintTests.test_inventory_order_and_duplicate_entries_do_not_change_fingerprint) ... ok\ntest_reporting_commit_does_not_invalidate_unchanged_source (test_tooling.SourceFingerprintTests.test_reporting_commit_does_not_invalidate_unchanged_source) ... ok\ntest_failed_compose_validation_prevents_startup (test_tooling.StartupSafetyTests.test_failed_compose_validation_prevents_startup) ... ok\n\n----------------------------------------------------------------------\nRan 47 tests in 0.110s\n\nOK"
+  },
+  {
+    "command": [
+      "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "scripts/validate_capabilities.py"
+    ],
+    "utc": "2026-10-24T20:20:50Z",
+    "exit_code": 0,
+    "stdout": "Catalogue : 50 agents, 50 skills ; validation réussie",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "--profile",
+      "isolation",
+      "config",
+      "--format",
+      "json"
+    ],
+    "utc": "2026-10-24T20:20:50Z",
+    "exit_code": 0,
+    "stdout": "{\n  \"name\": \"t3l4n-bridge-local-fast\",\n  \"networks\": {\n    \"chain_a\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_a\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.0/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"chain_b\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_b\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.16/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"database\": {\n      \"name\": \"t3l4n-bridge-local-fast_database\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.32/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"documentation\": {\n      \"name\": \"t3l4n-bridge-local-fast_documentation\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.80/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"edge_a\": {\n      \"name\": \"t3l4n-bridge-local-fast_edge_a\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.96/28\"\n          }\n        ]\n      }\n    },\n    \"edge_b\": {\n      \"name\": \"t3l4n-bridge-local-fast_edge_b\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.112/28\"\n          }\n        ]\n      }\n    },\n    \"edge_docs\": {\n      \"name\": \"t3l4n-bridge-local-fast_edge_docs\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.128/28\"\n          }\n        ]\n      }\n    },\n    \"signing\": {\n      \"name\": \"t3l4n-bridge-local-fast_signing\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.48/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    }\n  },\n  \"secrets\": {\n    \"postgres_password\": {\n      \"name\": \"t3l4n-bridge-local-fast_postgres_password\",\n      \"file\": \"C:/Users/matth/bridge-talan/.local/runtime/local-fast/postgres_password\"\n    },\n    \"signer_witness\": {\n      \"name\": \"t3l4n-bridge-local-fast_signer_witness\",\n      \"file\": \"C:/Users/matth/bridge-talan/.local/runtime/local-fast/signer_witness\"\n    }\n  },\n  \"services\": {\n    \"chain-a\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"--host\",\n        \"0.0.0.0\",\n        \"--port\",\n        \"8545\",\n        \"--chain-id\",\n        \"31337\",\n        \"--hardfork\",\n        \"london\",\n        \"--timestamp\",\n        \"1700000000\",\n        \"--block-time\",\n        \"2\",\n        \"--threads\",\n        \"2\",\n        \"--no-cors\",\n        \"--quiet\",\n        \"--state\",\n        \"/home/foundry/state.json\",\n        \"--state-interval\",\n        \"10\"\n      ],\n      \"entrypoint\": [\n        \"anvil\"\n      ],\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"cast\",\n          \"chain-id\",\n          \"--rpc-url\",\n          \"http://127.0.0.1:8545\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"402653184\",\n      \"networks\": {\n        \"chain_a\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"stop_grace_period\": \"15s\",\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"1000:1000\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"chain_a_data\",\n          \"target\": \"/home/foundry\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"chain-b\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"--host\",\n        \"0.0.0.0\",\n        \"--port\",\n        \"8545\",\n        \"--chain-id\",\n        \"31338\",\n        \"--hardfork\",\n        \"london\",\n        \"--timestamp\",\n        \"1700000000\",\n        \"--block-time\",\n        \"2\",\n        \"--threads\",\n        \"2\",\n        \"--no-cors\",\n        \"--quiet\",\n        \"--state\",\n        \"/home/foundry/state.json\",\n        \"--state-interval\",\n        \"10\"\n      ],\n      \"entrypoint\": [\n        \"anvil\"\n      ],\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"cast\",\n          \"chain-id\",\n          \"--rpc-url\",\n          \"http://127.0.0.1:8545\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"402653184\",\n      \"networks\": {\n        \"chain_b\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"stop_grace_period\": \"15s\",\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"1000:1000\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"chain_b_data\",\n          \"target\": \"/home/foundry\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"docs\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"-m\",\n        \"http.server\",\n        \"8000\",\n        \"--bind\",\n        \"0.0.0.0\",\n        \"--directory\",\n        \"/site\"\n      ],\n      \"entrypoint\": null,\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"python\",\n          \"-c\",\n          \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/', timeout=2)\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"documentation\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/site\",\n          \"target\": \"/site\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"docs-gateway\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"docs\"\n      ],\n      \"depends_on\": {\n        \"docs\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"documentation\": null,\n        \"edge_docs\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"18080\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"postgres\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": null,\n      \"entrypoint\": null,\n      \"environment\": {\n        \"PGDATA\": \"/var/lib/postgresql/data/pgdata\",\n        \"POSTGRES_DB\": \"bridge\",\n        \"POSTGRES_INITDB_ARGS\": \"--auth-host=scram-sha-256 --auth-local=trust\",\n        \"POSTGRES_PASSWORD_FILE\": \"/run/secrets/postgres_password\",\n        \"POSTGRES_USER\": \"sandbox_admin\"\n      },\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD-SHELL\",\n          \"pg_isready -U sandbox_admin -d bridge\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 30\n      },\n      \"image\": \"postgres:17.11-alpine@sha256:eee6c6e1b0894fa4fe0075eb054af9fd1cf39a35321c2d4110626cfe506411fb\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"database\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"secrets\": [\n        {\n          \"source\": \"postgres_password\",\n          \"target\": \"/run/secrets/postgres_password\"\n        }\n      ],\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\",\n        \"/var/run/postgresql:rw,noexec,nosuid,size=8m,uid=70,gid=70\"\n      ],\n      \"user\": \"70:70\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"postgres_data\",\n          \"target\": \"/var/lib/postgresql/data\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"rpc-a\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"chain-a\"\n      ],\n      \"depends_on\": {\n        \"chain-a\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"chain_a\": null,\n        \"edge_a\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"18545\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"rpc-b\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"chain-b\"\n      ],\n      \"depends_on\": {\n        \"chain-b\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"chain_b\": null,\n        \"edge_b\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"28545\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"witness-signer\": {\n      \"profiles\": [\n        \"isolation\"\n      ],\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"-m\",\n        \"http.server\",\n        \"8080\",\n        \"--bind\",\n        \"0.0.0.0\",\n        \"--directory\",\n        \"/tmp\"\n      ],\n      \"entrypoint\": null,\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"python\",\n          \"-c\",\n          \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/', timeout=2)\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"2s\",\n        \"retries\": 20\n      },\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"signing\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"secrets\": [\n        {\n          \"source\": \"signer_witness\",\n          \"target\": \"/run/secrets/signer_witness\"\n        }\n      ],\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\"\n    }\n  },\n  \"volumes\": {\n    \"chain_a_data\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_a_data\"\n    },\n    \"chain_b_data\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_b_data\"\n    },\n    \"postgres_data\": {\n      \"name\": \"t3l4n-bridge-local-fast_postgres_data\"\n    }\n  },\n  \"x-anvil\": {\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"cpus\": 1,\n    \"entrypoint\": [\n      \"anvil\"\n    ],\n    \"healthcheck\": {\n      \"interval\": \"3s\",\n      \"retries\": 20,\n      \"test\": [\n        \"CMD\",\n        \"cast\",\n        \"chain-id\",\n        \"--rpc-url\",\n        \"http://127.0.0.1:8545\"\n      ],\n      \"timeout\": \"3s\"\n    },\n    \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n    \"logging\": {\n      \"driver\": \"json-file\",\n      \"options\": {\n        \"max-file\": \"2\",\n        \"max-size\": \"5m\"\n      }\n    },\n    \"mem_limit\": \"384m\",\n    \"pids_limit\": 128,\n    \"platform\": \"linux/amd64\",\n    \"read_only\": true,\n    \"restart\": \"no\",\n    \"security_opt\": [\n      \"no-new-privileges:true\"\n    ],\n    \"stop_grace_period\": \"15s\",\n    \"tmpfs\": [\n      \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n    ],\n    \"user\": \"1000:1000\"\n  },\n  \"x-restricted\": {\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"cpus\": 1,\n    \"logging\": {\n      \"driver\": \"json-file\",\n      \"options\": {\n        \"max-file\": \"2\",\n        \"max-size\": \"5m\"\n      }\n    },\n    \"mem_limit\": \"256m\",\n    \"pids_limit\": 128,\n    \"platform\": \"linux/amd64\",\n    \"read_only\": true,\n    \"restart\": \"no\",\n    \"security_opt\": [\n      \"no-new-privileges:true\"\n    ],\n    \"tmpfs\": [\n      \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n    ]\n  }\n}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-besu",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-besu.yaml",
+      "--profile",
+      "isolation",
+      "config",
+      "--format",
+      "json"
+    ],
+    "utc": "2026-10-24T20:20:51Z",
+    "exit_code": 0,
+    "stdout": "{\n  \"name\": \"t3l4n-bridge-local-besu\",\n  \"networks\": {\n    \"chain_a\": {\n      \"name\": \"t3l4n-bridge-local-besu_chain_a\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.241.0/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"chain_b\": {\n      \"name\": \"t3l4n-bridge-local-besu_chain_b\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.241.16/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"database\": {\n      \"name\": \"t3l4n-bridge-local-besu_database\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.241.32/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"documentation\": {\n      \"name\": \"t3l4n-bridge-local-besu_documentation\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.241.80/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"edge_a\": {\n      \"name\": \"t3l4n-bridge-local-besu_edge_a\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.241.96/28\"\n          }\n        ]\n      }\n    },\n    \"edge_b\": {\n      \"name\": \"t3l4n-bridge-local-besu_edge_b\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.241.112/28\"\n          }\n        ]\n      }\n    },\n    \"edge_docs\": {\n      \"name\": \"t3l4n-bridge-local-besu_edge_docs\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.241.128/28\"\n          }\n        ]\n      }\n    },\n    \"signing\": {\n      \"name\": \"t3l4n-bridge-local-besu_signing\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.241.48/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    }\n  },\n  \"secrets\": {\n    \"besu_node_key\": {\n      \"name\": \"t3l4n-bridge-local-besu_besu_node_key\",\n      \"file\": \"C:/Users/matth/bridge-talan/.local/runtime/local-besu/besu_node_key\"\n    },\n    \"postgres_password\": {\n      \"name\": \"t3l4n-bridge-local-besu_postgres_password\",\n      \"file\": \"C:/Users/matth/bridge-talan/.local/runtime/local-besu/postgres_password\"\n    },\n    \"signer_witness\": {\n      \"name\": \"t3l4n-bridge-local-besu_signer_witness\",\n      \"file\": \"C:/Users/matth/bridge-talan/.local/runtime/local-besu/signer_witness\"\n    }\n  },\n  \"services\": {\n    \"chain-a\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 2,\n      \"command\": [\n        \"--data-path=/opt/besu/data\",\n        \"--genesis-file=/config/genesis.json\",\n        \"--node-private-key-file=/run/secrets/besu_node_key\",\n        \"--rpc-http-enabled=true\",\n        \"--rpc-http-host=0.0.0.0\",\n        \"--rpc-http-api=ETH,NET,WEB3,QBFT\",\n        \"--host-allowlist=localhost,127.0.0.1,chain-a\",\n        \"--discovery-enabled=false\",\n        \"--min-gas-price=0\",\n        \"--sync-mode=FULL\"\n      ],\n      \"entrypoint\": null,\n      \"environment\": {\n        \"JAVA_OPTS\": \"-Xms256m -Xmx768m -Djava.io.tmpdir=/jni-tmp\"\n      },\n      \"image\": \"hyperledger/besu:26.10.0@sha256:7ce78163f9de6733bb868c8bd2ebb4e6e90cc7cb950034ff8c333b1a0c27aace\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"1610612736\",\n      \"networks\": {\n        \"chain_a\": null\n      },\n      \"pids_limit\": 256,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"secrets\": [\n        {\n          \"source\": \"besu_node_key\",\n          \"target\": \"/run/secrets/besu_node_key\"\n        }\n      ],\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\",\n        \"/jni-tmp:rw,exec,nosuid,nodev,size=128m,uid=1000,gid=1000,mode=0700\"\n      ],\n      \"user\": \"1000:1000\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"chain_a_data\",\n          \"target\": \"/opt/besu\",\n          \"volume\": {}\n        },\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/.local/runtime/local-besu/genesis.json\",\n          \"target\": \"/config/genesis.json\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"chain-b\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"--host\",\n        \"0.0.0.0\",\n        \"--chain-id\",\n        \"31340\",\n        \"--hardfork\",\n        \"london\",\n        \"--timestamp\",\n        \"1700000000\",\n        \"--block-time\",\n        \"2\",\n        \"--threads\",\n        \"2\",\n        \"--no-cors\",\n        \"--quiet\",\n        \"--state\",\n        \"/home/foundry/state.json\",\n        \"--state-interval\",\n        \"10\"\n      ],\n      \"entrypoint\": [\n        \"anvil\"\n      ],\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"cast\",\n          \"chain-id\",\n          \"--rpc-url\",\n          \"http://127.0.0.1:8545\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"402653184\",\n      \"networks\": {\n        \"chain_b\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"1000:1000\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"chain_b_data\",\n          \"target\": \"/home/foundry\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"docs\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"-m\",\n        \"http.server\",\n        \"8000\",\n        \"--bind\",\n        \"0.0.0.0\",\n        \"--directory\",\n        \"/site\"\n      ],\n      \"entrypoint\": null,\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"python\",\n          \"-c\",\n          \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/', timeout=2)\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"documentation\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/site\",\n          \"target\": \"/site\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"docs-gateway\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"docs\"\n      ],\n      \"depends_on\": {\n        \"docs\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"documentation\": null,\n        \"edge_docs\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"18081\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"postgres\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": null,\n      \"entrypoint\": null,\n      \"environment\": {\n        \"PGDATA\": \"/var/lib/postgresql/data/pgdata\",\n        \"POSTGRES_DB\": \"bridge\",\n        \"POSTGRES_INITDB_ARGS\": \"--auth-host=scram-sha-256 --auth-local=trust\",\n        \"POSTGRES_PASSWORD_FILE\": \"/run/secrets/postgres_password\",\n        \"POSTGRES_USER\": \"sandbox_admin\"\n      },\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD-SHELL\",\n          \"pg_isready -U sandbox_admin -d bridge\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 30\n      },\n      \"image\": \"postgres:17.11-alpine@sha256:eee6c6e1b0894fa4fe0075eb054af9fd1cf39a35321c2d4110626cfe506411fb\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"database\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"secrets\": [\n        {\n          \"source\": \"postgres_password\",\n          \"target\": \"/run/secrets/postgres_password\"\n        }\n      ],\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\",\n        \"/var/run/postgresql:rw,noexec,nosuid,size=8m,uid=70,gid=70\"\n      ],\n      \"user\": \"70:70\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"postgres_data\",\n          \"target\": \"/var/lib/postgresql/data\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"rpc-a\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"chain-a\"\n      ],\n      \"depends_on\": {\n        \"chain-a\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"chain_a\": null,\n        \"edge_a\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"38545\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"rpc-b\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"chain-b\"\n      ],\n      \"depends_on\": {\n        \"chain-b\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"chain_b\": null,\n        \"edge_b\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"48545\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"witness-signer\": {\n      \"profiles\": [\n        \"isolation\"\n      ],\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"-m\",\n        \"http.server\",\n        \"8080\",\n        \"--bind\",\n        \"0.0.0.0\",\n        \"--directory\",\n        \"/tmp\"\n      ],\n      \"entrypoint\": null,\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"python\",\n          \"-c\",\n          \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/', timeout=2)\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"2s\",\n        \"retries\": 20\n      },\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"signing\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"secrets\": [\n        {\n          \"source\": \"signer_witness\",\n          \"target\": \"/run/secrets/signer_witness\"\n        }\n      ],\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\"\n    }\n  },\n  \"volumes\": {\n    \"chain_a_data\": {\n      \"name\": \"t3l4n-bridge-local-besu_chain_a_data\"\n    },\n    \"chain_b_data\": {\n      \"name\": \"t3l4n-bridge-local-besu_chain_b_data\"\n    },\n    \"postgres_data\": {\n      \"name\": \"t3l4n-bridge-local-besu_postgres_data\"\n    }\n  },\n  \"x-restricted\": {\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"cpus\": 1,\n    \"logging\": {\n      \"driver\": \"json-file\",\n      \"options\": {\n        \"max-file\": \"2\",\n        \"max-size\": \"5m\"\n      }\n    },\n    \"mem_limit\": \"256m\",\n    \"pids_limit\": 128,\n    \"platform\": \"linux/amd64\",\n    \"read_only\": true,\n    \"restart\": \"no\",\n    \"security_opt\": [\n      \"no-new-privileges:true\"\n    ],\n    \"tmpfs\": [\n      \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n    ]\n  }\n}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "C:\\Users\\matth\\bridge-talan\\.venv\\Scripts\\python.exe",
+      "-m",
+      "mkdocs",
+      "build",
+      "--strict"
+    ],
+    "utc": "2026-10-24T20:20:51Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "INFO    -  Cleaning site directory\nINFO    -  Building documentation to directory: C:\\Users\\matth\\bridge-talan\\site\nINFO    -  The following pages exist in the docs directory, but are not included in the \"nav\" configuration:\n  - status\\index.md\nINFO    -  Doc file 'index.md' contains an unrecognized relative link 'status/', it was left as is. Did you mean 'status/index.md'?\nINFO    -  Documentation built in 0.16 seconds"
+  },
+  {
+    "command": [
+      "git",
+      "ls-files",
+      "--cached",
+      "--others",
+      "--exclude-standard",
+      "-z"
+    ],
+    "utc": "2026-10-24T20:20:52Z",
+    "exit_code": 0,
+    "stdout": ".agents/skills/bridge-alertes/SKILL.md\u0000.agents/skills/bridge-amelioration/SKILL.md\u0000.agents/skills/bridge-anvil/SKILL.md\u0000.agents/skills/bridge-architecture/SKILL.md\u0000.agents/skills/bridge-besu-qbft/SKILL.md\u0000.agents/skills/bridge-burn-mint/SKILL.md\u0000.agents/skills/bridge-checkpoints/SKILL.md\u0000.agents/skills/bridge-ci/SKILL.md\u0000.agents/skills/bridge-cloisonnement/SKILL.md\u0000.agents/skills/bridge-collecte/SKILL.md\u0000.agents/skills/bridge-compose/SKILL.md\u0000.agents/skills/bridge-concurrence/SKILL.md\u0000.agents/skills/bridge-crash/SKILL.md\u0000.agents/skills/bridge-decimals/SKILL.md\u0000.agents/skills/bridge-dedup/SKILL.md\u0000.agents/skills/bridge-deploiement/SKILL.md\u0000.agents/skills/bridge-doctor/SKILL.md\u0000.agents/skills/bridge-documentation/SKILL.md\u0000.agents/skills/bridge-erc20/SKILL.md\u0000.agents/skills/bridge-etat-projet/SKILL.md\u0000.agents/skills/bridge-exigences/SKILL.md\u0000.agents/skills/bridge-finalite/SKILL.md\u0000.agents/skills/bridge-fuzz/SKILL.md\u0000.agents/skills/bridge-grafana/SKILL.md\u0000.agents/skills/bridge-invariants/SKILL.md\u0000.agents/skills/bridge-logs/SKILL.md\u0000.agents/skills/bridge-manifestes/SKILL.md\u0000.agents/skills/bridge-menaces/SKILL.md\u0000.agents/skills/bridge-metriques/SKILL.md\u0000.agents/skills/bridge-migrations/SKILL.md\u0000.agents/skills/bridge-nonces/SKILL.md\u0000.agents/skills/bridge-pause/SKILL.md\u0000.agents/skills/bridge-plafonds/SKILL.md\u0000.agents/skills/bridge-postgres-schema/SKILL.md\u0000.agents/skills/bridge-reconciliation/SKILL.md\u0000.agents/skills/bridge-recus/SKILL.md\u0000.agents/skills/bridge-registre-preuves/SKILL.md\u0000.agents/skills/bridge-reorg/SKILL.md\u0000.agents/skills/bridge-reseaux/SKILL.md\u0000.agents/skills/bridge-retry/SKILL.md\u0000.agents/skills/bridge-roles/SKILL.md\u0000.agents/skills/bridge-rpc-pannes/SKILL.md\u0000.agents/skills/bridge-secrets/SKILL.md\u0000.agents/skills/bridge-sepolia-identite/SKILL.md\u0000.agents/skills/bridge-signature/SKILL.md\u0000.agents/skills/bridge-soumission/SKILL.md\u0000.agents/skills/bridge-sources/SKILL.md\u0000.agents/skills/bridge-tela-identite/SKILL.md\u0000.agents/skills/bridge-transfer-id/SKILL.md\u0000.agents/skills/bridge-versions/SKILL.md\u0000.codex/agents/bridge-alertes.toml\u0000.codex/agents/bridge-amelioration.toml\u0000.codex/agents/bridge-anvil.toml\u0000.codex/agents/bridge-architecture.toml\u0000.codex/agents/bridge-besu-qbft.toml\u0000.codex/agents/bridge-burn-mint.toml\u0000.codex/agents/bridge-checkpoints.toml\u0000.codex/agents/bridge-ci.toml\u0000.codex/agents/bridge-cloisonnement.toml\u0000.codex/agents/bridge-collecte.toml\u0000.codex/agents/bridge-compose.toml\u0000.codex/agents/bridge-concurrence.toml\u0000.codex/agents/bridge-crash.toml\u0000.codex/agents/bridge-decimals.toml\u0000.codex/agents/bridge-dedup.toml\u0000.codex/agents/bridge-deploiement.toml\u0000.codex/agents/bridge-doctor.toml\u0000.codex/agents/bridge-documentation.toml\u0000.codex/agents/bridge-erc20.toml\u0000.codex/agents/bridge-etat-projet.toml\u0000.codex/agents/bridge-exigences.toml\u0000.codex/agents/bridge-finalite.toml\u0000.codex/agents/bridge-fuzz.toml\u0000.codex/agents/bridge-grafana.toml\u0000.codex/agents/bridge-invariants.toml\u0000.codex/agents/bridge-logs.toml\u0000.codex/agents/bridge-manifestes.toml\u0000.codex/agents/bridge-menaces.toml\u0000.codex/agents/bridge-metriques.toml\u0000.codex/agents/bridge-migrations.toml\u0000.codex/agents/bridge-nonces.toml\u0000.codex/agents/bridge-pause.toml\u0000.codex/agents/bridge-plafonds.toml\u0000.codex/agents/bridge-postgres-schema.toml\u0000.codex/agents/bridge-reconciliation.toml\u0000.codex/agents/bridge-recus.toml\u0000.codex/agents/bridge-registre-preuves.toml\u0000.codex/agents/bridge-reorg.toml\u0000.codex/agents/bridge-reseaux.toml\u0000.codex/agents/bridge-retry.toml\u0000.codex/agents/bridge-roles.toml\u0000.codex/agents/bridge-rpc-pannes.toml\u0000.codex/agents/bridge-secrets.toml\u0000.codex/agents/bridge-sepolia-identite.toml\u0000.codex/agents/bridge-signature.toml\u0000.codex/agents/bridge-soumission.toml\u0000.codex/agents/bridge-sources.toml\u0000.codex/agents/bridge-tela-identite.toml\u0000.codex/agents/bridge-transfer-id.toml\u0000.codex/agents/bridge-versions.toml\u0000.env.example\u0000.gitattributes\u0000.github/workflows/verify.yml\u0000.gitignore\u0000AGENTS.md\u0000README.md\u0000contracts/README.md\u0000contracts/foundry.toml\u0000docs/adr/0001-stack-profils.md\u0000docs/adr/0002-protocole.md\u0000docs/adr/0003-reprise-finalite.md\u0000docs/agents.md\u0000docs/architecture.md\u0000docs/claims.yaml\u0000docs/exigences.md\u0000docs/exploitation.md\u0000docs/index.md\u0000docs/informations-manquantes.md\u0000docs/installation.md\u0000docs/journal.md\u0000docs/limites.md\u0000docs/resultats.md\u0000docs/securite.md\u0000docs/sources.md\u0000docs/status/index.md\u0000docs/tests-preuves.md\u0000global.json\u0000mkdocs.yml\u0000observability/metrics-contract.md\u0000requirements-docs.in\u0000requirements-docs.lock\u0000sandbox/besu/qbft.json\u0000sandbox/compose.common.yaml\u0000sandbox/compose.local-besu.yaml\u0000sandbox/compose.local-fast.yaml\u0000sandbox/egress-policy.json\u0000sandbox/loopback_proxy.py\u0000sandbox/profiles/integration-testnet.json\u0000sandbox/profiles/local-besu.json\u0000sandbox/profiles/local-fast.json\u0000sandbox/versions.lock.json\u0000scripts/bridge\u0000scripts/bridge.ps1\u0000scripts/bridge.py\u0000scripts/validate_capabilities.py\u0000src/README.md\u0000tests/integration/README.md\u0000tests/test_tooling.py\u0000",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--network",
+      "none",
+      "--read-only",
+      "--user",
+      "10001:10001",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges:true",
+      "--memory",
+      "256m",
+      "--cpus",
+      "1",
+      "--pids-limit",
+      "64",
+      "-v",
+      "C:\\Users\\matth\\AppData\\Local\\Temp\\t3l4n-scan-7pnzua_f:/scan:ro",
+      "ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f",
+      "dir",
+      "/scan",
+      "--redact",
+      "--no-banner"
+    ],
+    "utc": "2026-10-24T20:20:52Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "\u001b[90m8:20PM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1mscanned ~309896 bytes (309.90 KB) in 280ms\u001b[0m\n\u001b[90m8:20PM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1mno leaks found\u001b[0m"
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "--profile",
+      "isolation",
+      "config",
+      "--format",
+      "json"
+    ],
+    "utc": "2026-10-24T20:20:53Z",
+    "exit_code": 0,
+    "stdout": "{\n  \"name\": \"t3l4n-bridge-local-fast\",\n  \"networks\": {\n    \"chain_a\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_a\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.0/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"chain_b\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_b\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.16/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"database\": {\n      \"name\": \"t3l4n-bridge-local-fast_database\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.32/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"documentation\": {\n      \"name\": \"t3l4n-bridge-local-fast_documentation\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.80/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"edge_a\": {\n      \"name\": \"t3l4n-bridge-local-fast_edge_a\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.96/28\"\n          }\n        ]\n      }\n    },\n    \"edge_b\": {\n      \"name\": \"t3l4n-bridge-local-fast_edge_b\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.112/28\"\n          }\n        ]\n      }\n    },\n    \"edge_docs\": {\n      \"name\": \"t3l4n-bridge-local-fast_edge_docs\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.128/28\"\n          }\n        ]\n      }\n    },\n    \"signing\": {\n      \"name\": \"t3l4n-bridge-local-fast_signing\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.48/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    }\n  },\n  \"secrets\": {\n    \"postgres_password\": {\n      \"name\": \"t3l4n-bridge-local-fast_postgres_password\",\n      \"file\": \"C:/Users/matth/bridge-talan/.local/runtime/local-fast/postgres_password\"\n    },\n    \"signer_witness\": {\n      \"name\": \"t3l4n-bridge-local-fast_signer_witness\",\n      \"file\": \"C:/Users/matth/bridge-talan/.local/runtime/local-fast/signer_witness\"\n    }\n  },\n  \"services\": {\n    \"chain-a\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"--host\",\n        \"0.0.0.0\",\n        \"--port\",\n        \"8545\",\n        \"--chain-id\",\n        \"31337\",\n        \"--hardfork\",\n        \"london\",\n        \"--timestamp\",\n        \"1700000000\",\n        \"--block-time\",\n        \"2\",\n        \"--threads\",\n        \"2\",\n        \"--no-cors\",\n        \"--quiet\",\n        \"--state\",\n        \"/home/foundry/state.json\",\n        \"--state-interval\",\n        \"10\"\n      ],\n      \"entrypoint\": [\n        \"anvil\"\n      ],\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"cast\",\n          \"chain-id\",\n          \"--rpc-url\",\n          \"http://127.0.0.1:8545\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"402653184\",\n      \"networks\": {\n        \"chain_a\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"stop_grace_period\": \"15s\",\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"1000:1000\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"chain_a_data\",\n          \"target\": \"/home/foundry\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"chain-b\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"--host\",\n        \"0.0.0.0\",\n        \"--port\",\n        \"8545\",\n        \"--chain-id\",\n        \"31338\",\n        \"--hardfork\",\n        \"london\",\n        \"--timestamp\",\n        \"1700000000\",\n        \"--block-time\",\n        \"2\",\n        \"--threads\",\n        \"2\",\n        \"--no-cors\",\n        \"--quiet\",\n        \"--state\",\n        \"/home/foundry/state.json\",\n        \"--state-interval\",\n        \"10\"\n      ],\n      \"entrypoint\": [\n        \"anvil\"\n      ],\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"cast\",\n          \"chain-id\",\n          \"--rpc-url\",\n          \"http://127.0.0.1:8545\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"402653184\",\n      \"networks\": {\n        \"chain_b\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"stop_grace_period\": \"15s\",\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"1000:1000\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"chain_b_data\",\n          \"target\": \"/home/foundry\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"docs\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"-m\",\n        \"http.server\",\n        \"8000\",\n        \"--bind\",\n        \"0.0.0.0\",\n        \"--directory\",\n        \"/site\"\n      ],\n      \"entrypoint\": null,\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"python\",\n          \"-c\",\n          \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/', timeout=2)\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"documentation\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/site\",\n          \"target\": \"/site\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"docs-gateway\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"docs\"\n      ],\n      \"depends_on\": {\n        \"docs\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"documentation\": null,\n        \"edge_docs\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"18080\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"postgres\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": null,\n      \"entrypoint\": null,\n      \"environment\": {\n        \"PGDATA\": \"/var/lib/postgresql/data/pgdata\",\n        \"POSTGRES_DB\": \"bridge\",\n        \"POSTGRES_INITDB_ARGS\": \"--auth-host=scram-sha-256 --auth-local=trust\",\n        \"POSTGRES_PASSWORD_FILE\": \"/run/secrets/postgres_password\",\n        \"POSTGRES_USER\": \"sandbox_admin\"\n      },\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD-SHELL\",\n          \"pg_isready -U sandbox_admin -d bridge\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 30\n      },\n      \"image\": \"postgres:17.11-alpine@sha256:eee6c6e1b0894fa4fe0075eb054af9fd1cf39a35321c2d4110626cfe506411fb\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"database\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"secrets\": [\n        {\n          \"source\": \"postgres_password\",\n          \"target\": \"/run/secrets/postgres_password\"\n        }\n      ],\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\",\n        \"/var/run/postgresql:rw,noexec,nosuid,size=8m,uid=70,gid=70\"\n      ],\n      \"user\": \"70:70\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"postgres_data\",\n          \"target\": \"/var/lib/postgresql/data\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"rpc-a\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"chain-a\"\n      ],\n      \"depends_on\": {\n        \"chain-a\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"chain_a\": null,\n        \"edge_a\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"18545\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"rpc-b\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"chain-b\"\n      ],\n      \"depends_on\": {\n        \"chain-b\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"chain_b\": null,\n        \"edge_b\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"28545\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"witness-signer\": {\n      \"profiles\": [\n        \"isolation\"\n      ],\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"-m\",\n        \"http.server\",\n        \"8080\",\n        \"--bind\",\n        \"0.0.0.0\",\n        \"--directory\",\n        \"/tmp\"\n      ],\n      \"entrypoint\": null,\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"python\",\n          \"-c\",\n          \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/', timeout=2)\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"2s\",\n        \"retries\": 20\n      },\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"signing\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"secrets\": [\n        {\n          \"source\": \"signer_witness\",\n          \"target\": \"/run/secrets/signer_witness\"\n        }\n      ],\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\"\n    }\n  },\n  \"volumes\": {\n    \"chain_a_data\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_a_data\"\n    },\n    \"chain_b_data\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_b_data\"\n    },\n    \"postgres_data\": {\n      \"name\": \"t3l4n-bridge-local-fast_postgres_data\"\n    }\n  },\n  \"x-anvil\": {\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"cpus\": 1,\n    \"entrypoint\": [\n      \"anvil\"\n    ],\n    \"healthcheck\": {\n      \"interval\": \"3s\",\n      \"retries\": 20,\n      \"test\": [\n        \"CMD\",\n        \"cast\",\n        \"chain-id\",\n        \"--rpc-url\",\n        \"http://127.0.0.1:8545\"\n      ],\n      \"timeout\": \"3s\"\n    },\n    \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n    \"logging\": {\n      \"driver\": \"json-file\",\n      \"options\": {\n        \"max-file\": \"2\",\n        \"max-size\": \"5m\"\n      }\n    },\n    \"mem_limit\": \"384m\",\n    \"pids_limit\": 128,\n    \"platform\": \"linux/amd64\",\n    \"read_only\": true,\n    \"restart\": \"no\",\n    \"security_opt\": [\n      \"no-new-privileges:true\"\n    ],\n    \"stop_grace_period\": \"15s\",\n    \"tmpfs\": [\n      \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n    ],\n    \"user\": \"1000:1000\"\n  },\n  \"x-restricted\": {\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"cpus\": 1,\n    \"logging\": {\n      \"driver\": \"json-file\",\n      \"options\": {\n        \"max-file\": \"2\",\n        \"max-size\": \"5m\"\n      }\n    },\n    \"mem_limit\": \"256m\",\n    \"pids_limit\": 128,\n    \"platform\": \"linux/amd64\",\n    \"read_only\": true,\n    \"restart\": \"no\",\n    \"security_opt\": [\n      \"no-new-privileges:true\"\n    ],\n    \"tmpfs\": [\n      \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n    ]\n  }\n}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "up",
+      "--detach",
+      "--pull",
+      "never",
+      "--force-recreate",
+      "--wait",
+      "--wait-timeout",
+      "90"
+    ],
+    "utc": "2026-10-24T20:20:54Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "Container t3l4n-bridge-local-fast-postgres-1  Recreate\n Container t3l4n-bridge-local-fast-docs-1  Recreate\n Container t3l4n-bridge-local-fast-chain-b-1  Recreate\n Container t3l4n-bridge-local-fast-chain-a-1  Recreate\n Container t3l4n-bridge-local-fast-chain-a-1  Recreated\n Container t3l4n-bridge-local-fast-rpc-a-1  Recreate\n Container t3l4n-bridge-local-fast-chain-b-1  Recreated\n Container t3l4n-bridge-local-fast-rpc-b-1  Recreate\n Container t3l4n-bridge-local-fast-postgres-1  Recreated\n Container t3l4n-bridge-local-fast-docs-1  Recreated\n Container t3l4n-bridge-local-fast-docs-gateway-1  Recreate\n Container t3l4n-bridge-local-fast-rpc-a-1  Recreated\n Container t3l4n-bridge-local-fast-rpc-b-1  Recreated\n Container t3l4n-bridge-local-fast-docs-gateway-1  Recreated\n Container t3l4n-bridge-local-fast-postgres-1  Starting\n Container t3l4n-bridge-local-fast-docs-1  Starting\n Container t3l4n-bridge-local-fast-chain-a-1  Starting\n Container t3l4n-bridge-local-fast-chain-b-1  Starting\n Container t3l4n-bridge-local-fast-chain-b-1  Started\n Container t3l4n-bridge-local-fast-rpc-b-1  Starting\n Container t3l4n-bridge-local-fast-postgres-1  Started\n Container t3l4n-bridge-local-fast-docs-1  Started\n Container t3l4n-bridge-local-fast-docs-gateway-1  Starting\n Container t3l4n-bridge-local-fast-chain-a-1  Started\n Container t3l4n-bridge-local-fast-rpc-a-1  Starting\n Container t3l4n-bridge-local-fast-docs-gateway-1  Started\n Container t3l4n-bridge-local-fast-rpc-b-1  Started\n Container t3l4n-bridge-local-fast-rpc-a-1  Started\n Container t3l4n-bridge-local-fast-chain-a-1  Waiting\n Container t3l4n-bridge-local-fast-postgres-1  Waiting\n Container t3l4n-bridge-local-fast-rpc-a-1  Waiting\n Container t3l4n-bridge-local-fast-rpc-b-1  Waiting\n Container t3l4n-bridge-local-fast-chain-b-1  Waiting\n Container t3l4n-bridge-local-fast-docs-1  Waiting\n Container t3l4n-bridge-local-fast-docs-gateway-1  Waiting\n Container t3l4n-bridge-local-fast-rpc-b-1  Healthy\n Container t3l4n-bridge-local-fast-rpc-a-1  Healthy\n Container t3l4n-bridge-local-fast-docs-gateway-1  Healthy\n Container t3l4n-bridge-local-fast-chain-a-1  Healthy\n Container t3l4n-bridge-local-fast-postgres-1  Healthy\n Container t3l4n-bridge-local-fast-chain-b-1  Healthy\n Container t3l4n-bridge-local-fast-docs-1  Healthy"
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "ps",
+      "--quiet",
+      "chain-a"
+    ],
+    "utc": "2026-10-24T20:21:02Z",
+    "exit_code": 0,
+    "stdout": "a679892222b0e4d334753d0dc2e2b9acc2bde277fcc985036260b9403243caf3",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "a679892222b0e4d334753d0dc2e2b9acc2bde277fcc985036260b9403243caf3"
+    ],
+    "utc": "2026-10-24T20:21:03Z",
+    "exit_code": 0,
+    "stdout": "[{\"Config\": {\"User\": \"1000:1000\", \"Image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\"}, \"HostConfig\": {\"ReadonlyRootfs\": true, \"Privileged\": false, \"CapDrop\": [\"ALL\"], \"SecurityOpt\": [\"no-new-privileges:true\"], \"Memory\": 402653184, \"NanoCpus\": 1000000000, \"PidsLimit\": 128, \"PortBindings\": {}, \"LogConfig\": {\"Type\": \"json-file\", \"Config\": {\"max-file\": \"2\", \"max-size\": \"5m\"}}}, \"Mounts\": [{\"Type\": \"volume\", \"Name\": \"t3l4n-bridge-local-fast_chain_a_data\", \"Source\": \"t3l4n-bridge-local-fast_chain_a_data\", \"Destination\": \"/home/foundry\", \"Driver\": \"local\", \"Mode\": \"rw\", \"RW\": true, \"Propagation\": \"\"}]}]",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "ps",
+      "--quiet",
+      "chain-b"
+    ],
+    "utc": "2026-10-24T20:21:03Z",
+    "exit_code": 0,
+    "stdout": "698e970047c2361542ab52f1c919c1b51d816a11fc01e46c0d19f2d0c2e0256e",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "698e970047c2361542ab52f1c919c1b51d816a11fc01e46c0d19f2d0c2e0256e"
+    ],
+    "utc": "2026-10-24T20:21:03Z",
+    "exit_code": 0,
+    "stdout": "[{\"Config\": {\"User\": \"1000:1000\", \"Image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\"}, \"HostConfig\": {\"ReadonlyRootfs\": true, \"Privileged\": false, \"CapDrop\": [\"ALL\"], \"SecurityOpt\": [\"no-new-privileges:true\"], \"Memory\": 402653184, \"NanoCpus\": 1000000000, \"PidsLimit\": 128, \"PortBindings\": {}, \"LogConfig\": {\"Type\": \"json-file\", \"Config\": {\"max-file\": \"2\", \"max-size\": \"5m\"}}}, \"Mounts\": [{\"Type\": \"volume\", \"Name\": \"t3l4n-bridge-local-fast_chain_b_data\", \"Source\": \"t3l4n-bridge-local-fast_chain_b_data\", \"Destination\": \"/home/foundry\", \"Driver\": \"local\", \"Mode\": \"rw\", \"RW\": true, \"Propagation\": \"\"}]}]",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "ps",
+      "--quiet",
+      "postgres"
+    ],
+    "utc": "2026-10-24T20:21:03Z",
+    "exit_code": 0,
+    "stdout": "60f172ad0b6660286719ce9e05b639535e7a2f7339ccad0230a1404ea715ff8b",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "60f172ad0b6660286719ce9e05b639535e7a2f7339ccad0230a1404ea715ff8b"
+    ],
+    "utc": "2026-10-24T20:21:04Z",
+    "exit_code": 0,
+    "stdout": "[{\"Config\": {\"User\": \"70:70\", \"Image\": \"postgres:17.11-alpine@sha256:eee6c6e1b0894fa4fe0075eb054af9fd1cf39a35321c2d4110626cfe506411fb\"}, \"HostConfig\": {\"ReadonlyRootfs\": true, \"Privileged\": false, \"CapDrop\": [\"ALL\"], \"SecurityOpt\": [\"no-new-privileges:true\"], \"Memory\": 268435456, \"NanoCpus\": 1000000000, \"PidsLimit\": 128, \"PortBindings\": {}, \"LogConfig\": {\"Type\": \"json-file\", \"Config\": {\"max-file\": \"2\", \"max-size\": \"5m\"}}}, \"Mounts\": [{\"Type\": \"volume\", \"Name\": \"t3l4n-bridge-local-fast_postgres_data\", \"Source\": \"t3l4n-bridge-local-fast_postgres_data\", \"Destination\": \"/var/lib/postgresql/data\", \"Driver\": \"local\", \"Mode\": \"rw\", \"RW\": true, \"Propagation\": \"\"}, {\"Type\": \"bind\", \"Source\": \"C:/Users/matth/bridge-talan/.local/runtime/local-fast/postgres_password\", \"Destination\": \"/run/secrets/postgres_password\", \"Mode\": \"\", \"RW\": false, \"Propagation\": \"rprivate\"}]}]",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "ps",
+      "--quiet",
+      "docs"
+    ],
+    "utc": "2026-10-24T20:21:04Z",
+    "exit_code": 0,
+    "stdout": "27f3682534e4a32a44489ce4965e6d527caf7cf7d1f6c77de96c946facf4fef9",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "27f3682534e4a32a44489ce4965e6d527caf7cf7d1f6c77de96c946facf4fef9"
+    ],
+    "utc": "2026-10-24T20:21:04Z",
+    "exit_code": 0,
+    "stdout": "[{\"Config\": {\"User\": \"10001:10001\", \"Image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\"}, \"HostConfig\": {\"ReadonlyRootfs\": true, \"Privileged\": false, \"CapDrop\": [\"ALL\"], \"SecurityOpt\": [\"no-new-privileges:true\"], \"Memory\": 268435456, \"NanoCpus\": 1000000000, \"PidsLimit\": 128, \"PortBindings\": {}, \"LogConfig\": {\"Type\": \"json-file\", \"Config\": {\"max-file\": \"2\", \"max-size\": \"5m\"}}}, \"Mounts\": [{\"Type\": \"bind\", \"Source\": \"C:/Users/matth/bridge-talan/site\", \"Destination\": \"/site\", \"Mode\": \"ro\", \"RW\": false, \"Propagation\": \"rprivate\"}]}]",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "ps",
+      "--quiet",
+      "rpc-a"
+    ],
+    "utc": "2026-10-24T20:21:04Z",
+    "exit_code": 0,
+    "stdout": "554e6a3c845681deaef375618b0002dcd737e74e2ce489f7721a1c17912ea6e9",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "554e6a3c845681deaef375618b0002dcd737e74e2ce489f7721a1c17912ea6e9"
+    ],
+    "utc": "2026-10-24T20:21:05Z",
+    "exit_code": 0,
+    "stdout": "[{\"Config\": {\"User\": \"10001:10001\", \"Image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\"}, \"HostConfig\": {\"ReadonlyRootfs\": true, \"Privileged\": false, \"CapDrop\": [\"ALL\"], \"SecurityOpt\": [\"no-new-privileges:true\"], \"Memory\": 268435456, \"NanoCpus\": 1000000000, \"PidsLimit\": 128, \"PortBindings\": {\"8080/tcp\": [{\"HostIp\": \"127.0.0.1\", \"HostPort\": \"18545\"}]}, \"LogConfig\": {\"Type\": \"json-file\", \"Config\": {\"max-file\": \"2\", \"max-size\": \"5m\"}}}, \"Mounts\": [{\"Type\": \"bind\", \"Source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\", \"Destination\": \"/app/proxy.py\", \"Mode\": \"ro\", \"RW\": false, \"Propagation\": \"rprivate\"}]}]",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "ps",
+      "--quiet",
+      "rpc-b"
+    ],
+    "utc": "2026-10-24T20:21:05Z",
+    "exit_code": 0,
+    "stdout": "08429717e3be53b5d1ea86f70e94fbf13b8c7c659841d79660a22f349607cfa3",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "08429717e3be53b5d1ea86f70e94fbf13b8c7c659841d79660a22f349607cfa3"
+    ],
+    "utc": "2026-10-24T20:21:05Z",
+    "exit_code": 0,
+    "stdout": "[{\"Config\": {\"User\": \"10001:10001\", \"Image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\"}, \"HostConfig\": {\"ReadonlyRootfs\": true, \"Privileged\": false, \"CapDrop\": [\"ALL\"], \"SecurityOpt\": [\"no-new-privileges:true\"], \"Memory\": 268435456, \"NanoCpus\": 1000000000, \"PidsLimit\": 128, \"PortBindings\": {\"8080/tcp\": [{\"HostIp\": \"127.0.0.1\", \"HostPort\": \"28545\"}]}, \"LogConfig\": {\"Type\": \"json-file\", \"Config\": {\"max-file\": \"2\", \"max-size\": \"5m\"}}}, \"Mounts\": [{\"Type\": \"bind\", \"Source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\", \"Destination\": \"/app/proxy.py\", \"Mode\": \"ro\", \"RW\": false, \"Propagation\": \"rprivate\"}]}]",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "ps",
+      "--quiet",
+      "docs-gateway"
+    ],
+    "utc": "2026-10-24T20:21:05Z",
+    "exit_code": 0,
+    "stdout": "d0ff8ccae233719406d42477359ecb9f9f16359688c622a28672eda80e321884",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "d0ff8ccae233719406d42477359ecb9f9f16359688c622a28672eda80e321884"
+    ],
+    "utc": "2026-10-24T20:21:06Z",
+    "exit_code": 0,
+    "stdout": "[{\"Config\": {\"User\": \"10001:10001\", \"Image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\"}, \"HostConfig\": {\"ReadonlyRootfs\": true, \"Privileged\": false, \"CapDrop\": [\"ALL\"], \"SecurityOpt\": [\"no-new-privileges:true\"], \"Memory\": 268435456, \"NanoCpus\": 1000000000, \"PidsLimit\": 128, \"PortBindings\": {\"8080/tcp\": [{\"HostIp\": \"127.0.0.1\", \"HostPort\": \"18080\"}]}, \"LogConfig\": {\"Type\": \"json-file\", \"Config\": {\"max-file\": \"2\", \"max-size\": \"5m\"}}}, \"Mounts\": [{\"Type\": \"bind\", \"Source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\", \"Destination\": \"/app/proxy.py\", \"Mode\": \"ro\", \"RW\": false, \"Propagation\": \"rprivate\"}]}]",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "--profile",
+      "isolation",
+      "up",
+      "-d",
+      "--pull",
+      "never",
+      "--wait",
+      "witness-signer"
+    ],
+    "utc": "2026-10-24T20:21:06Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "Network t3l4n-bridge-local-fast_signing  Creating\n Network t3l4n-bridge-local-fast_signing  Created\n Container t3l4n-bridge-local-fast-witness-signer-1  Creating\n Container t3l4n-bridge-local-fast-witness-signer-1  Created\n Container t3l4n-bridge-local-fast-witness-signer-1  Starting\n Container t3l4n-bridge-local-fast-witness-signer-1  Started\n Container t3l4n-bridge-local-fast-witness-signer-1  Waiting\n Container t3l4n-bridge-local-fast-witness-signer-1  Healthy"
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "ps",
+      "--quiet",
+      "witness-signer"
+    ],
+    "utc": "2026-10-24T20:21:09Z",
+    "exit_code": 0,
+    "stdout": "313a483c0ed27445277a1cd0ead10b5c15a3f6e0e21c115bc3d42b1a98f989bd",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}",
+      "313a483c0ed27445277a1cd0ead10b5c15a3f6e0e21c115bc3d42b1a98f989bd"
+    ],
+    "utc": "2026-10-24T20:21:10Z",
+    "exit_code": 0,
+    "stdout": "10.231.240.50",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--label",
+      "com.t3l4n.project=t3l4n-bridge-local-fast",
+      "--network",
+      "t3l4n-bridge-local-fast_signing",
+      "--user",
+      "10001:10001",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges:true",
+      "--memory",
+      "64m",
+      "--cpus",
+      "0.5",
+      "--pids-limit",
+      "32",
+      "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+      "python",
+      "-c",
+      "import urllib.request; r=urllib.request.urlopen('http://witness-signer:8080/',timeout=3); assert r.status==200; print('HTTP 200')"
+    ],
+    "utc": "2026-10-24T20:21:10Z",
+    "exit_code": 0,
+    "stdout": "HTTP 200",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--label",
+      "com.t3l4n.project=t3l4n-bridge-local-fast",
+      "--network",
+      "t3l4n-bridge-local-fast_signing",
+      "--user",
+      "10001:10001",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges:true",
+      "--memory",
+      "64m",
+      "--cpus",
+      "0.5",
+      "--pids-limit",
+      "32",
+      "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+      "python",
+      "-c",
+      "import socket,sys; s=socket.create_connection((sys.argv[1],8080),3); s.close(); print('TCP OK')",
+      "10.231.240.50"
+    ],
+    "utc": "2026-10-24T20:21:11Z",
+    "exit_code": 0,
+    "stdout": "TCP OK",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--label",
+      "com.t3l4n.project=t3l4n-bridge-local-fast",
+      "--network",
+      "t3l4n-bridge-local-fast_database",
+      "--user",
+      "10001:10001",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges:true",
+      "--memory",
+      "64m",
+      "--cpus",
+      "0.5",
+      "--pids-limit",
+      "32",
+      "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+      "python",
+      "-c",
+      "import socket,sys\ntry:\n s=socket.create_connection((sys.argv[1],8080),3)\nexcept OSError as e:\n print(type(e).__name__)\nelse:\n s.close(); raise SystemExit('Communication interdite reussie')",
+      "10.231.240.50"
+    ],
+    "utc": "2026-10-24T20:21:12Z",
+    "exit_code": 0,
+    "stdout": "OSError",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--label",
+      "com.t3l4n.project=t3l4n-bridge-local-fast",
+      "--network",
+      "t3l4n-bridge-local-fast_database",
+      "--user",
+      "10001:10001",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges:true",
+      "--memory",
+      "64m",
+      "--cpus",
+      "0.5",
+      "--pids-limit",
+      "32",
+      "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+      "python",
+      "-c",
+      "from pathlib import Path; assert not Path('/run/secrets/postgres_password').exists(); assert not Path('/run/secrets/signer_witness').exists(); assert not Path('/var/run/docker.sock').exists(); print('secrets et socket absents')"
+    ],
+    "utc": "2026-10-24T20:21:13Z",
+    "exit_code": 0,
+    "stdout": "secrets et socket absents",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "exec",
+      "-T",
+      "witness-signer",
+      "python",
+      "-c",
+      "from pathlib import Path; assert Path('/run/secrets/signer_witness').read_text().startswith('TEMOIN'); assert not Path('/run/secrets/postgres_password').exists(); print('temoin propre lisible, secret base absent')"
+    ],
+    "utc": "2026-10-24T20:21:14Z",
+    "exit_code": 0,
+    "stdout": "temoin propre lisible, secret base absent",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "exec",
+      "-T",
+      "postgres",
+      "sh",
+      "-c",
+      "test -r /run/secrets/postgres_password && test ! -e /run/secrets/signer_witness"
+    ],
+    "utc": "2026-10-24T20:21:15Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--label",
+      "com.t3l4n.project=t3l4n-bridge-local-fast",
+      "--network",
+      "t3l4n-bridge-local-fast_database",
+      "--user",
+      "10001:10001",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges:true",
+      "--memory",
+      "64m",
+      "--cpus",
+      "0.5",
+      "--pids-limit",
+      "32",
+      "-v",
+      "C:\\Users\\matth\\AppData\\Local\\Temp\\t3l4n-outside-u0q5zsjv:/control:ro",
+      "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+      "python",
+      "-c",
+      "from pathlib import Path; assert Path('/control/witness.txt').read_text()=='TEMOIN PUBLIC'; print('temoin existe')"
+    ],
+    "utc": "2026-10-24T20:21:15Z",
+    "exit_code": 0,
+    "stdout": "temoin existe",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--label",
+      "com.t3l4n.project=t3l4n-bridge-local-fast",
+      "--network",
+      "t3l4n-bridge-local-fast_database",
+      "--user",
+      "10001:10001",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges:true",
+      "--memory",
+      "64m",
+      "--cpus",
+      "0.5",
+      "--pids-limit",
+      "32",
+      "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+      "python",
+      "-c",
+      "from pathlib import Path; import sys; assert not Path('/control/witness.txt').exists(); assert not Path(sys.argv[1]).exists(); print('temoin hors perimetre inaccessible')",
+      "C:\\Users\\matth\\AppData\\Local\\Temp\\t3l4n-outside-u0q5zsjv\\witness.txt"
+    ],
+    "utc": "2026-10-24T20:21:16Z",
+    "exit_code": 0,
+    "stdout": "temoin hors perimetre inaccessible",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--label",
+      "com.t3l4n.project=t3l4n-bridge-local-fast",
+      "--network",
+      "t3l4n-bridge-local-fast_database",
+      "--user",
+      "10001:10001",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges:true",
+      "--memory",
+      "64m",
+      "--cpus",
+      "0.5",
+      "--pids-limit",
+      "32",
+      "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+      "python",
+      "-c",
+      "from pathlib import Path; import os; assert os.geteuid()!=0; s=Path('/proc/self/status').read_text(); assert 'CapEff:\\t0000000000000000' in s; assert 'NoNewPrivs:\\t1' in s\ntry:\n Path('/write-forbidden').write_text('temoin')\nexcept OSError:\n print('non root, sans capacites, no-new-privileges, racine non inscriptible')\nelse:\n raise SystemExit('racine inscriptible')"
+    ],
+    "utc": "2026-10-24T20:21:17Z",
+    "exit_code": 0,
+    "stdout": "non root, sans capacites, no-new-privileges, racine non inscriptible",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "--profile",
+      "isolation",
+      "stop",
+      "witness-signer"
+    ],
+    "utc": "2026-10-24T20:21:18Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "Container t3l4n-bridge-local-fast-witness-signer-1  Stopping\n Container t3l4n-bridge-local-fast-witness-signer-1  Stopped"
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "--profile",
+      "isolation",
+      "rm",
+      "--force",
+      "witness-signer"
+    ],
+    "utc": "2026-10-24T20:21:20Z",
+    "exit_code": 0,
+    "stdout": "Going to remove t3l4n-bridge-local-fast-witness-signer-1",
+    "stderr": "Container t3l4n-bridge-local-fast-witness-signer-1  Removing\n Container t3l4n-bridge-local-fast-witness-signer-1  Removed"
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "exec",
+      "-T",
+      "postgres",
+      "psql",
+      "-U",
+      "sandbox_admin",
+      "-d",
+      "bridge",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-c",
+      "CREATE TABLE IF NOT EXISTS sandbox_probe (id text PRIMARY KEY); INSERT INTO sandbox_probe VALUES ('campaign_1792873280802300700');"
+    ],
+    "utc": "2026-10-24T20:21:20Z",
+    "exit_code": 0,
+    "stdout": "CREATE TABLE\nINSERT 0 1",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "down",
+      "--timeout",
+      "20"
+    ],
+    "utc": "2026-10-24T20:21:21Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "Container t3l4n-bridge-local-fast-postgres-1  Stopping\n Container t3l4n-bridge-local-fast-rpc-a-1  Stopping\n Container t3l4n-bridge-local-fast-rpc-b-1  Stopping\n Container t3l4n-bridge-local-fast-docs-gateway-1  Stopping\n Container t3l4n-bridge-local-fast-postgres-1  Stopped\n Container t3l4n-bridge-local-fast-postgres-1  Removing\n Container t3l4n-bridge-local-fast-postgres-1  Removed\n Container t3l4n-bridge-local-fast-rpc-b-1  Stopped\n Container t3l4n-bridge-local-fast-rpc-b-1  Removing\n Container t3l4n-bridge-local-fast-rpc-b-1  Removed\n Container t3l4n-bridge-local-fast-chain-b-1  Stopping\n Container t3l4n-bridge-local-fast-docs-gateway-1  Stopped\n Container t3l4n-bridge-local-fast-docs-gateway-1  Removing\n Container t3l4n-bridge-local-fast-docs-gateway-1  Removed\n Container t3l4n-bridge-local-fast-docs-1  Stopping\n Container t3l4n-bridge-local-fast-rpc-a-1  Stopped\n Container t3l4n-bridge-local-fast-rpc-a-1  Removing\n Container t3l4n-bridge-local-fast-chain-b-1  Stopped\n Container t3l4n-bridge-local-fast-chain-b-1  Removing\n Container t3l4n-bridge-local-fast-rpc-a-1  Removed\n Container t3l4n-bridge-local-fast-chain-a-1  Stopping\n Container t3l4n-bridge-local-fast-chain-b-1  Removed\n Container t3l4n-bridge-local-fast-chain-a-1  Stopped\n Container t3l4n-bridge-local-fast-chain-a-1  Removing\n Container t3l4n-bridge-local-fast-chain-a-1  Removed\n Container t3l4n-bridge-local-fast-docs-1  Stopped\n Container t3l4n-bridge-local-fast-docs-1  Removing\n Container t3l4n-bridge-local-fast-docs-1  Removed\n Network t3l4n-bridge-local-fast_edge_a  Removing\n Network t3l4n-bridge-local-fast_documentation  Removing\n Network t3l4n-bridge-local-fast_edge_docs  Removing\n Network t3l4n-bridge-local-fast_edge_b  Removing\n Network t3l4n-bridge-local-fast_chain_b  Removing\n Network t3l4n-bridge-local-fast_database  Removing\n Network t3l4n-bridge-local-fast_chain_a  Removing\n Network t3l4n-bridge-local-fast_edge_docs  Removed\n Network t3l4n-bridge-local-fast_edge_a  Removed\n Network t3l4n-bridge-local-fast_documentation  Removed\n Network t3l4n-bridge-local-fast_edge_b  Removed\n Network t3l4n-bridge-local-fast_database  Removed\n Network t3l4n-bridge-local-fast_chain_b  Removed\n Network t3l4n-bridge-local-fast_chain_a  Removed"
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "--profile",
+      "isolation",
+      "config",
+      "--format",
+      "json"
+    ],
+    "utc": "2026-10-24T20:22:04Z",
+    "exit_code": 0,
+    "stdout": "{\n  \"name\": \"t3l4n-bridge-local-fast\",\n  \"networks\": {\n    \"chain_a\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_a\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.0/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"chain_b\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_b\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.16/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"database\": {\n      \"name\": \"t3l4n-bridge-local-fast_database\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.32/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"documentation\": {\n      \"name\": \"t3l4n-bridge-local-fast_documentation\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.80/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    },\n    \"edge_a\": {\n      \"name\": \"t3l4n-bridge-local-fast_edge_a\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.96/28\"\n          }\n        ]\n      }\n    },\n    \"edge_b\": {\n      \"name\": \"t3l4n-bridge-local-fast_edge_b\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.112/28\"\n          }\n        ]\n      }\n    },\n    \"edge_docs\": {\n      \"name\": \"t3l4n-bridge-local-fast_edge_docs\",\n      \"driver_opts\": {\n        \"com.docker.network.bridge.enable_ip_masquerade\": \"false\"\n      },\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.128/28\"\n          }\n        ]\n      }\n    },\n    \"signing\": {\n      \"name\": \"t3l4n-bridge-local-fast_signing\",\n      \"ipam\": {\n        \"config\": [\n          {\n            \"subnet\": \"10.231.240.48/28\"\n          }\n        ]\n      },\n      \"internal\": true\n    }\n  },\n  \"secrets\": {\n    \"postgres_password\": {\n      \"name\": \"t3l4n-bridge-local-fast_postgres_password\",\n      \"file\": \"C:/Users/matth/bridge-talan/.local/runtime/local-fast/postgres_password\"\n    },\n    \"signer_witness\": {\n      \"name\": \"t3l4n-bridge-local-fast_signer_witness\",\n      \"file\": \"C:/Users/matth/bridge-talan/.local/runtime/local-fast/signer_witness\"\n    }\n  },\n  \"services\": {\n    \"chain-a\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"--host\",\n        \"0.0.0.0\",\n        \"--port\",\n        \"8545\",\n        \"--chain-id\",\n        \"31337\",\n        \"--hardfork\",\n        \"london\",\n        \"--timestamp\",\n        \"1700000000\",\n        \"--block-time\",\n        \"2\",\n        \"--threads\",\n        \"2\",\n        \"--no-cors\",\n        \"--quiet\",\n        \"--state\",\n        \"/home/foundry/state.json\",\n        \"--state-interval\",\n        \"10\"\n      ],\n      \"entrypoint\": [\n        \"anvil\"\n      ],\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"cast\",\n          \"chain-id\",\n          \"--rpc-url\",\n          \"http://127.0.0.1:8545\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"402653184\",\n      \"networks\": {\n        \"chain_a\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"stop_grace_period\": \"15s\",\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"1000:1000\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"chain_a_data\",\n          \"target\": \"/home/foundry\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"chain-b\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"--host\",\n        \"0.0.0.0\",\n        \"--port\",\n        \"8545\",\n        \"--chain-id\",\n        \"31338\",\n        \"--hardfork\",\n        \"london\",\n        \"--timestamp\",\n        \"1700000000\",\n        \"--block-time\",\n        \"2\",\n        \"--threads\",\n        \"2\",\n        \"--no-cors\",\n        \"--quiet\",\n        \"--state\",\n        \"/home/foundry/state.json\",\n        \"--state-interval\",\n        \"10\"\n      ],\n      \"entrypoint\": [\n        \"anvil\"\n      ],\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"cast\",\n          \"chain-id\",\n          \"--rpc-url\",\n          \"http://127.0.0.1:8545\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"402653184\",\n      \"networks\": {\n        \"chain_b\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"stop_grace_period\": \"15s\",\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"1000:1000\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"chain_b_data\",\n          \"target\": \"/home/foundry\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"docs\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"-m\",\n        \"http.server\",\n        \"8000\",\n        \"--bind\",\n        \"0.0.0.0\",\n        \"--directory\",\n        \"/site\"\n      ],\n      \"entrypoint\": null,\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"python\",\n          \"-c\",\n          \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/', timeout=2)\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 20\n      },\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"documentation\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/site\",\n          \"target\": \"/site\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"docs-gateway\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"docs\"\n      ],\n      \"depends_on\": {\n        \"docs\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"documentation\": null,\n        \"edge_docs\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"18080\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"postgres\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": null,\n      \"entrypoint\": null,\n      \"environment\": {\n        \"PGDATA\": \"/var/lib/postgresql/data/pgdata\",\n        \"POSTGRES_DB\": \"bridge\",\n        \"POSTGRES_INITDB_ARGS\": \"--auth-host=scram-sha-256 --auth-local=trust\",\n        \"POSTGRES_PASSWORD_FILE\": \"/run/secrets/postgres_password\",\n        \"POSTGRES_USER\": \"sandbox_admin\"\n      },\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD-SHELL\",\n          \"pg_isready -U sandbox_admin -d bridge\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"3s\",\n        \"retries\": 30\n      },\n      \"image\": \"postgres:17.11-alpine@sha256:eee6c6e1b0894fa4fe0075eb054af9fd1cf39a35321c2d4110626cfe506411fb\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"database\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"secrets\": [\n        {\n          \"source\": \"postgres_password\",\n          \"target\": \"/run/secrets/postgres_password\"\n        }\n      ],\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\",\n        \"/var/run/postgresql:rw,noexec,nosuid,size=8m,uid=70,gid=70\"\n      ],\n      \"user\": \"70:70\",\n      \"volumes\": [\n        {\n          \"type\": \"volume\",\n          \"source\": \"postgres_data\",\n          \"target\": \"/var/lib/postgresql/data\",\n          \"volume\": {}\n        }\n      ]\n    },\n    \"rpc-a\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"chain-a\"\n      ],\n      \"depends_on\": {\n        \"chain-a\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"chain_a\": null,\n        \"edge_a\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"18545\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"rpc-b\": {\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"/app/proxy.py\",\n        \"chain-b\"\n      ],\n      \"depends_on\": {\n        \"chain-b\": {\n          \"condition\": \"service_started\",\n          \"required\": true\n        }\n      },\n      \"entrypoint\": null,\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"chain_b\": null,\n        \"edge_b\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"ports\": [\n        {\n          \"mode\": \"ingress\",\n          \"host_ip\": \"127.0.0.1\",\n          \"target\": 8080,\n          \"published\": \"28545\",\n          \"protocol\": \"tcp\"\n        }\n      ],\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\",\n      \"volumes\": [\n        {\n          \"type\": \"bind\",\n          \"source\": \"C:/Users/matth/bridge-talan/sandbox/loopback_proxy.py\",\n          \"target\": \"/app/proxy.py\",\n          \"read_only\": true,\n          \"bind\": {\n            \"create_host_path\": true\n          }\n        }\n      ]\n    },\n    \"witness-signer\": {\n      \"profiles\": [\n        \"isolation\"\n      ],\n      \"cap_drop\": [\n        \"ALL\"\n      ],\n      \"cpus\": 1,\n      \"command\": [\n        \"python\",\n        \"-m\",\n        \"http.server\",\n        \"8080\",\n        \"--bind\",\n        \"0.0.0.0\",\n        \"--directory\",\n        \"/tmp\"\n      ],\n      \"entrypoint\": null,\n      \"healthcheck\": {\n        \"test\": [\n          \"CMD\",\n          \"python\",\n          \"-c\",\n          \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/', timeout=2)\"\n        ],\n        \"timeout\": \"3s\",\n        \"interval\": \"2s\",\n        \"retries\": 20\n      },\n      \"image\": \"python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\",\n      \"logging\": {\n        \"driver\": \"json-file\",\n        \"options\": {\n          \"max-file\": \"2\",\n          \"max-size\": \"5m\"\n        }\n      },\n      \"mem_limit\": \"268435456\",\n      \"networks\": {\n        \"signing\": null\n      },\n      \"pids_limit\": 128,\n      \"platform\": \"linux/amd64\",\n      \"read_only\": true,\n      \"restart\": \"no\",\n      \"secrets\": [\n        {\n          \"source\": \"signer_witness\",\n          \"target\": \"/run/secrets/signer_witness\"\n        }\n      ],\n      \"security_opt\": [\n        \"no-new-privileges:true\"\n      ],\n      \"tmpfs\": [\n        \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n      ],\n      \"user\": \"10001:10001\"\n    }\n  },\n  \"volumes\": {\n    \"chain_a_data\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_a_data\"\n    },\n    \"chain_b_data\": {\n      \"name\": \"t3l4n-bridge-local-fast_chain_b_data\"\n    },\n    \"postgres_data\": {\n      \"name\": \"t3l4n-bridge-local-fast_postgres_data\"\n    }\n  },\n  \"x-anvil\": {\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"cpus\": 1,\n    \"entrypoint\": [\n      \"anvil\"\n    ],\n    \"healthcheck\": {\n      \"interval\": \"3s\",\n      \"retries\": 20,\n      \"test\": [\n        \"CMD\",\n        \"cast\",\n        \"chain-id\",\n        \"--rpc-url\",\n        \"http://127.0.0.1:8545\"\n      ],\n      \"timeout\": \"3s\"\n    },\n    \"image\": \"ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\",\n    \"logging\": {\n      \"driver\": \"json-file\",\n      \"options\": {\n        \"max-file\": \"2\",\n        \"max-size\": \"5m\"\n      }\n    },\n    \"mem_limit\": \"384m\",\n    \"pids_limit\": 128,\n    \"platform\": \"linux/amd64\",\n    \"read_only\": true,\n    \"restart\": \"no\",\n    \"security_opt\": [\n      \"no-new-privileges:true\"\n    ],\n    \"stop_grace_period\": \"15s\",\n    \"tmpfs\": [\n      \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n    ],\n    \"user\": \"1000:1000\"\n  },\n  \"x-restricted\": {\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"cpus\": 1,\n    \"logging\": {\n      \"driver\": \"json-file\",\n      \"options\": {\n        \"max-file\": \"2\",\n        \"max-size\": \"5m\"\n      }\n    },\n    \"mem_limit\": \"256m\",\n    \"pids_limit\": 128,\n    \"platform\": \"linux/amd64\",\n    \"read_only\": true,\n    \"restart\": \"no\",\n    \"security_opt\": [\n      \"no-new-privileges:true\"\n    ],\n    \"tmpfs\": [\n      \"/tmp:rw,noexec,nosuid,size=32m,mode=1777\"\n    ]\n  }\n}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "up",
+      "--detach",
+      "--pull",
+      "never",
+      "--force-recreate",
+      "--wait",
+      "--wait-timeout",
+      "90"
+    ],
+    "utc": "2026-10-24T20:22:05Z",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "Network t3l4n-bridge-local-fast_chain_a  Creating\n Network t3l4n-bridge-local-fast_chain_a  Created\n Network t3l4n-bridge-local-fast_chain_b  Creating\n Network t3l4n-bridge-local-fast_chain_b  Created\n Network t3l4n-bridge-local-fast_edge_a  Creating\n Network t3l4n-bridge-local-fast_edge_a  Created\n Network t3l4n-bridge-local-fast_edge_b  Creating\n Network t3l4n-bridge-local-fast_edge_b  Created\n Network t3l4n-bridge-local-fast_documentation  Creating\n Network t3l4n-bridge-local-fast_documentation  Created\n Network t3l4n-bridge-local-fast_edge_docs  Creating\n Network t3l4n-bridge-local-fast_edge_docs  Created\n Network t3l4n-bridge-local-fast_database  Creating\n Network t3l4n-bridge-local-fast_database  Created\n Container t3l4n-bridge-local-fast-chain-b-1  Creating\n Container t3l4n-bridge-local-fast-postgres-1  Creating\n Container t3l4n-bridge-local-fast-docs-1  Creating\n Container t3l4n-bridge-local-fast-chain-a-1  Creating\n Container t3l4n-bridge-local-fast-docs-1  Created\n Container t3l4n-bridge-local-fast-docs-gateway-1  Creating\n Container t3l4n-bridge-local-fast-postgres-1  Created\n Container t3l4n-bridge-local-fast-chain-a-1  Created\n Container t3l4n-bridge-local-fast-rpc-a-1  Creating\n Container t3l4n-bridge-local-fast-chain-b-1  Created\n Container t3l4n-bridge-local-fast-rpc-b-1  Creating\n Container t3l4n-bridge-local-fast-docs-gateway-1  Created\n Container t3l4n-bridge-local-fast-rpc-a-1  Created\n Container t3l4n-bridge-local-fast-rpc-b-1  Created\n Container t3l4n-bridge-local-fast-chain-a-1  Starting\n Container t3l4n-bridge-local-fast-chain-b-1  Starting\n Container t3l4n-bridge-local-fast-docs-1  Starting\n Container t3l4n-bridge-local-fast-postgres-1  Starting\n Container t3l4n-bridge-local-fast-docs-1  Started\n Container t3l4n-bridge-local-fast-docs-gateway-1  Starting\n Container t3l4n-bridge-local-fast-chain-a-1  Started\n Container t3l4n-bridge-local-fast-rpc-a-1  Starting\n Container t3l4n-bridge-local-fast-chain-b-1  Started\n Container t3l4n-bridge-local-fast-rpc-b-1  Starting\n Container t3l4n-bridge-local-fast-postgres-1  Started\n Container t3l4n-bridge-local-fast-docs-gateway-1  Started\n Container t3l4n-bridge-local-fast-rpc-b-1  Started\n Container t3l4n-bridge-local-fast-rpc-a-1  Started\n Container t3l4n-bridge-local-fast-rpc-a-1  Waiting\n Container t3l4n-bridge-local-fast-rpc-b-1  Waiting\n Container t3l4n-bridge-local-fast-docs-gateway-1  Waiting\n Container t3l4n-bridge-local-fast-postgres-1  Waiting\n Container t3l4n-bridge-local-fast-docs-1  Waiting\n Container t3l4n-bridge-local-fast-chain-a-1  Waiting\n Container t3l4n-bridge-local-fast-chain-b-1  Waiting\n Container t3l4n-bridge-local-fast-rpc-b-1  Healthy\n Container t3l4n-bridge-local-fast-docs-gateway-1  Healthy\n Container t3l4n-bridge-local-fast-rpc-a-1  Healthy\n Container t3l4n-bridge-local-fast-chain-b-1  Healthy\n Container t3l4n-bridge-local-fast-chain-a-1  Healthy\n Container t3l4n-bridge-local-fast-docs-1  Healthy\n Container t3l4n-bridge-local-fast-postgres-1  Healthy"
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "t3l4n-bridge-local-fast",
+      "--env-file",
+      "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+      "-f",
+      "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+      "exec",
+      "-T",
+      "postgres",
+      "psql",
+      "-U",
+      "sandbox_admin",
+      "-d",
+      "bridge",
+      "-At",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-c",
+      "SELECT count(*) FROM sandbox_probe WHERE id='campaign_1792873280802300700';"
+    ],
+    "utc": "2026-10-24T20:22:11Z",
+    "exit_code": 0,
+    "stdout": "1",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "ls-files",
+      "--cached",
+      "--others",
+      "--exclude-standard",
+      "-z"
+    ],
+    "utc": "2026-10-24T20:22:11Z",
+    "exit_code": 0,
+    "stdout": ".agents/skills/bridge-alertes/SKILL.md\u0000.agents/skills/bridge-amelioration/SKILL.md\u0000.agents/skills/bridge-anvil/SKILL.md\u0000.agents/skills/bridge-architecture/SKILL.md\u0000.agents/skills/bridge-besu-qbft/SKILL.md\u0000.agents/skills/bridge-burn-mint/SKILL.md\u0000.agents/skills/bridge-checkpoints/SKILL.md\u0000.agents/skills/bridge-ci/SKILL.md\u0000.agents/skills/bridge-cloisonnement/SKILL.md\u0000.agents/skills/bridge-collecte/SKILL.md\u0000.agents/skills/bridge-compose/SKILL.md\u0000.agents/skills/bridge-concurrence/SKILL.md\u0000.agents/skills/bridge-crash/SKILL.md\u0000.agents/skills/bridge-decimals/SKILL.md\u0000.agents/skills/bridge-dedup/SKILL.md\u0000.agents/skills/bridge-deploiement/SKILL.md\u0000.agents/skills/bridge-doctor/SKILL.md\u0000.agents/skills/bridge-documentation/SKILL.md\u0000.agents/skills/bridge-erc20/SKILL.md\u0000.agents/skills/bridge-etat-projet/SKILL.md\u0000.agents/skills/bridge-exigences/SKILL.md\u0000.agents/skills/bridge-finalite/SKILL.md\u0000.agents/skills/bridge-fuzz/SKILL.md\u0000.agents/skills/bridge-grafana/SKILL.md\u0000.agents/skills/bridge-invariants/SKILL.md\u0000.agents/skills/bridge-logs/SKILL.md\u0000.agents/skills/bridge-manifestes/SKILL.md\u0000.agents/skills/bridge-menaces/SKILL.md\u0000.agents/skills/bridge-metriques/SKILL.md\u0000.agents/skills/bridge-migrations/SKILL.md\u0000.agents/skills/bridge-nonces/SKILL.md\u0000.agents/skills/bridge-pause/SKILL.md\u0000.agents/skills/bridge-plafonds/SKILL.md\u0000.agents/skills/bridge-postgres-schema/SKILL.md\u0000.agents/skills/bridge-reconciliation/SKILL.md\u0000.agents/skills/bridge-recus/SKILL.md\u0000.agents/skills/bridge-registre-preuves/SKILL.md\u0000.agents/skills/bridge-reorg/SKILL.md\u0000.agents/skills/bridge-reseaux/SKILL.md\u0000.agents/skills/bridge-retry/SKILL.md\u0000.agents/skills/bridge-roles/SKILL.md\u0000.agents/skills/bridge-rpc-pannes/SKILL.md\u0000.agents/skills/bridge-secrets/SKILL.md\u0000.agents/skills/bridge-sepolia-identite/SKILL.md\u0000.agents/skills/bridge-signature/SKILL.md\u0000.agents/skills/bridge-soumission/SKILL.md\u0000.agents/skills/bridge-sources/SKILL.md\u0000.agents/skills/bridge-tela-identite/SKILL.md\u0000.agents/skills/bridge-transfer-id/SKILL.md\u0000.agents/skills/bridge-versions/SKILL.md\u0000.codex/agents/bridge-alertes.toml\u0000.codex/agents/bridge-amelioration.toml\u0000.codex/agents/bridge-anvil.toml\u0000.codex/agents/bridge-architecture.toml\u0000.codex/agents/bridge-besu-qbft.toml\u0000.codex/agents/bridge-burn-mint.toml\u0000.codex/agents/bridge-checkpoints.toml\u0000.codex/agents/bridge-ci.toml\u0000.codex/agents/bridge-cloisonnement.toml\u0000.codex/agents/bridge-collecte.toml\u0000.codex/agents/bridge-compose.toml\u0000.codex/agents/bridge-concurrence.toml\u0000.codex/agents/bridge-crash.toml\u0000.codex/agents/bridge-decimals.toml\u0000.codex/agents/bridge-dedup.toml\u0000.codex/agents/bridge-deploiement.toml\u0000.codex/agents/bridge-doctor.toml\u0000.codex/agents/bridge-documentation.toml\u0000.codex/agents/bridge-erc20.toml\u0000.codex/agents/bridge-etat-projet.toml\u0000.codex/agents/bridge-exigences.toml\u0000.codex/agents/bridge-finalite.toml\u0000.codex/agents/bridge-fuzz.toml\u0000.codex/agents/bridge-grafana.toml\u0000.codex/agents/bridge-invariants.toml\u0000.codex/agents/bridge-logs.toml\u0000.codex/agents/bridge-manifestes.toml\u0000.codex/agents/bridge-menaces.toml\u0000.codex/agents/bridge-metriques.toml\u0000.codex/agents/bridge-migrations.toml\u0000.codex/agents/bridge-nonces.toml\u0000.codex/agents/bridge-pause.toml\u0000.codex/agents/bridge-plafonds.toml\u0000.codex/agents/bridge-postgres-schema.toml\u0000.codex/agents/bridge-reconciliation.toml\u0000.codex/agents/bridge-recus.toml\u0000.codex/agents/bridge-registre-preuves.toml\u0000.codex/agents/bridge-reorg.toml\u0000.codex/agents/bridge-reseaux.toml\u0000.codex/agents/bridge-retry.toml\u0000.codex/agents/bridge-roles.toml\u0000.codex/agents/bridge-rpc-pannes.toml\u0000.codex/agents/bridge-secrets.toml\u0000.codex/agents/bridge-sepolia-identite.toml\u0000.codex/agents/bridge-signature.toml\u0000.codex/agents/bridge-soumission.toml\u0000.codex/agents/bridge-sources.toml\u0000.codex/agents/bridge-tela-identite.toml\u0000.codex/agents/bridge-transfer-id.toml\u0000.codex/agents/bridge-versions.toml\u0000.env.example\u0000.gitattributes\u0000.github/workflows/verify.yml\u0000.gitignore\u0000AGENTS.md\u0000README.md\u0000contracts/README.md\u0000contracts/foundry.toml\u0000docs/adr/0001-stack-profils.md\u0000docs/adr/0002-protocole.md\u0000docs/adr/0003-reprise-finalite.md\u0000docs/agents.md\u0000docs/architecture.md\u0000docs/claims.yaml\u0000docs/exigences.md\u0000docs/exploitation.md\u0000docs/index.md\u0000docs/informations-manquantes.md\u0000docs/installation.md\u0000docs/journal.md\u0000docs/limites.md\u0000docs/resultats.md\u0000docs/securite.md\u0000docs/sources.md\u0000docs/status/index.md\u0000docs/tests-preuves.md\u0000global.json\u0000mkdocs.yml\u0000observability/metrics-contract.md\u0000requirements-docs.in\u0000requirements-docs.lock\u0000sandbox/besu/qbft.json\u0000sandbox/compose.common.yaml\u0000sandbox/compose.local-besu.yaml\u0000sandbox/compose.local-fast.yaml\u0000sandbox/egress-policy.json\u0000sandbox/loopback_proxy.py\u0000sandbox/profiles/integration-testnet.json\u0000sandbox/profiles/local-besu.json\u0000sandbox/profiles/local-fast.json\u0000sandbox/versions.lock.json\u0000scripts/bridge\u0000scripts/bridge.ps1\u0000scripts/bridge.py\u0000scripts/validate_capabilities.py\u0000src/README.md\u0000tests/integration/README.md\u0000tests/test_tooling.py\u0000",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "--version"
+    ],
+    "utc": "2026-10-24T20:22:11Z",
+    "exit_code": 0,
+    "stdout": "git version 2.52.0.windows.1",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "version"
+    ],
+    "utc": "2026-10-24T20:22:11Z",
+    "exit_code": 0,
+    "stdout": "Docker Compose version v2.40.3-desktop.1",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "image",
+      "inspect",
+      "ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7",
+      "--format",
+      "{{json .}}"
+    ],
+    "utc": "2026-10-24T20:22:12Z",
+    "exit_code": 0,
+    "stdout": "{\"Id\": \"sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\", \"RepoDigests\": [\"ghcr.io/foundry-rs/foundry@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7\"], \"Architecture\": \"amd64\", \"Os\": \"linux\"}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "image",
+      "inspect",
+      "postgres:17.11-alpine@sha256:eee6c6e1b0894fa4fe0075eb054af9fd1cf39a35321c2d4110626cfe506411fb",
+      "--format",
+      "{{json .}}"
+    ],
+    "utc": "2026-10-24T20:22:12Z",
+    "exit_code": 0,
+    "stdout": "{\"Id\": \"sha256:eee6c6e1b0894fa4fe0075eb054af9fd1cf39a35321c2d4110626cfe506411fb\", \"RepoDigests\": [\"postgres@sha256:eee6c6e1b0894fa4fe0075eb054af9fd1cf39a35321c2d4110626cfe506411fb\"], \"Architecture\": \"amd64\", \"Os\": \"linux\"}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "image",
+      "inspect",
+      "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+      "--format",
+      "{{json .}}"
+    ],
+    "utc": "2026-10-24T20:22:12Z",
+    "exit_code": 0,
+    "stdout": "{\"Id\": \"sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\", \"RepoDigests\": [\"python@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32\"], \"Architecture\": \"amd64\", \"Os\": \"linux\"}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "image",
+      "inspect",
+      "ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f",
+      "--format",
+      "{{json .}}"
+    ],
+    "utc": "2026-10-24T20:22:12Z",
+    "exit_code": 0,
+    "stdout": "{\"Id\": \"sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f\", \"RepoDigests\": [\"ghcr.io/gitleaks/gitleaks@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f\"], \"Architecture\": \"amd64\", \"Os\": \"linux\"}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "C:\\Users\\matth\\bridge-talan\\.venv\\Scripts\\python.exe",
+      "-m",
+      "pip",
+      "freeze"
+    ],
+    "utc": "2026-10-24T20:22:12Z",
+    "exit_code": 0,
+    "stdout": "click==8.5.0\ncolorama==0.4.6\nghp-import==2.1.0\nJinja2==3.1.6\nMarkdown==3.11.2\nMarkupSafe==3.0.4\nmergedeep==1.3.4\nmkdocs==1.6.1\nmkdocs-get-deps==0.2.2\npackaging==26.3\npathspec==1.1.1\nplatformdirs==4.13.5\npython-dateutil==3.0.0\nPyYAML==6.0.3\npyyaml_env_tag==1.1\nsix==1.17.0\ntzdata==2026.5\nwatchdog==6.0.0",
+    "stderr": ""
+  }
+]

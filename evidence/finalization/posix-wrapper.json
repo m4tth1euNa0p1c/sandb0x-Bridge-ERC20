@@ -1,0 +1,49 @@
+{
+  "utc": "2026-10-24T20:30:04Z",
+  "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a",
+  "source": {
+    "sha256": "ac9da09f58333828bb050b83774e66a5010f382e7d89a4e7e5e389a3688d0956"
+  },
+  "scope": "POSIX wrapper and tooling tests in Linux container; no host secrets mounted",
+  "result": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--network",
+      "none",
+      "--user",
+      "10001:10001",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges:true",
+      "--memory",
+      "256m",
+      "--cpus",
+      "1",
+      "--pids-limit",
+      "128",
+      "--tmpfs",
+      "/tmp:rw,noexec,nosuid,size=32m,mode=1777",
+      "--tmpfs",
+      "/workspace/.local:rw,noexec,nosuid,size=8m,uid=10001,gid=10001",
+      "-v",
+      "C:\\Users\\matth\\AppData\\Local\\Temp\\t3l4n-public-source-hri1e56k:/workspace:ro",
+      "-w",
+      "/workspace",
+      "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+      "sh",
+      "scripts/bridge",
+      "test"
+    ],
+    "utc": "2026-10-24T20:30:02Z",
+    "exit_code": 0,
+    "stdout": "Registre : 15 affirmations ; trois profils valides\ntest_compose_environment_cannot_redirect_project_or_config (test_tooling.CleanupBoundaryTests.test_compose_environment_cannot_redirect_project_or_config) ... ok\ntest_down_keeps_volumes_and_selects_only_the_requested_project (test_tooling.CleanupBoundaryTests.test_down_keeps_volumes_and_selects_only_the_requested_project) ... ok\ntest_authorized_bind_cannot_be_mounted_writable_or_at_another_target (test_tooling.ComposeMountPolicyTests.test_authorized_bind_cannot_be_mounted_writable_or_at_another_target) ... ok\ntest_home_subdirectory_and_other_unapproved_binds_are_rejected (test_tooling.ComposeMountPolicyTests.test_home_subdirectory_and_other_unapproved_binds_are_rejected) ... ok\ntest_read_only_site_mount_is_authorized_for_docs (test_tooling.ComposeMountPolicyTests.test_read_only_site_mount_is_authorized_for_docs) ... ok\ntest_site_bind_cannot_be_granted_to_an_unrelated_service (test_tooling.ComposeMountPolicyTests.test_site_bind_cannot_be_granted_to_an_unrelated_service) ... ok\ntest_artifact_reference_cannot_leave_its_campaign (test_tooling.EvidenceStatusTests.test_artifact_reference_cannot_leave_its_campaign) ... ok\ntest_besu_claim_accepts_only_its_matching_besu_evidence (test_tooling.EvidenceStatusTests.test_besu_claim_accepts_only_its_matching_besu_evidence) ... ok\ntest_changed_assertion_scope_requires_a_new_verification (test_tooling.EvidenceStatusTests.test_changed_assertion_scope_requires_a_new_verification) ... ok\ntest_changed_source_makes_previous_evidence_obsolete (test_tooling.EvidenceStatusTests.test_changed_source_makes_previous_evidence_obsolete) ... ok\ntest_failure_or_missing_check_never_counts_as_verified (test_tooling.EvidenceStatusTests.test_failure_or_missing_check_never_counts_as_verified) ... ok\ntest_incomplete_manifest_with_valid_checksum_is_obsolete (test_tooling.EvidenceStatusTests.test_incomplete_manifest_with_valid_checksum_is_obsolete) ... ok\ntest_local_proof_cannot_be_labelled_tela_or_besu (test_tooling.EvidenceStatusTests.test_local_proof_cannot_be_labelled_tela_or_besu) ... ok\ntest_manifest_from_different_profile_is_not_reused (test_tooling.EvidenceStatusTests.test_manifest_from_different_profile_is_not_reused) ... ok\ntest_manifest_reference_cannot_leave_the_repository (test_tooling.EvidenceStatusTests.test_manifest_reference_cannot_leave_the_repository) ... ok\ntest_manifest_tampering_invalidates_integrity (test_tooling.EvidenceStatusTests.test_manifest_tampering_invalidates_integrity) ... ok\ntest_matching_claim_and_passing_evidence_preserve_verified_status (test_tooling.EvidenceStatusTests.test_matching_claim_and_passing_evidence_preserve_verified_status) ... ok\ntest_missing_checksum_or_invalid_json_is_not_verification (test_tooling.EvidenceStatusTests.test_missing_checksum_or_invalid_json_is_not_verification) ... ok\ntest_missing_or_changed_artifact_invalidates_integrity (test_tooling.EvidenceStatusTests.test_missing_or_changed_artifact_invalidates_integrity) ... ok\ntest_missing_proof_never_counts_as_verified (test_tooling.EvidenceStatusTests.test_missing_proof_never_counts_as_verified) ... ok\ntest_unverified_claim_is_not_promoted_by_an_existing_manifest (test_tooling.EvidenceStatusTests.test_unverified_claim_is_not_promoted_by_an_existing_manifest) ... ok\ntest_disabled_profile_can_be_inspected_without_activation (test_tooling.IntegrationGateTests.test_disabled_profile_can_be_inspected_without_activation) ... ok\ntest_editing_enabled_cannot_activate_integration (test_tooling.IntegrationGateTests.test_editing_enabled_cannot_activate_integration) ... ok\ntest_integration_execution_paths_reject_before_any_external_action (test_tooling.IntegrationGateTests.test_integration_execution_paths_reject_before_any_external_action) ... ok\ntest_confirmation_depth_requires_a_bounded_positive_integer (test_tooling.ProfilePolicyTests.test_confirmation_depth_requires_a_bounded_positive_integer) ... ok\ntest_confirmation_policy_cannot_replace_besu_qbft_silently (test_tooling.ProfilePolicyTests.test_confirmation_policy_cannot_replace_besu_qbft_silently) ... ok\ntest_external_and_ambiguous_rpc_endpoints_are_rejected (test_tooling.ProfilePolicyTests.test_external_and_ambiguous_rpc_endpoints_are_rejected) ... ok\ntest_known_local_profiles_are_accepted (test_tooling.ProfilePolicyTests.test_known_local_profiles_are_accepted) ... ok\ntest_mainnet_and_unapproved_chain_pairs_are_rejected (test_tooling.ProfilePolicyTests.test_mainnet_and_unapproved_chain_pairs_are_rejected) ... ok\ntest_missing_or_unknown_finality_is_rejected (test_tooling.ProfilePolicyTests.test_missing_or_unknown_finality_is_rejected) ... ok\ntest_non_test_profile_is_rejected (test_tooling.ProfilePolicyTests.test_non_test_profile_is_rejected) ... ok\ntest_qbft_policy_cannot_be_applied_to_anvil (test_tooling.ProfilePolicyTests.test_qbft_policy_cannot_be_applied_to_anvil) ... ok\ntest_unknown_profile_is_rejected_before_reading_configuration (test_tooling.ProfilePolicyTests.test_unknown_profile_is_rejected_before_reading_configuration) ... ok\ntest_unsupported_decimals_and_evm_target_are_rejected (test_tooling.ProfilePolicyTests.test_unsupported_decimals_and_evm_target_are_rejected) ... ok\ntest_existing_code_reference_is_accepted (test_tooling.RegistryReferenceTests.test_existing_code_reference_is_accepted) ... ok\ntest_nonexistent_code_reference_fails_lint (test_tooling.RegistryReferenceTests.test_nonexistent_code_reference_fails_lint) ... ok\ntest_missing_genesis_or_head_is_not_a_healthy_chain (test_tooling.RpcIdentityTests.test_missing_genesis_or_head_is_not_a_healthy_chain) ... ok\ntest_observation_retains_network_and_block_identifiers (test_tooling.RpcIdentityTests.test_observation_retains_network_and_block_identifiers) ... ok\ntest_rpc_keeps_response_result_without_sending_transactions (test_tooling.RpcIdentityTests.test_rpc_keeps_response_result_without_sending_transactions) ... ok\ntest_rpc_rejects_mismatched_id_errors_and_missing_result (test_tooling.RpcIdentityTests.test_rpc_rejects_mismatched_id_errors_and_missing_result) ... ok\ntest_wrong_chain_identity_is_rejected_before_reading_blocks (test_tooling.RpcIdentityTests.test_wrong_chain_identity_is_rejected_before_reading_blocks) ... ok\ntest_wrong_client_is_rejected_before_reading_blocks (test_tooling.RpcIdentityTests.test_wrong_client_is_rejected_before_reading_blocks) ... ok\ntest_content_changes_and_file_deletion_change_source_fingerprint (test_tooling.SourceFingerprintTests.test_content_changes_and_file_deletion_change_source_fingerprint) ... ok\ntest_file_hash_is_the_hash_of_exact_bytes (test_tooling.SourceFingerprintTests.test_file_hash_is_the_hash_of_exact_bytes) ... ok\ntest_inventory_order_and_duplicate_entries_do_not_change_fingerprint (test_tooling.SourceFingerprintTests.test_inventory_order_and_duplicate_entries_do_not_change_fingerprint) ... ok\ntest_reporting_commit_does_not_invalidate_unchanged_source (test_tooling.SourceFingerprintTests.test_reporting_commit_does_not_invalidate_unchanged_source) ... ok\ntest_failed_compose_validation_prevents_startup (test_tooling.StartupSafetyTests.test_failed_compose_validation_prevents_startup) ... ok\n\n----------------------------------------------------------------------\nRan 47 tests in 0.374s\n\nOK",
+    "stderr": ""
+  },
+  "passed": true
+}

@@ -16,11 +16,11 @@
       "verification": "tooling",
       "environment": "local-fast",
       "expected": "Tous les tests unittest réussissent",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "47 tests unitaires réussis ; aucun test ignoré.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "CAP-001",
@@ -37,11 +37,11 @@
       "verification": "capabilities",
       "environment": "local-fast",
       "expected": "50 agents et 50 skills valides au minimum",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "50 agents et 50 skills ; contrôle structurel et associations réussis.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "CFG-001",
@@ -58,11 +58,11 @@
       "verification": "compose",
       "environment": "local-fast",
       "expected": "Validation Docker Compose et assertions de restriction réussies",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "Les deux configurations Compose sont valides et passent les restrictions statiques.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "RUN-001",
@@ -78,11 +78,11 @@
       "verification": "startup",
       "environment": "local-fast",
       "expected": "Clients Anvil ; chain IDs 31337 et 31338",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "Les deux clients et chain IDs attendus répondent ; hashes et hauteurs conservés.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "ISO-001",
@@ -99,11 +99,11 @@
       "verification": "hardening",
       "environment": "local-fast",
       "expected": "Non root, rootfs RO, capacités supprimées, quotas, no-new-privileges",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "Sept services inspectés : UID non root, racine RO, capacités retirées, quotas et no-new-privileges.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "ISO-002",
@@ -119,11 +119,11 @@
       "verification": "isolation",
       "environment": "local-fast",
       "expected": "Contrôles positifs réussis et tentatives interdites échouées",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "HTTP 200 et TCP OK pour les contrôles autorisés ; OSError inter-réseaux ; fichiers et secrets interdits absents.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "DB-001",
@@ -140,11 +140,11 @@
       "verification": "persistence",
       "environment": "local-fast",
       "expected": "Témoin SQL unique, genesis identique et hauteur non décroissante",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "Une ligne témoin SQL conservée ; genesis identiques et hauteurs non décroissantes après recréation.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "DOC-001",
@@ -160,11 +160,11 @@
       "verification": "docs",
       "environment": "local-fast",
       "expected": "Code de sortie 0 du build strict",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "MkDocs 1.6.1, build --strict : sortie 0.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "SEC-001",
@@ -180,11 +180,11 @@
       "verification": "secrets",
       "environment": "local-fast",
       "expected": "Gitleaks sortie 0 avec redaction des résultats",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "Scan des sources et preuves : sortie 0 ; credential synthétique témoin détecté, sortie 1 attendue, valeur masquée.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "NET-001",
@@ -200,11 +200,11 @@
       "verification": "integration_gate",
       "environment": "local-fast",
       "expected": "Erreur explicite, aucune commande Docker ou RPC",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "integration-testnet refusé avant toute commande Docker ou appel RPC.",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "EVD-001",
@@ -220,11 +220,11 @@
       "verification": "source_unchanged",
       "environment": "local-fast",
       "expected": "SHA-256 début/fin identiques",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_local",
+      "observed": "Empreinte SHA-256 inchangée pendant la campagne : ac9da09f58333828bb050b83774e66a5010f382e7d89a4e7e5e389a3688d0956",
+      "evidence": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "date_utc": "2026-10-24T20:30:32Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "BESU-001",
@@ -240,11 +240,11 @@
       "verification": "startup",
       "environment": "local-besu",
       "expected": "Besu 31339 et Anvil 31340 répondent",
-      "status": "implémenté",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
-      "evidence": null,
-      "date_utc": null,
-      "source_commit": null
+      "status": "vérifié_besu_local",
+      "observed": "Les deux clients et chain IDs attendus répondent ; hashes et hauteurs conservés.",
+      "evidence": "evidence/20261024T203035Z-local-besu/manifest.json",
+      "date_utc": "2026-10-24T20:32:03Z",
+      "source_commit": "991df1d6d7c5eb0642e9a51501a9018c792aab4a"
     },
     {
       "id": "HOST-001",

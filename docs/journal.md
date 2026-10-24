@@ -66,3 +66,9 @@ Les rapports JSON sont désormais écrits en LF et `evidence/**` est exclu de la
 normalisation de texte Git : leurs empreintes portent sur les mêmes octets après
 clone Windows/Linux. Ces changements motivent une nouvelle campagne finale ;
 les campagnes antérieures sont conservées comme historiques.
+
+## Clôture technique du jalon 1
+
+Les deux campagnes finales ont réussi leurs 11 contrôles sur `991df1d6d7c5eb0642e9a51501a9018c792aab4a`.
+47 tests unitaires et 50 validations de skills ont réussi. Les rapports et le
+registre sont mis à jour sans promouvoir le protocole absent. Voir [résultats](resultats.md).
