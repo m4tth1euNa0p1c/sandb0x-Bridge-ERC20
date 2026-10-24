@@ -1,0 +1,8 @@
+{
+  "version": "0.8.30",
+  "long_version": "0.8.30+commit.73712a01",
+  "url": "https://raw.githubusercontent.com/ethereum/solc-bin/c04c6cdc827bbdcc7bd65689fa76b63a238b223f/linux-amd64/solc-linux-amd64-v0.8.30+commit.73712a01",
+  "git_revision": "c04c6cdc827bbdcc7bd65689fa76b63a238b223f",
+  "sha256": "f3e987dc6ecebd4bd350c48edcbc320b46cf9e3109bd3fc3d88f1acaf4c428f7",
+  "primary_url_status": "https://binaries.soliditylang.org/linux-amd64/list.json returned HTTP 403 during installation"
+}

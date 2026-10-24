@@ -2,7 +2,8 @@
 src = "src"
 test = "test"
 out = "out"
-libs = ["lib"]
+libs = ["vendor"]
+remappings = ["@openzeppelin/contracts/=vendor/openzeppelin/contracts/"]
 solc_version = "0.8.30"
 auto_detect_solc = false
 evm_version = "london"
