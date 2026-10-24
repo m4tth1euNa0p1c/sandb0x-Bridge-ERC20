@@ -3,6 +3,14 @@ name: bridge-besu-qbft
 description: "Configurer ou tester le profil Besu local T3l4N avec genesis et consensus reproductibles."
 ---
 
+# Retour d'expérience local
+
+Si Besu échoue au chargement de RocksDB JNI avec `failed to map segment`,
+vérifier le montage du répertoire temporaire Java. Le profil testé utilise
+un tmpfs exécutable dédié `/jni-tmp`, borné et réservé à uid1000, en conservant
+`/tmp` noexec et la racine en lecture seule. Ne pas généraliser ce diagnostic
+à tout échec Java ; conserver la trace observée et retester le démarrage.
+
 # Préparer une simulation Besu QBFT
 
 **Entrées.** sandbox/besu/qbft.json, version Besu verrouillée, profil local-besu et répertoire local de clés ignoré par Git.

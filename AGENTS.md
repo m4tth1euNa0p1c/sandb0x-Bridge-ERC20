@@ -43,3 +43,15 @@ publier de documents privés ou pousser sans demande explicite.
 Exécuter les commandes réellement disponibles dans `README.md`. Les tests du jalon 1
 portent sur l'outillage, les configurations et l'infrastructure ; ils ne valident pas le bridge.
 Ajouter les tests de protocole et de reprise avec leur implémentation aux jalons suivants.
+
+## Agents et skills du projet
+
+Maintenir au moins 50 rôles dans `.codex/agents/` et 50 skills correspondants dans
+`.agents/skills/`, selon la demande utilisateur. Le catalogue est dans `docs/agents.md`.
+Choisir les spécialistes utiles au lot, attribuer explicitement les fichiers et
+respecter les limites de concurrence de la session ; ne pas activer tous les rôles
+sans besoin. Aucun rôle ne modifie les permissions héritées ni la configuration globale.
+Après un défaut réellement observé, corriger le workflow concerné, rejouer son
+cas et consigner le résultat. Exécuter `python scripts/validate_capabilities.py`
+après un changement du catalogue. Cette amélioration se fait lors des sessions
+et campagnes effectives ; elle ne garantit pas un processus autonome permanent.

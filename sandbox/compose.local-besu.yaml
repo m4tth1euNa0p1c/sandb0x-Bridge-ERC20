@@ -9,9 +9,11 @@ services:
     pids_limit: 256
     cpus: 2.0
     mem_limit: 1536m
-    environment: {JAVA_OPTS: "-Xms256m -Xmx768m"}
+    environment: {JAVA_OPTS: "-Xms256m -Xmx768m -Djava.io.tmpdir=/jni-tmp"}
     restart: "no"
-    tmpfs: ["/tmp:rw,noexec,nosuid,size=64m,mode=1777"]
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=32m,mode=1777
+      - /jni-tmp:rw,exec,nosuid,nodev,size=128m,uid=1000,gid=1000,mode=0700
     logging:
       driver: json-file
       options: {max-size: 5m, max-file: "2"}

@@ -12,6 +12,11 @@ Les passerelles de consultation ont un réseau edge distinct avec masquerading
 désactivé ; les nœuds et services de données restent sur réseaux internes.
 Les affirmations ISO-001 et ISO-002 indiquent les vérifications et leur périmètre.
 
+Exception mesurée pour Besu : RocksDB charge une bibliothèque JNI et échoue si
+son répertoire temporaire est noexec. Un tmpfs `/jni-tmp` de 128 Mio, uid1000,
+mode0700, nosuid/nodev, autorise ce chargement ; `java.io.tmpdir` le cible.
+`/tmp` et la racine conservent leurs restrictions. Il ne s'agit pas d'un conteneur privilégié.
+
 PostgreSQL reçoit un mot de passe aléatoire créé localement, via un fichier
 Compose secret. Hors Swarm, ce fichier reste un montage de l'hôte, sans chiffrement
 de coffre. Sous Unix, le répertoire parent est en 0700 et le fichier monté en
