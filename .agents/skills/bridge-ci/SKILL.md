@@ -15,6 +15,7 @@ description: "Implémenter ou revoir la CI T3l4N pour compilation, tests locaux,
 4. Vérifier compilation des composants présents, tests pertinents, build documentaire et scan secrets. Ne pas inventer une compilation de contrats encore absents.
 5. Pour un faux positif de scan, relier la valeur à son artefact public vérifié avant toute exception. Les deux empreintes OpenZeppelin AccessControl détectées le 2026-10-24 sont autorisées par valeur exacte et chemin limité ; aucune exclusion globale de sources ou de preuves. Le contrôle positif synthétique doit continuer à échouer avec le code attendu.
 6. Tester les images SDK non root et sans réseau avec les répertoires temporaires requis. Sous .NET 10.0.13 Linux, les tests ont besoin d'un `XDG_RUNTIME_DIR` privé inscriptible pour les mutex ; le tmpfs dédié conserve la racine en lecture seule. Un succès sur le SDK hôte ne remplace pas cette exécution.
+7. Vérifier les propriétaires Linux des bind mounts sur un clone neuf : un UID1000 fixe ne peut pas écrire dans un checkout UID1001. Le compilateur reprend l'UID non root de l'orchestrateur Linux et reçoit les sources en lecture seule, avec sorties/cache séparés. Conserver les rapports de compilation même si le bootstrap échoue avant la campagne complète ; ne jamais téléverser le répertoire runtime des secrets.
 
 **Livrable.** Workflow vérifié localement et statut distant seulement s'il a réellement été interrogé.
 

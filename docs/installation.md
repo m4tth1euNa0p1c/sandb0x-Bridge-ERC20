@@ -39,6 +39,9 @@ Depuis un clone neuf, commencer par `doctor`, puis `bootstrap`, `up` et `demo`.
 contrats et construit les images .NET avec restauration NuGet verrouillée. Le
 SDK de l'hôte n'est pas nécessaire à ce parcours. `build` reconstruit les images
 après un changement applicatif ; cette commande appartient à la phase installation.
+Forge reçoit les sources en lecture seule et deux montages d'écriture (`out`,
+`cache`). Sur Linux il utilise l'UID/GID non root de l'orchestrateur pour ces
+sorties ; le décalage UID1000/UID1001 a été reproduit et corrigé pour les runners.
 `test` exécute les tests Python, Solidity et .NET puis le transfert et les pannes.
 `prove` ajoute les vérifications de cloisonnement, de persistance et de supervision,
 avec un manifeste complet sous `evidence/`. Ces deux commandes modifient les

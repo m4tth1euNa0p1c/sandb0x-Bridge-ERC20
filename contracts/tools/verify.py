@@ -6,6 +6,7 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -70,16 +71,29 @@ def execute(command, timeout=240):
                 "stdout": "", "stderr": type(exc).__name__}
 
 
+def container_user():
+    if os.name != "nt" and os.getuid() != 0:
+        return f"{os.getuid()}:{os.getgid()}"
+    return "1000:1000"
+
+
 def docker_forge(command):
     run_id = uuid.uuid4().hex
     name = "t3l4n-contract-check-" + run_id
+    outputs = [ROOT / "out", ROOT / "cache"]
+    for directory in outputs:
+        directory.mkdir(exist_ok=True)
+        if os.name != "nt" and os.getuid() == 0:
+            # Artefacts publics uniquement, jamais des sources ni des secrets.
+            directory.chmod(0o777)
     args = ["docker", "run", "--rm", "--pull", "never", "--name", name,
             "--label", "com.t3l4n.project=contracts", "--label", "com.t3l4n.check=" + run_id,
-            "--platform", "linux/amd64", "--network", "none", "--user", "1000:1000",
+            "--platform", "linux/amd64", "--network", "none", "--user", container_user(),
             "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges:true",
             "--memory", "1g", "--cpus", "2", "--pids-limit", "128",
             "--log-opt", "max-size=5m", "--log-opt", "max-file=2",
-            "--tmpfs", "/tmp:rw,nosuid,size=128m", "-v", str(ROOT) + ":/work", "-w", "/work",
+            "--tmpfs", "/tmp:rw,nosuid,size=128m", "-v", str(ROOT) + ":/work:ro",
+            *sum((["-v", str(p) + ":/work/" + p.name] for p in outputs), []), "-w", "/work",
             "--entrypoint", "forge", IMAGE, *command]
     result = execute(args)
     if result["exit_code"] == 124:

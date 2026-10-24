@@ -28,7 +28,13 @@ jobs:
         if: always()
         with:
           name: preuves-local-fast-${{ github.sha }}
-          path: evidence/
+          path: |
+            evidence/
+            .local/contracts-verification.json
+            .local/dotnet-tests.json
+            .local/build.json
+            .local/history/*.json
+          include-hidden-files: true
           retention-days: 30
   integration-testnet:
     if: ${{ false }}
