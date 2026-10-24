@@ -9,6 +9,7 @@ import io
 import json
 import os
 from pathlib import Path
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -17,6 +18,7 @@ from unittest.mock import patch
 REPO = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("bridge_tooling", REPO / "scripts/bridge.py")
 bridge = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = bridge
 SPEC.loader.exec_module(bridge)
 
 
@@ -99,6 +101,22 @@ class ProfilePolicyTests(unittest.TestCase):
 
 
 class IntegrationGateTests(unittest.TestCase):
+    def test_main_execution_commands_reject_integration_before_any_process_or_rpc(self):
+        for command in ("bootstrap", "build", "up", "down", "demo", "test", "prove"):
+            with self.subTest(command=command), patch.object(bridge.sys, "argv", ["bridge", command, "--profile", "integration-testnet"]), patch.object(bridge, "run", side_effect=AssertionError("process started before refusal")) as run, patch.object(bridge, "rpc", side_effect=AssertionError("RPC before refusal")) as rpc, redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                self.assertEqual(bridge.main(), 2)
+                run.assert_not_called()
+                rpc.assert_not_called()
+
+    def test_main_local_build_profiles_remain_accepted(self):
+        # main importe ce module depuis scripts ; rendre le test exécutable isolément aussi.
+        sys.path.insert(0, str(REPO / "scripts"))
+        import bridge_runtime
+        for name in ("local-fast", "local-besu"):
+            with self.subTest(profile=name), patch.object(bridge.sys, "argv", ["bridge", "build", "--profile", name]), patch.object(bridge_runtime, "build") as build:
+                self.assertEqual(bridge.main(), 0)
+                build.assert_called_once_with(bridge)
+
     def test_disabled_profile_can_be_inspected_without_activation(self):
         p = bridge.profile("integration-testnet")
         self.assertFalse(p["enabled"])

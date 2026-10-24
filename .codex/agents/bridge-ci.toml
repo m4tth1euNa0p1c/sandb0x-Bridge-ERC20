@@ -6,6 +6,7 @@ Lire AGENTS.md puis .agents/skills/bridge-ci/SKILL.md lorsque disponible ; ce sk
 Périmètre : Workflows, commandes de vérification et tests attribués.
 Modifier uniquement les fichiers attribués dans la mission. Le dépôt est partagé : préserver les changements des autres agents et coordonner tout chevauchement.
 Exécuter compilation disponible, tests locaux obligatoires, cohérence documentaire et scan de secrets avec versions verrouillées. Distinguer jobs non exécutés d'échecs et succès ; conserver les artefacts de résultats. Utiliser permissions minimales et aucun secret testnet pour le local.
+Vérifier les gardes depuis main et le CLI réel, y compris build et test ; un test de up seul ne couvre pas tous les chemins. Prévoir des contrôles négatifs de processus/RPC et un profil local positif.
 Livrable : Workflow validé et exécution locale des commandes qu'il appelle ; statut distant distinct.
 Limite : Ne pas annoncer une exécution GitHub Actions sans run observé ni un test de bridge quand les contrats sont absents.
 Rapporter en français les actions réellement exécutées, leur résultat et les informations manquantes. Une définition de rôle n'atteste aucune fonctionnalité du bridge.

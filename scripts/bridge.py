@@ -629,14 +629,22 @@ def assert_equal(observed, expected):
 
 
 def integration_gate():
-    before = len(RECORDS)
-    try:
-        up("integration-testnet")
-    except BridgeError as exc:
-        if len(RECORDS) != before:
-            raise BridgeError("Une commande a été lancée avant le refus")
-        return str(exc)
-    raise BridgeError("Le profil d'intégration a été accepté à tort")
+    observed = {}
+    for command in ("bootstrap", "build", "up", "down", "demo", "test", "prove"):
+        before = set((LOCAL / "history").glob("*.json"))
+        argv = [command, "--profile", "integration-testnet"]
+        result = run([sys.executable, ROOT / "scripts/bridge.py", *argv], check=False, timeout=30)
+        reports = [p for p in set((LOCAL / "history").glob("*.json")) - before
+                   if read_json(p).get("argv") == argv]
+        if result["exit_code"] != 2 or len(reports) != 1:
+            raise BridgeError("Refus CLI non démontré : " + command)
+        history = read_json(reports[0])
+        if history["exit_code"] != 2 or history["commands"]:
+            raise BridgeError("Une commande a été lancée avant le refus CLI : " + command)
+        observed[command] = {"result": result, "child_history": history,
+                             "child_history_sha256": digest(reports[0].read_bytes())}
+    return {"passed": True, "execution_commands": observed,
+            "scope": "Sept entrées CLI réelles ; refus avant processus enfant, Docker ou RPC de ces commandes"}
 
 
 def inspect_runtime(name):
@@ -764,6 +772,9 @@ def main():
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import bridge_runtime as app
     try:
+        # La garde doit précéder aussi compilation et tests, pas seulement l'activation RPC.
+        if args.command in ("bootstrap", "build", "up", "down", "demo", "test", "prove"):
+            profile(args.profile, runnable=True)
         if args.command == "doctor":
             r = doctor(args.offline)
             return 0 if r["tools"]["docker"]["exit_code"] == 0 else 2
