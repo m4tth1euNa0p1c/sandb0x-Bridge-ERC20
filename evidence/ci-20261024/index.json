@@ -1,0 +1,13 @@
+{
+  "checked_utc": "2026-10-24T23:11:35Z",
+  "html_url": "https://github.com/m4tth1euNa0p1c/T3l4N-Bridge-ERC20/actions/runs/40140238460",
+  "head_sha": "fd030c49d1e773676e1f3543fff93fa1b60d3c95",
+  "conclusion": "success",
+  "local_fast_job": "success",
+  "integration_testnet_job": "skipped",
+  "artifact_id": 12579270727,
+  "archive_sha256": "a5d1bad960d6e3a67783e80e572e50bf8b4816d681754891b6854c2e0549255e",
+  "expires_at": "2026-11-23T23:00:45Z",
+  "retained_campaign": "evidence/20261024T225246Z-local-fast/manifest.json",
+  "note": "Archive reçue via le connecteur GitHub ; SHA-256 conforme au digest Actions. Seule la campagne courante est extraite, octets inchangés."
+}

@@ -1,65 +1,123 @@
-# Résultats du jalon 1
+# Résultats vérifiés et limites
 
-Le jalon 1 est vérifié dans son périmètre d'infrastructure et d'outillage.
-**Le bridge ERC20, les transferts, le relayer et le signataire ne sont pas implémentés.**
+**Revue du CLI : ces campagnes sont historiques depuis la correction de la garde
+de uild et 	est. Le registre les marque obsolètes jusqu’aux nouvelles
+campagnes sur le code corrigé.**
 
-Commit source testé : `991df1d6d7c5eb0642e9a51501a9018c792aab4a`. Empreinte exacte des sources :
-`ac9da09f58333828bb050b83774e66a5010f382e7d89a4e7e5e389a3688d0956`. Les rapports sont ajoutés dans un commit ultérieur.
-Les modifications non commitées au début des campagnes ne concernent que les
-campagnes antérieures sous `evidence/` ; les sources testées sont figées.
+Le démonstrateur local exécute les transferts burn/mint dans les deux sens,
+avec persistance, signature séparée, tests de panne et supervision. Les deux
+campagnes ci-dessous ont réussi sur les mêmes sources figées. Elles ne valident
+ni Sepolia ni le véritable TELA. La frontière d’une VM dédiée reste à établir.
 
-| Profil | Campagne UTC | Contrôles réussis | Preuve |
-|---|---|---|---|
-| local-fast | 2026-10-24T20:29:10Z → 2026-10-24T20:30:32Z | 11/11 | <a href="../evidence/20261024T202910Z-local-fast/manifest.json">Manifeste JSON</a> |
-| local-besu | 2026-10-24T20:30:35Z → 2026-10-24T20:32:03Z | 11/11 | <a href="../evidence/20261024T203035Z-local-besu/manifest.json">Manifeste JSON</a> |
+Commit **du code testé** : `fd030c49d1e773676e1f3543fff93fa1b60d3c95`.
+Empreinte exacte : `181e570822aa138e937eedd4c3df0957e4d650f40e1f55b5d7fbfac7a354bf29`.
+Les rapports sont ajoutés dans un commit ultérieur. Les fichiers de compte rendu
+et `evidence/` sont exclus explicitement de cette empreinte pour éviter un cycle.
+Les autres fichiers, les définitions d’affirmations, commandes, codes de sortie,
+versions et images sont conservés dans chaque manifeste.
 
-Résultats observés :
+| Profil | Hôte d’exécution | Campagne UTC | Contrôles | Preuve |
+|---|---|---|---|---|
+| local-fast | Windows 11 / Docker Desktop Linux | 2026-10-24T23:22:35Z → 2026-10-24T23:30:18Z | 18/18 | <a href="../evidence/20261024T232235Z-local-fast/manifest.json">Manifeste et empreinte</a> |
+| local-besu | Windows 11 / Docker Desktop Linux | 2026-10-24T23:10:50Z → 2026-10-24T23:16:41Z | 18/18 | <a href="../evidence/20261024T231050Z-local-besu/manifest.json">Manifeste et empreinte</a> |
 
-- 47 tests d'outillage réussis sur Windows, puis les mêmes 47 via le wrapper POSIX
-  dans un conteneur Python Linux ; aucun test applicatif ERC20 exécuté.
-- 50 définitions d'agents et 50 skills validés ; 50 contrôles officiels de skills
-  réussis. Quatre exercices comportementaux ciblés ont été réalisés. Cela ne
-  démontre pas l'efficacité des 50 rôles sur des missions réelles.
-- Anvil 1.3.1 : réseaux 31337/31338 ; Besu 26.10.0 QBFT mono-validateur : 31339,
-  avec une seconde chaîne Anvil 31340. Aucun réseau TELA véritable interrogé.
-- Sept services par profil portent les restrictions vérifiées. Les contrôles
-  réseau autorisés réussissent, la tentative inter-réseaux par IP échoue ;
-  les fichiers témoins et secrets des autres compartiments restent inaccessibles
-  dans les scénarios testés.
-- Témoin SQL et états de nœuds conservés après arrêt et recréation des conteneurs.
-  Cela ne valide aucun checkpoint ni nonce de relayer.
-- Construction MkDocs stricte et scan Gitleaks réussis. Le contrôle positif du
-  scan détecte le credential synthétique. L'intégration est refusée explicitement.
+## Résultats mesurés
 
-Les 15 affirmations sont décrites dans [le registre](claims.yaml) : 11 vérifiées
-localement, une vérifiée sur Besu local, deux bloquées et une proposée. Le tableau
-recalcule l'obsolescence si les sources, définitions ou artefacts changent.
+- 67 tests Python réussis ; aucun test ignoré.
+- 27 tests Solidity réussis, dont fuzzing et invariants ; artefacts London empreintés.
+- 64 tests signataire et 51 tests relayer réussis sans réseau, sans skip.
+- Un aller-retour réel de 10 tokens sur chaque profil, avec 18 decimals, montants
+  entiers, reçus, identifiants et destinataires conservés dans les rapports.
+- local-fast : neuf scénarios réussis, incluant relecture, pause, RPC suspendu,
+  gas nul, concurrence de deux processus, crashs 91/92 et réorganisation avant finalité.
+- local-besu : sept scénarios réussis ; gas forcé à zéro et réorganisation Anvil
+  restent explicitement **non exécutés**, sans validation Besu de ces deux cas.
+- Quatorze services inspectés par profil ; contrôles positifs et négatifs de
+  réseau, fichiers et secrets réussis. Cela ne confine pas l’administrateur hôte.
+- Redémarrage propre avec SQL, transferts, identités et progression conservés.
+  Aucun test de coupure brutale de l’hôte n’est assimilé à ce résultat.
+- Anvil 1.8.4 : 520 blocs et deux reprises propres dans le témoin historique.
+- Supervision : 12 règles, neuf scénarios promtool/51 assertions, arrêt réel du
+  relayer et restauration, puis 26 contrôles API/requêtes sur chaque profil.
+- MkDocs strict, scan Gitleaks et ses cinq témoins positifs réussis.
+- 50 définitions d’agents et 50 skills : contrôle structurel réussi. Leur présence
+  ne signifie pas 50 processus actifs ni 50 évaluations comportementales complètes.
 
-## Historique conservé
+Les 28 affirmations du [registre](claims.yaml) comprennent 26 validations locales
+ou Besu local et deux blocages (hôte dédié et TELA). Leur état est recalculé si
+sources, définition ou artefact changent. Les tests avec doubles RPC et stockage
+restent distincts des expériences PostgreSQL/RPC réelles.
 
-La campagne `20261024T202049Z-local-fast` avait réussi sur 26d03f9. La campagne
-`20261024T202323Z-local-besu` avait réussi ses tests d'infrastructure mais échoué
-au scan sur un SHA-256 public pris pour une clé. Elles sont historiques pour le
-code actuel. L'exception du scan et le contrôle positif sont documentés dans
-[sécurité](securite.md). Les échecs de ports, d'IPAM et de JNI sont consignés dans
-[le journal](journal.md).
+## Jalons
 
-## Limites restantes
+| Jalon | Résultat | Limite restante |
+|---|---|---|
+|1 — environnement, décisions et profils|Exécuté et documenté|Hôte initial partagé|
+|2 — aller-retour et persistance|Démontré sur les deux profils locaux|Confiance dans le relayer autorisé|
+|3 — pannes, invariants, cloisonnement|Scénarios locaux et tests de contrats passés|Portée bornée des injections|
+|4 — Besu, supervision et documentation|Compatibilité Besu 26.10.0/London/QBFT local et vues observées|QBFT mono-validateur sans tolérance byzantine|
+|5 — Sepolia puis TELA de test|Non exécuté, profil désactivé|Identités, accès, droits, clés et gas de test manquants|
 
-VM et moteur dédiés non établis sur l'hôte partagé actuel. Filtrage des sorties
-par destination non démontré. Pas de tests de protocole, fuzzing, invariants,
-concurrence du relayer, crash applicatif, réorganisation ou réconciliation d'offre.
-Pas de compilation .NET/Solidity au J1, ni de run GitHub Actions distant.
-Prometheus et Grafana ne sont pas démarrés.
+La [CI GitHub Actions](https://github.com/m4tth1euNa0p1c/T3l4N-Bridge-ERC20/actions/runs/40140238460) sur `fd030c49d1e773676e1f3543fff93fa1b60d3c95` est `success`.
+Cette CI comprend l’installation depuis un clone neuf et 18 contrôles local-fast.
+Sa <a href="../evidence/20261024T225246Z-local-fast/manifest.json">campagne complète</a>
+et l’<a href="../evidence/ci-20261024/index.json">empreinte de l’archive téléchargée</a>
+sont conservées. Les sources de la CI et des campagnes locales ont les mêmes octets.
+Le job d’intégration réelle reste ignoré explicitement. Les artefacts Actions
+ont une rétention de 30 jours ; les rapports copiés dans ce dépôt durent tant que
+le dépôt est conservé. Les captures et expériences complémentaires sont indexées
+dans <a href="../evidence/visual-20261024/index.json">les rendus</a> et
+<a href="../evidence/diagnostics-20261024/index.json">les diagnostics historiques</a>.
 
-Sepolia et TELA : non exécutés. Accès, identités, ABI, rôles, clés et gas de test
-restent à obtenir selon [les informations manquantes](informations-manquantes.md).
-Le démarrage Besu ne constitue pas une validation des contrats futurs.
+## Échecs conservés et corrections
 
-## Consultation et reproduction
+Les preuves J1 restent historiques. Les incidents IPAM, passerelle, JNI Besu,
+droits SQL, dépendance JSON vulnérable, mutex .NET, association de reçus entre
+chaînes et historique Anvil sont décrits dans [le journal](journal.md).
+Les neuf premières injections local-fast ont passé mais leur campagne était
+invalide car les sources avaient changé. Un premier essai Besu a rencontré
+WinError10013 ; le suivant a réussi sans changement de pare-feu ni de paramètres OS.
 
-`python scripts/bridge.py up --profile local-fast`, `test`, `prove --profile local-fast`,
-`docs`, `status` et `down` sont exécutables ; `bootstrap` prépare un clone neuf.
-Consulter [l'installation](installation.md) pour les prérequis.
-Le tableau sur `http://127.0.0.1:18080/status/` est un instantané UTC. Relancer
-`status` pour le rafraîchir. La disponibilité dépend de l'hôte.
+La CI sur clone neuf a révélé un UID Forge incompatible avec les fichiers du
+runner Linux. Le témoin UID 1000/UID 1001 reproduit le refus puis la réussite ; les
+sources sont désormais montées en lecture seule et seules les sorties écrites.
+Des hashes publics de code et adresses ERC20 ont également déclenché le scan :
+les exceptions restent ciblées et les cinq témoins de détection repassent.
+Le tableau arrêté a été corrigé pour conserver l’heure connue et ne pas afficher
+en vert les valeurs indisponibles. Chaque campagne finale rejoue ces contrôles.
+
+Après une interruption de session, Docker Desktop était arrêté. Une campagne
+locale a échoué explicitement sur le moteur absent. Au redémarrage, une ancienne
+transaction finalisée de l’instance Anvil avait perdu son reçu et son effet :
+bloc destination remplacé, burn source conservé, nonce réservé encore libre.
+Le relayer a demandé une intervention et rendu la réconciliation inconclusive.
+La cause de l’arrêt du moteur n’a pas été déterminée.
+
+Une intervention opérateur limitée à cet identifiant a revérifié le contexte,
+puis permis au processeur existant de rediffuser la transaction déjà persistée.
+Les 22 contrôles réussissent : **même signature, nonce et hash**, un seul crédit
+exact et une offre équilibrée. Aucune signature nouvelle ni compensation
+automatique n’a été produite. Les <a href="../evidence/restart-incident-20261024/index.json">observations,
+la procédure exécutée et les résultats</a> restent conservés. La campagne
+local-fast sur cet hôte a ensuite été rejouée entièrement.
+
+Une relance a aussi refusé un verrou de campagne resté après l’interruption.
+Le verrou et les six résultats partiels ont été archivés ; l’absence de processus
+a été vérifiée avant son retrait ciblé. Le manifeste de cette relance reste en
+échec. La campagne finale réussie n’efface aucun de ces résultats.
+
+## Limites et reproduction
+
+Aucun débit soutenu, percentile de latence ni engagement de disponibilité n’a
+été mesuré. Les horodatages donnent des durées de campagne, pas un benchmark.
+L’historique Anvil a échoué à 4 100 blocs dans une expérience distincte ; ses
+instantanés périodiques ne constituent pas un journal durable après coupure.
+Le relayer autorisé peut frauder dans ses pouvoirs ; les administrateurs peuvent
+attribuer les rôles du token. Les plafonds et la pause ne prouvent pas le burn distant.
+
+Les [prérequis manquants](informations-manquantes.md) restent requis avant tout
+réseau partagé. Les faucets concernent le gas, pas automatiquement le token ERC20.
+Consulter [installation](installation.md) et [exploitation](exploitation.md) pour
+`bootstrap`, `up`, `demo`, `test`, `prove`, `docs`, `status` et `down`.
+Le suivi projet sous `/status/` est un instantané UTC ; Grafana et les API locales
+nécessitent les services démarrés. Leur fonctionnement continu dépend de l’hôte.

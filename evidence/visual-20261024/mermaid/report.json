@@ -1,0 +1,221 @@
+{
+  "utc": "2026-10-24T22:36:55.941853+00:00",
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\matth\\bridge-talan\\.venv\\Scripts\\python.exe",
+        "-m",
+        "mkdocs",
+        "build",
+        "--strict",
+        "--site-dir",
+        "C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\site"
+      ],
+      "exit_code": 0,
+      "stderr": "INFO    -  Cleaning site directory\r\nINFO    -  Building documentation to directory: C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\site\r\nINFO    -  The following pages exist in the docs directory, but are not included in the \"nav\" configuration:\r\n  - status\\index.md\r\nINFO    -  Documentation built in 0.16 seconds\r\n"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        "--headless=new",
+        "--disable-gpu",
+        "--disable-background-networking",
+        "--disable-sync",
+        "--disable-extensions",
+        "--disable-default-apps",
+        "--disable-component-update",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--disable-quic",
+        "--hide-scrollbars",
+        "--proxy-server=http://127.0.0.1:9",
+        "--proxy-bypass-list=127.0.0.1",
+        "--virtual-time-budget=5000",
+        "--window-size=1440,1800",
+        "--user-data-dir=C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\browser-7a40dbb9abc64ea6b342cf7323416bff",
+        "--dump-dom",
+        "--screenshot=C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\page-0.png",
+        "http://127.0.0.1:59737/offline-canary.html"
+      ],
+      "exit_code": 0,
+      "stderr": "11616 bytes written to file C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\page-0.png\r\n"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        "--headless=new",
+        "--disable-gpu",
+        "--disable-background-networking",
+        "--disable-sync",
+        "--disable-extensions",
+        "--disable-default-apps",
+        "--disable-component-update",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--disable-quic",
+        "--hide-scrollbars",
+        "--proxy-server=http://127.0.0.1:9",
+        "--proxy-bypass-list=127.0.0.1",
+        "--virtual-time-budget=5000",
+        "--window-size=1440,1800",
+        "--user-data-dir=C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\browser-e84f4ccb4c0b4639aa5cc7681a41fed4",
+        "--dump-dom",
+        "--screenshot=C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\page-1.png",
+        "http://127.0.0.1:59737/architecture/index.html"
+      ],
+      "exit_code": 0,
+      "stderr": "185730 bytes written to file C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\page-1.png\r\n"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        "--headless=new",
+        "--disable-gpu",
+        "--disable-background-networking",
+        "--disable-sync",
+        "--disable-extensions",
+        "--disable-default-apps",
+        "--disable-component-update",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--disable-quic",
+        "--hide-scrollbars",
+        "--proxy-server=http://127.0.0.1:9",
+        "--proxy-bypass-list=127.0.0.1",
+        "--virtual-time-budget=5000",
+        "--window-size=1440,1800",
+        "--user-data-dir=C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\browser-0cfa075257604071ae86a8c3ce501994",
+        "--dump-dom",
+        "--screenshot=C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\page-2.png",
+        "http://127.0.0.1:59737/adr/0003-reprise-finalite/index.html"
+      ],
+      "exit_code": 0,
+      "stderr": "230963 bytes written to file C:\\Users\\matth\\bridge-talan\\.local\\mermaid-validation\\20261024T223655Z\\page-2.png\r\n"
+    }
+  ],
+  "pages": [
+    {
+      "path": "offline-canary.html",
+      "expected_diagrams": 0,
+      "rendered": 0,
+      "svg_count": 0,
+      "graphic_count": 0,
+      "attributes": {
+        "data-browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+        "data-external": "blocked"
+      }
+    },
+    {
+      "path": "architecture/index.html",
+      "expected_diagrams": 2,
+      "rendered": 2,
+      "svg_count": 2,
+      "graphic_count": 103,
+      "attributes": {
+        "lang": "fr",
+        "data-bs-theme": "light",
+        "data-mermaid-expected": "2",
+        "data-mermaid-rendered": "2",
+        "data-mermaid-errors": "0",
+        "data-mermaid-ready": "true",
+        "style": "scroll-padding-top: 156px;"
+      }
+    },
+    {
+      "path": "adr/0003-reprise-finalite/index.html",
+      "expected_diagrams": 1,
+      "rendered": 1,
+      "svg_count": 1,
+      "graphic_count": 57,
+      "attributes": {
+        "lang": "fr",
+        "data-bs-theme": "light",
+        "data-mermaid-expected": "1",
+        "data-mermaid-rendered": "1",
+        "data-mermaid-errors": "0",
+        "data-mermaid-ready": "true",
+        "style": "scroll-padding-top: 156px;"
+      }
+    }
+  ],
+  "passed": true,
+  "vendor": {
+    "name": "mermaid",
+    "version": "11.16.1",
+    "license": "MIT",
+    "reviewed_utc": "2026-10-24T21:36:18.136775+00:00",
+    "repository": "https://github.com/mermaid-js/mermaid",
+    "release": "https://github.com/mermaid-js/mermaid/releases/tag/mermaid%4011.16.1",
+    "registry_url": "https://registry.npmjs.org/mermaid/11.16.1",
+    "tarball_url": "https://registry.npmjs.org/mermaid/-/mermaid-11.16.1.tgz",
+    "tarball_integrity_sha512": "sha512-TQsq6u22fAn3rek5VOubrhKPo1g5hwC3FXUN9hiyupTckcYiGuuKGkNQrKYwGJkXUxZdojwRG46gsSCFZMDp4g==",
+    "tarball_sha256": "ebd9885111092c78cefc79a76f6c1dc34ed5b834b02ae8f338227ce79c003de4",
+    "files": {
+      "mermaid.min.js": {
+        "sha256": "18327bef70d96fb505fe7287d9f6a7362ebf07ff6576ddfaffb1a06f3e1a2954",
+        "bytes": 3566058
+      },
+      "LICENSE.txt": {
+        "sha256": "ec9fb67dcb25eccc416ed56e1aab819222c805a2a4bfe4cb19e7556bf2ffde80",
+        "bytes": 1089
+      }
+    },
+    "bundle_unmodified": true,
+    "dynamic_import_count": 0,
+    "security_sources": [
+      "https://github.com/mermaid-js/mermaid/security/advisories/GHSA-3rrr-jr9j-h3q3",
+      "https://github.com/mermaid-js/mermaid/security/advisories/GHSA-c4c3-pg64-4m4v"
+    ]
+  },
+  "html_external_resources": 0,
+  "browser_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+  "source_commit": "6d3375a11c2798bc17e8078af0c0549677c44874",
+  "git_status": [
+    " M contracts/solc.lock.json",
+    " M contracts/vectors/transfer-id-v1.json",
+    " M contracts/vendor/openzeppelin/SOURCES.json",
+    " M mkdocs.yml",
+    " M src/Bridge.Operator/packages.lock.json",
+    " M src/Bridge.Relayer/packages.lock.json",
+    " M src/Bridge.Signer/packages.lock.json"
+  ],
+  "source_sha256": {
+    "mkdocs.yml": "b84dbc52c2899dc2589ab4db62aaeb76feb25ff2856693ac10c18f823f5347da",
+    "tests/docs_mermaid.py": "52fca5f6be7c290a696a7efc97f1a2b126882df0f1b7e2d1a7ac835a21f6bb0d",
+    "docs/adr/0001-stack-profils.md": "44e93beade6faea26afd110e1c9a7d81769ad21ed852a9ded540ca0930634458",
+    "docs/adr/0002-protocole.md": "1be18cb33a967420a74d6666e2afd09237057220e8c64fc1122e996e4dfe3d86",
+    "docs/adr/0003-reprise-finalite.md": "f33899ad28e1bf73d2eb93e44e2dd977e82d52cd1c869c73544b011c16102f2c",
+    "docs/adr/0004-interfaces-application.md": "85ba918dd2455b02d4420af076721944a826d5b05c96c09a101524e0d37794bd",
+    "docs/adr/0005-persistance-anvil.md": "d3e1f39049b550acfc66df9efc0aa4d586c0067eeb47deee4781c6fa203270de",
+    "docs/agents.md": "75a1e2fc980f130003ac413fa4f2e6e370b6d466d1348f895528b5b9da62b5e1",
+    "docs/architecture.md": "61e1370297f6228b8fccc1ee0619183d157a4dc8956497282cead2e1fc88c8b7",
+    "docs/assets/mermaid-init.js": "5a31effe7e260b606957dd397ed9c4542cc99420b2d3a59971a156dbe8642ede",
+    "docs/assets/mermaid.css": "ba74c5e703dc203faad4cf887a2b3655136a25f112d7a8beb52fbe4e4805bc03",
+    "docs/assets/mermaid.md": "2b40338f2295bff2798bfeece2ccbcb8c99c5695280362ae73ab155e8854a2a6",
+    "docs/assets/vendor/mermaid-11.16.1/LICENSE.txt": "ec9fb67dcb25eccc416ed56e1aab819222c805a2a4bfe4cb19e7556bf2ffde80",
+    "docs/assets/vendor/mermaid-11.16.1/mermaid.min.js": "18327bef70d96fb505fe7287d9f6a7362ebf07ff6576ddfaffb1a06f3e1a2954",
+    "docs/assets/vendor/mermaid-11.16.1/upstream.json": "789b4ab42fd7ccb3fcad779e68d50a38834cd65cc122389c727f0a3089aa3a0f",
+    "docs/claims.yaml": "e783599aaad099346462f87a5533bed4080b31f7964777c5f84c76aa3f7ee1b1",
+    "docs/exigences.md": "94c493b41135352acd46753893df2717c133c8a27742a77e4d8ee763cc779f5b",
+    "docs/exploitation.md": "64a5b28ba433d45d0db9898e12c57002db289ae5e8fc747c3eefd9da65df9a89",
+    "docs/index.md": "2bffeb83232e2a2d0b8dc615013c23cdabf18c0d55988479d2dcefe953f7279d",
+    "docs/informations-manquantes.md": "d5ab0f006af5db163e1d16899b26d0d307dfb47363df054be47c3cf15cbd98bc",
+    "docs/installation.md": "4fb680f8661de86b7a8188d6bdf0caf0e3c6ab7f7a9868e134f8a73e41438dda",
+    "docs/journal.md": "254e8977e3f3e018558a1c1be3cf7434b86ed7759a41e196acb4f5dc557d5098",
+    "docs/limites.md": "5845945dd4781df7d0bb8d04891323d2d5986beb0c6c64af5110080ab9687de5",
+    "docs/resultats.md": "bbf8032b66c2b87d6504a7886085d2084b1e5888c055ff5e2fb2ad148d08274b",
+    "docs/securite.md": "e7fd32c2b2c89ece7bf50ea4b61f00bf6c57be0be430c73c174b4b7e1ba5164a",
+    "docs/sources.md": "9fa92c2d029ff8eb2916bdde9984518aa4b269d0441c4872252f3609734d358c",
+    "docs/status/index.md": "ee6b242e4c2d23e9369078c7dc71fe3f8c75d1e0fac7eb4c0967157457873da6",
+    "docs/tests-preuves.md": "eee4f57e1285de97ee4184f44f53699551d26434e188c8e800155ebe33405d2b"
+  },
+  "sources_unchanged_at_end": true,
+  "artefact_sha256": {
+    "page-0.html": "cfc1e7ce96e2d24e99aa761070ed3f56e95555f9108d882231f46ec70f4eda5f",
+    "page-0.png": "97d6351d8153d07bae050c6b695374f372a947dd37b9e27d774ceda5c44767ed",
+    "page-1.html": "9e75eedb4667f60af0b830ab8ad05d3d4fbca106cad1d2419a2f52e982d12cd4",
+    "page-1.png": "7d73db8a37dbbaa0901ea9bcfa0ab2dd450d950420d7aba81295a074ccb6388e",
+    "page-2.html": "a340287297fc16530e17df295d960e16bc691a6bf10e9a3684f7a65e9ed67024",
+    "page-2.png": "9f2e24eef1980972ae78ba5f222116d217336045c9c0535f62aee86db772d802"
+  }
+}

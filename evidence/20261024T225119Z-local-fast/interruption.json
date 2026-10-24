@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-24T23:11:36Z",
+  "status": "non_validÃ©",
+  "observed": "RÃ©pertoire de campagne vide Ã  la reprise de session ; processus absent et aucun manifeste final. Cause prÃ©cise de lâ€™interruption non Ã©tablie.",
+  "source_commit_requested": "fd030c49d1e773676e1f3543fff93fa1b60d3c95",
+  "note": "Aucun rÃ©sultat nâ€™est reconstruit ou dÃ©duit de la campagne suivante.",
+  "followup": {
+    "observed_utc": "2026-10-24T23:22:34.5760152Z",
+    "partial_resilience_report": "resilience-interrupted.json",
+    "partial_status": "Interrompu : six scénarios marqués réussis, aucun résultat global ni horodatage final ; pas de validation de campagne.",
+    "lock_recovery": "lock-recovery.json",
+    "lock_archive": "resilience.lock",
+    "failed_relaunch": "../20261024T231823Z-local-fast/manifest.json"
+  }
+}

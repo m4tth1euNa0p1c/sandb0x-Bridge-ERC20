@@ -1,0 +1,63 @@
+{
+  "utc": "2026-10-24T20:11:04.653684+00:00",
+  "scope": "tests du validateur dans une copie temporaire, pas evaluation comportementale des agents",
+  "passed": true,
+  "results": [
+    {
+      "case": "catalogue_valid",
+      "expected": "accept",
+      "observed": true,
+      "passed": true
+    },
+    {
+      "case": "missing_skill",
+      "expected": "reject",
+      "observed_errors": [
+        ".codex/agents/bridge-finalite.toml: skill associé absent ou invalide",
+        "Au moins 50 skills valides requis ; observé : 49",
+        "Au moins 50 agents valides requis ; observé : 49"
+      ],
+      "passed": true
+    },
+    {
+      "case": "model_override",
+      "expected": "reject",
+      "observed_errors": [
+        ".codex/agents/bridge-finalite.toml: paramètres de modèle/permissions interdits : model",
+        "bridge-finalite: agent associé absent ou invalide",
+        "Au moins 50 agents valides requis ; observé : 49"
+      ],
+      "passed": true
+    },
+    {
+      "case": "nested_permissions",
+      "expected": "reject",
+      "observed_errors": [
+        ".codex/agents/bridge-finalite.toml: paramètres de modèle/permissions interdits : permissions, permissions.network_access",
+        "bridge-finalite: agent associé absent ou invalide",
+        "Au moins 50 agents valides requis ; observé : 49"
+      ],
+      "passed": true
+    },
+    {
+      "case": "broken_association",
+      "expected": "reject",
+      "observed_errors": [
+        ".codex/agents/bridge-finalite.toml: référence explicite au skill associé absente",
+        "bridge-finalite: agent associé absent ou invalide",
+        "Au moins 50 agents valides requis ; observé : 49"
+      ],
+      "passed": true
+    },
+    {
+      "case": "empty_instructions",
+      "expected": "reject",
+      "observed_errors": [
+        ".codex/agents/bridge-finalite.toml: les trois champs doivent être des chaînes non vides",
+        "bridge-finalite: agent associé absent ou invalide",
+        "Au moins 50 agents valides requis ; observé : 49"
+      ],
+      "passed": true
+    }
+  ]
+}

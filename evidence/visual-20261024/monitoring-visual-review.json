@@ -1,0 +1,61 @@
+{
+  "utc": "2026-10-24T21:18:51.779983+00:00",
+  "source_commit": "8ef4b18f11189d6c286704c489745bb8f58fa62d",
+  "images": [
+    {
+      "path": ".local/grafana-initial.png",
+      "sha256": "c4d967d07852d5bb6fcd995ab6ad1836530ef18f15ad8bf31ceb634ec0d4dfe2",
+      "capture_utc": "2026-10-24T21:10:43.7144066Z",
+      "browser_version": "155.0.8059.41",
+      "capture_script_exit_code": null,
+      "reviewed": true,
+      "served_dashboard_version": 1
+    },
+    {
+      "path": ".local/grafana-corrected.png",
+      "sha256": "6594d853e54917ee5ba58dd4df4868258006a302e9d4a051d26bff9beeb843f1",
+      "capture_utc": "2026-10-24T21:14:39.7250173Z",
+      "browser_version": "155.0.8059.41",
+      "capture_script_exit_code": 0,
+      "reviewed": true,
+      "served_dashboard_version": 1
+    }
+  ],
+  "observed": [
+    "Les 24 panneaux ont été rendus dans Chrome headless avec un profil neuf isolé.",
+    "Le fallback de disponibilité produisait une seconde série contradictoire lorsque la télémétrie existait.",
+    "Les panneaux de texte restaient vides en absence de série source.",
+    "Le tableau servi est resté en version 1 après passage du fichier source en version 2.",
+    "L'état non prêt ou indisponible était visible pendant le diagnostic de redémarrage de l'agent principal."
+  ],
+  "implemented_corrections": [
+    "Agréger la disponibilité avant le fallback pour éviter une série sans labels en doublon.",
+    "Produire un fallback Indisponible explicite pour version, profil, réseau et réconciliation.",
+    "Masquer les valeurs métier sauf si la télémétrie est récente et bridge_ready vaut 1.",
+    "Augmenter la hauteur des panneaux de texte.",
+    "Relire les fichiers Grafana toutes les 30 secondes au lieu des notifications utilisées à 10 secondes."
+  ],
+  "verification_pending": [
+    "Capturer et inspecter le tableau corrigé pendant un arrêt coordonné du relayer ; les replis d'indisponibilité sont déjà couverts par les assertions promtool."
+  ],
+  "nominal_validation": {
+    "utc": "2026-10-24T21:26:17.712924+00:00",
+    "report": ".local/local-fast-monitoring-live.json",
+    "passed": true,
+    "checks": 26,
+    "screenshot": ".local/grafana-final.png",
+    "screenshot_sha256": "3dc77e200c56f7bfcbff7974d9165fb79c88ae72e40c5e580b4b724d5c680d10",
+    "browser_version": "155.0.8059.41",
+    "capture_exit_code": 0,
+    "visually_inspected": true,
+    "observed": [
+      "Les 24 panneaux corrigés sont rendus ; aucune double série de disponibilité.",
+      "Disponible, Récent et Prêt sont affichés une seule fois.",
+      "Profil local-fast et chain IDs 31337/31338 lisibles.",
+      "Version exécutée exposée ; son texte long peut être tronqué dans le panneau, la valeur complète figure dans le rapport API.",
+      "Horodatages et texte explicatif visibles ; réconciliation balanced en vert.",
+      "Les cinq alertes de reprise encore affichées dans cette capture étaient résolues à la lecture API de 21:28 UTC."
+    ]
+  },
+  "scope": "Défauts initiaux conservés puis rendu nominal corrigé réellement inspecté. La capture corrigée d'indisponibilité reste une vérification distincte."
+}

@@ -1,0 +1,190 @@
+{
+  "utc": "2026-10-24T22:41:14Z",
+  "expected": "UID1000 refusé en écriture dans le travail Linux UID1001 ; UID1001 compile avec les mêmes sources",
+  "passed": true,
+  "negative": {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "1000:1000",
+      "-w",
+      "/scratch",
+      "t3l4n-bridge-uidprobe-f27a78bb3b93",
+      "forge",
+      "build",
+      "--force",
+      "--use",
+      "/scratch/.toolchain/solc-0.8.30"
+    ],
+    "utc": "2026-10-24T22:41:16Z",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Error: \"/scratch/cache/solidity-files-cache.json\": Permission denied (os error 13)",
+    "duration_seconds": 0.172
+  },
+  "positive": {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "1001:1001",
+      "-w",
+      "/scratch",
+      "t3l4n-bridge-uidprobe-f27a78bb3b93",
+      "forge",
+      "build",
+      "--force",
+      "--use",
+      "/scratch/.toolchain/solc-0.8.30"
+    ],
+    "utc": "2026-10-24T22:41:16Z",
+    "exit_code": 0,
+    "stdout": "Compiling 17 files with Solc 0.8.30\nSolc 0.8.30 finished in 580.66ms\nCompiler run successful!",
+    "stderr": "note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/BridgeInvariant.t.sol:17:34\n   |\n17 |     BridgeToken public immutable tokenA;\n   |                                  ------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:17:34\n   |\n17 |     BridgeToken public immutable token;\n   |                                  -----\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:18:30\n   |\n18 |     uint256 public immutable localChainId;\n   |                              ------------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:19:30\n   |\n19 |     uint256 public immutable maxTransfer;\n   |                              -----------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:20:30\n   |\n20 |     uint256 public immutable epochMintCap;\n   |                              ------------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/BridgeInvariant.t.sol:18:34\n   |\n18 |     BridgeToken public immutable tokenB;\n   |                                  ------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/BridgeInvariant.t.sol:19:29\n   |\n19 |     Bridge public immutable bridgeA;\n   |                             -------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:21:30\n   |\n21 |     uint256 public immutable epochSeconds;\n   |                              ------------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/BridgeInvariant.t.sol:20:29\n   |\n20 |     Bridge public immutable bridgeB;\n   |                             -------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-const]: constants should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/TestSupport.sol:25:26\n   |\n25 |     Vm internal constant vm = Vm(address(uint160(uint256(keccak256(\"hevm cheat code\")))));\n   |                          --\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-const\n\nnote[asm-keccak256]: use of inefficient hashing mechanism; consider using inline assembly\n   --> /scratch/src/Bridge.sol:224:16\n    |\n224 |           return keccak256(\n    |  ________________-\n225 | |             abi.encode(\n...   |\n237 | |             )\n238 | |         );\n    | |_________-\n    |\n    = help: https://book.getfoundry.sh/reference/forge/forge-lint#asm-keccak256",
+    "duration_seconds": 0.781
+  },
+  "commands": [
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "t3l4n-bridge-uidprobe-f27a78bb3b93",
+        "--label",
+        "com.t3l4n.project=t3l4n-bridge-uidprobe",
+        "--user",
+        "1001:1001",
+        "--network",
+        "none",
+        "--read-only",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges:true",
+        "--memory",
+        "1g",
+        "--cpus",
+        "2",
+        "--pids-limit",
+        "128",
+        "--tmpfs",
+        "/tmp:rw,nosuid,size=128m",
+        "--tmpfs",
+        "/scratch:rw,exec,nosuid,size=256m,uid=1001,gid=1001,mode=0755",
+        "-v",
+        "C:\\Users\\matth\\bridge-talan\\contracts:/source:ro",
+        "--entrypoint",
+        "sh",
+        "ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7",
+        "-c",
+        "cp -R /source/. /scratch/ && touch /scratch/ready && sleep 180"
+      ],
+      "utc": "2026-10-24T22:41:14Z",
+      "exit_code": 0,
+      "stdout": "bb1aeecc2e5655fbba75b791f031be2ac0d13c8af91dfff74c6b8d722ac61cd9",
+      "stderr": "",
+      "duration_seconds": 0.719
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "t3l4n-bridge-uidprobe-f27a78bb3b93",
+        "test",
+        "-e",
+        "/scratch/ready"
+      ],
+      "utc": "2026-10-24T22:41:15Z",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.156
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "t3l4n-bridge-uidprobe-f27a78bb3b93",
+        "test",
+        "-e",
+        "/scratch/ready"
+      ],
+      "utc": "2026-10-24T22:41:16Z",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.157
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "-u",
+        "1000:1000",
+        "-w",
+        "/scratch",
+        "t3l4n-bridge-uidprobe-f27a78bb3b93",
+        "forge",
+        "build",
+        "--force",
+        "--use",
+        "/scratch/.toolchain/solc-0.8.30"
+      ],
+      "utc": "2026-10-24T22:41:16Z",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Error: \"/scratch/cache/solidity-files-cache.json\": Permission denied (os error 13)",
+      "duration_seconds": 0.172
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "-u",
+        "1001:1001",
+        "-w",
+        "/scratch",
+        "t3l4n-bridge-uidprobe-f27a78bb3b93",
+        "forge",
+        "build",
+        "--force",
+        "--use",
+        "/scratch/.toolchain/solc-0.8.30"
+      ],
+      "utc": "2026-10-24T22:41:16Z",
+      "exit_code": 0,
+      "stdout": "Compiling 17 files with Solc 0.8.30\nSolc 0.8.30 finished in 580.66ms\nCompiler run successful!",
+      "stderr": "note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/BridgeInvariant.t.sol:17:34\n   |\n17 |     BridgeToken public immutable tokenA;\n   |                                  ------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:17:34\n   |\n17 |     BridgeToken public immutable token;\n   |                                  -----\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:18:30\n   |\n18 |     uint256 public immutable localChainId;\n   |                              ------------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:19:30\n   |\n19 |     uint256 public immutable maxTransfer;\n   |                              -----------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:20:30\n   |\n20 |     uint256 public immutable epochMintCap;\n   |                              ------------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/BridgeInvariant.t.sol:18:34\n   |\n18 |     BridgeToken public immutable tokenB;\n   |                                  ------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/BridgeInvariant.t.sol:19:29\n   |\n19 |     Bridge public immutable bridgeA;\n   |                             -------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/src/Bridge.sol:21:30\n   |\n21 |     uint256 public immutable epochSeconds;\n   |                              ------------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/BridgeInvariant.t.sol:20:29\n   |\n20 |     Bridge public immutable bridgeB;\n   |                             -------\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable\n\nnote[screaming-snake-case-const]: constants should use SCREAMING_SNAKE_CASE\n  --> /scratch/test/TestSupport.sol:25:26\n   |\n25 |     Vm internal constant vm = Vm(address(uint160(uint256(keccak256(\"hevm cheat code\")))));\n   |                          --\n   |\n   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-const\n\nnote[asm-keccak256]: use of inefficient hashing mechanism; consider using inline assembly\n   --> /scratch/src/Bridge.sol:224:16\n    |\n224 |           return keccak256(\n    |  ________________-\n225 | |             abi.encode(\n...   |\n237 | |             )\n238 | |         );\n    | |_________-\n    |\n    = help: https://book.getfoundry.sh/reference/forge/forge-lint#asm-keccak256",
+      "duration_seconds": 0.781
+    },
+    {
+      "command": [
+        "docker",
+        "inspect",
+        "t3l4n-bridge-uidprobe-f27a78bb3b93",
+        "--format",
+        "{{index .Config.Labels \"com.t3l4n.project\"}}"
+      ],
+      "utc": "2026-10-24T22:41:17Z",
+      "exit_code": 0,
+      "stdout": "t3l4n-bridge-uidprobe",
+      "stderr": "",
+      "duration_seconds": 0.078
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "t3l4n-bridge-uidprobe-f27a78bb3b93"
+      ],
+      "utc": "2026-10-24T22:41:17Z",
+      "exit_code": 0,
+      "stdout": "t3l4n-bridge-uidprobe-f27a78bb3b93",
+      "stderr": "",
+      "duration_seconds": 0.281
+    }
+  ]
+}

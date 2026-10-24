@@ -152,3 +152,91 @@ licence, sans CDN à l'exécution. Trois diagrammes ont été réellement rendus
 par Chrome avec proxy externe fermé et contrôle négatif de connectivité.
 La recette d'un tableau Grafana ancien ou arrêté est menée séparément des
 contrôles nominaux, avant le gel final.
+
+## Campagnes sur sources figées et incident de reprise
+
+Sur le commit `fd030c49d1e773676e1f3543fff93fa1b60d3c95`, la CI GitHub Actions
+40140238460 a installé le projet depuis un clone neuf, puis réussi les 18
+contrôles obligatoires de local-fast. Le job d’intégration réelle est ignoré.
+L’archive Actions a été téléchargée et son SHA-256 vérifié ; la campagne est
+conservée octet pour octet dans `evidence/20261024T225246Z-local-fast/`.
+La campagne locale Besu `20261024T231050Z-local-besu` réussit également ses
+18 contrôles, dont sept injections réellement exécutées. Les cas gas forcé à
+zéro et réorganisation Anvil restent non exécutés sur ce profil.
+
+La correction des permissions Forge sur Linux a été confirmée dans cette CI :
+le compilateur suit l’UID non root de l’orchestrateur, lit les sources en lecture
+seule et écrit uniquement ses sorties. Trois régressions supplémentaires portent
+l’outillage à 67 tests. La supervision a été exercée avec arrêt effectif du
+relayer : dernière date connue conservée, valeurs métier indisponibles et
+restauration vérifiée. Neuf scénarios promtool comportent 51 assertions.
+
+À la reprise de session, une campagne locale ne possédait aucun manifeste final
+et le moteur Docker Desktop était arrêté. Le premier nouveau `prove` échoue
+explicitement sur cette indisponibilité (`20261024T230925Z-local-fast`). Aucun
+succès n’en est déduit. Après redémarrage du moteur, local-besu retrouve une offre
+équilibrée. L’ancienne instance local-fast signale toutefois
+`destination_effect_lost_after_policy_finality` sur un transfert.
+
+L’enquête en lecture seule établit un burn source toujours canonique, un bloc
+destination remplacé, un reçu et un effet absents, et le nonce réservé 28 encore
+libre, sans transaction pending. La cause de l’arrêt du moteur reste inconnue.
+Le relayer a bien demandé une intervention et conservé une réconciliation
+inconclusive. La procédure opérateur a ensuite arrêté le relayer, revérifié
+identités, bytecodes, événement complet, domaine, finalité locale, reçu absent
+et nonce libre, puis autorisé uniquement ce transfert à reprendre son état
+préparé. Aucun nouveau payload, nonce ou hash n’a été créé. Le processeur
+existant a rediffusé la transaction persistée et vérifié le reçu.
+
+Les 22 assertions de cette intervention passent : un seul événement de
+complétion, crédit exact, signature/nonce/hash inchangés et offre réconciliée.
+L’état avant/après, les commandes SQL ciblées et le script exécuté sont conservés
+dans `evidence/restart-incident-20261024/`. Ce n’est pas une réparation automatique
+de timeout ni une garantie de durabilité d’Anvil après coupure. Une nouvelle
+campagne complète local-fast est lancée sur l’instance ainsi examinée.
+
+Le scan des rapports historiques supplémentaires a signalé des empreintes
+publiques et adresses ERC20 dans trois rapports placés à un niveau différent.
+Leur rangement a été aligné sur les campagnes habituelles, sans altérer leurs
+octets ni les règles Gitleaks. Le scan et les cinq témoins positifs repassent.
+Treize instantanés Anvil volumineux (191 010 878 octets) restent à leurs chemins
+locaux originaux, référencés et empreintés dans l’index des diagnostics ; ils
+sont conservés jusqu’au nettoyage explicite du propriétaire.
+
+La relance local-fast a ensuite rencontré le verrou de la campagne interrompue
+à 22:53:21 UTC. Le manifeste 20261024T231823Z-local-fast conserve cet échec
+(17 contrôles réussis, résilience refusée). Après vérification qu’aucun processus
+de campagne ne restait actif, le seul verrou a été archivé puis retiré. Le rapport
+partiel et cette opération sont conservés dans evidence/20261024T225119Z-local-fast/.
+Les données du bridge n’ont pas été supprimées pour relancer le test.
+
+La campagne 20261024T232235Z-local-fast a finalement réussi ses 18 contrôles,
+avec les neuf injections et un état persistant restauré, sur le même commit
+d030c49d1e773676e1f3543fff93fa1b60d3c95 que Besu et la CI.
+Le registre est recalculé : 21 affirmations vérifiées localement, cinq sur
+Besu local, deux bloquées et aucune obsolète. Les champs de définition n’ont
+pas changé ; les seuls fichiers de sources modifiés sont les comptes rendus
+explicitement exclus de l’empreinte.
+
+## Garde du CLI complet et amélioration des workflows
+
+La commande PowerShell 	est --profile local-fast a terminé avec succès sur
+d030c4 : 67 tests Python, 27 Solidity, 115 .NET, aller-retour et neuf
+injections. Une contre-vérification de main a ensuite reproduit un refus
+trop tardif de uild et 	est avec integration-testnet. Des sentinelles
+bloquantes ont empêché toute exécution réelle de ces commandes ; aucun accès
+Sepolia ou TELA n’a eu lieu. Le test précédent de up() ne couvrait pas ces
+deux branches, donc la formulation NET-001 était trop large.
+
+La garde des sept commandes d’exécution est désormais placée avant leur
+travail. Deux régressions vérifient le refus avant processus/RPC et l’acceptation
+des profils locaux ; 69 tests Python passent. Les sept CLI réellement invoqués
+retournent 2, chacun avec un journal de commandes vide. Le fixture de test
+enregistre maintenant son module dynamique dans sys.modules pour exercer
+réellement main, sans faux succès causé par un KeyError du fixture.
+
+Les rôles et skills CI et crash intègrent ces retours : couverture du point
+d’entrée complet, examen des verrous après interruption, et reprise opérateur
+explicitement distincte d’une compensation. Le catalogue 50/50 reste valide.
+Les anciennes campagnes sont marquées obsolètes pour les sources modifiées ;
+elles restent conservées. De nouvelles campagnes sont requises avant promotion.

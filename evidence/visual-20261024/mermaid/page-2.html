@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="light" data-mermaid-expected="1" data-mermaid-rendered="1" data-mermaid-errors="0" data-mermaid-ready="true" style="scroll-padding-top: 156px;"><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Reprise et finalité - T3l4N Bridge ERC20 — laboratoire et preuves</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link href="../../assets/mermaid.css" rel="stylesheet"> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">T3l4N Bridge ERC20 — laboratoire et preuves</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">État et objectif</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../exigences/" class="nav-link">Exigences</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../informations-manquantes/" class="nav-link">Informations manquantes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../architecture/" class="nav-link">Architecture</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../installation/" class="nav-link">Installation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../securite/" class="nav-link">Sécurité et compartimentage</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../tests-preuves/" class="nav-link">Tests et preuves</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../resultats/" class="nav-link">Résultats</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../exploitation/" class="nav-link">Exploitation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../limites/" class="nav-link">Limites et charge</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../agents/" class="nav-link">Agents et skills</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../journal/" class="nav-link">Journal</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown" aria-expanded="false">Décisions</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../0001-stack-profils/" class="dropdown-item">Stack et profils</a>
+</li>
+                                    
+<li>
+    <a href="../0002-protocole/" class="dropdown-item">Protocole et confiance</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">Reprise et finalité</a>
+</li>
+                                    
+<li>
+    <a href="../0004-interfaces-application/" class="dropdown-item">Interfaces applicatives et signature</a>
+</li>
+                                    
+<li>
+    <a href="../0005-persistance-anvil/" class="dropdown-item">Persistance historique Anvil</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../assets/mermaid/" class="nav-link">Rendu des diagrammes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../sources/" class="nav-link">Sources</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../0002-protocole/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../0004-interfaces-application/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary" style="top: 156px;">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#adr-0003-reprise-et-finalite" class="nav-link active">ADR-0003 — reprise et finalité</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#decision-initiale" class="nav-link">Décision initiale</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#mise-en-uvre-observee-collecte-et-concurrence" class="nav-link">Mise en œuvre observée : collecte et concurrence</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#mise-en-uvre-observee-soumission-et-reprise" class="nav-link">Mise en œuvre observée : soumission et reprise</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#finalite-et-reorganisations" class="nav-link">Finalité et réorganisations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#verification-consequences-et-limites" class="nav-link">Vérification, conséquences et limites</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="adr-0003-reprise-et-finalite">ADR-0003 — reprise et finalité</h1>
+<p>Date initiale et mise à jour : 2026-10-24. Statut : mécanismes locaux implémentés ;
+expériences et version vérifiée dans <a href="../../resultats/">les résultats</a>.</p>
+<h2 id="decision-initiale">Décision initiale</h2>
+<p>Préférer la lecture historique <code>eth_getLogs</code> avec checkpoint durable à une
+collecte dépendant uniquement de WebSocket. Conserver chaîne, bridge, numéro
+et hash de bloc, transaction et index de log ; dédupliquer aussi par ID métier.
+Le checkpoint et les événements d'un lot doivent être commis ensemble.</p>
+<p>Réserver durablement les nonces et persister la transaction signée avant envoi.
+Un résultat RPC ambigu impose une réconciliation ; l'absence de reçu n'autorise
+jamais un mint compensatoire. La conception envisageait une réservation
+<code>FOR UPDATE SKIP LOCKED</code> ou un bail ; l'implémentation retient les verrous
+consultatifs décrits ci-dessous.</p>
+<p>Définir une politique de finalité par réseau, sans repli silencieux, et rendre
+les observations orphelines inéligibles. Une intervention humaine, éventuellement
+accompagnée d'une pause autorisée, est préférable à une correction autonome
+de l'offre.</p>
+<h2 id="mise-en-uvre-observee-collecte-et-concurrence">Mise en œuvre observée : collecte et concurrence</h2>
+<p><code>Collector.cs</code> lit des lots d'au plus 32 blocs. Le checkpoint est le prochain bloc
+à lire ; hashes et parents des blocs sont persistés avec les événements dans
+une transaction SQL. La variation du nonce source et sa séquence doivent
+correspondre aux logs : une réponse historique vide ou tronquée ne doit pas
+faire avancer le checkpoint.</p>
+<p><code>PostgresStore.cs</code> utilise des <strong>verrous consultatifs PostgreSQL de session</strong>
+sur des connexions dédiées : initialisation, collecte par chaîne, traitement
+par chaîne destination et réconciliation. Le verrou de traitement est partagé
+entre workers et processus qui utilisent la même base. La paire courante
+possède un compte signataire par destination ; ce verrou n'est pas un algorithme
+générique multi-comptes.</p>
+<p>La réservation du compteur <code>bridge.nonces</code> utilise <code>SELECT ... FOR UPDATE</code>,
+puis incrémente le compteur et affecte le nonce au transfert dans une transaction.
+Les contraintes d'unicité portent sur ID de transfert, observation
+<code>(source_chain, source_bridge, block_hash, transaction_hash, log_index)</code> et
+<code>(destination_chain, destination_signer, destination_nonce)</code>.
+Il n'y a pas de <code>SKIP LOCKED</code> ni de bail expirant dans ce chemin.</p>
+<figure class="bridge-diagram"><div class="bridge-diagram__canvas mermaid" aria-label="Diagramme 1 ; défilement horizontal possible" tabindex="0" data-processed="true" data-mermaid-result="rendered"><svg id="mermaid-1792881419962" width="706.07421875" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="statediagram" height="617" viewBox="0 0 706.07421875 617" role="graphics-document document" aria-roledescription="stateDiagram"><style>#mermaid-1792881419962{font-family:Arial,Helvetica,sans-serif;font-size:16px;fill:#000000;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1792881419962 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1792881419962 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1792881419962 .error-icon{fill:#552222;}#mermaid-1792881419962 .error-text{fill:#552222;stroke:#552222;}#mermaid-1792881419962 .edge-thickness-normal{stroke-width:1px;}#mermaid-1792881419962 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1792881419962 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1792881419962 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1792881419962 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1792881419962 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1792881419962 .marker{fill:#666;stroke:#666;}#mermaid-1792881419962 .marker.cross{stroke:#666;}#mermaid-1792881419962 svg{font-family:Arial,Helvetica,sans-serif;font-size:16px;}#mermaid-1792881419962 p{margin:0;}#mermaid-1792881419962 defs [id$="-barbEnd"]{fill:#000;stroke:#000;}#mermaid-1792881419962 g.stateGroup text{fill:#999;stroke:none;font-size:10px;}#mermaid-1792881419962 g.stateGroup text{fill:#000000;stroke:none;font-size:10px;}#mermaid-1792881419962 g.stateGroup .state-title{font-weight:bolder;fill:#111111;}#mermaid-1792881419962 g.stateGroup rect{fill:#eee;stroke:#999;}#mermaid-1792881419962 g.stateGroup line{stroke:#666;stroke-width:1;}#mermaid-1792881419962 .transition{stroke:#000;stroke-width:1;fill:none;}#mermaid-1792881419962 .stateGroup .composit{fill:#ffffff;border-bottom:1px;}#mermaid-1792881419962 .stateGroup .alt-composit{fill:#e0e0e0;border-bottom:1px;}#mermaid-1792881419962 .state-note{stroke:#999;fill:#666;}#mermaid-1792881419962 .state-note text{fill:#fff;stroke:none;font-size:10px;}#mermaid-1792881419962 .stateLabel .box{stroke:none;stroke-width:0;fill:#eee;opacity:0.5;}#mermaid-1792881419962 .edgeLabel .label rect{fill:#eee;opacity:0.5;}#mermaid-1792881419962 .edgeLabel{background-color:white;text-align:center;}#mermaid-1792881419962 .edgeLabel p{background-color:white;}#mermaid-1792881419962 .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#mermaid-1792881419962 .edgeLabel .label text{fill:#000000;}#mermaid-1792881419962 .label div .edgeLabel{color:#000000;}#mermaid-1792881419962 .stateLabel text{fill:#111111;font-size:10px;font-weight:bold;}#mermaid-1792881419962 .node circle.state-start{fill:#222;stroke:#222;}#mermaid-1792881419962 .node .fork-join{fill:#222;stroke:#222;}#mermaid-1792881419962 .node circle.state-end{fill:hsl(0, 0%, 83.3333333333%);stroke:#ffffff;stroke-width:1.5;}#mermaid-1792881419962 .end-state-inner{fill:#ffffff;stroke-width:1.5;}#mermaid-1792881419962 .node rect{fill:#eee;stroke:#000;stroke-width:1px;}#mermaid-1792881419962 .node polygon{fill:#eee;stroke:#000;stroke-width:1px;}#mermaid-1792881419962 [id$="-barbEnd"]{fill:#666;}#mermaid-1792881419962 .statediagram-cluster rect{fill:#eee;stroke:#000;stroke-width:1px;}#mermaid-1792881419962 .cluster-label,#mermaid-1792881419962 .nodeLabel{color:#111111;}#mermaid-1792881419962 .statediagram-cluster rect.outer{rx:5px;ry:5px;}#mermaid-1792881419962 .statediagram-state .divider{stroke:#000;}#mermaid-1792881419962 .statediagram-state .title-state{rx:5px;ry:5px;}#mermaid-1792881419962 .statediagram-cluster.statediagram-cluster .inner{fill:#ffffff;}#mermaid-1792881419962 .statediagram-cluster.statediagram-cluster-alt .inner{fill:#f4f4f4;}#mermaid-1792881419962 .statediagram-cluster .inner{rx:0;ry:0;}#mermaid-1792881419962 .statediagram-state rect.basic{rx:5px;ry:5px;}#mermaid-1792881419962 .statediagram-state rect.divider{stroke-dasharray:10,10;fill:#f4f4f4;}#mermaid-1792881419962 .note-edge{stroke-dasharray:5;}#mermaid-1792881419962 .statediagram-note rect{fill:#666;stroke:#999;stroke-width:1px;rx:0;ry:0;}#mermaid-1792881419962 .statediagram-note rect{fill:#666;stroke:#999;stroke-width:1px;rx:0;ry:0;}#mermaid-1792881419962 .statediagram-note text{fill:#fff;}#mermaid-1792881419962 .statediagram-note .nodeLabel{color:#fff;}#mermaid-1792881419962 .statediagram .edgeLabel{color:red;}#mermaid-1792881419962 [id$="-dependencyStart"],#mermaid-1792881419962 [id$="-dependencyEnd"]{fill:#666;stroke:#666;stroke-width:1;}#mermaid-1792881419962 .statediagramTitleText{text-anchor:middle;font-size:18px;fill:#000000;}#mermaid-1792881419962 [data-look="neo"].statediagram-cluster rect{fill:#eee;stroke:url(#mermaid-1792881419962-gradient);stroke-width:1;}#mermaid-1792881419962 [data-look="neo"].statediagram-cluster rect.outer{rx:5px;ry:5px;filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1792881419962 .node .neo-node{stroke:#999;}#mermaid-1792881419962 [data-look="neo"].node rect,#mermaid-1792881419962 [data-look="neo"].cluster rect,#mermaid-1792881419962 [data-look="neo"].node polygon{stroke:url(#mermaid-1792881419962-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1792881419962 [data-look="neo"].swimlane.cluster rect{filter:none;}#mermaid-1792881419962 [data-look="neo"].node path{stroke:url(#mermaid-1792881419962-gradient);stroke-width:1px;}#mermaid-1792881419962 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1792881419962 [data-look="neo"].node .neo-line path{stroke:#999;filter:none;}#mermaid-1792881419962 [data-look="neo"].node circle{stroke:url(#mermaid-1792881419962-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1792881419962 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1792881419962 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1792881419962-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1792881419962 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1792881419962-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1792881419962 :root{--mermaid-font-family:Arial,Helvetica,sans-serif;}</style><g><defs><marker id="mermaid-1792881419962_stateDiagram-barbEnd" refX="19" refY="7" markerWidth="20" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M 19,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M501.219,45.002L489.99,49.668C478.76,54.335,456.302,63.667,445.073,72.5C433.844,81.333,433.844,89.667,433.844,93.833L433.844,98" id="mermaid-1792881419962-edge0" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge0" data-points="W3sieCI6NTAxLjIxODc1LCJ5Ijo0NS4wMDIwMjAwNTYyNzN9LHsieCI6NDMzLjg0Mzc1LCJ5Ijo3M30seyJ4Ijo0MzMuODQzNzUsInkiOjk4fV0=" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M433.844,138L433.844,142.167C433.844,146.333,433.844,154.667,433.844,163C433.844,171.333,433.844,179.667,433.844,183.833L433.844,188" id="mermaid-1792881419962-edge1" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge1" data-points="W3sieCI6NDMzLjg0Mzc1LCJ5IjoxMzh9LHsieCI6NDMzLjg0Mzc1LCJ5IjoxNjN9LHsieCI6NDMzLjg0Mzc1LCJ5IjoxODh9XQ==" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M368.031,218.212L330.663,224.01C293.296,229.808,218.56,241.404,181.192,251.369C143.824,261.333,143.824,269.667,143.824,273.833L143.824,278" id="mermaid-1792881419962-edge2" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge2" data-points="W3sieCI6MzY4LjAzMTI1LCJ5IjoyMTguMjExNTk2NzQwNTIxMjZ9LHsieCI6MTQzLjgyNDIxODc1LCJ5IjoyNTN9LHsieCI6MTQzLjgyNDIxODc1LCJ5IjoyNzh9XQ==" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M166.909,318L171.719,322.167C176.528,326.333,186.147,334.667,190.956,346.333C195.766,358,195.766,373,195.766,389.75C195.766,406.5,195.766,425,189.162,440.167C182.559,455.333,169.352,467.167,162.749,473.083L156.145,479" id="mermaid-1792881419962-edge3" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge3" data-points="W3sieCI6MTY2LjkwOTI4ODE5NDQ0NDQ2LCJ5IjozMTh9LHsieCI6MTk1Ljc2NTYyNSwieSI6MzQzfSx7IngiOjE5NS43NjU2MjUsInkiOjM4OH0seyJ4IjoxOTUuNzY1NjI1LCJ5Ijo0NDMuNX0seyJ4IjoxNTYuMTQ1NDQ2MjI3NDc3NDYsInkiOjQ3OX1d" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M133.824,519L133.824,523.167C133.824,527.333,133.824,535.667,133.824,544C133.824,552.333,133.824,560.667,133.824,564.833L133.824,569" id="mermaid-1792881419962-edge4" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge4" data-points="W3sieCI6MTMzLjgyNDIxODc1LCJ5Ijo1MTl9LHsieCI6MTMzLjgyNDIxODc1LCJ5Ijo1NDR9LHsieCI6MTMzLjgyNDIxODc1LCJ5Ijo1Njl9XQ==" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M417.444,228L414.028,232.167C410.611,236.333,403.778,244.667,393.908,253C384.038,261.333,371.131,269.667,364.677,273.833L358.224,278" id="mermaid-1792881419962-edge5" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge5" data-points="W3sieCI6NDE3LjQ0NDQ0NDQ0NDQ0NDQ2LCJ5IjoyMjh9LHsieCI6Mzk2Ljk0NTMxMjUsInkiOjI1M30seyJ4IjozNTguMjIzNTI0MzA1NTU1NTQsInkiOjI3OH1d" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M488.486,228L499.87,232.167C511.254,236.333,534.021,244.667,538.91,253C543.799,261.333,530.81,269.667,524.315,273.833L517.82,278" id="mermaid-1792881419962-edge6" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge6" data-points="W3sieCI6NDg4LjQ4NjExMTExMTExMTEsInkiOjIyOH0seyJ4Ijo1NTYuNzg5MDYyNSwieSI6MjUzfSx7IngiOjUxNy44MTk4Nzg0NzIyMjIyLCJ5IjoyNzh9XQ==" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M499.656,221.275L525.869,226.563C552.082,231.85,604.508,242.425,629.795,251.879C655.082,261.333,653.23,269.667,652.304,273.833L651.378,278" id="mermaid-1792881419962-edge7" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge7" data-points="W3sieCI6NDk5LjY1NjI1LCJ5IjoyMjEuMjc1MjAwOTI0NTE1NDJ9LHsieCI6NjU2LjkzMzU5Mzc1LCJ5IjoyNTN9LHsieCI6NjUxLjM3ODAzODE5NDQ0NDUsInkiOjI3OH1d" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M290.93,278L283.364,273.833C275.798,269.667,260.667,261.333,273.517,252.288C286.367,243.242,327.199,233.485,347.615,228.606L368.031,223.727" id="mermaid-1792881419962-edge8" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge8" data-points="W3sieCI6MjkwLjkzMDEyMTUyNzc3Nzc3LCJ5IjoyNzh9LHsieCI6MjQ1LjUzNTE1NjI1LCJ5IjoyNTN9LHsieCI6MzY4LjAzMTI1LCJ5IjoyMjMuNzI3MTc2NTUxMTIzMjh9XQ==" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M455.667,278L449.213,273.833C442.76,269.667,429.853,261.333,424.964,253C420.075,244.667,423.204,236.333,424.769,232.167L426.333,228" id="mermaid-1792881419962-edge9" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge9" data-points="W3sieCI6NDU1LjY2NzEwMDY5NDQ0NDQ2LCJ5IjoyNzh9LHsieCI6NDE2Ljk0NTMxMjUsInkiOjI1M30seyJ4Ijo0MjYuMzMzMzMzMzMzMzMzMywieSI6MjI4fV0=" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M615.758,278L609.263,273.833C602.769,269.667,589.779,261.333,570.048,253C550.318,244.667,523.846,236.333,510.611,232.167L497.375,228" id="mermaid-1792881419962-edge10" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge10" data-points="W3sieCI6NjE1Ljc1ODI0NjUyNzc3NzgsInkiOjI3OH0seyJ4Ijo1NzYuNzg5MDYyNSwieSI6MjUzfSx7IngiOjQ5Ny4zNzUsInkiOjIyOH1d" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M120.739,318L115.93,322.167C111.12,326.333,101.502,334.667,96.692,343C91.883,351.333,91.883,359.667,91.883,363.833L91.883,368" id="mermaid-1792881419962-edge11" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge11" data-points="W3sieCI6MTIwLjczOTE0OTMwNTU1NTU2LCJ5IjozMTh9LHsieCI6OTEuODgyODEyNSwieSI6MzQzfSx7IngiOjkxLjg4MjgxMjUsInkiOjM2OH1d" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M91.883,408L91.883,413.917C91.883,419.833,91.883,431.667,96.354,443.5C100.825,455.333,109.768,467.167,114.239,473.083L118.71,479" id="mermaid-1792881419962-edge12" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge12" data-points="W3sieCI6OTEuODgyODEyNSwieSI6NDA4fSx7IngiOjkxLjg4MjgxMjUsInkiOjQ0My41fSx7IngiOjExOC43MTAxOTg0Nzk3Mjk3MywieSI6NDc5fV0=" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M559.112,48L562.649,52.167C566.187,56.333,573.261,64.667,576.799,73C580.336,81.333,580.336,89.667,580.336,93.833L580.336,98" id="mermaid-1792881419962-edge13" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge13" data-points="W3sieCI6NTU5LjExMTk3OTE2NjY2NjYsInkiOjQ4fSx7IngiOjU4MC4zMzU5Mzc1LCJ5Ijo3M30seyJ4Ijo1ODAuMzM1OTM3NSwieSI6OTh9XQ==" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M226.996,315.517L248.745,320.097C270.493,324.678,313.991,333.839,335.74,345.919C357.488,358,357.488,373,357.488,389.75C357.488,406.5,357.488,425,357.488,443.5C357.488,462,357.488,480.5,357.488,497.25C357.488,514,357.488,529,356.562,540.667C355.636,552.333,353.785,560.667,352.859,564.833L351.933,569" id="mermaid-1792881419962-edge14" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge14" data-points="W3sieCI6MjI2Ljk5NjA5Mzc1LCJ5IjozMTUuNTE2OTExMDM4Nzk0ODN9LHsieCI6MzU3LjQ4ODI4MTI1LCJ5IjozNDN9LHsieCI6MzU3LjQ4ODI4MTI1LCJ5IjozODh9LHsieCI6MzU3LjQ4ODI4MTI1LCJ5Ijo0NDMuNX0seyJ4IjozNTcuNDg4MjgxMjUsInkiOjQ5OX0seyJ4IjozNTcuNDg4MjgxMjUsInkiOjU0NH0seyJ4IjozNTEuOTMyNzI1Njk0NDQ0NDYsInkiOjU2OX1d" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path><path d="M185.75,519L196.567,523.167C207.385,527.333,229.021,535.667,248.804,544C268.588,552.333,286.52,560.667,295.486,564.833L304.452,569" id="mermaid-1792881419962-edge15" class="edge-thickness-normal edge-pattern-solid transition" style="fill:none;;;fill:none" data-edge="true" data-et="edge" data-id="edge15" data-points="W3sieCI6MTg1Ljc0OTU2NTk3MjIyMjIzLCJ5Ijo1MTl9LHsieCI6MjUwLjY1NjI1LCJ5Ijo1NDR9LHsieCI6MzA0LjQ1MTgyMjkxNjY2NjcsInkiOjU2OX1d" data-look="classic" marker-end="url(#mermaid-1792881419962_stateDiagram-barbEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="edge0" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge1" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge2" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge3" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge4" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge5" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge6" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge7" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge8" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge9" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge10" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge11" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel" transform="translate(91.8828125, 443.5)"><g class="label" data-id="edge12" transform="translate(-0.046875, -10.5)"><g><rect class="background" style="" x="-83.8359375" y="0" width="167.765625" height="21"></rect><text y="-10.1" text-anchor="middle" style=""><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"><tspan font-style="normal" class="text-inner-tspan" font-weight="normal">réconciliation</tspan><tspan font-style="normal" class="text-inner-tspan" font-weight="normal"> préalable</tspan></tspan></text></g></g></g><g class="edgeLabel"><g class="label" data-id="edge13" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge14" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g><g class="edgeLabel"><g class="label" data-id="edge15" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"></tspan></text></g></g><g><rect class="background" style="stroke: none"></rect></g></g><g class="nodes"><g class="node  statediagram-state" id="mermaid-1792881419962-state-observed-13" data-look="classic" transform="translate(542.1328125, 28)"><rect class="basic label-container" style="" rx="5" ry="5" x="-40.9140625" y="-20" width="81.828125" height="40"></rect><g class="label" style="" transform="translate(-32.9140625, -12)"><rect></rect><foreignObject width="65.828125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>observed</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-waiting_finality-1" data-look="classic" transform="translate(433.84375, 118)"><rect class="basic label-container" style="" rx="5" ry="5" x="-60.03125" y="-20" width="120.0625" height="40"></rect><g class="label" style="" transform="translate(-52.03125, -12)"><rect></rect><foreignObject width="104.0625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>waiting_finality</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-source_finalized-10" data-look="classic" transform="translate(433.84375, 208)"><rect class="basic label-container" style="" rx="5" ry="5" x="-65.8125" y="-20" width="131.625" height="40"></rect><g class="label" style="" transform="translate(-57.8125, -12)"><rect></rect><foreignObject width="115.625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>source_finalized</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-destination_prepared-14" data-look="classic" transform="translate(143.82421875, 298)"><rect class="basic label-container" style="" rx="5" ry="5" x="-83.171875" y="-20" width="166.34375" height="40"></rect><g class="label" style="" transform="translate(-75.171875, -12)"><rect></rect><foreignObject width="150.34375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>destination_prepared</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-destination_submitted-15" data-look="classic" transform="translate(133.82421875, 499)"><rect class="basic label-container" style="" rx="5" ry="5" x="-85.828125" y="-20" width="171.65625" height="40"></rect><g class="label" style="" transform="translate(-77.828125, -12)"><rect></rect><foreignObject width="155.65625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>destination_submitted</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-destination_finalized-4" data-look="classic" transform="translate(133.82421875, 589)"><rect class="basic label-container" style="" rx="5" ry="5" x="-80.5" y="-20" width="161" height="40"></rect><g class="label" style="" transform="translate(-72.5, -12)"><rect></rect><foreignObject width="145" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>destination_finalized</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-waiting_gas-8" data-look="classic" transform="translate(327.24609375, 298)"><rect class="basic label-container" style="" rx="5" ry="5" x="-50.25" y="-20" width="100.5" height="40"></rect><g class="label" style="" transform="translate(-42.25, -12)"><rect></rect><foreignObject width="84.5" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>waiting_gas</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-waiting_pause-9" data-look="classic" transform="translate(486.64453125, 298)"><rect class="basic label-container" style="" rx="5" ry="5" x="-59.1484375" y="-20" width="118.296875" height="40"></rect><g class="label" style="" transform="translate(-51.1484375, -12)"><rect></rect><foreignObject width="102.296875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>waiting_pause</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-waiting_rate-10" data-look="classic" transform="translate(646.93359375, 298)"><rect class="basic label-container" style="" rx="5" ry="5" x="-51.140625" y="-20" width="102.28125" height="40"></rect><g class="label" style="" transform="translate(-43.140625, -12)"><rect></rect><foreignObject width="86.28125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>waiting_rate</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-retryable_failure-12" data-look="classic" transform="translate(91.8828125, 388)"><rect class="basic label-container" style="" rx="5" ry="5" x="-65.3671875" y="-20" width="130.734375" height="40"></rect><g class="label" style="" transform="translate(-57.3671875, -12)"><rect></rect><foreignObject width="114.734375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>retryable_failure</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-rejected-13" data-look="classic" transform="translate(580.3359375, 118)"><rect class="basic label-container" style="" rx="5" ry="5" x="-36.4609375" y="-20" width="72.921875" height="40"></rect><g class="label" style="" transform="translate(-28.4609375, -12)"><rect></rect><foreignObject width="56.921875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>rejected</p></span></div></foreignObject></g></g><g class="node  statediagram-state" id="mermaid-1792881419962-state-intervention_required-15" data-look="classic" transform="translate(347.48828125, 589)"><rect class="basic label-container" style="" rx="5" ry="5" x="-83.1640625" y="-20" width="166.328125" height="40"></rect><g class="label" style="" transform="translate(-75.1640625, -12)"><rect></rect><foreignObject width="150.328125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>intervention_required</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mermaid-1792881419962-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><defs><filter id="mermaid-1792881419962-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><linearGradient id="mermaid-1792881419962-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="hsl(0, 0%, 83.3333333333%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(0, 0%, 88.9215686275%)" stop-opacity="1"></stop></linearGradient></svg></div><details><summary>Source textuelle du diagramme</summary><pre><code class="language-mermaid">stateDiagram-v2
+    observed --&gt; waiting_finality
+    waiting_finality --&gt; source_finalized
+    source_finalized --&gt; destination_prepared
+    destination_prepared --&gt; destination_submitted
+    destination_submitted --&gt; destination_finalized
+    source_finalized --&gt; waiting_gas
+    source_finalized --&gt; waiting_pause
+    source_finalized --&gt; waiting_rate
+    waiting_gas --&gt; source_finalized
+    waiting_pause --&gt; source_finalized
+    waiting_rate --&gt; source_finalized
+    destination_prepared --&gt; retryable_failure
+    retryable_failure --&gt; destination_submitted: réconciliation préalable
+    observed --&gt; rejected
+    destination_prepared --&gt; intervention_required
+    destination_submitted --&gt; intervention_required
+</code></pre></details></figure>
+<p>Le diagramme résume les chemins principaux ; les états sont réévalués selon
+la cause. <code>schema.sql</code> et <code>TransferProcessor.cs</code> définissent les transitions
+effectives, notamment les échecs à plusieurs étapes.</p>
+<h2 id="mise-en-uvre-observee-soumission-et-reprise">Mise en œuvre observée : soumission et reprise</h2>
+<p><code>destination_prepared</code> signifie que la préparation durable précède la diffusion :
+nonce, prix, payload signé et hash sont conservés en base. Le relayer revérifie
+le hash source juste avant envoi. Une reprise vérifie, dans cet ordre utile,
+reçu et bloc canonique, succès et <code>processed</code>, nonces latest/pending, puis présence
+de la transaction. Un mint sans reçu propre, un nonce consommé inconnu ou un
+reçu reverted exige une intervention.</p>
+<p>Une rediffusion éventuelle réutilise les mêmes octets signés, le même nonce et
+le même ID métier. <strong>Aucun remplacement automatique de frais n'est implémenté.</strong>
+Un remplacement éventuel conserverait nonce et transfert ; un nouveau burn
+est une autre opération métier et ne doit pas être créé pour résoudre un timeout.</p>
+<p>Les valeurs par défaut appliquées sont 12 tentatives, un timeout RPC de
+5 secondes, 10 tentatives par minute et destination suivies en base et une
+attente pending maximale de 300 secondes. Les erreurs RPC peuvent consommer
+des tentatives ; les états gas/pause/fréquence évitent une diffusion immédiate.
+Le réessai utilise un délai exponentiel plafonné à 30 secondes. Même si le
+dernier envoi autorisé a une réponse ambiguë, une passe de réconciliation
+reste possible avant d'appliquer la limite. Le signataire possède en plus
+son propre limiteur de signatures ; voir <a href="../../securite/">sécurité</a>.</p>
+<p>Chaque cycle valide les <strong>deux</strong> identités, contrats et rôles avant collecte et
+traitement. Si cette étape échoue, le cycle est dégradé avant même qu'un nouveau
+burn soit collecté. L'état HTTP indique cette panne ; il n'est pas nécessaire
+qu'une ligne de transfert non encore observé soit en <code>retryable_failure</code>.</p>
+<h2 id="finalite-et-reorganisations">Finalité et réorganisations</h2>
+<table class="table table-striped table-hover">
+<thead>
+<tr>
+<th>Réseau</th>
+<th>Politique effectivement disponible</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anvil local</td>
+<td><code>head - blockNumber &gt;= 3</code> par défaut : <strong>trois blocs après inclusion</strong>, et non trois blocs en comptant celui d'inclusion</td>
+</tr>
+<tr>
+<td>Besu local</td>
+<td><code>qbft-local</code> utilise le bloc accepté en tête du mono-validateur ; hypothèse de cette simulation sans tolérance byzantine</td>
+</tr>
+<tr>
+<td>Sepolia</td>
+<td>Intégration non implémentée ; l'usage du tag <code>finalized</code> proposé initialement reste à vérifier et réaliser</td>
+</tr>
+<tr>
+<td>Véritable TELA de test</td>
+<td>Politique inconnue et intégration désactivée jusqu'à connaissance du réseau et du RPC</td>
+</tr>
+</tbody>
+</table>
+<p>Inclusion, convention de confirmations et finalisation sont distinctes.
+Un mode non supporté ou un état historique indisponible provoque une erreur ;
+aucun fallback silencieux vers <code>latest</code> ou vers un seuil plus faible n'est fourni.</p>
+<p>Le collecteur recherche un ancêtre dans une fenêtre de 128 blocs. Il conserve
+les observations orphelines avec <code>canonical=false</code> et repositionne le checkpoint.
+Sans nonce destination réservé, le transfert est rejeté ; avec une opération
+engagée, il passe en intervention requise. Une réorg au-delà de la fenêtre
+échoue explicitement.</p>
+<p>La réconciliation détecte aussi la perte d'un effet précédemment déclaré
+finalisé et la signale comme intervention, sans le reclasser silencieusement
+en transit normal. <strong>Elle n'appelle pas automatiquement <code>pause()</code>.</strong> L'opérateur
+doit évaluer et faire appliquer la pause par le rôle habilité. Aucune correction
+autonome d'offre n'est effectuée.</p>
+<h2 id="verification-consequences-et-limites">Vérification, conséquences et limites</h2>
+<p>Les tests isolés couvrent RPC indisponible/lent/incohérent, réponse d'envoi
+perdue, reprise, nonce, reorg et réconciliation. Les tests avec services exercent
+arrêt/reprise, recollecte, pause, gas, concurrence, sorties de processus après
+signature persistée et après diffusion, puis réorg Anvil préfinalité.
+RELAYER-001, RESILIENCE-001 et RECON-001 distinguent ces méthodes et leurs résultats.</p>
+<p>Le crash après diffusion se produit après retour RPC positif et avant écriture
+submitted ; ce n'est pas une réponse réseau supprimée. PostgreSQL, le signataire
+et l'hôte restent des dépendances de disponibilité ; les verrous de session
+ne remplacent ni sauvegarde ni haute disponibilité. Le traitement est réessayable
+avec effet métier idempotent, sans atomicité distribuée.</p>
+<p>La persistance Anvil et ses bornes mesurées sont décrites dans
+<a href="../0005-persistance-anvil/">ADR-0005</a>. Les tests de reprise de nœuds couvrent un
+arrêt propre ; les crashs du relayer n'établissent pas une résistance des chaînes
+à une coupure de l'hôte. Aucun scénario Anvil ne démontre la finalité TELA.</p>
+<p>Références : <a href="https://www.postgresql.org/docs/17/explicit-locking.html">verrous PostgreSQL</a>,
+<a href="../0004-interfaces-application/">interfaces applicatives</a>,
+<a href="../0002-protocole/">protocole et confiance</a>, <a href="../../sources/">sources</a>.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../assets/vendor/mermaid-11.16.1/mermaid.min.js"></script>
+        <script src="../../assets/mermaid-init.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+<div class="mermaidTooltip" style="opacity: 0; position: absolute; text-align: center; max-width: 200px; padding: 2px; font-size: 12px; background: rgb(255, 255, 222); border: 1px solid rgb(51, 51, 51); border-radius: 2px; pointer-events: none; z-index: 100;"></div></body></html>

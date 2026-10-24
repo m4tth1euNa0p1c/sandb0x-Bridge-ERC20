@@ -1,0 +1,31 @@
+﻿{
+    "utc":  "2026-10-24T22:34:23.5281630Z",
+    "profile":  "local-fast",
+    "url":  "http://127.0.0.1:13000/d/t3l4n-bridge",
+    "browser":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "browser_version":  "155.0.8059.41",
+    "isolated_profile":  "C:\\Users\\matth\\bridge-talan\\.local\\visual-browser\\d708f3ec072a4e8bb3ae64058cfaaf13",
+    "command_arguments":  [
+                              "--headless=new",
+                              "--disable-gpu",
+                              "--disable-background-networking",
+                              "--disable-sync",
+                              "--disable-extensions",
+                              "--disable-default-apps",
+                              "--disable-component-update",
+                              "--metrics-recording-only",
+                              "--no-first-run",
+                              "--no-default-browser-check",
+                              "--disable-features=MediaRouter",
+                              "--hide-scrollbars",
+                              "--window-size=1440,1900",
+                              "--virtual-time-budget=20000",
+                              "--user-data-dir=C:\\Users\\matth\\bridge-talan\\.local\\visual-browser\\d708f3ec072a4e8bb3ae64058cfaaf13",
+                              "--screenshot=C:\\Users\\matth\\bridge-talan\\.local\\grafana-stopped-verified.png",
+                              "http://127.0.0.1:13000/d/t3l4n-bridge"
+                          ],
+    "exit_code":  0,
+    "screenshot":  "C:\\Users\\matth\\bridge-talan\\.local\\grafana-stopped-verified.png",
+    "visual_review":  "À effectuer séparément ; un fichier PNG ne vaut pas inspection.",
+    "screenshot_sha256":  "7249be498134e018ad1a28ef78a66d6059bef47f9f7da8144a6f10e9889d5eb7"
+}

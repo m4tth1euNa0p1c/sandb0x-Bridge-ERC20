@@ -1,0 +1,31 @@
+﻿{
+    "utc":  "2026-10-24T21:10:43.7144066Z",
+    "profile":  "local-fast",
+    "url":  "http://127.0.0.1:13000/d/t3l4n-bridge",
+    "browser":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "browser_version":  "155.0.8059.41",
+    "isolated_profile":  "C:\\Users\\matth\\bridge-talan\\.local\\visual-browser\\969e4196f9cd444da71b19c87ddaf201",
+    "command_arguments":  [
+                              "--headless=new",
+                              "--disable-gpu",
+                              "--disable-background-networking",
+                              "--disable-sync",
+                              "--disable-extensions",
+                              "--disable-default-apps",
+                              "--disable-component-update",
+                              "--metrics-recording-only",
+                              "--no-first-run",
+                              "--no-default-browser-check",
+                              "--disable-features=MediaRouter",
+                              "--hide-scrollbars",
+                              "--window-size=1440,1900",
+                              "--virtual-time-budget=20000",
+                              "--user-data-dir=C:\\Users\\matth\\bridge-talan\\.local\\visual-browser\\969e4196f9cd444da71b19c87ddaf201",
+                              "--screenshot=C:\\Users\\matth\\bridge-talan\\.local\\grafana-initial.png",
+                              "http://127.0.0.1:13000/d/t3l4n-bridge"
+                          ],
+    "exit_code":  null,
+    "screenshot":  "C:\\Users\\matth\\bridge-talan\\.local\\grafana-initial.png",
+    "visual_review":  "Ã€ effectuer sÃ©parÃ©ment ; un fichier PNG ne vaut pas inspection.",
+    "screenshot_sha256":  "c4d967d07852d5bb6fcd995ab6ad1836530ef18f15ad8bf31ceb634ec0d4dfe2"
+}

@@ -1,0 +1,304 @@
+{
+  "utc": "2026-10-24T23:15:48Z",
+  "source_commit": "fd030c49d1e773676e1f3543fff93fa1b60d3c95",
+  "source_sha256": "181e570822aa138e937eedd4c3df0957e4d650f40e1f55b5d7fbfac7a354bf29",
+  "scope": "Diagnostic en lecture seule après redémarrage Docker Desktop ; aucune clé lue, aucune signature, aucun envoi, aucun changement SQL.",
+  "status_before": {
+    "running": true,
+    "ready": true,
+    "stale": false,
+    "profile": "local-fast",
+    "codeVersion": "f4a694dc9e765f00e0f1d86236b870e6fd5b3c27a2e6bd0eb8274ecc508f82f1",
+    "updatedUtc": "2026-10-24T23:15:46.9041525+00:00",
+    "errorCode": null,
+    "networks": [
+      {
+        "name": "a",
+        "chainId": 31337,
+        "head": 2758,
+        "finalized": 2755,
+        "nextBlock": 2759,
+        "lastCollectionUtc": "2026-10-24T23:15:46.891192+00:00",
+        "gasBalanceWei": "9999508644534515852",
+        "paused": false
+      },
+      {
+        "name": "b",
+        "chainId": 31338,
+        "head": 2733,
+        "finalized": 2730,
+        "nextBlock": 2734,
+        "lastCollectionUtc": "2026-10-24T23:15:46.891193+00:00",
+        "gasBalanceWei": "9996910754204258668",
+        "paused": false
+      }
+    ],
+    "transfers": {
+      "counts": {
+        "observed": 0,
+        "waiting_finality": 0,
+        "source_finalized": 0,
+        "destination_prepared": 0,
+        "destination_submitted": 0,
+        "destination_finalized": 31,
+        "waiting_gas": 0,
+        "waiting_pause": 0,
+        "waiting_rate": 0,
+        "retryable_failure": 0,
+        "rejected": 2,
+        "intervention_required": 1
+      },
+      "oldestPendingSeconds": 1195.487077,
+      "attempts": 1
+    },
+    "reconciliation": {
+      "state": "inconclusive",
+      "expectedSupply": null,
+      "supplyA": null,
+      "supplyB": null,
+      "inTransit": null,
+      "difference": null,
+      "cuts": {
+        "a": {
+          "number": 2754,
+          "hash": "0x53dc46163b447406b7cde8d4de3a8788a9234737f854af2c8769917bb7d4406e",
+          "parentHash": "0x4ccf6d13a7103c0e89b449f3dc120e3fd28231e3980b86f3de79796edfe33b15"
+        },
+        "b": {
+          "number": 2729,
+          "hash": "0xe8e03314c685a5224f83b645f668f21461c94199015b871a05fbf2c7f188366f",
+          "parentHash": "0x871bd0c70bd9e11ddfd848048782a23f1891a8a3d36d67f84482528cd9f5759a"
+        }
+      },
+      "updatedUtc": "2026-10-24T23:15:45.8806817+00:00",
+      "reason": "destination_effect_lost_after_policy_finality"
+    }
+  },
+  "observations": [
+    {
+      "row": {
+        "id": "0x6236e0d1c2f4491dfa94dadab8d3081b7589506d9ddffa66392d990f8a5e1091",
+        "source_chain": 31337,
+        "destination_chain": 31338,
+        "source_block": 2697,
+        "source_block_hash": "0x798e358772eba6655652470c774f8e2a869106a2b4089c0442ece6fbf4dd713e",
+        "source_tx": "0xc128085ef72ddfdb407e2409f342dd4d456e3323dc0918a24222078e9b090eec",
+        "log_index": 1,
+        "recipient": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+        "source_nonce": 28,
+        "amount": 1000000000000000000,
+        "destination_signer": "0xb2ce14a806b31783f875000b7847afe02fca5008",
+        "state": "intervention_required",
+        "error_code": "destination_effect_lost_after_policy_finality",
+        "destination_nonce": 28,
+        "destination_hash": "0xdece78a7b097c97a54e902881d333d8580e7da3add36eab88dd7cbd2e332b865",
+        "destination_block": 2682,
+        "destination_block_hash": "0xf2692d4dda54aff92d457d339612a53f23b1dae76856aa2f3b5ccbfbaa03b1c8",
+        "signed_payload_persisted": true,
+        "observed_at": "2026-10-24T22:55:51.417464+00:00",
+        "updated_at": "2026-10-24T23:14:06.521836+00:00"
+      },
+      "source_identity": {
+        "chain_id": 31337,
+        "client": "anvil/v1.8.4",
+        "genesis_hash": "0x28d33252ab01f3e92d373f4658380262a6c11dd6f77d2d61d06b4e1bcfc25a58",
+        "head": 2758,
+        "head_hash": "0x5e82af53d6af6731240dd7ed07c37201a658f41c0e3c4bf5584a6a14c6bcb0f2"
+      },
+      "destination_identity": {
+        "chain_id": 31338,
+        "client": "anvil/v1.8.4",
+        "genesis_hash": "0x28d33252ab01f3e92d373f4658380262a6c11dd6f77d2d61d06b4e1bcfc25a58",
+        "head": 2733,
+        "head_hash": "0x81c7bf2fd7676566e4f9b413a8dd9b8375d57363992cd4480d359dfc86ad87b2"
+      },
+      "source_receipt": {
+        "type": "0x0",
+        "status": "0x1",
+        "cumulativeGasUsed": "0xe8bb",
+        "logs": [
+          {
+            "address": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000f39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+              "0x0000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+            "blockHash": "0x798e358772eba6655652470c774f8e2a869106a2b4089c0442ece6fbf4dd713e",
+            "blockNumber": "0xa89",
+            "blockTimestamp": "0x65540613",
+            "transactionHash": "0xc128085ef72ddfdb407e2409f342dd4d456e3323dc0918a24222078e9b090eec",
+            "transactionIndex": "0x0",
+            "logIndex": "0x0",
+            "removed": false
+          },
+          {
+            "address": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+            "topics": [
+              "0x351d0b1652b5ab82b3084b60e900c98080a59c9245e78b738c1c6212b61ea504",
+              "0x6236e0d1c2f4491dfa94dadab8d3081b7589506d9ddffa66392d990f8a5e1091",
+              "0x0000000000000000000000000000000000000000000000000000000000007a6a",
+              "0x000000000000000000000000f39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+            ],
+            "data": "0x000000000000000000000000f39fd6e51aad88f6f4ce6ab8827279cfffb922660000000000000000000000005fbdb2315678afecb367f032d93f642f64180aa30000000000000000000000005fbdb2315678afecb367f032d93f642f64180aa3000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512000000000000000000000000000000000000000000000000000000000000001c0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+            "blockHash": "0x798e358772eba6655652470c774f8e2a869106a2b4089c0442ece6fbf4dd713e",
+            "blockNumber": "0xa89",
+            "blockTimestamp": "0x65540613",
+            "transactionHash": "0xc128085ef72ddfdb407e2409f342dd4d456e3323dc0918a24222078e9b090eec",
+            "transactionIndex": "0x0",
+            "logIndex": "0x1",
+            "removed": false
+          }
+        ],
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000010000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000040020000000000000100000800000000000000000000000010000000000000010000000000000000000000000000000000000010080000000200000000000000000000000000000080000000000000000000000000000000000000000000000442000000200000000000001000000000002400000000000000000020000000000000000004000000000000000000000000000000800000000000000000",
+        "transactionHash": "0xc128085ef72ddfdb407e2409f342dd4d456e3323dc0918a24222078e9b090eec",
+        "transactionIndex": "0x0",
+        "blockHash": "0x798e358772eba6655652470c774f8e2a869106a2b4089c0442ece6fbf4dd713e",
+        "blockNumber": "0xa89",
+        "gasUsed": "0xe8bb",
+        "effectiveGasPrice": "0x77359400",
+        "from": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+        "to": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "contractAddress": null,
+        "blockTimestamp": 1700005395
+      },
+      "destination_receipt": null,
+      "destination_transaction": null,
+      "source_block_now": {
+        "hash": "0x798e358772eba6655652470c774f8e2a869106a2b4089c0442ece6fbf4dd713e",
+        "parentHash": "0xc39dfdbf3d0d0cb4ff9daafd98ffcd8f8530a7f76dab0a283f0946d874d5d184",
+        "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+        "miner": "0x0000000000000000000000000000000000000000",
+        "stateRoot": "0x7095f48acaf822a67ca9af2269d93bbaf6b3091c9593cd784977501879d55382",
+        "transactionsRoot": "0xdcf59735ee64014ba49f472dab99407969fa995d82f393b08b2a7a133dae9fcf",
+        "receiptsRoot": "0x3e4442105b56b7c9fe2768628a90350c27438872c0dc15bf208c3d3ecb8cb059",
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000010000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000040020000000000000100000800000000000000000000000010000000000000010000000000000000000000000000000000000010080000000200000000000000000000000000000080000000000000000000000000000000000000000000000442000000200000000000001000000000002400000000000000000020000000000000000004000000000000000000000000000000800000000000000000",
+        "difficulty": "0x0",
+        "number": "0xa89",
+        "gasLimit": "0x1c9c380",
+        "gasUsed": "0xe8bb",
+        "timestamp": "0x65540613",
+        "extraData": "0x",
+        "mixHash": "0x6c2e9e980e201a6d4f4fb84f6f3cb4e5d375c4da65e747f2c7a3a203e12be4f8",
+        "nonce": "0x0000000000000000",
+        "baseFeePerGas": "0x7",
+        "totalDifficulty": "0x0",
+        "size": "0x2d0",
+        "uncles": [],
+        "transactions": [
+          "0xc128085ef72ddfdb407e2409f342dd4d456e3323dc0918a24222078e9b090eec"
+        ]
+      },
+      "destination_block_now": {
+        "hash": "0xd37a9a714c6423928398af4c09fd4c95d6d2aa9ce057cd5ef41906d1121361eb",
+        "parentHash": "0x152a9549a98f807761248053b85505e600c4eee16be718a5bc1e5bf7ce8002a2",
+        "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+        "miner": "0x0000000000000000000000000000000000000000",
+        "stateRoot": "0x676604bb214f245be4145fcb515b14e96d8a3c3cddd8985839dc97e72f01ba48",
+        "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+        "receiptsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "difficulty": "0x0",
+        "number": "0xa7a",
+        "gasLimit": "0x1c9c380",
+        "gasUsed": "0x0",
+        "timestamp": "0x6554061d",
+        "extraData": "0x",
+        "mixHash": "0x10d7f368e8e946658f939b2caef22eedaebd66c41f9aae0a6d427d369e262b5f",
+        "nonce": "0x0000000000000000",
+        "baseFeePerGas": "0x7",
+        "totalDifficulty": "0x0",
+        "size": "0x200",
+        "uncles": [],
+        "transactions": []
+      },
+      "destination_nonce_latest": "0x1c",
+      "destination_nonce_pending": "0x1c",
+      "processed_latest": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "processed_recorded_block": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "balance_destination": "0x0000000000000000000000000000000000000000000000018493fba64ef00000",
+      "supply_a": "0x00000000000000000000000000000000000000000000d3c0895a1a93aaac0000",
+      "supply_b": "0x0000000000000000000000000000000000000000000000018493fba64ef00000"
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "docker",
+        "compose",
+        "--project-name",
+        "t3l4n-bridge-local-fast",
+        "--env-file",
+        "C:\\Users\\matth\\bridge-talan\\.local\\compose.empty.env",
+        "-f",
+        "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.common.yaml",
+        "-f",
+        "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.local-fast.yaml",
+        "-f",
+        "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.bridge.yaml",
+        "-f",
+        "C:\\Users\\matth\\bridge-talan\\sandbox\\compose.monitoring.yaml",
+        "ps",
+        "--quiet",
+        "postgres"
+      ],
+      "utc": "2026-10-24T23:15:47Z",
+      "exit_code": 0,
+      "stdout": "6f509fb338effbaf951ab06ba617f038d32dddae2437fcdf605657930fdfd39d",
+      "stderr": "",
+      "duration_seconds": 0.234
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "-i",
+        "6f509fb338effbaf951ab06ba617f038d32dddae2437fcdf605657930fdfd39d",
+        "psql",
+        "-X",
+        "-q",
+        "-A",
+        "-t",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-U",
+        "sandbox_admin",
+        "-d",
+        "bridge"
+      ],
+      "utc": "2026-10-24T23:15:47Z",
+      "exit_code": 0,
+      "stdout": "[{\"id\":\"0x6236e0d1c2f4491dfa94dadab8d3081b7589506d9ddffa66392d990f8a5e1091\",\"source_chain\":31337,\"destination_chain\":31338,\"source_block\":2697,\"source_block_hash\":\"0x798e358772eba6655652470c774f8e2a869106a2b4089c0442ece6fbf4dd713e\",\"source_tx\":\"0xc128085ef72ddfdb407e2409f342dd4d456e3323dc0918a24222078e9b090eec\",\"log_index\":1,\"recipient\":\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\",\"source_nonce\":28,\"amount\":1000000000000000000,\"destination_signer\":\"0xb2ce14a806b31783f875000b7847afe02fca5008\",\"state\":\"intervention_required\",\"error_code\":\"destination_effect_lost_after_policy_finality\",\"destination_nonce\":28,\"destination_hash\":\"0xdece78a7b097c97a54e902881d333d8580e7da3add36eab88dd7cbd2e332b865\",\"destination_block\":2682,\"destination_block_hash\":\"0xf2692d4dda54aff92d457d339612a53f23b1dae76856aa2f3b5ccbfbaa03b1c8\",\"signed_payload_persisted\":true,\"observed_at\":\"2026-10-24T22:55:51.417464+00:00\",\"updated_at\":\"2026-10-24T23:14:06.521836+00:00\"}]",
+      "stderr": "",
+      "duration_seconds": 0.125
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "utc": "2026-10-24T23:15:48Z",
+      "exit_code": 0,
+      "stdout": "fd030c49d1e773676e1f3543fff93fa1b60d3c95",
+      "stderr": "",
+      "duration_seconds": 0.031
+    },
+    {
+      "command": [
+        "git",
+        "ls-files",
+        "--cached",
+        "--others",
+        "--exclude-standard",
+        "-z"
+      ],
+      "utc": "2026-10-24T23:15:48Z",
+      "exit_code": 0,
+      "stdout": "evidence/20261024T223810Z-local-fast/anvil-history.json\u0000evidence/20261024T223810Z-local-fast/build.json\u0000evidence/20261024T223810Z-local-fast/capabilities-validator-tests.json\u0000evidence/20261024T223810Z-local-fast/commands.json\u0000evidence/20261024T223810Z-local-fast/contracts-verification.json\u0000evidence/20261024T223810Z-local-fast/deployment.json\u0000evidence/20261024T223810Z-local-fast/doctor.json\u0000evidence/20261024T223810Z-local-fast/dotnet-tests.json\u0000evidence/20261024T223810Z-local-fast/local-fast-demo.json\u0000evidence/20261024T223810Z-local-fast/local-fast-monitoring-live.json\u0000evidence/20261024T223810Z-local-fast/local-fast-monitoring-stale.json\u0000evidence/20261024T223810Z-local-fast/local-fast-resilience.json\u0000evidence/20261024T223810Z-local-fast/manifest.json\u0000evidence/20261024T223810Z-local-fast/manifest.sha256\u0000evidence/20261024T223810Z-local-fast/monitoring-checks.json\u0000evidence/20261024T223810Z-local-fast/relayer-tests.trx\u0000evidence/20261024T223810Z-local-fast/signer-tests.trx\u0000evidence/20261024T223810Z-local-fast/skills-forward-review.json\u0000evidence/20261024T223810Z-local-fast/skills-quick-validation.json\u0000evidence/20261024T225119Z-local-fast/interruption.json\u0000evidence/20261024T225246Z-local-fast/anvil-history.json\u0000evidence/20261024T225246Z-local-fast/build.json\u0000evidence/20261024T225246Z-local-fast/commands.json\u0000evidence/20261024T225246Z-local-fast/contracts-verification.json\u0000evidence/20261024T225246Z-local-fast/deployment.json\u0000evidence/20261024T225246Z-local-fast/doctor.json\u0000evidence/20261024T225246Z-local-fast/dotnet-tests.json\u0000evidence/20261024T225246Z-local-fast/local-fast-demo.json\u0000evidence/20261024T225246Z-local-fast/local-fast-monitoring-live.json\u0000evidence/20261024T225246Z-local-fast/local-fast-monitoring-stale.json\u0000evidence/20261024T225246Z-local-fast/local-fast-resilience.json\u0000evidence/20261024T225246Z-local-fast/manifest.json\u0000evidence/20261024T225246Z-local-fast/manifest.sha256\u0000evidence/20261024T225246Z-local-fast/monitoring-checks.json\u0000evidence/20261024T225246Z-local-fast/relayer-tests.trx\u0000evidence/20261024T225246Z-local-fast/signer-tests.trx\u0000evidence/20261024T230925Z-local-fast/anvil-history.json\u0000evidence/20261024T230925Z-local-fast/build.json\u0000evidence/20261024T230925Z-local-fast/capabilities-validator-tests.json\u0000evidence/20261024T230925Z-local-fast/commands.json\u0000evidence/20261024T230925Z-local-fast/contracts-verification.json\u0000evidence/20261024T230925Z-local-fast/deployment.json\u0000evidence/20261024T230925Z-local-fast/doctor.json\u0000evidence/20261024T230925Z-local-fast/dotnet-tests.json\u0000evidence/20261024T230925Z-local-fast/local-fast-demo.json\u0000evidence/20261024T230925Z-local-fast/local-fast-monitoring-live.json\u0000evidence/20261024T230925Z-local-fast/local-fast-monitoring-stale.json\u0000evidence/20261024T230925Z-local-fast/local-fast-resilience.json\u0000evidence/20261024T230925Z-local-fast/manifest.json\u0000evidence/20261024T230925Z-local-fast/manifest.sha256\u0000evidence/20261024T230925Z-local-fast/monitoring-checks.json\u0000evidence/20261024T230925Z-local-fast/relayer-tests.trx\u0000evidence/20261024T230925Z-local-fast/signer-tests.trx\u0000evidence/20261024T230925Z-local-fast/skills-forward-review.json\u0000evidence/20261024T230925Z-local-fast/skills-quick-validation.json\u0000evidence/ci-20261024/index.json\u0000evidence/diagnostics-20261024/SHA256SUMS\u0000evidence/diagnostics-20261024/anvil/20261024T211403-5b18fc/SHA256SUMS\u0000evidence/diagnostics-20261024/anvil/20261024T211403-5b18fc/after-1.json\u0000evidence/diagnostics-20261024/anvil/20261024T211403-5b18fc/after-2.json\u0000evidence/diagnostics-20261024/anvil/20261024T211403-5b18fc/before.json\u0000evidence/diagnostics-20261024/anvil/20261024T211403-5b18fc/report.json\u0000evidence/diagnostics-20261024/anvil/20261024T211403-5b18fc/tested-script.py\u0000evidence/diagnostics-20261024/anvil/20261024T211608-992e38/SHA256SUMS\u0000evidence/diagnostics-20261024/anvil/20261024T211608-992e38/after-1.json\u0000evidence/diagnostics-20261024/anvil/20261024T211608-992e38/after-2.json\u0000evidence/diagnostics-20261024/anvil/20261024T211608-992e38/before.json\u0000evidence/diagnostics-20261024/anvil/20261024T211608-992e38/report.json\u0000evidence/diagnostics-20261024/anvil/20261024T211608-992e38/tested-script.py\u0000evidence/diagnostics-20261024/anvil/20261024T211813-963214/SHA256SUMS\u0000evidence/diagnostics-20261024/anvil/20261024T211813-963214/after-1.json\u0000evidence/diagnostics-20261024/anvil/20261024T211813-963214/after-2.json\u0000evidence/diagnostics-20261024/anvil/20261024T211813-963214/before.json\u0000evidence/diagnostics-20261024/anvil/20261024T211813-963214/report.json\u0000evidence/diagnostics-20261024/anvil/20261024T211813-963214/tested-script.py\u0000evidence/diagnostics-20261024/anvil/20261024T211813-eb66dc/SHA256SUMS\u0000evidence/diagnostics-20261024/anvil/20261024T211813-eb66dc/after-1.json\u0000evidence/diagnostics-20261024/anvil/20261024T211813-eb66dc/after-2.json\u0000evidence/diagnostics-20261024/anvil/20261024T211813-eb66dc/before.json\u0000evidence/diagnostics-20261024/anvil/20261024T211813-eb66dc/report.json\u0000evidence/diagnostics-20261024/anvil/20261024T211813-eb66dc/tested-script.py\u0000evidence/diagnostics-20261024/anvil/20261024T212059-23710a/SHA256SUMS\u0000evidence/diagnostics-20261024/anvil/20261024T212059-23710a/after-1.json\u0000evidence/diagnostics-20261024/anvil/20261024T212059-23710a/after-2.json\u0000evidence/diagnostics-20261024/anvil/20261024T212059-23710a/before.json\u0000evidence/diagnostics-20261024/anvil/20261024T212059-23710a/report.json\u0000evidence/diagnostics-20261024/anvil/20261024T212059-23710a/tested-script.py\u0000evidence/diagnostics-20261024/anvil/20261024T212146-f88a36/SHA256SUMS\u0000evidence/diagnostics-20261024/anvil/20261024T212146-f88a36/after-1.json\u0000evidence/diagnostics-20261024/anvil/20261024T212146-f88a36/before.json\u0000evidence/diagnostics-20261024/anvil/20261024T212146-f88a36/report.json\u0000evidence/diagnostics-20261024/anvil/20261024T212146-f88a36/tested-script.py\u0000evidence/diagnostics-20261024/anvil/20261024T212246-dfff0a/SHA256SUMS\u0000evidence/diagnostics-20261024/anvil/20261024T212246-dfff0a/after-1.json\u0000evidence/diagnostics-20261024/anvil/20261024T212246-dfff0a/after-2.json\u0000evidence/diagnostics-20261024/anvil/20261024T212246-dfff0a/before.json\u0000evidence/diagnostics-20261024/anvil/20261024T212246-dfff0a/report.json\u0000evidence/diagnostics-20261024/anvil/20261024T212246-dfff0a/tested-script.py\u0000evidence/diagnostics-20261024/anvil/comparatif.json\u0000evidence/diagnostics-20261024/forge-linux-uid-probe-noexec.json\u0000evidence/diagnostics-20261024/forge-linux-uid-probe.json\u0000evidence/diagnostics-20261024/index.json\u0000evidence/diagnostics-20261024/local-besu-20261024T213940Z-b975d2f8.json\u0000evidence/diagnostics-20261024/local-besu-20261024T214348Z-bb281e10.json\u0000evidence/diagnostics-20261024/local-fast-20261024T212832Z-9c179623.json\u0000evidence/diagnostics-20261024/local-fast-monitoring-stale-start-race.json\u0000evidence/visual-20261024/SHA256SUMS\u0000evidence/visual-20261024/grafana-corrected-capture.json\u0000evidence/visual-20261024/grafana-corrected.png\u0000evidence/visual-20261024/grafana-final-capture.json\u0000evidence/visual-20261024/grafana-final.png\u0000evidence/visual-20261024/grafana-initial-capture.json\u0000evidence/visual-20261024/grafana-initial.png\u0000evidence/visual-20261024/grafana-stopped-verified-capture.json\u0000evidence/visual-20261024/grafana-stopped-verified.png\u0000evidence/visual-20261024/index.json\u0000evidence/visual-20261024/mermaid/page-0.html\u0000evidence/visual-20261024/mermaid/page-0.png\u0000evidence/visual-20261024/mermaid/page-1.html\u0000evidence/visual-20261024/mermaid/page-1.png\u0000evidence/visual-20261024/mermaid/page-2.html\u0000evidence/visual-20261024/mermaid/page-2.png\u0000evidence/visual-20261024/mermaid/report.json\u0000evidence/visual-20261024/monitoring-visual-review.json\u0000.agents/skills/bridge-alertes/SKILL.md\u0000.agents/skills/bridge-amelioration/SKILL.md\u0000.agents/skills/bridge-anvil/SKILL.md\u0000.agents/skills/bridge-architecture/SKILL.md\u0000.agents/skills/bridge-besu-qbft/SKILL.md\u0000.agents/skills/bridge-burn-mint/SKILL.md\u0000.agents/skills/bridge-checkpoints/SKILL.md\u0000.agents/skills/bridge-ci/SKILL.md\u0000.agents/skills/bridge-cloisonnement/SKILL.md\u0000.agents/skills/bridge-collecte/SKILL.md\u0000.agents/skills/bridge-compose/SKILL.md\u0000.agents/skills/bridge-concurrence/SKILL.md\u0000.agents/skills/bridge-crash/SKILL.md\u0000.agents/skills/bridge-decimals/SKILL.md\u0000.agents/skills/bridge-dedup/SKILL.md\u0000.agents/skills/bridge-deploiement/SKILL.md\u0000.agents/skills/bridge-doctor/SKILL.md\u0000.agents/skills/bridge-documentation/SKILL.md\u0000.agents/skills/bridge-erc20/SKILL.md\u0000.agents/skills/bridge-etat-projet/SKILL.md\u0000.agents/skills/bridge-exigences/SKILL.md\u0000.agents/skills/bridge-finalite/SKILL.md\u0000.agents/skills/bridge-fuzz/SKILL.md\u0000.agents/skills/bridge-grafana/SKILL.md\u0000.agents/skills/bridge-invariants/SKILL.md\u0000.agents/skills/bridge-logs/SKILL.md\u0000.agents/skills/bridge-manifestes/SKILL.md\u0000.agents/skills/bridge-menaces/SKILL.md\u0000.agents/skills/bridge-metriques/SKILL.md\u0000.agents/skills/bridge-migrations/SKILL.md\u0000.agents/skills/bridge-nonces/SKILL.md\u0000.agents/skills/bridge-pause/SKILL.md\u0000.agents/skills/bridge-plafonds/SKILL.md\u0000.agents/skills/bridge-postgres-schema/SKILL.md\u0000.agents/skills/bridge-reconciliation/SKILL.md\u0000.agents/skills/bridge-recus/SKILL.md\u0000.agents/skills/bridge-registre-preuves/SKILL.md\u0000.agents/skills/bridge-reorg/SKILL.md\u0000.agents/skills/bridge-reseaux/SKILL.md\u0000.agents/skills/bridge-retry/SKILL.md\u0000.agents/skills/bridge-roles/SKILL.md\u0000.agents/skills/bridge-rpc-pannes/SKILL.md\u0000.agents/skills/bridge-secrets/SKILL.md\u0000.agents/skills/bridge-sepolia-identite/SKILL.md\u0000.agents/skills/bridge-signature/SKILL.md\u0000.agents/skills/bridge-soumission/SKILL.md\u0000.agents/skills/bridge-sources/SKILL.md\u0000.agents/skills/bridge-tela-identite/SKILL.md\u0000.agents/skills/bridge-transfer-id/SKILL.md\u0000.agents/skills/bridge-versions/SKILL.md\u0000.codex/agents/bridge-alertes.toml\u0000.codex/agents/bridge-amelioration.toml\u0000.codex/agents/bridge-anvil.toml\u0000.codex/agents/bridge-architecture.toml\u0000.codex/agents/bridge-besu-qbft.toml\u0000.codex/agents/bridge-burn-mint.toml\u0000.codex/agents/bridge-checkpoints.toml\u0000.codex/agents/bridge-ci.toml\u0000.codex/agents/bridge-cloisonnement.toml\u0000.codex/agents/bridge-collecte.toml\u0000.codex/agents/bridge-compose.toml\u0000.codex/agents/bridge-concurrence.toml\u0000.codex/agents/bridge-crash.toml\u0000.codex/agents/bridge-decimals.toml\u0000.codex/agents/bridge-dedup.toml\u0000.codex/agents/bridge-deploiement.toml\u0000.codex/agents/bridge-doctor.toml\u0000.codex/agents/bridge-documentation.toml\u0000.codex/agents/bridge-erc20.toml\u0000.codex/agents/bridge-etat-projet.toml\u0000.codex/agents/bridge-exigences.toml\u0000.codex/agents/bridge-finalite.toml\u0000.codex/agents/bridge-fuzz.toml\u0000.codex/agents/bridge-grafana.toml\u0000.codex/agents/bridge-invariants.toml\u0000.codex/agents/bridge-logs.toml\u0000.codex/agents/bridge-manifestes.toml\u0000.codex/agents/bridge-menaces.toml\u0000.codex/agents/bridge-metriques.toml\u0000.codex/agents/bridge-migrations.toml\u0000.codex/agents/bridge-nonces.toml\u0000.codex/agents/bridge-pause.toml\u0000.codex/agents/bridge-plafonds.toml\u0000.codex/agents/bridge-postgres-schema.toml\u0000.codex/agents/bridge-reconciliation.toml\u0000.codex/agents/bridge-recus.toml\u0000.codex/agents/bridge-registre-preuves.toml\u0000.codex/agents/bridge-reorg.toml\u0000.codex/agents/bridge-reseaux.toml\u0000.codex/agents/bridge-retry.toml\u0000.codex/agents/bridge-roles.toml\u0000.codex/agents/bridge-rpc-pannes.toml\u0000.codex/agents/bridge-secrets.toml\u0000.codex/agents/bridge-sepolia-identite.toml\u0000.codex/agents/bridge-signature.toml\u0000.codex/agents/bridge-soumission.toml\u0000.codex/agents/bridge-sources.toml\u0000.codex/agents/bridge-tela-identite.toml\u0000.codex/agents/bridge-transfer-id.toml\u0000.codex/agents/bridge-versions.toml\u0000.dockerignore\u0000.env.example\u0000.gitattributes\u0000.github/workflows/verify.yml\u0000.gitignore\u0000.gitleaks.toml\u0000AGENTS.md\u0000NuGet.config\u0000README.md\u0000contracts/.gitignore\u0000contracts/README.md\u0000contracts/foundry.toml\u0000contracts/solc.lock.json\u0000contracts/src/Bridge.sol\u0000contracts/src/BridgeToken.sol\u0000contracts/test/Bridge.t.sol\u0000contracts/test/BridgeDomain.t.sol\u0000contracts/test/BridgeInvariant.t.sol\u0000contracts/test/TestSupport.sol\u0000contracts/tools/prepare.py\u0000contracts/tools/verify.py\u0000contracts/vectors/transfer-id-v1.json\u0000contracts/vendor/openzeppelin/LICENSE\u0000contracts/vendor/openzeppelin/SOURCES.json\u0000contracts/vendor/openzeppelin/contracts/access/AccessControl.sol\u0000contracts/vendor/openzeppelin/contracts/access/IAccessControl.sol\u0000contracts/vendor/openzeppelin/contracts/interfaces/draft-IERC6093.sol\u0000contracts/vendor/openzeppelin/contracts/token/ERC20/ERC20.sol\u0000contracts/vendor/openzeppelin/contracts/token/ERC20/IERC20.sol\u0000contracts/vendor/openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol\u0000contracts/vendor/openzeppelin/contracts/utils/Context.sol\u0000contracts/vendor/openzeppelin/contracts/utils/Pausable.sol\u0000contracts/vendor/openzeppelin/contracts/utils/ReentrancyGuard.sol\u0000contracts/vendor/openzeppelin/contracts/utils/introspection/ERC165.sol\u0000contracts/vendor/openzeppelin/contracts/utils/introspection/IERC165.sol\u0000docs/adr/0001-stack-profils.md\u0000docs/adr/0002-protocole.md\u0000docs/adr/0003-reprise-finalite.md\u0000docs/adr/0004-interfaces-application.md\u0000docs/adr/0005-persistance-anvil.md\u0000docs/agents.md\u0000docs/architecture.md\u0000docs/assets/mermaid-init.js\u0000docs/assets/mermaid.css\u0000docs/assets/mermaid.md\u0000docs/assets/vendor/mermaid-11.16.1/LICENSE.txt\u0000docs/assets/vendor/mermaid-11.16.1/mermaid.min.js\u0000docs/assets/vendor/mermaid-11.16.1/upstream.json\u0000docs/claims.yaml\u0000docs/exigences.md\u0000docs/exploitation.md\u0000docs/index.md\u0000docs/informations-manquantes.md\u0000docs/installation.md\u0000docs/journal.md\u0000docs/limites.md\u0000docs/resultats.md\u0000docs/securite.md\u0000docs/sources.md\u0000docs/status/index.md\u0000docs/tests-preuves.md\u0000evidence/20261024T202049Z-local-fast/capabilities-validator-tests.json\u0000evidence/20261024T202049Z-local-fast/commands.json\u0000evidence/20261024T202049Z-local-fast/doctor.json\u0000evidence/20261024T202049Z-local-fast/manifest.json\u0000evidence/20261024T202049Z-local-fast/manifest.sha256\u0000evidence/20261024T202049Z-local-fast/skills-forward-review.json\u0000evidence/20261024T202049Z-local-fast/skills-quick-validation.json\u0000evidence/20261024T202323Z-local-besu/besu-genesis.json\u0000evidence/20261024T202323Z-local-besu/capabilities-validator-tests.json\u0000evidence/20261024T202323Z-local-besu/commands.json\u0000evidence/20261024T202323Z-local-besu/doctor.json\u0000evidence/20261024T202323Z-local-besu/manifest.json\u0000evidence/20261024T202323Z-local-besu/manifest.sha256\u0000evidence/20261024T202323Z-local-besu/skills-forward-review.json\u0000evidence/20261024T202323Z-local-besu/skills-quick-validation.json\u0000evidence/20261024T202910Z-local-fast/capabilities-validator-tests.json\u0000evidence/20261024T202910Z-local-fast/commands.json\u0000evidence/20261024T202910Z-local-fast/doctor.json\u0000evidence/20261024T202910Z-local-fast/manifest.json\u0000evidence/20261024T202910Z-local-fast/manifest.sha256\u0000evidence/20261024T202910Z-local-fast/skills-forward-review.json\u0000evidence/20261024T202910Z-local-fast/skills-quick-validation.json\u0000evidence/20261024T203035Z-local-besu/besu-genesis.json\u0000evidence/20261024T203035Z-local-besu/capabilities-validator-tests.json\u0000evidence/20261024T203035Z-local-besu/commands.json\u0000evidence/20261024T203035Z-local-besu/doctor.json\u0000evidence/20261024T203035Z-local-besu/manifest.json\u0000evidence/20261024T203035Z-local-besu/manifest.sha256\u0000evidence/20261024T203035Z-local-besu/skills-forward-review.json\u0000evidence/20261024T203035Z-local-besu/skills-quick-validation.json\u0000evidence/finalization/artifacts.json\u0000evidence/finalization/checks.json\u0000evidence/finalization/doctor-final.json\u0000evidence/finalization/posix-wrapper.json\u0000global.json\u0000mkdocs.yml\u0000observability/README.md\u0000observability/grafana/dashboards/bridge.json\u0000observability/grafana/provisioning/dashboards/bridge.yml\u0000observability/grafana/provisioning/datasources/prometheus.yml\u0000observability/metrics-contract.md\u0000observability/prometheus/bridge.rules.yml\u0000observability/prometheus/prometheus.yml\u0000observability/tests/capture.ps1\u0000observability/tests/live.py\u0000observability/tests/rules.test.yml\u0000observability/tests/stale.py\u0000observability/tests/verify.py\u0000requirements-docs.in\u0000requirements-docs.lock\u0000sandbox/Dockerfile.besu\u0000sandbox/Dockerfile.dotnet\u0000sandbox/Dockerfile.tests\u0000sandbox/besu/qbft.json\u0000sandbox/compose.bridge.yaml\u0000sandbox/compose.common.yaml\u0000sandbox/compose.local-besu.yaml\u0000sandbox/compose.local-fast.yaml\u0000sandbox/compose.monitoring.yaml\u0000sandbox/egress-policy.json\u0000sandbox/loopback_proxy.py\u0000sandbox/profiles/integration-testnet.json\u0000sandbox/profiles/local-besu.json\u0000sandbox/profiles/local-fast.json\u0000sandbox/versions.lock.json\u0000scripts/bridge\u0000scripts/bridge.ps1\u0000scripts/bridge.py\u0000scripts/bridge_runtime.py\u0000scripts/validate_capabilities.py\u0000src/Bridge.Operator/Bridge.Operator.csproj\u0000src/Bridge.Operator/Program.cs\u0000src/Bridge.Operator/packages.lock.json\u0000src/Bridge.Relayer/Abi.cs\u0000src/Bridge.Relayer/Bridge.Relayer.csproj\u0000src/Bridge.Relayer/Collector.cs\u0000src/Bridge.Relayer/Configuration.cs\u0000src/Bridge.Relayer/Domain.cs\u0000src/Bridge.Relayer/PostgresStore.cs\u0000src/Bridge.Relayer/Program.cs\u0000src/Bridge.Relayer/Reconciler.cs\u0000src/Bridge.Relayer/RelayerService.cs\u0000src/Bridge.Relayer/Rpc.cs\u0000src/Bridge.Relayer/TransferProcessor.cs\u0000src/Bridge.Relayer/packages.lock.json\u0000src/Bridge.Relayer/schema.sql\u0000src/Bridge.Signer/Bridge.Signer.csproj\u0000src/Bridge.Signer/FileKeySigner.cs\u0000src/Bridge.Signer/Program.cs\u0000src/Bridge.Signer/README.md\u0000src/Bridge.Signer/SignerApplication.cs\u0000src/Bridge.Signer/SignerConfiguration.cs\u0000src/Bridge.Signer/SigningPolicy.cs\u0000src/Bridge.Signer/SigningService.cs\u0000src/Bridge.Signer/packages.lock.json\u0000src/README.md\u0000tests/Bridge.Relayer.Tests/Bridge.Relayer.Tests.csproj\u0000tests/Bridge.Relayer.Tests/CollectionTests.cs\u0000tests/Bridge.Relayer.Tests/Fakes.cs\u0000tests/Bridge.Relayer.Tests/ProcessorTests.cs\u0000tests/Bridge.Relayer.Tests/ProtocolTests.cs\u0000tests/Bridge.Relayer.Tests/ReconciliationTests.cs\u0000tests/Bridge.Relayer.Tests/StatusTests.cs\u0000tests/Bridge.Relayer.Tests/TransportTests.cs\u0000tests/Bridge.Relayer.Tests/packages.lock.json\u0000tests/Bridge.Signer.Tests/Bridge.Signer.Tests.csproj\u0000tests/Bridge.Signer.Tests/ConfigurationAndKeyTests.cs\u0000tests/Bridge.Signer.Tests/SignerHttpTests.cs\u0000tests/Bridge.Signer.Tests/SignerTestEnvironment.cs\u0000tests/Bridge.Signer.Tests/SigningPolicyTests.cs\u0000tests/Bridge.Signer.Tests/packages.lock.json\u0000tests/anvil_persistence.py\u0000tests/docs_mermaid.py\u0000tests/integration/README.md\u0000tests/resilience.py\u0000tests/test_contract_tooling.py\u0000tests/test_runtime.py\u0000tests/test_runtime_resilience.py\u0000tests/test_tooling.py\u0000",
+      "stderr": "",
+      "duration_seconds": 0.047
+    }
+  ]
+}

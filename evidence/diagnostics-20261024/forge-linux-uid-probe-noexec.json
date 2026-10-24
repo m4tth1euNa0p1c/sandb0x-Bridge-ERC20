@@ -1,0 +1,190 @@
+{
+  "utc": "2026-10-24T22:40:52Z",
+  "expected": "UID1000 refusé en écriture dans le travail Linux UID1001 ; UID1001 compile avec les mêmes sources",
+  "passed": false,
+  "negative": {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "1000:1000",
+      "-w",
+      "/scratch",
+      "t3l4n-bridge-uidprobe-86b53e7c546e",
+      "forge",
+      "build",
+      "--force",
+      "--use",
+      "/scratch/.toolchain/solc-0.8.30"
+    ],
+    "utc": "2026-10-24T22:40:54Z",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Error: \"/scratch/.toolchain/solc-0.8.30\": Permission denied (os error 13)",
+    "duration_seconds": 0.11
+  },
+  "positive": {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "1001:1001",
+      "-w",
+      "/scratch",
+      "t3l4n-bridge-uidprobe-86b53e7c546e",
+      "forge",
+      "build",
+      "--force",
+      "--use",
+      "/scratch/.toolchain/solc-0.8.30"
+    ],
+    "utc": "2026-10-24T22:40:54Z",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Error: \"/scratch/.toolchain/solc-0.8.30\": Permission denied (os error 13)",
+    "duration_seconds": 0.141
+  },
+  "commands": [
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "t3l4n-bridge-uidprobe-86b53e7c546e",
+        "--label",
+        "com.t3l4n.project=t3l4n-bridge-uidprobe",
+        "--user",
+        "1001:1001",
+        "--network",
+        "none",
+        "--read-only",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges:true",
+        "--memory",
+        "1g",
+        "--cpus",
+        "2",
+        "--pids-limit",
+        "128",
+        "--tmpfs",
+        "/tmp:rw,nosuid,size=128m",
+        "--tmpfs",
+        "/scratch:rw,nosuid,size=256m,uid=1001,gid=1001,mode=0755",
+        "-v",
+        "C:\\Users\\matth\\bridge-talan\\contracts:/source:ro",
+        "--entrypoint",
+        "sh",
+        "ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7",
+        "-c",
+        "cp -R /source/. /scratch/ && touch /scratch/ready && sleep 180"
+      ],
+      "utc": "2026-10-24T22:40:52Z",
+      "exit_code": 0,
+      "stdout": "a49fd8b8c709e00930f6af9c39a0f779cce4a618c72f4401a5acfa16ba2eceaf",
+      "stderr": "",
+      "duration_seconds": 0.406
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "t3l4n-bridge-uidprobe-86b53e7c546e",
+        "test",
+        "-e",
+        "/scratch/ready"
+      ],
+      "utc": "2026-10-24T22:40:53Z",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.11
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "t3l4n-bridge-uidprobe-86b53e7c546e",
+        "test",
+        "-e",
+        "/scratch/ready"
+      ],
+      "utc": "2026-10-24T22:40:54Z",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.14
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "-u",
+        "1000:1000",
+        "-w",
+        "/scratch",
+        "t3l4n-bridge-uidprobe-86b53e7c546e",
+        "forge",
+        "build",
+        "--force",
+        "--use",
+        "/scratch/.toolchain/solc-0.8.30"
+      ],
+      "utc": "2026-10-24T22:40:54Z",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Error: \"/scratch/.toolchain/solc-0.8.30\": Permission denied (os error 13)",
+      "duration_seconds": 0.11
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "-u",
+        "1001:1001",
+        "-w",
+        "/scratch",
+        "t3l4n-bridge-uidprobe-86b53e7c546e",
+        "forge",
+        "build",
+        "--force",
+        "--use",
+        "/scratch/.toolchain/solc-0.8.30"
+      ],
+      "utc": "2026-10-24T22:40:54Z",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Error: \"/scratch/.toolchain/solc-0.8.30\": Permission denied (os error 13)",
+      "duration_seconds": 0.141
+    },
+    {
+      "command": [
+        "docker",
+        "inspect",
+        "t3l4n-bridge-uidprobe-86b53e7c546e",
+        "--format",
+        "{{index .Config.Labels \"com.t3l4n.project\"}}"
+      ],
+      "utc": "2026-10-24T22:40:54Z",
+      "exit_code": 0,
+      "stdout": "t3l4n-bridge-uidprobe",
+      "stderr": "",
+      "duration_seconds": 0.078
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "t3l4n-bridge-uidprobe-86b53e7c546e"
+      ],
+      "utc": "2026-10-24T22:40:54Z",
+      "exit_code": 0,
+      "stdout": "t3l4n-bridge-uidprobe-86b53e7c546e",
+      "stderr": "",
+      "duration_seconds": 0.25
+    }
+  ]
+}

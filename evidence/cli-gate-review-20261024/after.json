@@ -1,0 +1,73 @@
+{
+  "utc": "2026-10-24T23:38:29Z",
+  "source_commit": "fd030c49d1e773676e1f3543fff93fa1b60d3c95",
+  "source_sha256": "38023fa68849104ca99096796bf522e07d71b1708bc9260584954af282303511",
+  "expected": "Sept commandes d’exécution refusées depuis main avant tout lancement de processus ou RPC.",
+  "scope": "Régression avec sentinelles bloquantes : aucune commande interceptée n’est exécutée ; aucun réseau externe interrogé.",
+  "results": [
+    {
+      "command": "bootstrap",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "build",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "up",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "down",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "demo",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "test",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "prove",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,16 @@
+{
+  "assembled_utc": "2026-10-24T23:19:30Z",
+  "source_commit": "fd030c49d1e773676e1f3543fff93fa1b60d3c95",
+  "source_sha256": "181e570822aa138e937eedd4c3df0957e4d650f40e1f55b5d7fbfac7a354bf29",
+  "scope": "Incident constaté après indisponibilité et redémarrage Docker Desktop sur la seule instance local-fast r2. Cause de l’arrêt du moteur non déterminée ; les lectures RPC démontrent un bloc destination remplacé et un reçu absent.",
+  "expected": "Ne pas compenser automatiquement. Conserver intervention_required et une réconciliation inconclusive jusqu’à investigation explicite.",
+  "observed": "Burn source conservé et canonique ; destination processed=false, transaction/reçu absents et nonce 28 libre. Reprise opérateur ciblée vers destination_prepared, sans changer nonce, payload ni hash ; le relayer existant rediffuse après ses vérifications.",
+  "result": "22 contrôles réussis : même payload signé, nonce et hash ; un seul événement de complétion, crédit exact, offre réconciliée et aucune intervention restante.",
+  "limits": "Cette intervention ponctuelle sur données de test ne démontre pas la durabilité d’Anvil après arrêt brutal et n’est pas un mécanisme général de reprise automatique. Le script est conservé comme procédure exécutée et refuse une deuxième exécution.",
+  "retention": "Rapports légers et procédure : durée de vie du dépôt. Les clés et données privées restent hors Git.",
+  "artifacts": {
+    "observation.json": "b0356f43c72215341f3f717a0734b6ebcdb37c6d3f161812c0dd01b7865689cc",
+    "operator-recovery.py": "6419ba5aa3abff84246a7e8af58b6ba6353208644e49a94dc838e9a41b18be92",
+    "recovery.json": "0e197e8ff82153b27a378712fa61bda42663b5338401a33fc5e791e1e1d82301"
+  }
+}

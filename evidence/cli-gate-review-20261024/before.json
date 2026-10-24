@@ -1,0 +1,81 @@
+{
+  "utc": "2026-10-24T23:37:25Z",
+  "source_commit": "fd030c49d1e773676e1f3543fff93fa1b60d3c95",
+  "source_sha256": "181e570822aa138e937eedd4c3df0957e4d650f40e1f55b5d7fbfac7a354bf29",
+  "expected": "Sept commandes d’exécution refusées depuis main avant tout lancement de processus ou RPC.",
+  "scope": "Régression avec sentinelles bloquantes : aucune commande interceptée n’est exécutée ; aucun réseau externe interrogé.",
+  "results": [
+    {
+      "command": "bootstrap",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "build",
+      "exit_code": null,
+      "error": "AssertionError: process_attempt_before_refusal",
+      "process_attempts": 1,
+      "rpc_attempts": 0,
+      "first_process_prefix": [
+        "docker",
+        "build",
+        "--platform"
+      ],
+      "passed": false
+    },
+    {
+      "command": "up",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "down",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "demo",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    },
+    {
+      "command": "test",
+      "exit_code": null,
+      "error": "AssertionError: process_attempt_before_refusal",
+      "process_attempts": 1,
+      "rpc_attempts": 0,
+      "first_process_prefix": [
+        "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "unittest"
+      ],
+      "passed": false
+    },
+    {
+      "command": "prove",
+      "exit_code": 2,
+      "error": null,
+      "process_attempts": 0,
+      "rpc_attempts": 0,
+      "first_process_prefix": [],
+      "passed": true
+    }
+  ],
+  "passed": false
+}

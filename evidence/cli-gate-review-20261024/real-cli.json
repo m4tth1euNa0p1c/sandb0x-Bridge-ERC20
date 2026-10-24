@@ -1,0 +1,195 @@
+{
+  "passed": true,
+  "execution_commands": {
+    "bootstrap": {
+      "result": {
+        "command": [
+          "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "C:\\Users\\matth\\bridge-talan\\scripts\\bridge.py",
+          "bootstrap",
+          "--profile",
+          "integration-testnet"
+        ],
+        "utc": "2026-10-24T23:39:04Z",
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "Intégration désactivée : consulter docs/informations-manquantes.md (TELA-01..06, SEP-01..02, SEC-01)",
+        "duration_seconds": 0.125
+      },
+      "child_history": {
+        "utc": "2026-10-24T23:39:04Z",
+        "argv": [
+          "bootstrap",
+          "--profile",
+          "integration-testnet"
+        ],
+        "exit_code": 2,
+        "commands": []
+      },
+      "child_history_sha256": "81a1213aa0904c2153159a113f7320bf442e75fdd7a30551cc8cb8ca8fdf358c"
+    },
+    "build": {
+      "result": {
+        "command": [
+          "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "C:\\Users\\matth\\bridge-talan\\scripts\\bridge.py",
+          "build",
+          "--profile",
+          "integration-testnet"
+        ],
+        "utc": "2026-10-24T23:39:04Z",
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "Intégration désactivée : consulter docs/informations-manquantes.md (TELA-01..06, SEP-01..02, SEC-01)",
+        "duration_seconds": 0.141
+      },
+      "child_history": {
+        "utc": "2026-10-24T23:39:04Z",
+        "argv": [
+          "build",
+          "--profile",
+          "integration-testnet"
+        ],
+        "exit_code": 2,
+        "commands": []
+      },
+      "child_history_sha256": "8f56446bd78bda9e4ee02526effa088e40b54ce17acb878709087b96ec59a828"
+    },
+    "up": {
+      "result": {
+        "command": [
+          "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "C:\\Users\\matth\\bridge-talan\\scripts\\bridge.py",
+          "up",
+          "--profile",
+          "integration-testnet"
+        ],
+        "utc": "2026-10-24T23:39:04Z",
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "Intégration désactivée : consulter docs/informations-manquantes.md (TELA-01..06, SEP-01..02, SEC-01)",
+        "duration_seconds": 0.109
+      },
+      "child_history": {
+        "utc": "2026-10-24T23:39:04Z",
+        "argv": [
+          "up",
+          "--profile",
+          "integration-testnet"
+        ],
+        "exit_code": 2,
+        "commands": []
+      },
+      "child_history_sha256": "03ed506c7eef8744e06214dc3dec2aa02cddd8574e370710f41cbf43fb6d80ca"
+    },
+    "down": {
+      "result": {
+        "command": [
+          "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "C:\\Users\\matth\\bridge-talan\\scripts\\bridge.py",
+          "down",
+          "--profile",
+          "integration-testnet"
+        ],
+        "utc": "2026-10-24T23:39:04Z",
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "Intégration désactivée : consulter docs/informations-manquantes.md (TELA-01..06, SEP-01..02, SEC-01)",
+        "duration_seconds": 0.125
+      },
+      "child_history": {
+        "utc": "2026-10-24T23:39:05Z",
+        "argv": [
+          "down",
+          "--profile",
+          "integration-testnet"
+        ],
+        "exit_code": 2,
+        "commands": []
+      },
+      "child_history_sha256": "17ad90f0ce5bd9c77b7f8f7c13557196cf5dcc5554417a1c44f9ee7373b99dbe"
+    },
+    "demo": {
+      "result": {
+        "command": [
+          "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "C:\\Users\\matth\\bridge-talan\\scripts\\bridge.py",
+          "demo",
+          "--profile",
+          "integration-testnet"
+        ],
+        "utc": "2026-10-24T23:39:05Z",
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "Intégration désactivée : consulter docs/informations-manquantes.md (TELA-01..06, SEP-01..02, SEC-01)",
+        "duration_seconds": 0.125
+      },
+      "child_history": {
+        "utc": "2026-10-24T23:39:05Z",
+        "argv": [
+          "demo",
+          "--profile",
+          "integration-testnet"
+        ],
+        "exit_code": 2,
+        "commands": []
+      },
+      "child_history_sha256": "43033d5519469740b0a31bdeaeab9727ae9c6d97da3b6e5232d0b63ed6263d0c"
+    },
+    "test": {
+      "result": {
+        "command": [
+          "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "C:\\Users\\matth\\bridge-talan\\scripts\\bridge.py",
+          "test",
+          "--profile",
+          "integration-testnet"
+        ],
+        "utc": "2026-10-24T23:39:05Z",
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "Intégration désactivée : consulter docs/informations-manquantes.md (TELA-01..06, SEP-01..02, SEC-01)",
+        "duration_seconds": 0.125
+      },
+      "child_history": {
+        "utc": "2026-10-24T23:39:05Z",
+        "argv": [
+          "test",
+          "--profile",
+          "integration-testnet"
+        ],
+        "exit_code": 2,
+        "commands": []
+      },
+      "child_history_sha256": "0c9795c420f2f5acc77578827935f9c52e5b8af079ab32b564f257e61ef81048"
+    },
+    "prove": {
+      "result": {
+        "command": [
+          "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "C:\\Users\\matth\\bridge-talan\\scripts\\bridge.py",
+          "prove",
+          "--profile",
+          "integration-testnet"
+        ],
+        "utc": "2026-10-24T23:39:05Z",
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "Intégration désactivée : consulter docs/informations-manquantes.md (TELA-01..06, SEP-01..02, SEC-01)",
+        "duration_seconds": 0.125
+      },
+      "child_history": {
+        "utc": "2026-10-24T23:39:05Z",
+        "argv": [
+          "prove",
+          "--profile",
+          "integration-testnet"
+        ],
+        "exit_code": 2,
+        "commands": []
+      },
+      "child_history_sha256": "cb5a502c3230453a287960b6c2f63cbbd853680b2d667492d910cd81dc658d06"
+    }
+  },
+  "scope": "Sept entrées CLI réelles ; refus avant processus enfant, Docker ou RPC de ces commandes"
+}

@@ -1,0 +1,179 @@
+{
+  "utc": "2026-10-24T22:45:17.102310+00:00",
+  "profile": "local-fast",
+  "prometheus": "http://127.0.0.1:18090",
+  "grafana": "http://127.0.0.1:13000",
+  "checks": [
+    {
+      "grafana_health": {
+        "database": "ok",
+        "version": "13.2.4",
+        "commit": "0e79aef9d91abf3bdadae9af15763029072fb45b"
+      }
+    },
+    {
+      "dashboard_uid": "t3l4n-bridge",
+      "panel_count": 24,
+      "file_sha256": "c4b2ccc50a72be6f42cd8d6bdd8d5dfa7600e3ed1077e24f4bf29fead4791f43"
+    },
+    {
+      "query": "max(up{job=\"bridge\"}) or vector(0)",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "max(bridge:telemetry_fresh) or vector(0)",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "max((bridge_ready * on(job, instance) bridge:telemetry_fresh)) or vector(0)",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "last_over_time(bridge_status_updated_timestamp_seconds[24h]) * 1000",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "time() - last_over_time(bridge_status_updated_timestamp_seconds[24h])",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "(bridge_code_info and on(job, instance) (bridge:telemetry_fresh == 1)) or (label_replace(vector(0),\"version\",\"Indisponible\",\"__name__\",\".*\") unless on() (bridge_code_info and on(job, instance) (bridge:telemetry_fresh == 1)))",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "(bridge_code_info{profile=~\"local-fast|local-besu\"} and on(job, instance) (bridge:telemetry_fresh == 1)) or (label_replace(vector(0),\"profile\",\"Indisponible\",\"__name__\",\".*\") unless on() (bridge_code_info{profile=~\"local-fast|local-besu\"} and on(job, instance) (bridge:telemetry_fresh == 1)))",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "(bridge_network_info and on(job, instance) (bridge:telemetry_fresh == 1)) or (label_replace(label_replace(vector(0),\"network\",\"Indisponible\",\"__name__\",\".*\"),\"chain_id\",\"?\",\"__name__\",\".*\") unless on() (bridge_network_info and on(job, instance) (bridge:telemetry_fresh == 1)))",
+      "status": "success",
+      "result_count": 2
+    },
+    {
+      "query": "last_over_time(bridge_last_collection_timestamp_seconds[24h]) * 1000",
+      "status": "success",
+      "result_count": 2
+    },
+    {
+      "query": "bridge_finalized_lag_blocks and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (bridge_ready == 1)",
+      "status": "success",
+      "result_count": 2
+    },
+    {
+      "query": "bridge_chain_finalized and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (bridge_ready == 1)",
+      "status": "success",
+      "result_count": 2
+    },
+    {
+      "query": "bridge_chain_head and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (bridge_ready == 1)",
+      "status": "success",
+      "result_count": 2
+    },
+    {
+      "query": "bridge_transfers and on(job, instance) (bridge_ready == 1)",
+      "status": "success",
+      "result_count": 12
+    },
+    {
+      "query": "bridge_oldest_pending_seconds and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (bridge_ready == 1)",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "bridge_attempts_pending and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (bridge_ready == 1)",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "bridge_transfers{state=\"intervention_required\"} and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (bridge_ready == 1)",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "rate(bridge_cycle_errors_total[1m])",
+      "status": "success",
+      "result_count": 6
+    },
+    {
+      "query": "bridge_gas_balance_wei / 1e18 and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (bridge_ready == 1)",
+      "status": "success",
+      "result_count": 2
+    },
+    {
+      "query": "bridge_paused and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (bridge_ready == 1)",
+      "status": "success",
+      "result_count": 2
+    },
+    {
+      "query": "((bridge_reconciliation_state == 1) and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (time() - bridge_reconciliation_updated_timestamp_seconds <= 60) and on(job, instance) (time() - bridge_reconciliation_updated_timestamp_seconds >= -5) and on(job, instance) (bridge_ready == 1)) or (label_replace(vector(0),\"state\",\"Indisponible\",\"__name__\",\".*\") unless on() ((bridge_reconciliation_state == 1) and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (time() - bridge_reconciliation_updated_timestamp_seconds <= 60) and on(job, instance) (time() - bridge_reconciliation_updated_timestamp_seconds >= -5) and on(job, instance) (bridge_ready == 1)))",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "last_over_time(bridge_reconciliation_updated_timestamp_seconds[24h]) * 1000",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "query": "count(ALERTS{alertstate=\"firing\"}) or vector(0)",
+      "status": "success",
+      "result_count": 1
+    },
+    {
+      "grafana_datasource_query": "passed"
+    },
+    {
+      "code": [
+        {
+          "metric": {
+            "__name__": "bridge_code_info",
+            "instance": "relayer:8080",
+            "job": "bridge",
+            "profile": "local-fast",
+            "version": "f4a694dc9e765f00e0f1d86236b870e6fd5b3c27a2e6bd0eb8274ecc508f82f1"
+          },
+          "value": [
+            1792881917.277,
+            "1"
+          ]
+        }
+      ],
+      "networks": [
+        {
+          "metric": {
+            "__name__": "bridge_network_info",
+            "chain_id": "31337",
+            "instance": "relayer:8080",
+            "job": "bridge",
+            "network": "a"
+          },
+          "value": [
+            1792881917.301,
+            "1"
+          ]
+        },
+        {
+          "metric": {
+            "__name__": "bridge_network_info",
+            "chain_id": "31338",
+            "instance": "relayer:8080",
+            "job": "bridge",
+            "network": "b"
+          },
+          "value": [
+            1792881917.301,
+            "1"
+          ]
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,130 @@
+{
+  "assembled_utc": "2026-10-24T23:11:35Z",
+  "assembly_commit": "fd030c49d1e773676e1f3543fff93fa1b60d3c95",
+  "scope": "Observations visuelles historiques : horodatages, versions et empreintes originales dans les rapports. Les premières captures documentent aussi les défauts ensuite corrigés. Le contrôle page-0 Mermaid est une connexion externe volontairement refusée ; pages 1 et 2 rendent trois diagrammes. La capture stopped-verified montre le relayer arrêté. Aucune capture ne vaut disponibilité actuelle.",
+  "retention": "Durée de vie du dépôt ; les observations datées ne sont pas du direct.",
+  "artifacts": [
+    {
+      "path": "mermaid/report.json",
+      "origin": ".local/mermaid-validation/20261024T223655Z/report.json",
+      "sha256": "9f595391a307a381c2b0c004b4465d92bc9ddcb4370d8e36b70c2d9f4b289d1c",
+      "bytes": 10824
+    },
+    {
+      "path": "mermaid/page-0.html",
+      "origin": ".local/mermaid-validation/20261024T223655Z/page-0.html",
+      "sha256": "cfc1e7ce96e2d24e99aa761070ed3f56e95555f9108d882231f46ec70f4eda5f",
+      "bytes": 456
+    },
+    {
+      "path": "mermaid/page-0.png",
+      "origin": ".local/mermaid-validation/20261024T223655Z/page-0.png",
+      "sha256": "97d6351d8153d07bae050c6b695374f372a947dd37b9e27d774ceda5c44767ed",
+      "bytes": 11616
+    },
+    {
+      "path": "mermaid/page-1.html",
+      "origin": ".local/mermaid-validation/20261024T223655Z/page-1.html",
+      "sha256": "9e75eedb4667f60af0b830ab8ad05d3d4fbca106cad1d2419a2f52e982d12cd4",
+      "bytes": 79167
+    },
+    {
+      "path": "mermaid/page-1.png",
+      "origin": ".local/mermaid-validation/20261024T223655Z/page-1.png",
+      "sha256": "7d73db8a37dbbaa0901ea9bcfa0ab2dd450d950420d7aba81295a074ccb6388e",
+      "bytes": 185730
+    },
+    {
+      "path": "mermaid/page-2.html",
+      "origin": ".local/mermaid-validation/20261024T223655Z/page-2.html",
+      "sha256": "a340287297fc16530e17df295d960e16bc691a6bf10e9a3684f7a65e9ed67024",
+      "bytes": 51043
+    },
+    {
+      "path": "mermaid/page-2.png",
+      "origin": ".local/mermaid-validation/20261024T223655Z/page-2.png",
+      "sha256": "9f2e24eef1980972ae78ba5f222116d217336045c9c0535f62aee86db772d802",
+      "bytes": 230963
+    },
+    {
+      "path": "grafana-final.png",
+      "origin": ".local/grafana-final.png",
+      "sha256": "3dc77e200c56f7bfcbff7974d9165fb79c88ae72e40c5e580b4b724d5c680d10",
+      "bytes": 236327
+    },
+    {
+      "path": "grafana-final-capture.json",
+      "origin": ".local/grafana-final-capture.json",
+      "sha256": "59bef4b27db926691f900b9d0fb912df39d1003057baf9d368d775ea5b52768b",
+      "bytes": 1833
+    },
+    {
+      "path": "grafana-stopped-verified.png",
+      "origin": ".local/grafana-stopped-verified.png",
+      "sha256": "7249be498134e018ad1a28ef78a66d6059bef47f9f7da8144a6f10e9889d5eb7",
+      "bytes": 215715
+    },
+    {
+      "path": "grafana-stopped-verified-capture.json",
+      "origin": ".local/grafana-stopped-verified-capture.json",
+      "sha256": "87fd4e9ee12a63653c763b1dd4dc62fce9aa5518c1c2266e2ffbe9b1bf5c883c",
+      "bytes": 1855
+    },
+    {
+      "path": "grafana-initial.png",
+      "origin": ".local/grafana-initial.png",
+      "sha256": "c4d967d07852d5bb6fcd995ab6ad1836530ef18f15ad8bf31ceb634ec0d4dfe2",
+      "bytes": 218683
+    },
+    {
+      "path": "grafana-initial-capture.json",
+      "origin": ".local/grafana-initial-capture.json",
+      "sha256": "6d035c3c24e3a32e7b399fc2cb9b2f5e6d750754c69ea29709393332780180a5",
+      "bytes": 1847
+    },
+    {
+      "path": "grafana-corrected.png",
+      "origin": ".local/grafana-corrected.png",
+      "sha256": "6594d853e54917ee5ba58dd4df4868258006a302e9d4a051d26bff9beeb843f1",
+      "bytes": 212208
+    },
+    {
+      "path": "grafana-corrected-capture.json",
+      "origin": ".local/grafana-corrected-capture.json",
+      "sha256": "2f14005e58ad73a623b36d4c2ac4163fea52dc45c248147078223045e29facaa",
+      "bytes": 1841
+    },
+    {
+      "path": "monitoring-visual-review.json",
+      "origin": ".local/monitoring-visual-review.json",
+      "sha256": "258fc5bdaedd4d0bf5f1be6ca2c6ac12841c8d84cec57e768497fcffdfe82bfe",
+      "bytes": 3243
+    },
+    {
+      "path": "grafana-besu-delivery.png",
+      "origin": ".local/grafana-besu-delivery.png",
+      "sha256": "4e900d596c935edc37cfff987f2da629c16dbc7e6b73ccdb236e0b75978e13c9",
+      "bytes": 236831
+    },
+    {
+      "path": "grafana-besu-delivery-capture.json",
+      "origin": ".local/grafana-besu-delivery-capture.json",
+      "sha256": "652506bf59fd3788c782e76c559e2eb3a0e348720db5dfc028fcdf25a011c34b",
+      "bytes": 1849
+    }
+  ],
+  "review": {
+    "utc": "2026-10-24T23:13:18Z",
+    "images_inspected": [
+      "grafana-stopped-verified.png",
+      "mermaid/page-2.png",
+      "grafana-besu-delivery.png"
+    ],
+    "observed": [
+      "Tableau arrêté : disponibilité rouge, dernière date conservée, âge 54 s, métier masqué, réconciliation indisponible et cinq alertes.",
+      "Diagramme de reprise rendu et lisible, états et transitions visibles dans la page ADR-0003.",
+      "Besu après campagne : Disponible/Récent/Prêt, chain IDs 31339/31340, retard 0, intervention 0, réconciliation balanced et aucune alerte active."
+    ],
+    "scope": "Relecture des captures historiques, aucune assertion de disponibilité présente."
+  }
+}
