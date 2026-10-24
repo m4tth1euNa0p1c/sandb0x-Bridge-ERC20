@@ -8,7 +8,9 @@ signé en base avant diffusion. Le service de signature ne contacte aucun RPC.
 Ce stockage de clé local ne constitue pas un HSM. Le réseau `signing` et un jeton
 de service monté seulement dans ces deux compartiments limitent son accès.
 
-Configuration publique commune (JSON camelCase, chemin `BRIDGE_CONFIG`) :
+Configuration publique commune (JSON camelCase, chemin `BRIDGE_CONFIG`). Extrait
+illustratif, non directement exécutable : les valeurs `0x...` sont des emplacements
+à remplacer par les identités et empreintes réellement vérifiées.
 
 ```json
 {
@@ -23,6 +25,7 @@ Configuration publique commune (JSON camelCase, chemin `BRIDGE_CONFIG`) :
     "genesisHash": "0x...", "clientPrefix": "anvil",
     "rpcUrl": "http://chain-a:8545",
     "tokenAddress": "0x...", "bridgeAddress": "0x...",
+    "tokenCodeHash": "0x...", "bridgeCodeHash": "0x...",
     "signerAddress": "0x...", "startBlock": 0,
     "finalityMode": "confirmations", "confirmations": 3,
     "maxTransfer": "1000000000000000000000",
@@ -56,7 +59,7 @@ le contrat et la politique du signataire. Un changement exige de nouveaux tests.
 
 La collecte est historique, avec checkpoint transactionnel et réexamen des
 observations avant finalité. Chaque réseau source utilise un verrou PostgreSQL
-pour la collecte. Les crédits utilisent un verrou par compte destination et
+pour la collecte. Les crédits utilisent un verrou par chaîne destination et
 une réservation durable de nonce. Un seul payload signé est conservé par
 transfert ; les reprises rediffusent les mêmes octets après réconciliation.
 Le remplacement de frais n'est pas automatique dans cette version : un nonce

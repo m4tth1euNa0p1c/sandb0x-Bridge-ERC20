@@ -1,0 +1,68 @@
+x-app: &app
+  platform: linux/amd64
+  profiles: [bridge]
+  user: "1654:1654"
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 128
+  cpus: 1.0
+  mem_limit: 384m
+  restart: "no"
+  tmpfs: ["/tmp:rw,noexec,nosuid,size=32m,mode=1777"]
+  logging:
+    driver: json-file
+    options: {max-size: 5m, max-file: "2"}
+  volumes: ["${BRIDGE_RUNTIME:?}/deployment.json:/config/deployment.json:ro"]
+services:
+  signer:
+    <<: *app
+    image: ${SIGNER_IMAGE:?build required}
+    command: [dotnet, Bridge.Signer.dll]
+    environment:
+      BRIDGE_CONFIG: /config/deployment.json
+      BRIDGE_SIGNER_TOKEN_FILE: /run/secrets/signer_token
+      DOTNET_EnableDiagnostics: "0"
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+      ASPNETCORE_HTTP_PORTS: ""
+      ASPNETCORE_ENVIRONMENT: Sandbox
+    secrets: [key_a, key_b, signer_token]
+    networks: [signing]
+  relayer:
+    <<: *app
+    image: ${RELAYER_IMAGE:?build required}
+    command: [dotnet, Bridge.Relayer.dll]
+    environment:
+      BRIDGE_CONFIG: /config/deployment.json
+      BRIDGE_DB_HOST: postgres
+      BRIDGE_DB_PORT: "5432"
+      BRIDGE_DB_NAME: bridge
+      BRIDGE_DB_USER: bridge_app
+      BRIDGE_DB_PASSWORD_FILE: /run/secrets/bridge_db_password
+      BRIDGE_SIGNER_URL: http://signer:8080
+      BRIDGE_SIGNER_TOKEN_FILE: /run/secrets/signer_token
+      BRIDGE_CODE_VERSION: ${BRIDGE_CODE_VERSION:-uncommitted}
+      DOTNET_EnableDiagnostics: "0"
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+      ASPNETCORE_HTTP_PORTS: ""
+      ASPNETCORE_ENVIRONMENT: Sandbox
+    secrets: [bridge_db_password, signer_token]
+    networks: [chain_a, chain_b, database, signing, monitoring]
+    depends_on: [postgres, signer]
+  bridge-gateway:
+    <<: *app
+    image: ${PROBE_IMAGE:?}
+    command: [python, /app/proxy.py, relayer]
+    volumes: ["${BRIDGE_ROOT:?}/sandbox/loopback_proxy.py:/app/proxy.py:ro"]
+    networks: [monitoring, edge_status]
+    ports: ["127.0.0.1:${STATUS_PORT:?}:8080"]
+    depends_on: [relayer]
+networks:
+  edge_status:
+    driver_opts: {com.docker.network.bridge.enable_ip_masquerade: "false"}
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.144/28"}]}
+secrets:
+  key_a: {file: "${BRIDGE_RUNTIME:?}/key_a"}
+  key_b: {file: "${BRIDGE_RUNTIME:?}/key_b"}
+  signer_token: {file: "${BRIDGE_RUNTIME:?}/signer_token"}
+  bridge_db_password: {file: "${BRIDGE_RUNTIME:?}/bridge_db_password"}

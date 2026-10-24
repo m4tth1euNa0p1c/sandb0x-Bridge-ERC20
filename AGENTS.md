@@ -40,9 +40,11 @@ publier de documents privés ou pousser sans demande explicite.
 
 ## Vérifications
 
-Exécuter les commandes réellement disponibles dans `README.md`. Les tests du jalon 1
-portent sur l'outillage, les configurations et l'infrastructure ; ils ne valident pas le bridge.
-Ajouter les tests de protocole et de reprise avec leur implémentation aux jalons suivants.
+Exécuter les commandes réellement disponibles dans `README.md`. `prove` couvre
+l'outillage, les contrats, les composants .NET, le transfert et les injections
+de panne du profil choisi. Conserver distincts les résultats unitaires, les
+expériences entre chaînes et les limites de chaque scénario. Après modification,
+reconstruire les images dont l'empreinte a changé avant la nouvelle campagne.
 
 ## Agents et skills du projet
 

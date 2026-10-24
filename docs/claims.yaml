@@ -4,14 +4,16 @@
   "claims": [
     {
       "id": "TOOL-001",
-      "statement": "Les tests de l'outillage du jalon 1 passent.",
+      "statement": "Les tests de l'outillage et de ses frontières d'exécution passent.",
       "scope": "scripts et configurations uniquement",
       "hypotheses": [
-        "aucun contrat ou relayer validé"
+        "Tests Python sans validation EVM implicite"
       ],
       "code": [
         "scripts/bridge.py",
-        "tests/test_tooling.py"
+        "scripts/bridge_runtime.py",
+        "tests/test_tooling.py",
+        "tests/test_runtime.py"
       ],
       "verification": "tooling",
       "environment": "local-fast",
@@ -45,7 +47,7 @@
     },
     {
       "id": "CFG-001",
-      "statement": "Les deux configurations Compose locales satisfont les restrictions statiques du jalon 1.",
+      "statement": "Les deux configurations Compose locales satisfont les restrictions statiques déclarées.",
       "scope": "local-fast et local-besu",
       "hypotheses": [
         "ne prouve pas les contrôles runtime"
@@ -53,7 +55,9 @@
       "code": [
         "sandbox/compose.common.yaml",
         "sandbox/compose.local-fast.yaml",
-        "sandbox/compose.local-besu.yaml"
+        "sandbox/compose.local-besu.yaml",
+        "sandbox/compose.bridge.yaml",
+        "sandbox/compose.monitoring.yaml"
       ],
       "verification": "compose",
       "environment": "local-fast",
@@ -69,7 +73,7 @@
       "statement": "Les deux Anvil locaux répondent avec leurs chain IDs attendus.",
       "scope": "infrastructure local-fast",
       "hypotheses": [
-        "aucun token déployé"
+        "Identités locales, distinctes des réseaux partagés"
       ],
       "code": [
         "sandbox/compose.local-fast.yaml",
@@ -87,14 +91,16 @@
     {
       "id": "ISO-001",
       "statement": "Les services et passerelles du profil local-fast portent les restrictions de conteneur attendues.",
-      "scope": "inspection runtime des noeuds, base, docs et passerelles",
+      "scope": "inspection des quatorze services et passerelles, y compris relayer, signataire et supervision",
       "hypotheses": [
         "moteur et hôte dignes de confiance"
       ],
       "code": [
         "sandbox/compose.common.yaml",
         "sandbox/compose.local-fast.yaml",
-        "scripts/bridge.py"
+        "scripts/bridge.py",
+        "sandbox/compose.bridge.yaml",
+        "sandbox/compose.monitoring.yaml"
       ],
       "verification": "hardening",
       "environment": "local-fast",
@@ -127,10 +133,10 @@
     },
     {
       "id": "DB-001",
-      "statement": "Un témoin SQL et les identités/hauteurs des chaînes sont conservés après recréation des conteneurs.",
+      "statement": "Les transferts persistés, un témoin SQL et les identités des chaînes sont conservés après arrêt propre et recréation des conteneurs.",
       "scope": "volumes local-fast",
       "hypotheses": [
-        "arrêt propre, aucun checkpoint métier"
+        "Arrêt propre ; aucune garantie de résistance à une coupure brutale de l’hôte Anvil"
       ],
       "code": [
         "scripts/bridge.py",
@@ -189,7 +195,7 @@
     {
       "id": "NET-001",
       "statement": "Le CLI refuse integration-testnet avant toute commande de runtime ou appel RPC.",
-      "scope": "jalon 1",
+      "scope": "garde du CLI et profils locaux livrés",
       "hypotheses": [
         "aucun prérequis TELA ou Sepolia fourni"
       ],
@@ -261,28 +267,28 @@
       "environment": "local-fast",
       "expected": "VM dédiée attestée et ressources moteur limitées au projet",
       "status": "bloqué",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "observed": "Hôte Windows partagé, processus enfant capable de lire un témoin hors dépôt et accès Docker étendu ; VM dédiée absente.",
       "evidence": null,
       "date_utc": null,
       "source_commit": null
     },
     {
       "id": "PROTO-001",
-      "statement": "Le bridge burn/mint doit transférer dans les deux sens avec effet idempotent.",
-      "scope": "jalons 2 et 3",
+      "statement": "Le bridge burn/mint exécute un aller-retour avec soldes et offre restaurés dans le scénario local.",
+      "scope": "transfert E2E ; idempotence sous panne vérifiée séparément par RESILIENCE-001",
       "hypotheses": [
         "tokens dédiés, decimals identiques, relayer autorisé"
       ],
       "code": [
-        "docs/adr/0002-protocole.md",
-        "contracts/README.md",
-        "src/README.md"
+        "contracts/src",
+        "src/Bridge.Relayer",
+        "scripts/bridge_runtime.py"
       ],
-      "verification": "bridge_roundtrip",
+      "verification": "roundtrip",
       "environment": "local-fast",
       "expected": "Soldes et réconciliation corrects après aller-retour",
-      "status": "proposé",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne d’ensemble à sceller.",
       "evidence": null,
       "date_utc": null,
       "source_commit": null
@@ -302,7 +308,260 @@
       "environment": "integration-testnet",
       "expected": "Identité, accès, rôles, gas et reçus réellement observés",
       "status": "bloqué",
-      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "observed": "Aucun RPC TELA ou Sepolia interrogé ; paramètres, permissions et fonds dédiés manquants.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "CONTRACT-001",
+      "statement": "Les tests du protocole burn/mint, anti-rejeu, rôles, pause, plafonds, fuzzing et invariants réussissent.",
+      "scope": "EVM simulée Foundry ; tests de contrats, distincts des RPC de deux réseaux",
+      "hypotheses": [
+        "Tokens dédiés à 18 decimals, sans frais ni rebase",
+        "Invariants de conservation hors mint externe ou fraude d’un executor"
+      ],
+      "code": [
+        "contracts/src",
+        "contracts/test",
+        "contracts/tools/verify.py"
+      ],
+      "verification": "contracts",
+      "environment": "local-fast",
+      "expected": "Compilation Solidity/London et tous les tests réussis sans test ignoré",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne finale non encore attribuée.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "SIGN-001",
+      "statement": "La signature dédiée accepte les requêtes autorisées et refuse les requêtes hors politique testées.",
+      "scope": "Tests .NET HTTP et cryptographiques isolés ; clés générées exclusivement pour ces tests",
+      "hypotheses": [
+        "Pas de preuve cryptographique du burn ; compteur de fréquence du signataire en mémoire"
+      ],
+      "code": [
+        "src/Bridge.Signer",
+        "tests/Bridge.Signer.Tests"
+      ],
+      "verification": "dotnet",
+      "environment": "local-fast",
+      "expected": "Tous les tests de signature passent sans skip",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne finale non encore attribuée.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "RELAYER-001",
+      "statement": "Les tests de logique de collecte, reprise, nonces, finalité et réconciliation du relayer réussissent.",
+      "scope": "Tests .NET avec doubles RPC et stockage ; ne prouvent pas seuls les verrous PostgreSQL",
+      "hypotheses": [],
+      "code": [
+        "src/Bridge.Relayer",
+        "tests/Bridge.Relayer.Tests"
+      ],
+      "verification": "dotnet",
+      "environment": "local-fast",
+      "expected": "Tous les scénarios isolés de reprise et de refus passent sans skip",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne finale non encore attribuée.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "TRANSFER-001",
+      "statement": "Un transfert aller puis retour est exécuté entre deux Anvil avec les montants et destinataires attendus.",
+      "scope": "Deux transactions de burn et deux crédits réels sur les RPC locaux",
+      "hypotheses": [
+        "Montants en unités entières, 18 decimals",
+        "Trois blocs supplémentaires après inclusion"
+      ],
+      "code": [
+        "scripts/bridge_runtime.py",
+        "contracts/src",
+        "src/Bridge.Relayer"
+      ],
+      "verification": "roundtrip",
+      "environment": "local-fast",
+      "expected": "Reçus réussis, processed vrai, un seul événement de crédit et soldes restaurés",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne finale non encore attribuée.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "RESILIENCE-001",
+      "statement": "Les neuf scénarios locaux de reprise, duplication, pause, RPC, gas, concurrence, crash et réorganisation préfinalité réussissent.",
+      "scope": "Processus et bases réels du profil local-fast, injections séquencées avec restauration",
+      "hypotheses": [
+        "Crashes du relayer, arrêt propre des nœuds hors scénario de réorganisation",
+        "Ne démontre pas la finalité de TELA"
+      ],
+      "code": [
+        "tests/resilience.py",
+        "src/Bridge.Relayer"
+      ],
+      "verification": "resilience",
+      "environment": "local-fast",
+      "expected": "Neuf scénarios réussis ; même nonce/hash après crash, pas de crédit double ni de crédit de branche rejetée",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne finale non encore attribuée.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "RECON-001",
+      "statement": "Après l’aller-retour au repos, la somme des deux offres correspond à l’offre de référence.",
+      "scope": "Contrôle E2E sans transfert concurrent ni transit restant ; vérifications des coupures incohérentes séparées dans RELAYER-001",
+      "hypotheses": [
+        "Aucune émission ou destruction externe ; émission initiale unique explicitement enregistrée"
+      ],
+      "code": [
+        "scripts/bridge_runtime.py",
+        "src/Bridge.Relayer/Reconciler.cs"
+      ],
+      "verification": "roundtrip",
+      "environment": "local-fast",
+      "expected": "Offre totale et soldes exactement conservés",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne finale non encore attribuée.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "OBS-001",
+      "statement": "Les règles, le dashboard et les requêtes interrogent les métriques réellement exposées du profil local.",
+      "scope": "Promtool, API Prometheus/Grafana et datasource ; arrêt réel du relayer et reprise ; rendu visuel référencé séparément",
+      "hypotheses": [],
+      "code": [
+        "observability",
+        "sandbox/compose.monitoring.yaml"
+      ],
+      "verification": "monitoring",
+      "environment": "local-fast",
+      "expected": "Règles testées ; arrêt/restauration du relayer, horodatages historiques, masquage métier, API et requêtes nominales vérifiés",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne finale non encore attribuée.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "KEY-001",
+      "statement": "Les services ne disposent que des secrets explicitement nécessaires et la signature non authentifiée est refusée.",
+      "scope": "Montages et tests d’accès des services réellement démarrés ; ne confine pas l’administrateur hôte",
+      "hypotheses": [],
+      "code": [
+        "sandbox/compose.bridge.yaml",
+        "scripts/bridge_runtime.py"
+      ],
+      "verification": "application_isolation",
+      "environment": "local-fast",
+      "expected": "Clés absentes du relayer/base/docs ; route signataire interdite depuis database ; HTTP401 sans jeton",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne finale non encore attribuée.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "BESU-PROTO-001",
+      "statement": "Un aller-retour burn/mint fonctionne avec Besu local configuré en QBFT et une seconde chaîne locale.",
+      "scope": "Version, genesis, consensus et cible EVM conservés dans la campagne Besu",
+      "hypotheses": [
+        "QBFT à un validateur sans tolérance byzantine",
+        "Aucune assertion sur le véritable TELA"
+      ],
+      "code": [
+        "sandbox/compose.local-besu.yaml",
+        "contracts/src",
+        "scripts/bridge_runtime.py"
+      ],
+      "verification": "roundtrip",
+      "environment": "local-besu",
+      "expected": "Deux burns, deux crédits, soldes et offre restaurés",
+      "status": "implémenté",
+      "observed": "Implémentation disponible ; campagne finale non encore attribuée.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "ANVIL-001",
+      "statement": "Les appels historiques, transactions, reçus et logs du témoin Anvil restent disponibles après deux arrêts propres à 520 blocs.",
+      "scope": "Expérience bornée Anvil 1.8.4 ; pas de garantie de coupure brutale ni de durée illimitée",
+      "hypotheses": [],
+      "code": [
+        "tests/anvil_persistence.py",
+        "docs/adr/0005-persistance-anvil.md"
+      ],
+      "verification": "anvil_history",
+      "environment": "local-fast",
+      "expected": "44 assertions réussies sur historique, identité, code, reçus et logs",
+      "status": "implémenté",
+      "observed": "Campagne finale à attribuer.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "BESU-RESILIENCE-001",
+      "statement": "Les sept scénarios de reprise applicables au profil Besu local réussissent.",
+      "scope": "Reprise historique, duplication, pause, RPC indisponible, concurrence et deux crashs ; gas nul et réorganisation Anvil non exécutés",
+      "hypotheses": [],
+      "code": [
+        "tests/resilience.py",
+        "src/Bridge.Relayer"
+      ],
+      "verification": "resilience",
+      "environment": "local-besu",
+      "expected": "Sept scénarios réussis, deux scénarios explicitement non exécutés",
+      "status": "implémenté",
+      "observed": "Campagne finale à attribuer.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "BESU-OBS-001",
+      "statement": "La supervision interroge les métriques réelles du profil Besu local.",
+      "scope": "Promtool, API Prometheus/Grafana et datasource ; arrêt réel du relayer et reprise ; rendu visuel référencé séparément",
+      "hypotheses": [],
+      "code": [
+        "observability",
+        "sandbox/compose.monitoring.yaml"
+      ],
+      "verification": "monitoring",
+      "environment": "local-besu",
+      "expected": "Règles testées ; arrêt/restauration du relayer, horodatages historiques, masquage métier, API et requêtes nominales vérifiés",
+      "status": "implémenté",
+      "observed": "Campagne finale à attribuer.",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "BESU-ISO-001",
+      "statement": "Les quatorze services du profil Besu local appliquent le durcissement de conteneur déclaré.",
+      "scope": "Inspection runtime, sans confinement de l’administrateur hôte",
+      "hypotheses": [],
+      "code": [
+        "sandbox/compose.local-besu.yaml",
+        "scripts/bridge.py"
+      ],
+      "verification": "hardening",
+      "environment": "local-besu",
+      "expected": "Non root, racines RO, capacités retirées, quotas et no-new-privileges",
+      "status": "implémenté",
+      "observed": "Campagne finale à attribuer.",
       "evidence": null,
       "date_utc": null,
       "source_commit": null

@@ -3,3 +3,5 @@
 *.pdf binary
 # Les empreintes des preuves portent sur leurs octets, même après un clone Windows/Linux.
 evidence/** -text
+# Bundle amont conservé octet pour octet ; provenance et intégrité dans upstream.json.
+docs/assets/vendor/mermaid-11.16.1/mermaid.min.js -text -diff

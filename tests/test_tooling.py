@@ -163,6 +163,24 @@ class ComposeMountPolicyTests(unittest.TestCase):
     def test_read_only_site_mount_is_authorized_for_docs(self):
         self.validate(self.config())
 
+    def test_documented_no_new_privileges_forms_are_accepted(self):
+        for option in ("no-new-privileges", "no-new-privileges:true", "no-new-privileges=true"):
+            with self.subTest(option=option):
+                config = self.config()
+                config["services"]["docs"]["security_opt"] = [option]
+                self.validate(config)
+
+    def test_disabled_or_ambiguous_no_new_privileges_is_rejected(self):
+        for options in ([], ["no-new-privileges:false"], ["no-new-privileges=false"],
+                        ["no-new-privileges:0"], ["label:no-new-privileges:true"],
+                        ["no-new-privileges:true", "no-new-privileges:false"],
+                        ["no-new-privileges=false", "no-new-privileges=true"]):
+            with self.subTest(options=options):
+                config = self.config()
+                config["services"]["docs"]["security_opt"] = options
+                with self.assertRaises(bridge.BridgeError):
+                    self.validate(config)
+
     def test_home_subdirectory_and_other_unapproved_binds_are_rejected(self):
         for source in (Path.home() / ".ssh", bridge.ROOT / "scripts", bridge.ROOT.parent):
             with self.subTest(source=source):
@@ -251,7 +269,7 @@ class EvidenceStatusTests(unittest.TestCase):
         self.snapshot = {"sha256": hashlib.sha256(b"source fixture").hexdigest()}
         self.manifest = {"source": self.snapshot, "profile": "local-fast", "passed": True,
                          "claim_definitions": {"TEST-01": bridge.digest(bridge.canonical(bridge.claim_definition(self.claim)))},
-                         "checks": [{"id": "startup", "passed": True}], "artifacts": {}}
+                         "checks": [{"id": "startup", "passed": True}, {"id": "source_unchanged", "passed": True}], "artifacts": {}}
         self.path = self.root / self.claim["evidence"]
         self.save()
 
@@ -265,6 +283,26 @@ class EvidenceStatusTests(unittest.TestCase):
 
     def test_matching_claim_and_passing_evidence_preserve_verified_status(self):
         self.assertEqual(self.status(), "vérifié_local")
+
+    def test_failed_campaign_cannot_validate_an_individually_passing_check(self):
+        self.manifest["passed"] = False
+        self.manifest["checks"].append({"id": "mandatory_test", "passed": False})
+        self.save()
+        self.assertEqual(self.status(), "obsolète")
+
+    def test_unstable_campaign_stays_obsolete_when_checkout_returns_to_initial_sources(self):
+        self.manifest["passed"] = False
+        self.manifest["checks"][-1]["passed"] = False
+        self.save()
+        self.assertEqual(bridge.effective_status(self.claim, {"sha256": "changed_during_campaign"}), "obsolète")
+        self.assertEqual(bridge.effective_status(self.claim, deepcopy(self.snapshot)), "obsolète")
+
+    def test_missing_or_failed_source_stability_check_invalidates_success_flag(self):
+        for check in (None, {"id": "source_unchanged", "passed": False}):
+            with self.subTest(check=check):
+                self.manifest["checks"] = [{"id": "startup", "passed": True}] + ([check] if check else [])
+                self.save()
+                self.assertEqual(self.status(), "obsolète")
 
     def test_besu_claim_accepts_only_its_matching_besu_evidence(self):
         self.claim["environment"] = "local-besu"
@@ -333,7 +371,7 @@ class EvidenceStatusTests(unittest.TestCase):
 
     def test_incomplete_manifest_with_valid_checksum_is_obsolete(self):
         original = deepcopy(self.manifest)
-        for missing in ("source", "checks", "claim_definitions", "profile", "artifacts"):
+        for missing in ("source", "checks", "claim_definitions", "profile", "artifacts", "passed"):
             with self.subTest(missing=missing):
                 self.manifest = deepcopy(original)
                 del self.manifest[missing]

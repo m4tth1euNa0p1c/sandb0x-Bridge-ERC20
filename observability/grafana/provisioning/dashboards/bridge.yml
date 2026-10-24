@@ -1,0 +1,13 @@
+apiVersion: 1
+providers:
+  - name: T3l4N sandbox
+    orgId: 1
+    folder: T3l4N
+    folderUid: t3l4n
+    type: file
+    disableDeletion: false
+    # >10 force le polling : les événements des bind mounts Windows ne remontent pas toujours.
+    updateIntervalSeconds: 30
+    allowUiUpdates: false
+    options:
+      path: /etc/grafana/bridge-dashboards

@@ -1,10 +1,42 @@
 {
-  "name": "local-besu", "enabled": true, "test_only": true,
+  "name": "local-besu",
+  "enabled": true,
+  "test_only": true,
   "description": "Simulation Besu QBFT mono-validateur + Anvil ; ne représente pas l'identité ni le consensus TELA",
-  "compose_files": ["sandbox/compose.common.yaml", "sandbox/compose.local-besu.yaml"],
-  "chains": [
-    {"service": "chain-a", "chain_id": 31339, "rpc_host": "http://127.0.0.1:38545", "rpc_internal": "http://chain-a:8545", "client_prefix": "besu", "finality": {"mode": "qbft-local", "meaning": "acceptation du bloc local ; mono-validateur sans tolérance byzantine"}},
-    {"service": "chain-b", "chain_id": 31340, "rpc_host": "http://127.0.0.1:48545", "rpc_internal": "http://chain-b:8545", "client_prefix": "anvil", "finality": {"mode": "confirmations", "depth": 3, "meaning": "convention de test"}}
+  "compose_files": [
+    "sandbox/compose.common.yaml",
+    "sandbox/compose.local-besu.yaml",
+    "sandbox/compose.bridge.yaml",
+    "sandbox/compose.monitoring.yaml"
   ],
-  "docs_port": 18081, "evm_target": "london", "token_decimals": 18
+  "chains": [
+    {
+      "service": "chain-a",
+      "chain_id": 31339,
+      "rpc_host": "http://127.0.0.1:38545",
+      "rpc_internal": "http://chain-a:8545",
+      "client_prefix": "besu",
+      "finality": {
+        "mode": "qbft-local",
+        "meaning": "acceptation du bloc local ; mono-validateur sans tolérance byzantine"
+      }
+    },
+    {
+      "service": "chain-b",
+      "chain_id": 31340,
+      "rpc_host": "http://127.0.0.1:48545",
+      "rpc_internal": "http://chain-b:8545",
+      "client_prefix": "anvil",
+      "finality": {
+        "mode": "confirmations",
+        "depth": 3,
+        "meaning": "convention de test"
+      }
+    }
+  ],
+  "docs_port": 18081,
+  "evm_target": "london",
+  "token_decimals": 18,
+  "status_port": 18083,
+  "runtime_revision": 2
 }

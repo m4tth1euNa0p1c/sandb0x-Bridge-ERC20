@@ -1,0 +1,28 @@
+{
+  "name": "mermaid",
+  "version": "11.16.1",
+  "license": "MIT",
+  "reviewed_utc": "2026-10-24T21:36:18.136775+00:00",
+  "repository": "https://github.com/mermaid-js/mermaid",
+  "release": "https://github.com/mermaid-js/mermaid/releases/tag/mermaid%4011.16.1",
+  "registry_url": "https://registry.npmjs.org/mermaid/11.16.1",
+  "tarball_url": "https://registry.npmjs.org/mermaid/-/mermaid-11.16.1.tgz",
+  "tarball_integrity_sha512": "sha512-TQsq6u22fAn3rek5VOubrhKPo1g5hwC3FXUN9hiyupTckcYiGuuKGkNQrKYwGJkXUxZdojwRG46gsSCFZMDp4g==",
+  "tarball_sha256": "ebd9885111092c78cefc79a76f6c1dc34ed5b834b02ae8f338227ce79c003de4",
+  "files": {
+    "mermaid.min.js": {
+      "sha256": "18327bef70d96fb505fe7287d9f6a7362ebf07ff6576ddfaffb1a06f3e1a2954",
+      "bytes": 3566058
+    },
+    "LICENSE.txt": {
+      "sha256": "ec9fb67dcb25eccc416ed56e1aab819222c805a2a4bfe4cb19e7556bf2ffde80",
+      "bytes": 1089
+    }
+  },
+  "bundle_unmodified": true,
+  "dynamic_import_count": 0,
+  "security_sources": [
+    "https://github.com/mermaid-js/mermaid/security/advisories/GHSA-3rrr-jr9j-h3q3",
+    "https://github.com/mermaid-js/mermaid/security/advisories/GHSA-c4c3-pg64-4m4v"
+  ]
+}

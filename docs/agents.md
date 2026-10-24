@@ -38,9 +38,11 @@ de la session. Un agent producteur et un agent de revue peuvent se compléter ;
 deux agents ne doivent pas modifier les mêmes fichiers sans coordination.
 L'exécution du bridge reste séparée de l'orchestration des agents.
 
-Au jalon 1, contrats, relayer et signature métier sont encore à réaliser.
-Les rôles correspondants sont disponibles pour les prochains travaux ; leur
-définition ne constitue pas une implémentation ni une preuve de ces composants.
+Les rôles ont accompagné l'implémentation des contrats, du relayer, de la
+signature et des tests de panne. Les preuves de ces composants sont les rapports
+d'exécution, distincts de la validation structurelle du catalogue. Trois agents
+spécialisés ont travaillé dans la session, dans la limite des quatre places
+simultanées incluant l'orchestrateur ; les cinquante définitions restent réutilisables.
 
 ## Catalogue
 

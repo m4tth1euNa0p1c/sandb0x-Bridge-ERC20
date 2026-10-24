@@ -1,0 +1,35 @@
+.bridge-diagram {
+  margin: 1.25rem 0;
+  border: 1px solid #c7cdd4;
+  border-radius: .35rem;
+  background: #fff;
+  color: #20252b;
+}
+.bridge-diagram__canvas {
+  overflow-x: auto;
+  padding: 1rem;
+}
+.bridge-diagram__canvas:focus-visible {
+  outline: 3px solid #1967b5;
+  outline-offset: 2px;
+}
+.bridge-diagram__canvas svg {
+  max-width: none !important;
+  height: auto;
+}
+.bridge-diagram details {
+  padding: .5rem 1rem;
+  border-top: 1px solid #c7cdd4;
+}
+.bridge-diagram summary {
+  cursor: pointer;
+}
+.bridge-diagram details pre {
+  margin-top: .75rem;
+}
+.bridge-diagram__canvas[data-mermaid-result="error"] {
+  color: #a32525;
+}
+@media print {
+  .bridge-diagram__canvas svg { max-width: 100% !important; }
+}

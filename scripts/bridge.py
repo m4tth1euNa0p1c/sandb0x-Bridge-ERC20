@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Outillage du jalon 1. Aucun envoi de transaction ni signature de bridge."""
+"""Orchestration de simulations locales et conservation des preuves."""
 from __future__ import annotations
 
 import argparse
@@ -55,14 +55,15 @@ def write_json(path, value):
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
 
-def run(args, *, check=True, timeout=60, env=None, transform=None):
+def run(args, *, check=True, timeout=60, env=None, transform=None, stdin_text=None):
     """Arguments structurés, sans shell ; ne jamais passer de secret dans args."""
     args = [str(x) for x in args]
     env = (os.environ.copy() if env is None else env.copy())
     env["PYTHONUTF8"] = "1"
     start = utc()
+    tick = time.monotonic()
     try:
-        p = subprocess.run(args, cwd=ROOT, env=env, capture_output=True, timeout=timeout,
+        p = subprocess.run(args, cwd=ROOT, env=env, capture_output=True, timeout=timeout, input=stdin_text,
                            encoding="utf-8", errors="replace")
         result = {"command": args, "utc": start, "exit_code": p.returncode,
                   "stdout": p.stdout.strip(), "stderr": p.stderr.strip()}
@@ -71,6 +72,7 @@ def run(args, *, check=True, timeout=60, env=None, transform=None):
                   "stdout": "", "stderr": type(exc).__name__}
     if transform and result["exit_code"] == 0:
         result["stdout"] = transform(result["stdout"])
+    result["duration_seconds"] = round(time.monotonic() - tick, 3)
     RECORDS.append(result)
     if check and result["exit_code"] != 0:
         raise BridgeError(f"Échec ({result['exit_code']}) : {args[:5]}\n{result['stderr']}")
@@ -87,7 +89,7 @@ def validate_profile(p):
     if p["name"] == "integration-testnet":
         # Un booléen modifié ne peut pas activer une intégration non implémentée.
         if p.get("enabled") is not False:
-            raise BridgeError("L'intégration doit rester désactivée au jalon 1")
+            raise BridgeError("L'intégration doit rester désactivée tant que ses prérequis ne sont pas vérifiés")
         return
     expected = {"local-fast": [31337, 31338], "local-besu": [31339, 31340]}[p["name"]]
     if [c["chain_id"] for c in p["chains"]] != expected:
@@ -126,8 +128,12 @@ def project(name):
 
 
 def runtime(name):
-    profile(name, runnable=True)
-    return LOCAL / "runtime" / name
+    p = profile(name, runnable=True)
+    revision = p.get("runtime_revision", 1)
+    if revision not in (1, 2):
+        raise BridgeError("Révision de runtime inconnue")
+    base = LOCAL / "runtime" / name
+    return base if revision == 1 else base / "r2"
 
 
 def compose(name, args, **kwargs):
@@ -137,9 +143,16 @@ def compose(name, args, **kwargs):
         if key.startswith("COMPOSE_"):
             env.pop(key)
     env.update({key.upper() + "_IMAGE": value for key, value in lock()["images"].items()})
+    built = read_json(LOCAL / "build.json") if (LOCAL / "build.json").is_file() else {}
+    for component in ("signer", "relayer", "operator", "besu_node"):
+        env[component.upper() + "_IMAGE"] = built.get("images", {}).get(component, lock()["images"]["dotnet_runtime"])
     env.update(BRIDGE_ROOT=ROOT.as_posix(), BRIDGE_RUNTIME=runtime(name).as_posix(),
                DOCS_PORT=str(p["docs_port"]), RPC_A_PORT=str(urlparse(p["chains"][0]["rpc_host"]).port),
                RPC_B_PORT=str(urlparse(p["chains"][1]["rpc_host"]).port),
+               STATUS_PORT=str(p.get("status_port", 18082)),
+               PROMETHEUS_PORT=str(18090 if name == "local-fast" else 18091),
+               GRAFANA_PORT=str(13000 if name == "local-fast" else 13001),
+               BRIDGE_CODE_VERSION=built.get("source_sha256", "absent"),
                NETWORK_PREFIX="10.231.240" if name == "local-fast" else "10.231.241")
     LOCAL.mkdir(exist_ok=True)
     empty = LOCAL / "compose.empty.env"
@@ -190,7 +203,9 @@ def effective_status(c, snapshot):
         return "obsolète"
     statuses = {"local-fast": "vérifié_local", "local-besu": "vérifié_besu_local"}
     try:
-        valid = (m["source"]["sha256"] == snapshot["sha256"] and
+        valid = (m.get("passed") is True and
+                 any(check["id"] == "source_unchanged" and check["passed"] is True for check in m["checks"]) and
+                 m["source"]["sha256"] == snapshot["sha256"] and
                  m.get("profile") == c["environment"] and
                  statuses.get(m.get("profile")) == c["status"] and
                  m.get("claim_definitions", {}).get(c["id"]) == digest(canonical(claim_definition(c))) and
@@ -236,9 +251,7 @@ def bootstrap(name, docs_only=False):
     run([python, "-m", "pip", "--disable-pip-version-check", "install", "--require-hashes", "-r", "requirements-docs.lock"], timeout=240)
     if docs_only:
         return
-    keys = ["foundry", "postgres", "probe", "gitleaks"]
-    if name == "local-besu":
-        keys += ["besu"]
+    keys = ["foundry", "anvil", "postgres", "probe", "gitleaks", "dotnet_sdk", "dotnet_runtime", "besu", "prometheus", "grafana"]
     for key in keys:
         print(f"Installation : image {key}", flush=True)
         run(["docker", "pull", "--platform", "linux/amd64", lock()["images"][key]], timeout=300)
@@ -252,6 +265,10 @@ def bootstrap(name, docs_only=False):
         # Le répertoire parent 0700 borne l'accès hôte ; seul postgres reçoit ce fichier.
         password.chmod(0o444)
     (target / "signer_witness").write_text("TEMOIN SANS SECRET REEL\n", encoding="utf-8")
+    app_password = target / "bridge_db_password"
+    if not app_password.exists():
+        app_password.write_text(secrets.token_hex(32), encoding="ascii")
+        app_password.chmod(0o444)
     if name == "local-besu" and not (target / "genesis.json").exists():
         generated = target / "generated"
         generated.mkdir(exist_ok=True)
@@ -310,7 +327,7 @@ def up(name):
     while True:
         try:
             observed = [chain_observation(c) for c in p["chains"]]
-            print(json.dumps({"profile": name, "infra_ready": True, "bridge_implemented": False, "chains": observed}, ensure_ascii=False))
+            print(json.dumps({"profile": name, "infra_ready": True, "application_start": "étape séparée", "chains": observed}, ensure_ascii=False), flush=True)
             return observed
         except Exception:
             if time.monotonic() >= deadline:
@@ -329,6 +346,9 @@ def doctor(offline=False):
         exe = shutil.which(tool)
         report["tools"][tool] = run([exe or tool, *args], check=False, timeout=15)
     report["compose"] = run(["docker", "compose", "version"], check=False)
+    local_sdk = LOCAL / "dotnet" / ("dotnet.exe" if os.name == "nt" else "dotnet")
+    if local_sdk.exists():
+        report["tools"]["dotnet_local"] = run([local_sdk, "--version"], check=False)
     report["docker_context"] = run(["docker", "context", "show"], check=False)["stdout"]
     report["docker_info"] = run(["docker", "info", "--format", "{{json .}}"], check=False, transform=lambda raw: json.dumps({
         k: v for k, v in json.loads(raw).items() if k in {"OSType", "Architecture", "NCPU", "MemTotal", "SecurityOptions", "ContainersRunning", "ServerVersion", "MemoryLimit", "PidsLimit", "CpuCfsQuota"}}))
@@ -357,7 +377,7 @@ def doctor(offline=False):
                 report["network_installation"].append({"url": url, "http_status": code})
             except Exception as exc:
                 report["network_installation"].append({"url": url, "error": type(exc).__name__})
-    report["limitations"] = ["Hôte et moteur Docker partagés, pas de VM dédiée attestée", "Aucun filtrage de destinations imposé au processus hôte", "Accès au moteur Docker réservé par convention à l'orchestrateur, pas par ACL projet", "Les outils applicatifs futurs ne sont pas tous installés"]
+    report["limitations"] = ["Hôte et moteur Docker partagés, pas de VM dédiée attestée", "Aucun filtrage de destinations imposé au processus hôte", "Accès au moteur Docker réservé par convention à l'orchestrateur, pas par ACL projet", "L'installation des dépendances est distincte de l'exécution ; vérifier build.json pour les images applicatives disponibles"]
     write_json(LOCAL / "doctor.json", report)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return report
@@ -382,18 +402,29 @@ def lint():
 
 
 def validate_compose(name):
-    config = json.loads(compose(name, ["--profile", "isolation", "config", "--format", "json"])["stdout"])
+    config = json.loads(compose(name, ["--profile", "isolation", "--profile", "bridge", "config", "--format", "json"])["stdout"])
+    built = read_json(LOCAL / "build.json") if (LOCAL / "build.json").is_file() else {}
+    allowed_images = set(lock()["images"].values()) | set(built.get("images", {}).values())
     for service, cfg in config["services"].items():
         if str(cfg.get("user", "0")).split(":")[0] in ("0", "root"):
             raise BridgeError(f"Service root : {service}")
         if not cfg.get("read_only") or cfg.get("privileged") or cfg.get("cap_add") or "ALL" not in cfg.get("cap_drop", []):
             raise BridgeError(f"Restrictions incomplètes : {service}")
-        if not any("no-new-privileges" in s for s in cfg.get("security_opt", [])):
+        security_options = [str(s).strip().lower().replace("=", ":", 1) for s in cfg.get("security_opt", [])]
+        nnp_options = [s for s in security_options if s.partition(":")[0] == "no-new-privileges"]
+        if not nnp_options or any(s not in ("no-new-privileges", "no-new-privileges:true") for s in nnp_options):
             raise BridgeError(f"Escalade non interdite : {service}")
         if not all(cfg.get(k) for k in ("mem_limit", "cpus", "pids_limit", "logging")):
             raise BridgeError(f"Limites absentes : {service}")
-        if cfg.get("image") not in lock()["images"].values():
+        if cfg.get("image") not in allowed_images:
             raise BridgeError(f"Image hors verrou : {service}")
+        secret_policy = {"postgres": {"postgres_password", "bridge_db_password"},
+                         "signer": {"key_a", "key_b", "signer_token"},
+                         "relayer": {"bridge_db_password", "signer_token"},
+                         "chain-a": {"besu_node_key"} if name == "local-besu" else set(),
+                         "grafana": {"grafana_password"}, "witness-signer": {"signer_witness"}}
+        if {s["source"] for s in cfg.get("secrets", [])} - secret_policy.get(service, set()):
+            raise BridgeError(f"Secret attribué hors nécessité explicite : {service}")
         for port in cfg.get("ports", []):
             if port.get("host_ip") != "127.0.0.1":
                 raise BridgeError(f"Port non loopback : {service}")
@@ -403,7 +434,16 @@ def validate_compose(name):
                            "rpc-a": [((ROOT / "sandbox/loopback_proxy.py").resolve(), "/app/proxy.py")],
                            "rpc-b": [((ROOT / "sandbox/loopback_proxy.py").resolve(), "/app/proxy.py")],
                            "docs-gateway": [((ROOT / "sandbox/loopback_proxy.py").resolve(), "/app/proxy.py")],
-                           "chain-a": [((runtime(name) / "genesis.json").resolve(), "/config/genesis.json")]}
+                           "bridge-gateway": [((ROOT / "sandbox/loopback_proxy.py").resolve(), "/app/proxy.py")],
+                           "prometheus-gateway": [((ROOT / "sandbox/loopback_proxy.py").resolve(), "/app/proxy.py")],
+                           "grafana-gateway": [((ROOT / "sandbox/loopback_proxy.py").resolve(), "/app/proxy.py")],
+                           "prometheus": [((ROOT / "observability/prometheus").resolve(), "/etc/prometheus")],
+                           "grafana": [((ROOT / "observability/grafana/provisioning").resolve(), "/etc/grafana/provisioning"),
+                                       ((ROOT / "observability/grafana/dashboards").resolve(), "/etc/grafana/bridge-dashboards")],
+                           "signer": [((runtime(name) / "deployment.json").resolve(), "/config/deployment.json")],
+                           "relayer": [((runtime(name) / "deployment.json").resolve(), "/config/deployment.json")],
+                           "chain-a": [((runtime(name) / "genesis.json").resolve(), "/config/genesis.json"),
+                                       ((runtime(name) / "genesis.bridge.json").resolve(), "/config/genesis.json")]}
                 if (Path(mount.get("source", "")).resolve(), mount.get("target")) not in allowed.get(service, []) or not mount.get("read_only"):
                     raise BridgeError(f"Montage hors liste autorisée : {service}")
     for net, cfg in config["networks"].items():
@@ -455,7 +495,7 @@ def status(name):
     commit_result = run(["git", "rev-parse", "HEAD"], check=False)
     state = {"utc": utc(), "mode": "instantané historique ; rafraîchir avec status", "profile": name,
              "code_commit": commit_result["stdout"] if commit_result["exit_code"] == 0 else None,
-             "source_sha256": snapshot["sha256"], "bridge": "non implémenté (jalon 2)", "services": [], "chains": []}
+             "source_sha256": snapshot["sha256"], "bridge": {"available": False, "state": "arrêté ou inaccessible"}, "services": [], "chains": []}
     if name != "integration-testnet":
         r = compose(name, ["ps", "--all", "--format", "json"], check=False)
         if r["exit_code"] == 0 and r["stdout"]:
@@ -467,6 +507,11 @@ def status(name):
                 state["chains"].append(chain_observation(c))
             except Exception:
                 state["chains"].append({"chain_id": c["chain_id"], "status": "arrêté ou RPC indisponible"})
+        try:
+            import bridge_runtime as app
+            state["bridge"] = {"available": True, "observed": app.read_status(sys.modules[__name__], name)}
+        except Exception:
+            pass
     state["claims"] = [{"id": c["id"], "status": effective_status(c, snapshot), "evidence": c.get("evidence")} for c in registry()["claims"]]
     campaigns = sorted((ROOT / "evidence").glob("*/manifest.json"))
     state["last_campaign"] = str(campaigns[-1].relative_to(ROOT)).replace("\\", "/") if campaigns else None
@@ -474,7 +519,7 @@ def status(name):
     page = ROOT / "site/status/index.html"
     page.parent.mkdir(parents=True, exist_ok=True)
     rows = "".join(f"<tr><td>{html.escape(c['id'])}</td><td>{html.escape(c['status'])}</td><td>" + (f"<a href='../../{html.escape(c['evidence'])}'>preuve JSON</a>" if c["evidence"] else "aucune") + "</td></tr>" for c in state["claims"])
-    page.write_text("<!doctype html><html lang='fr'><meta charset='utf-8'><meta name='viewport' content='width=device-width'><title>État T3l4N Bridge</title><style>body{font:16px system-ui;max-width:70rem;margin:2rem auto;padding:1rem}td,th{padding:.6rem;border-bottom:1px solid #bbb;text-align:left}pre{white-space:pre-wrap}aside{background:#fff0c0;padding:1rem}</style><h1>État du projet</h1><aside>Instantané historique, aucune actualisation automatique. Les services peuvent avoir changé depuis ce relevé. Dernière mise à jour UTC : " + state["utc"] + "</aside><p><a href='../'>Documentation</a></p><p>Bridge : non implémenté. Les métriques de transferts, de gas, de pause et de réconciliation sont indisponibles.</p><h2>Exploitation observée</h2><pre>" + html.escape(json.dumps({k: state[k] for k in ("profile", "code_commit", "source_sha256", "services", "chains", "last_campaign")}, ensure_ascii=False, indent=2)) + "</pre><h2>Affirmations</h2><table><tr><th>ID</th><th>Statut effectif</th><th>Preuve</th></tr>" + rows + "</table></html>", encoding="utf-8")
+    page.write_text("<!doctype html><html lang='fr'><meta charset='utf-8'><meta name='viewport' content='width=device-width'><title>État T3l4N Bridge</title><style>body{font:16px system-ui;max-width:70rem;margin:2rem auto;padding:1rem}td,th{padding:.6rem;border-bottom:1px solid #bbb;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere}aside{background:#fff0c0;padding:1rem}</style><h1>État du projet</h1><aside>Instantané historique, aucune actualisation automatique. Les services peuvent avoir changé depuis ce relevé. Dernière mise à jour UTC : " + state["utc"] + "</aside><p><a href='../'>Documentation</a> · <a href='http://127.0.0.1:" + str(p.get("status_port", 18082)) + "/status'>État du relayer maintenant (JSON)</a> · <a href='http://127.0.0.1:" + str(13000 if name == "local-fast" else 13001) + "/d/t3l4n-bridge/'>Supervision Grafana</a></p><h2>Exploitation observée</h2><pre>" + html.escape(json.dumps({k: state[k] for k in ("profile", "code_commit", "source_sha256", "bridge", "services", "chains", "last_campaign")}, ensure_ascii=False, indent=2)) + "</pre><h2>Affirmations</h2><table><tr><th>ID</th><th>Statut effectif</th><th>Preuve</th></tr>" + rows + "</table></html>", encoding="utf-8")
     print(json.dumps(state, ensure_ascii=False, indent=2))
     return state
 
@@ -495,6 +540,8 @@ def container_id(name, service):
 
 def prove(name):
     profile(name, runnable=True)
+    import bridge_runtime as app
+    module = sys.modules[__name__]
     commit = run(["git", "rev-parse", "HEAD"])["stdout"]
     snapshot = source_snapshot()
     campaign = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + name
@@ -504,14 +551,14 @@ def prove(name):
                 "git_status": run(["git", "status", "--porcelain=v1", "--untracked-files=all"])["stdout"],
                 "source": snapshot, "profile": name, "configuration": profile(name), "versions_lock": lock(),
                 "claim_definitions": {c["id"]: digest(canonical(claim_definition(c))) for c in registry()["claims"]},
-                "checks": [], "not_executed": ["transferts ERC20", "reprise du relayer", "fuzzing et invariants du bridge", "réconciliation de l'offre", "intégration Sepolia", "intégration TELA"],
+                "checks": [], "not_executed": ["intégration Sepolia", "intégration TELA"],
                 "retention": "Manifestes et rapports légers : durée de vie du dépôt ; données locales et site : jusqu'au nettoyage explicite par le propriétaire"}
 
     def check(id_, expected, function):
         print(f"Vérification : {id_}", flush=True)
         try:
             observed = function()
-            passed = True
+            passed = not isinstance(observed, dict) or observed.get("passed", True) is True
         except Exception as exc:
             passed, observed = False, str(exc)
         manifest["checks"].append({"id": id_, "expected": expected, "observed": observed, "passed": passed, "utc": utc()})
@@ -523,11 +570,18 @@ def prove(name):
         check("compose", "Deux configurations Compose valides, durcies et sans port public", lambda: {p: validate_compose(p) for p in ("local-fast", "local-besu")})
         check("docs", "Construction MkDocs stricte réussie", docs_build)
         check("secrets", "Gitleaks : aucun secret détecté dans les fichiers versionnables", scan_secrets)
-        ready = check("startup", "Deux chain IDs attendus répondent ; aucune preuve de transfert", lambda: up(name))
+        check("contracts", "Compilation London et tous les tests/fuzz/invariants réussissent sans skip", lambda: run([sys.executable, "contracts/tools/verify.py"], timeout=300))
+        check("dotnet", "Tous les tests .NET du signataire et du relayer réussissent sans réseau ni skip", lambda: app.tests(module))
+        check("anvil_history", "520 blocs, historique, logs et reçus conservés après deux arrêts propres du témoin Anvil", anvil_history)
+        ready = check("startup", "Identités des deux réseaux vérifiées, contrats appariés, relayer prêt", lambda: app.full_up(module, name))
         if ready:
             check("hardening", "Restrictions réellement appliquées aux services et passerelles", lambda: inspect_runtime(name))
             check("isolation", "Communication permise réussie ; IP inter-réseau, fichiers et secrets interdits inaccessibles", lambda: isolation(name))
+            check("application_isolation", "Clés seulement au signataire ; secrets et routes hors besoin inaccessibles ; signature sans authentification refusée", lambda: app.application_isolation(module, name))
+            check("roundtrip", "Burn/mint réel dans les deux sens, soldes restaurés et offre au repos conservée", lambda: app.demo(module, name))
+            check("resilience", "Scénarios de panne exécutés avec assertions et restauration ; limites de profil explicites", lambda: app.resilience(module, name))
             check("persistence", "Témoin SQL et progression de bloc conservés après down/up du projet", lambda: persistence(name))
+            check("monitoring", "Prometheus, Grafana, requêtes et règles vérifiés sur les métriques réellement exposées", lambda: monitoring(name))
         check("integration_gate", "Intégration refusée avant toute commande Docker ou RPC", integration_gate)
         check("source_unchanged", "Empreinte des sources inchangée pendant la campagne", lambda: assert_equal(source_snapshot()["sha256"], snapshot["sha256"]))
     finally:
@@ -535,13 +589,23 @@ def prove(name):
         manifest["passed"] = bool(manifest["checks"]) and all(c["passed"] for c in manifest["checks"])
         manifest["tool_versions"] = {"python": platform.python_version(), "git": run(["git", "--version"])["stdout"], "compose": run(["docker", "compose", "version"], check=False)["stdout"]}
         manifest["images_used"] = image_observations(name)
-        if name == "local-besu" and (runtime(name) / "genesis.json").is_file():
-            shutil.copyfile(runtime(name) / "genesis.json", out / "besu-genesis.json")
+        if name == "local-besu" and (runtime(name) / "genesis.bridge.json").is_file():
+            shutil.copyfile(runtime(name) / "genesis.bridge.json", out / "besu-genesis.json")
         python = ROOT / (".venv/Scripts/python.exe" if os.name == "nt" else ".venv/bin/python")
         manifest["installed_docs_dependencies"] = run([python, "-m", "pip", "freeze"], check=False)["stdout"]
-        for report in ("skills-quick-validation.json", "capabilities-validator-tests.json", "skills-forward-review.json"):
+        for report in ("skills-quick-validation.json", "capabilities-validator-tests.json", "skills-forward-review.json",
+                       "contracts-verification.json", "dotnet-tests.json", "build.json", name + "-demo.json",
+                       name + "-resilience.json", "monitoring-checks.json", name + "-monitoring-live.json",
+                       name + "-monitoring-stale.json", "anvil-history.json"):
             if (LOCAL / report).is_file():
                 shutil.copyfile(LOCAL / report, out / report)
+        if (runtime(name) / "deployment.json").is_file():
+            shutil.copyfile(runtime(name) / "deployment.json", out / "deployment.json")
+        for component in ("signer", "relayer"):
+            trx = LOCAL / "test-results" / component / "results.trx"
+            if trx.exists():
+                shutil.copyfile(trx, out / (component + "-tests.trx"))
+        manifest["dotnet_dependencies"] = {p.parent.name: read_json(p) for p in (ROOT / "src").glob("*/packages.lock.json")}
         if (LOCAL / "doctor.json").is_file():
             shutil.copyfile(LOCAL / "doctor.json", out / "doctor.json")
         write_json(out / "commands.json", RECORDS)
@@ -572,14 +636,18 @@ def integration_gate():
 
 def inspect_runtime(name):
     observations = {}
-    for service in ("chain-a", "chain-b", "postgres", "docs", "rpc-a", "rpc-b", "docs-gateway"):
+    for service in ("chain-a", "chain-b", "postgres", "docs", "rpc-a", "rpc-b", "docs-gateway",
+                    "signer", "relayer", "bridge-gateway", "prometheus", "grafana", "prometheus-gateway", "grafana-gateway"):
         cid = container_id(name, service)
         raw = json.loads(run(["docker", "inspect", cid], transform=lambda s: json.dumps([
             {"Config": {"User": x["Config"]["User"], "Image": x["Config"]["Image"]},
              "HostConfig": {k: x["HostConfig"][k] for k in ("ReadonlyRootfs", "Privileged", "CapDrop", "SecurityOpt", "Memory", "NanoCpus", "PidsLimit", "PortBindings", "LogConfig")},
              "Mounts": x["Mounts"]} for x in json.loads(s)])) ["stdout"])[0]
         h = raw["HostConfig"]
-        if not (h["ReadonlyRootfs"] and not h["Privileged"] and "ALL" in h["CapDrop"] and h["Memory"] > 0 and h["NanoCpus"] > 0 and h["PidsLimit"] > 0 and any("no-new-privileges" in v for v in h["SecurityOpt"])):
+        security_options = [str(s).strip().lower().replace("=", ":", 1) for s in h["SecurityOpt"]]
+        nnp_options = [s for s in security_options if s.partition(":")[0] == "no-new-privileges"]
+        nnp_enabled = bool(nnp_options) and all(s in ("no-new-privileges", "no-new-privileges:true") for s in nnp_options)
+        if not (h["ReadonlyRootfs"] and not h["Privileged"] and "ALL" in h["CapDrop"] and h["Memory"] > 0 and h["NanoCpus"] > 0 and h["PidsLimit"] > 0 and nnp_enabled):
             raise BridgeError(f"Durcissement absent sur {service}")
         if raw["Config"]["User"].split(":")[0] in ("", "0", "root"):
             raise BridgeError("Utilisateur root effectif configuré")
@@ -622,35 +690,65 @@ def isolation(name):
 
 
 def persistence(name):
+    import bridge_runtime as app
     marker = "campaign_" + str(time.time_ns())
     sql = f"CREATE TABLE IF NOT EXISTS sandbox_probe (id text PRIMARY KEY); INSERT INTO sandbox_probe VALUES ('{marker}');"
     compose(name, ["exec", "-T", "postgres", "psql", "-U", "sandbox_admin", "-d", "bridge", "-v", "ON_ERROR_STOP=1", "-c", sql])
     before = [chain_observation(c) for c in profile(name)["chains"]]
-    compose(name, ["down", "--timeout", "20"], timeout=60)
-    after = up(name)
+    transfers_before = compose(name, ["exec", "-T", "postgres", "psql", "-U", "sandbox_admin", "-d", "bridge", "-At", "-c", "SELECT count(*) FROM bridge.transfers;"])["stdout"]
+    compose(name, ["--profile", "bridge", "down", "--timeout", "20"], timeout=90)
+    app.full_up(sys.modules[__name__], name)
+    after = [chain_observation(c) for c in profile(name)["chains"]]
+    transfers_after = compose(name, ["exec", "-T", "postgres", "psql", "-U", "sandbox_admin", "-d", "bridge", "-At", "-c", "SELECT count(*) FROM bridge.transfers;"])["stdout"]
+    assert_equal(transfers_after, transfers_before)
     count = compose(name, ["exec", "-T", "postgres", "psql", "-U", "sandbox_admin", "-d", "bridge", "-At", "-v", "ON_ERROR_STOP=1", "-c", f"SELECT count(*) FROM sandbox_probe WHERE id='{marker}';"])["stdout"]
     assert_equal(count, "1")
     for a, b in zip(before, after):
         assert_equal(b["genesis_hash"], a["genesis_hash"])
         if b["head"] < a["head"]:
             raise BridgeError("Recul de hauteur après redémarrage")
-    return {"sql_marker_rows": 1, "before": before, "after": after, "scope": "Volumes et témoin SQL seulement, aucun état de relayer"}
+    return {"sql_marker_rows": 1, "transfers_retained": int(transfers_after), "before": before, "after": after,
+            "relayer": app.read_status(sys.modules[__name__], name)}
+
+
+def monitoring(name):
+    python = ROOT / (".venv/Scripts/python.exe" if os.name == "nt" else ".venv/bin/python")
+    offline = run([python, "observability/tests/verify.py"], timeout=120)
+    stopped = run([python, "observability/tests/stale.py", "--profile", name], timeout=240)
+    live = run([python, "observability/tests/live.py", "--profile", name, "--report", LOCAL / (name + "-monitoring-live.json")], timeout=120)
+    return {"offline": offline, "stopped": stopped, "live": live}
+
+
+def anvil_history():
+    result = run([sys.executable, "tests/anvil_persistence.py", "--variant", "history", "--restarts", "2", "--empty-blocks", "520"], timeout=180)
+    pointer = json.loads(result["stdout"])
+    path = Path(pointer["report"]).resolve()
+    if not path.is_relative_to((LOCAL / "anvil-persistence").resolve()):
+        raise BridgeError("Rapport historique hors périmètre")
+    report = read_json(path)
+    if report.get("passed") is not True:
+        raise BridgeError("Expérience historique Anvil échouée")
+    write_json(LOCAL / "anvil-history.json", report)
+    return {"command": result, "assertions": len(report["assertions"]), "passed": True}
 
 
 def image_observations(name):
-    keys = ["foundry", "postgres", "probe", "gitleaks"] + (["besu"] if name == "local-besu" else [])
+    keys = ["foundry", "anvil", "postgres", "probe", "gitleaks", "dotnet_sdk", "dotnet_runtime", "prometheus", "grafana"] + (["besu"] if name == "local-besu" else [])
     observed = {}
     for key in keys:
         r = run(["docker", "image", "inspect", lock()["images"][key], "--format", "{{json .}}"], check=False,
                 transform=lambda raw: json.dumps({k: v for k, v in json.loads(raw).items() if k in ("Id", "RepoDigests", "Architecture", "Os")}))
         observed[key] = r
+    built = LOCAL / "build.json"
+    if built.exists():
+        observed["application_build"] = read_json(built)
     return observed
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    for cmd in ("doctor", "bootstrap", "up", "down", "status", "test", "prove", "docs", "lint", "scan", "config"):
+    for cmd in ("doctor", "bootstrap", "build", "up", "down", "status", "test", "prove", "demo", "docs", "lint", "scan", "config"):
         p = sub.add_parser(cmd)
         p.add_argument("--profile", choices=PROFILES, default="local-fast")
         if cmd == "doctor":
@@ -658,22 +756,37 @@ def main():
         if cmd == "bootstrap":
             p.add_argument("--docs-only", action="store_true")
     args = parser.parse_args()
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import bridge_runtime as app
     try:
         if args.command == "doctor":
             r = doctor(args.offline)
             return 0 if r["tools"]["docker"]["exit_code"] == 0 else 2
         if args.command == "bootstrap":
             bootstrap(args.profile, args.docs_only)
+            if not args.docs_only:
+                run([sys.executable, "contracts/tools/prepare.py"], timeout=180)
+                run([sys.executable, "contracts/tools/verify.py"], timeout=240)
+                app.build(sys.modules[__name__])
+        elif args.command == "build":
+            app.build(sys.modules[__name__])
         elif args.command == "up":
-            up(args.profile)
+            app.full_up(sys.modules[__name__], args.profile)
             status(args.profile)
+        elif args.command == "demo":
+            app.demo(sys.modules[__name__], args.profile)
         elif args.command == "down":
-            compose(args.profile, ["--profile", "isolation", "down", "--timeout", "20"], timeout=60)
+            compose(args.profile, ["--profile", "isolation", "--profile", "bridge", "down", "--timeout", "20"], timeout=60)
             status(args.profile)
         elif args.command == "status":
             status(args.profile)
         elif args.command == "test":
             run_tests()
+            run([sys.executable, "contracts/tools/verify.py"], timeout=300)
+            app.tests(sys.modules[__name__])
+            app.full_up(sys.modules[__name__], args.profile)
+            app.demo(sys.modules[__name__], args.profile)
+            app.resilience(sys.modules[__name__], args.profile)
         elif args.command == "prove":
             prove(args.profile)
         elif args.command == "docs":

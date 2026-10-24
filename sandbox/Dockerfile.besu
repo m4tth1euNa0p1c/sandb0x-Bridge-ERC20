@@ -1,0 +1,5 @@
+ARG BESU_IMAGE
+FROM ${BESU_IMAGE}
+USER root
+RUN mkdir -p /var/lib/bridge-besu && chown 1000:1000 /var/lib/bridge-besu
+USER 1000:1000

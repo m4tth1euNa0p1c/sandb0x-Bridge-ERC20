@@ -1,6 +1,6 @@
 services:
   chain-a:
-    image: ${BESU_IMAGE:?locked image required}
+    image: ${BESU_NODE_IMAGE:?locked local build required}
     platform: linux/amd64
     user: "1000:1000"
     read_only: true
@@ -18,7 +18,7 @@ services:
       driver: json-file
       options: {max-size: 5m, max-file: "2"}
     command:
-      - --data-path=/opt/besu/data
+      - --data-path=/var/lib/bridge-besu
       - --genesis-file=/config/genesis.json
       - --node-private-key-file=/run/secrets/besu_node_key
       - --rpc-http-enabled=true
@@ -30,11 +30,11 @@ services:
       - --sync-mode=FULL
     secrets: [besu_node_key]
     volumes:
-      - chain_a_data:/opt/besu
-      - ${BRIDGE_RUNTIME:?}/genesis.json:/config/genesis.json:ro
+      - chain_a_bridge_data:/var/lib/bridge-besu
+      - ${BRIDGE_RUNTIME:?}/genesis.bridge.json:/config/genesis.json:ro
     networks: [chain_a]
   chain-b:
-    image: ${FOUNDRY_IMAGE:?locked image required}
+    image: ${ANVIL_IMAGE:?locked image required}
     platform: linux/amd64
     entrypoint: [anvil]
     user: "1000:1000"
@@ -49,8 +49,8 @@ services:
     logging:
       driver: json-file
       options: {max-size: 5m, max-file: "2"}
-    command: [--host, "0.0.0.0", --chain-id, "31340", --hardfork, london, --timestamp, "1700000000", --block-time, "2", --threads, "2", --no-cors, --quiet, --state, /home/foundry/state.json, --state-interval, "10"]
-    volumes: [chain_b_data:/home/foundry]
+    command: [--host, "0.0.0.0", --chain-id, "31340", --hardfork, london, --timestamp, "1700000000", --block-time, "2", --threads, "2", --no-cors, --quiet, --state, /home/foundry/state.json, --state-interval, "10", --preserve-historical-states]
+    volumes: [chain_b_bridge_r2:/home/foundry]
     networks: [chain_b]
     healthcheck:
       test: [CMD, cast, chain-id, --rpc-url, "http://127.0.0.1:8545"]
@@ -60,3 +60,6 @@ services:
 secrets:
   besu_node_key:
     file: ${BRIDGE_RUNTIME:?}/besu_node_key
+volumes:
+  chain_a_bridge_data:
+  chain_b_bridge_r2:

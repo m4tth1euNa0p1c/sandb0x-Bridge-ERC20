@@ -1,0 +1,116 @@
+x-monitor: &monitor
+  platform: linux/amd64
+  profiles: [bridge]
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 128
+  cpus: 1.0
+  mem_limit: 384m
+  restart: "no"
+  tmpfs: ["/tmp:rw,noexec,nosuid,size=32m,mode=1777"]
+  logging:
+    driver: json-file
+    options: {max-size: 5m, max-file: "2"}
+
+services:
+  prometheus:
+    <<: *monitor
+    image: ${PROMETHEUS_IMAGE:?locked image required}
+    user: "65534:65534"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=24h
+      - --storage.tsdb.retention.size=128MB
+      - --web.listen-address=0.0.0.0:9090
+      - --web.external-url=http://127.0.0.1:${PROMETHEUS_PORT:?}
+      - --query.max-concurrency=4
+      - --query.max-samples=1000000
+      - --log.format=json
+    environment: {GOMAXPROCS: "2"}
+    volumes:
+      - "${BRIDGE_ROOT:?}/observability/prometheus:/etc/prometheus:ro"
+      - prometheus_data:/prometheus
+    networks: [monitoring]
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://127.0.0.1:9090/-/ready]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  grafana:
+    <<: *monitor
+    image: ${GRAFANA_IMAGE:?locked image required}
+    user: "472:472"
+    mem_limit: 512m
+    environment:
+      GOMAXPROCS: "2"
+      GF_SERVER_HTTP_PORT: "3000"
+      GF_SERVER_ROOT_URL: http://127.0.0.1:${GRAFANA_PORT:?}/
+      GF_SECURITY_ADMIN_USER: sandbox_admin
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_password
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_USERS_ALLOW_ORG_CREATE: "false"
+      GF_ANALYTICS_ENABLED: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: "false"
+      GF_PLUGINS_PREINSTALL_DISABLED: "true"
+      GF_PLUGINS_PREINSTALL_AUTO_UPDATE: "false"
+      GF_PLUGINS_PUBLIC_KEY_RETRIEVAL_DISABLED: "true"
+      GF_LIVE_MAX_CONNECTIONS: "0"
+      GF_LOG_MODE: console
+      GF_LOG_CONSOLE_FORMAT: json
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/bridge-dashboards/bridge.json
+    secrets: [grafana_password]
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - "${BRIDGE_ROOT:?}/observability/grafana/provisioning:/etc/grafana/provisioning:ro"
+      - "${BRIDGE_ROOT:?}/observability/grafana/dashboards:/etc/grafana/bridge-dashboards:ro"
+    networks: [monitoring]
+    depends_on: [prometheus]
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://127.0.0.1:3000/api/health]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+  prometheus-gateway:
+    <<: *monitor
+    image: ${PROBE_IMAGE:?locked image required}
+    user: "10001:10001"
+    pids_limit: 32
+    mem_limit: 64m
+    cpus: 0.25
+    command: [python, /app/proxy.py, prometheus]
+    volumes: ["${BRIDGE_ROOT:?}/sandbox/loopback_proxy.py:/app/proxy.py:ro"]
+    networks: [monitoring, edge_prometheus]
+    ports: ["127.0.0.1:${PROMETHEUS_PORT:?}:8080"]
+    depends_on: [prometheus]
+  grafana-gateway:
+    <<: *monitor
+    image: ${PROBE_IMAGE:?locked image required}
+    user: "10001:10001"
+    pids_limit: 32
+    mem_limit: 64m
+    cpus: 0.25
+    command: [python, /app/proxy.py, grafana]
+    volumes: ["${BRIDGE_ROOT:?}/sandbox/loopback_proxy.py:/app/proxy.py:ro"]
+    networks: [monitoring, edge_grafana]
+    ports: ["127.0.0.1:${GRAFANA_PORT:?}:8080"]
+    depends_on: [grafana]
+
+networks:
+  edge_prometheus:
+    driver_opts: {com.docker.network.bridge.enable_ip_masquerade: "false"}
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.160/28"}]}
+  edge_grafana:
+    driver_opts: {com.docker.network.bridge.enable_ip_masquerade: "false"}
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.176/28"}]}
+volumes:
+  prometheus_data:
+  grafana_data:
+secrets:
+  grafana_password: {file: "${BRIDGE_RUNTIME:?}/grafana_password"}

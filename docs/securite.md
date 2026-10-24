@@ -1,63 +1,119 @@
 # Clés, menaces et frontières
 
-**Exigences.** Aucun mainnet, aucun actif réel, uniquement des clés de test.
-Aucun secret dans Git, rapports, logs ou captures. Les rôles des contrats et la
-signature séparée restent à implémenter ; voir [ADR-0002](adr/0002-protocole.md).
+## Exigences et portée
 
-**Implémentation J1.** Utilisateurs numériques non root, rootfs en lecture seule,
-capabilities ALL supprimées, no-new-privileges, tmpfs bornés, quotas mémoire/CPU/PID,
-journaux tournants 2 × 5 Mo, ports hôtes loopback, réseaux internes distincts.
-Aucun service ne reçoit le socket Docker ni le répertoire personnel de l'hôte.
-Les passerelles de consultation ont un réseau edge distinct avec masquerading
-désactivé ; les nœuds et services de données restent sur réseaux internes.
-Les affirmations ISO-001 et ISO-002 indiquent les vérifications et leur périmètre.
+Aucun mainnet ni actif réel ; seuls les profils locaux explicitement autorisés
+sont exécutables. Les paramètres du véritable TELA ne sont pas déduits d'un
+Besu local. Les [informations manquantes](informations-manquantes.md) empêchent
+l'intégration partagée. Les affirmations de sécurité concernent le code et les
+expériences nommées : ISO-001, ISO-002, KEY-001, SIGN-001, CONTRACT-001.
 
-Exception mesurée pour Besu : RocksDB charge une bibliothèque JNI et échoue si
-son répertoire temporaire est noexec. Un tmpfs `/jni-tmp` de 128 Mio, uid1000,
-mode0700, nosuid/nodev, autorise ce chargement ; `java.io.tmpdir` le cible.
-`/tmp` et la racine conservent leurs restrictions. Il ne s'agit pas d'un conteneur privilégié.
+Les processus Codex et le moteur Docker disposent de droits hôtes étendus.
+Leur accès n'est pas limité à ce projet par les réseaux Compose. La machine/VM
+dédiée reste à fournir (ENV-01) ; les témoins de cloisonnement ne démontrent pas
+cette frontière absente.
 
-PostgreSQL reçoit un mot de passe aléatoire créé localement, via un fichier
-Compose secret. Hors Swarm, ce fichier reste un montage de l'hôte, sans chiffrement
-de coffre. Sous Unix, le répertoire parent est en 0700 et le fichier monté en
-0444 pour que le compte du conteneur puisse le lire ; Compose ne remappe pas
-magiquement son propriétaire. Sous Windows, cette recette ne remplace pas une
-ACL NTFS et une VM dédiée. La base n'a pas de port publié ; le compte de bootstrap
-est administrateur. Un compte applicatif à privilèges réduits est requis au J2.
+## Signature et permissions
 
-**Test de cloisonnement.** Un serveur témoin joignable depuis le réseau signing
-sert de contrôle positif, y compris via son IP. Une sonde du réseau database
-tente la même IP et doit échouer. Une autre vérification monte un fichier public
-hors dépôt comme contrôle positif, puis vérifie son absence sans montage. Le
-témoin signataire peut lire son propre fichier, mais pas celui de PostgreSQL ;
-la base ne reçoit pas le témoin signataire. La sonde vérifie également son UID,
-ses capacités effectives, no-new-privileges et le refus d'écriture à la racine.
-Ce scénario ne couvre pas toutes les voies réseau de Docker Desktop.
+Les clés `key_a` et `key_b` sont générées pour ce laboratoire, conservées dans
+`.local/runtime/<profil>/r2/` et montées seulement dans le service signataire.
+Le relayer reçoit un jeton de service et le mot de passe PostgreSQL applicatif,
+mais aucune clé privée. Un opérateur ponctuel signe les administrations Besu avec
+une clé séparée. Les comptes publics d'Anvil servent seulement à cette simulation locale.
 
-**Limites.** Le processus Codex hôte et ses enfants peuvent lire un témoin hors
-dépôt. Le moteur Docker existant est partagé ; aucune ACL ne le limite aux
-ressources du bridge. Les réseaux Compose ne confinent pas un administrateur de
-l'hôte ou du moteur. La liste `sandbox/egress-policy.json` n'est pas un contrôle
-de destinations effectif pour l'installation, et ne garantit pas de filtrage
-DNS ou de suppression des accès spéciaux à l'hôte Docker Desktop.
-La désactivation du masquerading n'est pas assimilée à un pare-feu de destinations.
+`ITransactionSignerBackend` permet de remplacer le mécanisme de signature.
+`FileKeySigner` charge aujourd'hui un fichier local : ce n'est ni un HSM, ni un
+coffre matériel, ni une preuve d'effacement des copies mémoire ou sauvegardes.
+Le signataire ne contacte aucun RPC et ne vérifie donc pas la réalité d'un burn.
 
-Le scan Gitleaks utilise ses règles par défaut. Une exception dans
-`.gitleaks.toml` vise exclusivement la ligne d'inventaire et l'empreinte exacte
-du fichier `bridge-secrets.toml` : son nom déclenchait la règle generic-api-key
-sur un SHA-256 public. Elle ne masque pas un répertoire de preuves entier.
-Un credential synthétique éphémère placé dans un manifeste témoin doit toujours
-être détecté (sortie 1 attendue), sans afficher sa valeur. Les scans ne démontrent
-pas une absence absolue de secrets inconnus de leurs règles.
+`POST /sign` exige `X-Bridge-Token` ; une comparaison d'empreintes à temps constant
+protège la comparaison du secret. Le JSON est borné et ses champs strictement
+contrôlés. Seuls les domaines configurés, la méthode `completeTransfer`,
+la paire, le destinataire non nul, le montant, le nonce et les limites de gas
+acceptés peuvent être signés. La valeur native est zéro. Les erreurs sont bornées :
+401 pour authentification invalide, 400 pour requête invalide, 403 pour politique
+refusée, 429 pour fréquence, 500 pour échec interne. Les payloads signés sont
+renvoyés au relayer et persistés avant diffusion ; ils ne sont pas des artefacts
+à publier dans les rapports.
 
-**Modèle de menace.** Clé executor compromise : mint indu possible. Admin
-compromis : droits et configuration modifiables. RPC malveillant : faux événements
-ou fausse finalité ; vérifier identité, hashes et cohérence ne transforme pas un
-RPC en preuve de consensus. Base perdue : reprise et réconciliation nécessaires.
-Hôte compromis : contournement possible de tous les compartiments de cette VM.
-Les plafonds proposés ne sont pas encore appliqués par du code métier.
+Le compte SQL `bridge_app` est distinct de `sandbox_admin`. Le bootstrap
+administrateur crée son schéma ; le relayer y utilise ses tables et verrous.
+L'application n'est pas superutilisatrice. Les administrateurs PostgreSQL et
+hôte peuvent toutefois lire la base et ses transactions signées.
 
-**Avant intégration.** Identité via chain ID, genesis attendu, code/adresses des
-contrats et accord sur le réseau de test ; clés distinctes, droits minimaux,
-gas borné, destinations filtrées et politique de finalité validée. Rien de cela
-n'est déduit d'un succès local.
+## Limites appliquées par le code
+
+Valeurs du déploiement local courant ; les paramètres réellement exécutés sont
+dans le fichier de déploiement et le manifeste de campagne.
+
+| Contrôle | Valeur / portée |
+|---|---|
+| Token | 18 decimals, implémentation dédiée sans rebase ni frais |
+| Montant par transfert | 1 000 tokens, soit `10^21` unités minimales |
+| Mint par époque | 100 000 tokens par période fixe de 3 600 secondes, par bridge destination |
+| Gas de completion | 350 000 ; borne absolue de configuration/signature 500 000 |
+| Prix du gas | Maximum 100 gwei par défaut ; attente au-delà du plafond |
+| Fréquence | 10 tentatives par minute et destination dans PostgreSQL ; 10 signatures par minute et chaîne dans le processus signataire |
+| Tentatives | 12 par défaut ; réconciliation d'un envoi ambigu avant arrêt définitif |
+| RPC | Timeout de 5 secondes par défaut, sans redirection ni proxy implicite du client .NET |
+| Transaction pending | Intervention après 300 secondes par défaut, sans remplacement automatique de frais |
+| Requête signataire | Corps au plus 4 096 octets ; champs et encodage vérifiés |
+
+La fenêtre de mint est fixe : deux périodes adjacentes peuvent autoriser un
+cumul supérieur au plafond d'une période sur une fenêtre glissante.
+Le limiteur du signataire est en mémoire et repart au redémarrage ; le suivi
+des tentatives du relayer est persistant. Ces contrôles ne suppriment pas les
+pouvoirs des clés et administrateurs. Les montants sont calculés en entiers.
+
+## Compartimentage des services
+
+Compose impose utilisateurs non root, racines en lecture seule, suppression des
+capacités Linux, `no-new-privileges`, volumes explicites, limites CPU/RAM/PID et
+journaux tournants. Aucun service n'obtient socket Docker, répertoire personnel
+ou identifiants de production. Les consultations sont liées à `127.0.0.1`.
+
+Besu charge une bibliothèque JNI pour RocksDB : le tmpfs `/jni-tmp` autorise
+cette exécution avec propriétaire et permissions restreints. `/tmp` et la
+racine conservent leurs restrictions ; le conteneur n'est pas privilégié.
+
+Les secrets Compose hors Swarm restent des fichiers montés de l'hôte. Le
+répertoire runtime est restreint sous Unix ; les fichiers lisibles du conteneur
+n'offrent aucun chiffrement de coffre. Sous Windows, ces modes ne remplacent
+pas une ACL NTFS vérifiée. Les flux HTTP internes de signature et PostgreSQL
+sans TLS sont des choix du laboratoire local ; ils ne doivent pas être
+transposés tels quels à un réseau partagé.
+
+Les tests témoins comparent un accès autorisé et le même accès interdit, puis
+l'accès à un fichier inoffensif monté ou absent. Les tests applicatifs vérifient
+la distribution des secrets et le refus de signature sans authentification.
+Une déclaration Compose réussie ne vaut pas résultat runtime ; consulter
+[les preuves](tests-preuves.md).
+
+L'installation des dépendances est une phase réseau distincte. La liste
+`sandbox/egress-policy.json` décrit les destinations prévues mais ne constitue
+pas un pare-feu hôte. Les réseaux internes et l'absence de masquerading ne
+garantissent pas un filtrage fin des ports, de DNS ou des accès spéciaux à l'hôte
+Docker Desktop. L'administrateur du moteur peut contourner les compartiments.
+
+## Menaces et conséquences
+
+| Compromission / défaut | Conséquence et protection partielle |
+|---|---|
+| Clé d'exécution | Mints frauduleux possibles sur la paire dans les plafonds ; pause et révocation limitent les effets futurs |
+| Relayer ou jeton de signature | Requêtes frauduleuses compatibles avec la politique ; le signataire ne dispose pas d'une preuve du burn |
+| Administrateur du bridge | Attribution/révocation de rôles et levée de pause ; la paire déjà fixée reste immuable |
+| Administrateur du token | Attribution de `BRIDGE_ROLE` et émissions externes contournant les plafonds du bridge |
+| RPC incohérent ou malveillant | Arrêt sur incohérence détectée ; des réponses mensongères cohérentes restent dans la frontière de confiance |
+| Base perdue ou modifiée | Perte/falsification des données de reprise ; contraintes et réconciliation ne remplacent pas sauvegarde et contrôle d'accès |
+| Hôte ou moteur compromis | Accès possible aux clés, volumes et processus ; frontières Compose insuffisantes |
+| Finalité locale invalidée | Un effet déjà crédité peut exiger une intervention ; aucune compensation automatique n'efface ce risque |
+
+Un test inclut volontairement un mint forgé par un exécuteur autorisé : il
+démontre ce pouvoir, pas une propriété de preuve interchaîne. Des attestations
+multiples, une vérification cryptographique de preuves ou un autre mécanisme
+de garde sont des options futures, non implémentées.
+
+Gitleaks complète la revue et possède un contrôle positif avec credential
+synthétique éphémère. Les exceptions doivent rester ciblées sur les faux
+positifs publics ; ne pas masquer un répertoire de preuves. Un scan réussi
+ne démontre pas l'absence de toute catégorie de secret.

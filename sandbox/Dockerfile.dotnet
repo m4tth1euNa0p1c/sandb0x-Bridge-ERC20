@@ -1,0 +1,17 @@
+ARG SDK_IMAGE
+ARG RUNTIME_IMAGE
+FROM ${SDK_IMAGE} AS build
+ARG COMPONENT
+WORKDIR /build
+COPY global.json ./
+COPY NuGet.config ./
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+COPY src/Bridge.${COMPONENT}/ ./src/Bridge.${COMPONENT}/
+RUN dotnet restore src/Bridge.${COMPONENT}/Bridge.${COMPONENT}.csproj --locked-mode
+RUN dotnet publish src/Bridge.${COMPONENT}/Bridge.${COMPONENT}.csproj --no-restore -c Release -o /output /p:UseAppHost=false
+
+FROM ${RUNTIME_IMAGE}
+WORKDIR /app
+COPY --from=build /output/ ./
+USER 1654:1654
+ENV ASPNETCORE_URLS=http://0.0.0.0:8080 DOTNET_EnableDiagnostics=0

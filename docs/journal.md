@@ -72,3 +72,83 @@ les campagnes antérieures sont conservées comme historiques.
 Les deux campagnes finales ont réussi leurs 11 contrôles sur `991df1d6d7c5eb0642e9a51501a9018c792aab4a`.
 47 tests unitaires et 50 validations de skills ont réussi. Les rapports et le
 registre sont mis à jour sans promouvoir le protocole absent. Voir [résultats](resultats.md).
+
+## Mise en œuvre des jalons 2–4 — campagne en cours
+
+Le 2026-10-24, la branche a été poussée sur le dépôt privé ; la CI du jalon 1
+`40130621188` a réussi. Les contrats burn/mint ont ensuite été implémentés et
+27 tests Foundry ont réussi, avec fuzzing et invariants. La compilation du
+signataire et du relayer .NET a réussi ; leurs tests isolés restent distincts
+des campagnes EVM/PostgreSQL. Les résultats définitifs seront scellés après
+intégration et gel du code.
+
+Incidents observés et corrections :
+
+- Restore Nethereum : Newtonsoft.Json 11.0.2 signalé NU1903, corrigé par le pin
+  explicite 13.0.4 ; aucun avertissement correspondant après restore et audit.
+- Scan : deux empreintes publiques de fichiers OpenZeppelin assimilées à des
+  clés. Exceptions limitées à ces valeurs exactes et chemins de provenance,
+  contrôle synthétique positif toujours exécuté. La CI `40131665932` a conservé
+  cet échec ; correction poussée ensuite.
+- Compte PostgreSQL applicatif : `CREATE SCHEMA IF NOT EXISTS` demandait un droit
+  sur la base même après création du schéma par le bootstrap. L'opération
+  redondante a été retirée, sans élargir les droits du compte.
+- Build Linux du test relayer : le vecteur d'identifiant Solidity n'était pas
+  copié dans le contexte de test. Le fichier et son empreinte font désormais
+  partie de la construction et du contrôle de fraîcheur.
+- Une modification des tests pendant un build a été détectée et le build refusé.
+  Les sources applicatives et tests sont gelés avant la nouvelle campagne.
+- Revue du déploiement : liaison renforcée entre artefacts compilés et sources
+  testées, vérification du réseau avant émission. Le contrôle recherchait
+  initialement un reçu sur la mauvaise chaîne : les adresses de contrats
+  étaient identiques sur les deux réseaux. La recherche par seule adresse a
+  été remplacée par une attribution et une relecture sur le réseau concerné.
+  Aucune perte de reçu n'est établie par cet incident. Une expérience isolée
+  a en revanche reproduit l'absence de lectures d'état historique après reprise
+  sans l'option Anvil de conservation des états historiques.
+- La mémoire libre observée de l'hôte est descendue sous 1 Gio. Les serveurs
+  de compilation lancés avec le SDK local ont été arrêtés après leurs builds ;
+  aucun service extérieur au projet n'a été arrêté.
+
+Les retours ont été intégrés aux skills versions, CI, déploiement, manifestes et
+alertes. Le catalogue conserve ses 50 agents et 50 skills ; il ne représente pas
+50 processus simultanément actifs.
+
+La révision `r2` démarre avec Anvil 1.8.4 et états historiques conservés ; les
+anciennes données synthétiques sont préservées. Un premier aller-retour réel
+de 10 tokens a réussi le 2026-10-24 (rapport local horodaté et reçus conservés),
+avec soldes restaurés et offre totale égale à la référence. Les 64 tests du
+signataire et les 51 tests du relayer passent également dans des conteneurs Linux
+sans réseau, non root et à racine en lecture seule. Le runtime 10.0.13 du SDK nécessitait un
+répertoire privé `XDG_RUNTIME_DIR` pour son mutex : tmpfs borné ajouté, sans
+ouvrir la racine en écriture. Source primaire du comportement :
+[dotnet/runtime #135726](https://github.com/dotnet/runtime/issues/135726).
+
+La recette nominale des API et requêtes Grafana/Prometheus ainsi que la capture
+du tableau ont été effectuées. Les tests de panne et la compatibilité applicative
+Besu sont les étapes suivantes ; le registre attend leur campagne finale.
+
+## Recette complète et contre-revue avant gel
+
+Le premier aller-retour Besu/Anvil a également réussi, avec reçus et soldes
+restaurés. Sur local-fast, les neuf scénarios de panne ont passé ; la campagne
+diagnostique a correctement refusé une validation globale parce que le code
+avait changé pendant l'exécution. Ils doivent être rejoués sur sources gelées.
+
+La contre-revue a reproduit deux faux positifs des gardes : une preuve pouvait
+rester valide après échec global, et une option `no-new-privileges:false` pouvait
+être confondue avec `true`. Les gardes et leurs régressions ont été corrigées ;
+64 tests Python passent. Les conteneurs inspectés utilisaient déjà `true`.
+
+Le premier essai de résilience Besu a passé reprise historique et déduplication,
+puis rencontré `WinError10013` lors d'un accès HTTP hôte après levée de pause.
+L'instance a retrouvé un état prêt, équilibré, non pausé et sans transfert en
+attente lors de trois contrôles. Les comptages TCP observés ne permettent pas
+d'attribuer cet incident à une saturation. Aucun pare-feu ni paramètre système
+n'a été changé ; l'échec est conservé et la campagne est rejouée.
+
+Les diagrammes Mermaid sont fournis avec un bundle officiel épinglé et sa
+licence, sans CDN à l'exécution. Trois diagrammes ont été réellement rendus
+par Chrome avec proxy externe fermé et contrôle négatif de connectivité.
+La recette d'un tableau Grafana ancien ou arrêté est menée séparément des
+contrôles nominaux, avant le gel final.

@@ -1,0 +1,1022 @@
+{
+  "rule_files": [
+    "../prometheus/bridge.rules.yml"
+  ],
+  "evaluation_interval": "5s",
+  "tests": [
+    {
+      "name": "nominal frais sans alerte",
+      "interval": "5s",
+      "input_series": [
+        {
+          "series": "up{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_status_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_reconciliation_state{job=\"bridge\",instance=\"relayer:8080\",state=\"balanced\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_reconciliation_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_finalized_lag_blocks{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_oldest_pending_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_transfers{job=\"bridge\",instance=\"relayer:8080\",state=\"intervention_required\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_paused{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_ready{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeRelayerUnavailable",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeTelemetryStale",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeCollectionStale",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeFinalizedLag",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeTransferPending",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeInterventionRequired",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeTestGasLow",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgePaused",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeReconciliationMismatch",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeReconciliationUnknown",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "60s",
+          "alertname": "BridgeNotReady",
+          "exp_alerts": []
+        }
+      ],
+      "promql_expr_test": [
+        {
+          "expr": "bridge:telemetry_fresh",
+          "eval_time": "60s",
+          "exp_samples": [
+            {
+              "labels": "{__name__=\"bridge:telemetry_fresh\",instance=\"relayer:8080\",job=\"bridge\"}",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "expr": "max(up{job=\"bridge\"}) or vector(0)",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{}",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "expr": "max(bridge:telemetry_fresh) or vector(0)",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{}",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "exporteur et séries complètement absents",
+      "interval": "5s",
+      "input_series": [],
+      "alert_rule_test": [
+        {
+          "eval_time": "20s",
+          "alertname": "BridgeRelayerUnavailable",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "severity": "critical"
+              },
+              "exp_annotations": {
+                "summary": "Relayer inaccessible depuis Prometheus",
+                "procedure": "observability/README.md#service-indisponible"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "20s",
+          "alertname": "BridgeTelemetryStale",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "État absent, ancien ou horloge incohérente",
+                "procedure": "observability/README.md#donnees-anciennes"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "20s",
+          "alertname": "BridgeCollectionStale",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "network": "a",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Collecte historique ancienne ou absente",
+                "procedure": "observability/README.md#donnees-anciennes"
+              }
+            },
+            {
+              "exp_labels": {
+                "network": "b",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Collecte historique ancienne ou absente",
+                "procedure": "observability/README.md#donnees-anciennes"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "35s",
+          "alertname": "BridgeReconciliationUnknown",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Réconciliation inconnue, non concluante ou ancienne",
+                "procedure": "observability/README.md#pause-et-reconciliation"
+              }
+            }
+          ]
+        }
+      ],
+      "promql_expr_test": [
+        {
+          "expr": "max(up{job=\"bridge\"}) or vector(0)",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{}",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "expr": "max(bridge:telemetry_fresh) or vector(0)",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{}",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "expr": "(bridge_code_info and on(job, instance) (bridge:telemetry_fresh == 1)) or (label_replace(vector(0),\"version\",\"Indisponible\",\"__name__\",\".*\") unless on() (bridge_code_info and on(job, instance) (bridge:telemetry_fresh == 1)))",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{version=\"Indisponible\"}",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "expr": "(bridge_code_info{profile=~\"local-fast|local-besu\"} and on(job, instance) (bridge:telemetry_fresh == 1)) or (label_replace(vector(0),\"profile\",\"Indisponible\",\"__name__\",\".*\") unless on() (bridge_code_info{profile=~\"local-fast|local-besu\"} and on(job, instance) (bridge:telemetry_fresh == 1)))",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{profile=\"Indisponible\"}",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "expr": "(bridge_network_info and on(job, instance) (bridge:telemetry_fresh == 1)) or (label_replace(label_replace(vector(0),\"network\",\"Indisponible\",\"__name__\",\".*\"),\"chain_id\",\"?\",\"__name__\",\".*\") unless on() (bridge_network_info and on(job, instance) (bridge:telemetry_fresh == 1)))",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{chain_id=\"?\",network=\"Indisponible\"}",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "expr": "((bridge_reconciliation_state == 1) and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (time() - bridge_reconciliation_updated_timestamp_seconds <= 60) and on(job, instance) (time() - bridge_reconciliation_updated_timestamp_seconds >= -5) and on(job, instance) (bridge_ready == 1)) or (label_replace(vector(0),\"state\",\"Indisponible\",\"__name__\",\".*\") unless on() ((bridge_reconciliation_state == 1) and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (time() - bridge_reconciliation_updated_timestamp_seconds <= 60) and on(job, instance) (time() - bridge_reconciliation_updated_timestamp_seconds >= -5) and on(job, instance) (bridge_ready == 1)))",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{state=\"Indisponible\"}",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "scrape échoue puis reprend",
+      "interval": "5s",
+      "input_series": [
+        {
+          "series": "up{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1 0 0 0 0 1x25"
+        },
+        {
+          "series": "bridge_status_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_reconciliation_state{job=\"bridge\",instance=\"relayer:8080\",state=\"balanced\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_reconciliation_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_finalized_lag_blocks{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_oldest_pending_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_transfers{job=\"bridge\",instance=\"relayer:8080\",state=\"intervention_required\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_paused{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_ready{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "15s",
+          "alertname": "BridgeRelayerUnavailable",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "20s",
+          "alertname": "BridgeRelayerUnavailable",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "severity": "critical"
+              },
+              "exp_annotations": {
+                "summary": "Relayer inaccessible depuis Prometheus",
+                "procedure": "observability/README.md#service-indisponible"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "25s",
+          "alertname": "BridgeRelayerUnavailable",
+          "exp_alerts": []
+        }
+      ],
+      "promql_expr_test": [
+        {
+          "expr": "bridge:telemetry_fresh",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{__name__=\"bridge:telemetry_fresh\",instance=\"relayer:8080\",job=\"bridge\"}",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "expr": "bridge:telemetry_fresh",
+          "eval_time": "25s",
+          "exp_samples": [
+            {
+              "labels": "{__name__=\"bridge:telemetry_fresh\",instance=\"relayer:8080\",job=\"bridge\"}",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HTTP fonctionne mais données et collecte A figées",
+      "interval": "5s",
+      "input_series": [
+        {
+          "series": "up{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_status_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_reconciliation_state{job=\"bridge\",instance=\"relayer:8080\",state=\"balanced\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_reconciliation_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_finalized_lag_blocks{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_oldest_pending_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_transfers{job=\"bridge\",instance=\"relayer:8080\",state=\"intervention_required\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_paused{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_ready{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "45s",
+          "alertname": "BridgeTelemetryStale",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "50s",
+          "alertname": "BridgeTelemetryStale",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "État absent, ancien ou horloge incohérente",
+                "procedure": "observability/README.md#donnees-anciennes"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "50s",
+          "alertname": "BridgeCollectionStale",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "network": "a",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Collecte historique ancienne ou absente",
+                "procedure": "observability/README.md#donnees-anciennes"
+              }
+            }
+          ]
+        }
+      ],
+      "promql_expr_test": [
+        {
+          "expr": "bridge:telemetry_fresh",
+          "eval_time": "50s",
+          "exp_samples": [
+            {
+              "labels": "{__name__=\"bridge:telemetry_fresh\",instance=\"relayer:8080\",job=\"bridge\"}",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "horloge future refusée",
+      "interval": "5s",
+      "input_series": [
+        {
+          "series": "up{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_status_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "100x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_reconciliation_state{job=\"bridge\",instance=\"relayer:8080\",state=\"balanced\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_reconciliation_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_finalized_lag_blocks{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_oldest_pending_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_transfers{job=\"bridge\",instance=\"relayer:8080\",state=\"intervention_required\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_paused{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_ready{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "20s",
+          "alertname": "BridgeTelemetryStale",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "État absent, ancien ou horloge incohérente",
+                "procedure": "observability/README.md#donnees-anciennes"
+              }
+            }
+          ]
+        }
+      ],
+      "promql_expr_test": [
+        {
+          "expr": "bridge:telemetry_fresh",
+          "eval_time": "20s",
+          "exp_samples": [
+            {
+              "labels": "{__name__=\"bridge:telemetry_fresh\",instance=\"relayer:8080\",job=\"bridge\"}",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "attente gas pause intervention et offre divergente",
+      "interval": "5s",
+      "input_series": [
+        {
+          "series": "up{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_status_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "10000x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_reconciliation_state{job=\"bridge\",instance=\"relayer:8080\",state=\"balanced\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_reconciliation_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_finalized_lag_blocks{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "8x30"
+        },
+        {
+          "series": "bridge_oldest_pending_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "130x30"
+        },
+        {
+          "series": "bridge_transfers{job=\"bridge\",instance=\"relayer:8080\",state=\"intervention_required\"}",
+          "values": "2x30"
+        },
+        {
+          "series": "bridge_paused{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_reconciliation_state{job=\"bridge\",instance=\"relayer:8080\",state=\"mismatch\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_ready{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "35s",
+          "alertname": "BridgeFinalizedLag",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "network": "a",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Retard de collecte supérieur au seuil local",
+                "procedure": "observability/README.md#transfert-en-attente"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "35s",
+          "alertname": "BridgeTransferPending",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Un transfert reste en attente depuis plus de deux minutes",
+                "procedure": "observability/README.md#transfert-en-attente"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "35s",
+          "alertname": "BridgeInterventionRequired",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "state": "intervention_required",
+                "severity": "critical"
+              },
+              "exp_annotations": {
+                "summary": "Intervention requise sur un transfert",
+                "procedure": "observability/README.md#transfert-en-attente"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "35s",
+          "alertname": "BridgeTestGasLow",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "network": "a",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Solde de gas inférieur au seuil indicatif local",
+                "procedure": "observability/README.md#gas-de-test"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "35s",
+          "alertname": "BridgePaused",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "network": "a",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Bridge en pause sur un réseau",
+                "procedure": "observability/README.md#pause-et-reconciliation"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "35s",
+          "alertname": "BridgeReconciliationMismatch",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "state": "mismatch",
+                "severity": "critical"
+              },
+              "exp_annotations": {
+                "summary": "Écart observé lors du contrôle de l'offre",
+                "procedure": "observability/README.md#pause-et-reconciliation"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "réconciliation non concluante puis rétablie",
+      "interval": "5s",
+      "input_series": [
+        {
+          "series": "up{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_status_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_reconciliation_state{job=\"bridge\",instance=\"relayer:8080\",state=\"balanced\"}",
+          "values": "0x6 1x24"
+        },
+        {
+          "series": "bridge_reconciliation_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_finalized_lag_blocks{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_oldest_pending_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_transfers{job=\"bridge\",instance=\"relayer:8080\",state=\"intervention_required\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_paused{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_reconciliation_state{job=\"bridge\",instance=\"relayer:8080\",state=\"inconclusive\"}",
+          "values": "1x6 0x24"
+        },
+        {
+          "series": "bridge_ready{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "30s",
+          "alertname": "BridgeReconciliationUnknown",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "state": "inconclusive",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Réconciliation inconnue, non concluante ou ancienne",
+                "procedure": "observability/README.md#pause-et-reconciliation"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "35s",
+          "alertname": "BridgeReconciliationUnknown",
+          "exp_alerts": []
+        }
+      ]
+    },
+    {
+      "name": "HTTP available but bridge not ready",
+      "interval": "5s",
+      "input_series": [
+        {
+          "series": "up{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_status_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_gas_balance_wei{job=\"bridge\",instance=\"relayer:8080\",network=\"b\"}",
+          "values": "1000000000000000000x30"
+        },
+        {
+          "series": "bridge_reconciliation_state{job=\"bridge\",instance=\"relayer:8080\",state=\"balanced\"}",
+          "values": "1x30"
+        },
+        {
+          "series": "bridge_reconciliation_updated_timestamp_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0+5x30"
+        },
+        {
+          "series": "bridge_finalized_lag_blocks{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_oldest_pending_seconds{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_transfers{job=\"bridge\",instance=\"relayer:8080\",state=\"intervention_required\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_paused{job=\"bridge\",instance=\"relayer:8080\",network=\"a\"}",
+          "values": "0x30"
+        },
+        {
+          "series": "bridge_ready{job=\"bridge\",instance=\"relayer:8080\"}",
+          "values": "0x30"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "20s",
+          "alertname": "BridgeNotReady",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "bridge",
+                "instance": "relayer:8080",
+                "severity": "warning"
+              },
+              "exp_annotations": {
+                "summary": "Relayer non prêt pour le traitement",
+                "procedure": "observability/README.md#service-indisponible"
+              }
+            }
+          ]
+        }
+      ],
+      "promql_expr_test": [
+        {
+          "expr": "bridge_oldest_pending_seconds and on(job, instance) (bridge:telemetry_fresh == 1) and on(job, instance) (bridge_ready == 1)",
+          "eval_time": "20s",
+          "exp_samples": []
+        }
+      ]
+    },
+    {
+      "name": "horodatages conservés après marqueur stale sans inventer de mesure courante",
+      "interval": "5s",
+      "input_series": [
+        {
+          "series": "up{instance=\"relayer:8080\",job=\"bridge\"}",
+          "values": "1 1 0x12"
+        },
+        {
+          "series": "bridge_status_updated_timestamp_seconds{instance=\"relayer:8080\",job=\"bridge\"}",
+          "values": "10 15 stale"
+        },
+        {
+          "series": "bridge_last_collection_timestamp_seconds{instance=\"relayer:8080\",job=\"bridge\",network=\"a\"}",
+          "values": "10 15 stale"
+        },
+        {
+          "series": "bridge_reconciliation_updated_timestamp_seconds{instance=\"relayer:8080\",job=\"bridge\"}",
+          "values": "10 15 stale"
+        }
+      ],
+      "promql_expr_test": [
+        {
+          "expr": "last_over_time(bridge_status_updated_timestamp_seconds[24h]) * 1000",
+          "eval_time": "60s",
+          "exp_samples": [
+            {
+              "labels": "{instance=\"relayer:8080\",job=\"bridge\"}",
+              "value": 15000
+            }
+          ]
+        },
+        {
+          "expr": "time() - last_over_time(bridge_status_updated_timestamp_seconds[24h])",
+          "eval_time": "60s",
+          "exp_samples": [
+            {
+              "labels": "{instance=\"relayer:8080\",job=\"bridge\"}",
+              "value": 45
+            }
+          ]
+        },
+        {
+          "expr": "last_over_time(bridge_last_collection_timestamp_seconds[24h]) * 1000",
+          "eval_time": "60s",
+          "exp_samples": [
+            {
+              "labels": "{instance=\"relayer:8080\",job=\"bridge\",network=\"a\"}",
+              "value": 15000
+            }
+          ]
+        },
+        {
+          "expr": "last_over_time(bridge_reconciliation_updated_timestamp_seconds[24h]) * 1000",
+          "eval_time": "60s",
+          "exp_samples": [
+            {
+              "labels": "{instance=\"relayer:8080\",job=\"bridge\"}",
+              "value": 15000
+            }
+          ]
+        },
+        {
+          "expr": "bridge_status_updated_timestamp_seconds",
+          "eval_time": "60s",
+          "exp_samples": []
+        },
+        {
+          "expr": "last_over_time(bridge_status_updated_timestamp_seconds[24h]) * 1000",
+          "eval_time": "25h",
+          "exp_samples": []
+        }
+      ]
+    }
+  ]
+}

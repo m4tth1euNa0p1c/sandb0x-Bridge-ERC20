@@ -6,9 +6,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("target", choices=("chain-a", "chain-b", "docs"))
+    parser.add_argument("target", choices=("chain-a", "chain-b", "docs", "relayer", "prometheus", "grafana"))
     args = parser.parse_args()
-    target_port = 8000 if args.target == "docs" else 8545
+    target_port = {"docs": 8000, "relayer": 8080, "prometheus": 9090, "grafana": 3000}.get(args.target, 8545)
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *_args):

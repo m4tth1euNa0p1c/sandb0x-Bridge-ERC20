@@ -113,7 +113,7 @@ internal sealed class FakeRpc(BridgeConfig config) : IRpc
                 {
                     var events = state.HideSourceLogs ? [] : state.Events.Where(e => e.BlockNumber >= from && e.BlockNumber <= to).ToArray();
                     if (state.DuplicateSourceLogs) events = events.Concat(events).ToArray();
-                    result = Json(events.Select(e => SourceLog(config.Network(e.SourceChain), config.Network(e.DestinationChain), e))); 
+                    result = Json(events.Select(e => SourceLog(config.Network(e.SourceChain), config.Network(e.DestinationChain), e)));
                 }
                 else result = Json((state.HideCompletionLogs ? [] : state.Completed.Values.Where(c => c.BlockNumber >= from && c.BlockNumber <= to).ToArray()).Select(c => new { address = network.BridgeAddress, topics = new[] { Abi.CompletedTopic, c.Id, "0x" + Abi.AddressWord(c.Recipient) }, data = "0x" + Abi.Word(c.Amount), blockNumber = Abi.Hex(c.BlockNumber), blockHash = c.BlockHash, removed = false }));
                 break;

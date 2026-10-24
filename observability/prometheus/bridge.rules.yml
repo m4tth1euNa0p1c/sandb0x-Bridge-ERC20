@@ -1,0 +1,92 @@
+groups:
+  - name: bridge_runtime
+    rules:
+      - record: bridge:telemetry_fresh
+        expr: |
+          (up{job="bridge"} == bool 1)
+          * on(job, instance) ((time() - bridge_status_updated_timestamp_seconds < bool 30)
+          * (time() - bridge_status_updated_timestamp_seconds >= bool -5))
+      - alert: BridgeRelayerUnavailable
+        expr: up{job="bridge"} == 0 or absent(up{job="bridge"})
+        for: 15s
+        labels: {severity: critical}
+        annotations:
+          summary: Relayer inaccessible depuis Prometheus
+          procedure: observability/README.md#service-indisponible
+      - alert: BridgeTelemetryStale
+        expr: |
+          time() - bridge_status_updated_timestamp_seconds > 30
+          or bridge_status_updated_timestamp_seconds > time() + 5
+          or absent(bridge_status_updated_timestamp_seconds)
+        for: 15s
+        labels: {severity: warning}
+        annotations:
+          summary: État absent, ancien ou horloge incohérente
+          procedure: observability/README.md#donnees-anciennes
+      - alert: BridgeNotReady
+        expr: bridge_ready == 0 or absent(bridge_ready)
+        for: 15s
+        labels: {severity: warning}
+        annotations:
+          summary: Relayer non prêt pour le traitement
+          procedure: observability/README.md#service-indisponible
+      - alert: BridgeCollectionStale
+        expr: |
+          time() - bridge_last_collection_timestamp_seconds > 30
+          or absent(bridge_last_collection_timestamp_seconds{network="a"})
+          or absent(bridge_last_collection_timestamp_seconds{network="b"})
+        for: 15s
+        labels: {severity: warning}
+        annotations:
+          summary: Collecte historique ancienne ou absente
+          procedure: observability/README.md#donnees-anciennes
+      - alert: BridgeFinalizedLag
+        expr: bridge_finalized_lag_blocks > 5
+        for: 30s
+        labels: {severity: warning}
+        annotations:
+          summary: Retard de collecte supérieur au seuil local
+          procedure: observability/README.md#transfert-en-attente
+      - alert: BridgeTransferPending
+        expr: bridge_oldest_pending_seconds > 120
+        for: 15s
+        labels: {severity: warning}
+        annotations:
+          summary: Un transfert reste en attente depuis plus de deux minutes
+          procedure: observability/README.md#transfert-en-attente
+      - alert: BridgeInterventionRequired
+        expr: bridge_transfers{state="intervention_required"} > 0
+        labels: {severity: critical}
+        annotations:
+          summary: Intervention requise sur un transfert
+          procedure: observability/README.md#transfert-en-attente
+      - alert: BridgeTestGasLow
+        expr: bridge_gas_balance_wei < 1000000000000000
+        for: 15s
+        labels: {severity: warning}
+        annotations:
+          summary: Solde de gas inférieur au seuil indicatif local
+          procedure: observability/README.md#gas-de-test
+      - alert: BridgePaused
+        expr: bridge_paused == 1
+        labels: {severity: warning}
+        annotations:
+          summary: Bridge en pause sur un réseau
+          procedure: observability/README.md#pause-et-reconciliation
+      - alert: BridgeReconciliationMismatch
+        expr: bridge_reconciliation_state{state="mismatch"} == 1
+        labels: {severity: critical}
+        annotations:
+          summary: Écart observé lors du contrôle de l'offre
+          procedure: observability/README.md#pause-et-reconciliation
+      - alert: BridgeReconciliationUnknown
+        expr: |
+          bridge_reconciliation_state{state=~"inconclusive|unavailable"} == 1
+          or absent(bridge_reconciliation_state)
+          or time() - bridge_reconciliation_updated_timestamp_seconds > 60
+          or absent(bridge_reconciliation_updated_timestamp_seconds)
+        for: 30s
+        labels: {severity: warning}
+        annotations:
+          summary: Réconciliation inconnue, non concluante ou ancienne
+          procedure: observability/README.md#pause-et-reconciliation

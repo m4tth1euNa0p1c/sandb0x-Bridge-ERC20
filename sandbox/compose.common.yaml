@@ -23,8 +23,8 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=trust
       PGDATA: /var/lib/postgresql/data/pgdata
-    secrets: [postgres_password]
-    volumes: [postgres_data:/var/lib/postgresql/data]
+    secrets: [postgres_password, bridge_db_password]
+    volumes: [postgres_bridge_r2:/var/lib/postgresql/data]
     tmpfs:
       - /tmp:rw,noexec,nosuid,size=32m,mode=1777
       - /var/run/postgresql:rw,noexec,nosuid,size=8m,uid=70,gid=70
@@ -116,6 +116,7 @@ networks:
     driver_opts: {com.docker.network.bridge.enable_ip_masquerade: "false"}
     ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.128/28"}]}
 volumes:
+  postgres_bridge_r2:
   postgres_data:
   chain_a_data:
   chain_b_data:
@@ -124,3 +125,5 @@ secrets:
     file: ${BRIDGE_RUNTIME:?}/postgres_password
   signer_witness:
     file: ${BRIDGE_RUNTIME:?}/signer_witness
+  bridge_db_password:
+    file: ${BRIDGE_RUNTIME:?}/bridge_db_password
