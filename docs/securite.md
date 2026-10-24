@@ -113,7 +113,12 @@ démontre ce pouvoir, pas une propriété de preuve interchaîne. Des attestatio
 multiples, une vérification cryptographique de preuves ou un autre mécanisme
 de garde sont des options futures, non implémentées.
 
-Gitleaks complète la revue et possède un contrôle positif avec credential
-synthétique éphémère. Les exceptions doivent rester ciblées sur les faux
-positifs publics ; ne pas masquer un répertoire de preuves. Un scan réussi
+Gitleaks complète la revue avec cinq témoins synthétiques éphémères : deux motifs
+GitHub et trois motifs génériques, y compris dans les champs d'empreintes.
+Les exceptions restent ciblées sur des empreintes publiques exactes de fichiers,
+d'une définition d'affirmation et du runtime ERC20 relu sur les deux profils.
+Seul le champ `tokenAddress` accepte une adresse hexadécimale de 20 octets, dans
+les rapports JSON de preuves ; une clé Ethereum de 32 octets ne correspond pas.
+Aucun répertoire de preuves n'est exclu. Les autres règles restent actives, même
+sur ces champs. Un scan réussi
 ne démontre pas l'absence de toute catégorie de secret.

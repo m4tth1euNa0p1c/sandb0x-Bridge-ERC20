@@ -7,7 +7,7 @@ useDefault = true
 description = "SHA-256 public du fichier bridge-secrets.toml, pas une cle API"
 targetRules = ["generic-api-key"]
 condition = "AND"
-paths = ['''(^|/)evidence/[^/]+/manifest\.json$''']
+paths = ['''(^|/)evidence/[^/]+/[^/]+\.json$''']
 regexTarget = "line"
 regexes = ['''^\s*"\.codex/agents/bridge-secrets\.toml": "8ff751c9a71c4d7084f7120e5dd37f8b3bba7e674446bfab176a75f49da21282",?\s*$''']
 
@@ -18,3 +18,18 @@ condition = "AND"
 paths = ['''(^|/)contracts/vendor/openzeppelin/SOURCES\.json$''', '''(^|/)evidence/[^/]+/[^/]+\.json$''']
 regexTarget = "secret"
 regexes = ['''^93c8ebfe7b36ef4d180f1660a5a741125691957726209720af476fdd5c7bac43$''', '''^140304b7e99d517c57a13f391dfd3b550ca633a507f7b2af130f391b6cd89cc5$''']
+
+[[allowlists]]
+description = "Empreintes exactes publiques de sources et de KEY-001 ; hash runtime ERC20 relu sur les deux profils ; adresses ERC20 strictement sur 20 octets"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(^|/)evidence/[^/]+/[^/]+\.json$''']
+regexTarget = "line"
+regexes = [
+  '''^\s*"(contracts/)?src/BridgeToken\.sol": "ce02efa89b02a711363e59b4d372e130c7deb9ac25d2fcda2901c1bcce7db951",?\s*$''',
+  '''^\s*"src/Bridge\.Signer/FileKeySigner\.cs": "923e786e3e58a40ea26dd14f558dee0b30b992caae059c2a9575788cdbdb2bb3",?\s*$''',
+  '''^\s*"tests/Bridge\.Signer\.Tests/ConfigurationAndKeyTests\.cs": "70c1635b90b40a26de43324cecad3ccd046f6bb8944aad684ca89bbc90e1407c",?\s*$''',
+  '''^\s*"KEY-001": "8f16277273bffd4ab2ffd55714faf1d1ce07affc449b011d92c8b3806a869fdd",?\s*$''',
+  '''^\s*"tokenCodeHash": "0x53b39101e6877f0a78ba805a23ae99663f4973f421039ecfccd85dce82c405b7",?\s*$''',
+  '''^\s*"tokenAddress": "0x[0-9a-fA-F]{40}",?\s*$'''
+]

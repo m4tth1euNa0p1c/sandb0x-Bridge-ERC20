@@ -482,11 +482,16 @@ def scan_secrets():
         # Faux credential sans validité, créé exclusivement dans la copie temporaire.
         # Le contrôle assure que l'exception d'empreinte ne masque pas les vrais motifs.
         control = Path(d) / "evidence/scan-control/manifest.json"
-        write_json(control, {"api_key": "ghp_" + "".join(secrets.choice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") for _ in range(36))})
+        fake_pat = lambda: "ghp_" + "".join(secrets.choice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") for _ in range(36))
+        write_json(control, {"api_key": fake_pat(), "tokenAddress": fake_pat(),
+                            "src/Bridge.Signer/FileKeySigner.cs": secrets.token_hex(32),
+                            "tokenCodeHash": "0x" + secrets.token_hex(32), "KEY-001": secrets.token_hex(32)})
         detection = run(scanner + ["/scan/evidence/scan-control", *options], timeout=60, check=False)
-        if detection["exit_code"] != 1:
-            raise BridgeError("Le contrôle positif du détecteur n'a pas reconnu le credential synthétique")
-    return {"project_scan": result, "synthetic_positive_control": detection}
+        rule_counts = {rule: len(re.findall(r"RuleID:\s+" + rule + r"\b", detection["stdout"]))
+                       for rule in ("github-pat", "generic-api-key")}
+        if detection["exit_code"] != 1 or rule_counts["github-pat"] < 2 or rule_counts["generic-api-key"] < 3:
+            raise BridgeError("Les cinq témoins du détecteur, y compris les champs d'exception, n'ont pas tous été reconnus")
+    return {"project_scan": result, "synthetic_positive_control": detection, "synthetic_detection_counts": rule_counts}
 
 
 def status(name):
