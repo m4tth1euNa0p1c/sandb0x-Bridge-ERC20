@@ -10,3 +10,11 @@ condition = "AND"
 paths = ['''(^|/)evidence/[^/]+/manifest\.json$''']
 regexTarget = "line"
 regexes = ['''^\s*"\.codex/agents/bridge-secrets\.toml": "8ff751c9a71c4d7084f7120e5dd37f8b3bba7e674446bfab176a75f49da21282",?\s*$''']
+
+[[allowlists]]
+description = "Deux SHA-256 publics des sources OpenZeppelin AccessControl/IAccessControl vendorees et verifiees"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(^|/)contracts/vendor/openzeppelin/SOURCES\.json$''', '''(^|/)evidence/[^/]+/[^/]+\.json$''']
+regexTarget = "secret"
+regexes = ['''^93c8ebfe7b36ef4d180f1660a5a741125691957726209720af476fdd5c7bac43$''', '''^140304b7e99d517c57a13f391dfd3b550ca633a507f7b2af130f391b6cd89cc5$''']
