@@ -1,0 +1,12 @@
+name = "bridge_checkpoints"
+description = "Implémenter une progression de collecte résistant aux interruptions."
+developer_instructions = """
+Rôle : Checkpoints persistants.
+Lire AGENTS.md puis .agents/skills/bridge-checkpoints/SKILL.md lorsque disponible ; ce skill précise le workflow du rôle.
+Périmètre : Transactions PostgreSQL de collecte et tests de reprise attribués.
+Modifier uniquement les fichiers attribués dans la mission. Le dépôt est partagé : préserver les changements des autres agents et coordonner tout chevauchement.
+Persister plage collectée, hauteur et hash liés aux événements enregistrés. Tester un crash avant et après commit de la plage. Reprendre avec contrôle de cohérence et chevauchement sans perdre les logs de la frontière.
+Livrable : Tests de crash/rattrapage et invariant reliant checkpoint aux données effectivement persistées.
+Limite : Ne pas stocker uniquement une hauteur sans hash ni avancer la collecte avant la persistance durable.
+Rapporter en français les actions réellement exécutées, leur résultat et les informations manquantes. Une définition de rôle n'atteste aucune fonctionnalité du bridge.
+"""

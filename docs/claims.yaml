@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "format": "JSON compatible YAML 1.2",
+  "claims": [
+    {
+      "id": "TOOL-001",
+      "statement": "Les tests de l'outillage du jalon 1 passent.",
+      "scope": "scripts et configurations uniquement",
+      "hypotheses": [
+        "aucun contrat ou relayer validé"
+      ],
+      "code": [
+        "scripts/bridge.py",
+        "tests/test_tooling.py"
+      ],
+      "verification": "tooling",
+      "environment": "local-fast",
+      "expected": "Tous les tests unittest réussissent",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "CAP-001",
+      "statement": "Le dépôt contient au moins 50 définitions d'agents et 50 skills validables.",
+      "scope": "syntaxe, noms, associations et limites de configuration",
+      "hypotheses": [
+        "validation structurelle distincte de l'efficacité comportementale"
+      ],
+      "code": [
+        ".codex/agents",
+        ".agents/skills",
+        "scripts/validate_capabilities.py"
+      ],
+      "verification": "capabilities",
+      "environment": "local-fast",
+      "expected": "50 agents et 50 skills valides au minimum",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "CFG-001",
+      "statement": "Les deux configurations Compose locales satisfont les restrictions statiques du jalon 1.",
+      "scope": "local-fast et local-besu",
+      "hypotheses": [
+        "ne prouve pas les contrôles runtime"
+      ],
+      "code": [
+        "sandbox/compose.common.yaml",
+        "sandbox/compose.local-fast.yaml",
+        "sandbox/compose.local-besu.yaml"
+      ],
+      "verification": "compose",
+      "environment": "local-fast",
+      "expected": "Validation Docker Compose et assertions de restriction réussies",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "RUN-001",
+      "statement": "Les deux Anvil locaux répondent avec leurs chain IDs attendus.",
+      "scope": "infrastructure local-fast",
+      "hypotheses": [
+        "aucun token déployé"
+      ],
+      "code": [
+        "sandbox/compose.local-fast.yaml",
+        "scripts/bridge.py"
+      ],
+      "verification": "startup",
+      "environment": "local-fast",
+      "expected": "Clients Anvil ; chain IDs 31337 et 31338",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "ISO-001",
+      "statement": "Les services et passerelles du profil local-fast portent les restrictions de conteneur attendues.",
+      "scope": "inspection runtime des noeuds, base, docs et passerelles",
+      "hypotheses": [
+        "moteur et hôte dignes de confiance"
+      ],
+      "code": [
+        "sandbox/compose.common.yaml",
+        "sandbox/compose.local-fast.yaml",
+        "scripts/bridge.py"
+      ],
+      "verification": "hardening",
+      "environment": "local-fast",
+      "expected": "Non root, rootfs RO, capacités supprimées, quotas, no-new-privileges",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "ISO-002",
+      "statement": "Les frontières réseau, fichiers et secrets résistent au scénario témoin local.",
+      "scope": "sondes signing/database et montages explicitement testés",
+      "hypotheses": [
+        "ne couvre pas toutes les routes vers l'hôte ni une compromission du moteur"
+      ],
+      "code": [
+        "scripts/bridge.py",
+        "sandbox/compose.common.yaml"
+      ],
+      "verification": "isolation",
+      "environment": "local-fast",
+      "expected": "Contrôles positifs réussis et tentatives interdites échouées",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "DB-001",
+      "statement": "Un témoin SQL et les identités/hauteurs des chaînes sont conservés après recréation des conteneurs.",
+      "scope": "volumes local-fast",
+      "hypotheses": [
+        "arrêt propre, aucun checkpoint métier"
+      ],
+      "code": [
+        "scripts/bridge.py",
+        "sandbox/compose.common.yaml",
+        "sandbox/compose.local-fast.yaml"
+      ],
+      "verification": "persistence",
+      "environment": "local-fast",
+      "expected": "Témoin SQL unique, genesis identique et hauteur non décroissante",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "DOC-001",
+      "statement": "La documentation française se construit avec MkDocs en mode strict.",
+      "scope": "fichiers du dépôt",
+      "hypotheses": [
+        "aucune publication distante"
+      ],
+      "code": [
+        "mkdocs.yml",
+        "docs"
+      ],
+      "verification": "docs",
+      "environment": "local-fast",
+      "expected": "Code de sortie 0 du build strict",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "SEC-001",
+      "statement": "Le scan Gitleaks ne détecte pas de secret dans les fichiers versionnables testés.",
+      "scope": "scan du contenu, pas preuve absolue d'absence de secret",
+      "hypotheses": [
+        "répertoires .local et .venv exclus de Git"
+      ],
+      "code": [
+        "scripts/bridge.py",
+        ".gitignore"
+      ],
+      "verification": "secrets",
+      "environment": "local-fast",
+      "expected": "Gitleaks sortie 0 avec redaction des résultats",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "NET-001",
+      "statement": "Le CLI refuse integration-testnet avant toute commande de runtime ou appel RPC.",
+      "scope": "jalon 1",
+      "hypotheses": [
+        "aucun prérequis TELA ou Sepolia fourni"
+      ],
+      "code": [
+        "sandbox/profiles/integration-testnet.json",
+        "scripts/bridge.py"
+      ],
+      "verification": "integration_gate",
+      "environment": "local-fast",
+      "expected": "Erreur explicite, aucune commande Docker ou RPC",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "EVD-001",
+      "statement": "L'empreinte des sources reste identique pendant la campagne.",
+      "scope": "empreinte de comportement et définitions des affirmations",
+      "hypotheses": [
+        "rapports exclus explicitement pour éviter une référence circulaire"
+      ],
+      "code": [
+        "scripts/bridge.py",
+        "docs/tests-preuves.md"
+      ],
+      "verification": "source_unchanged",
+      "environment": "local-fast",
+      "expected": "SHA-256 début/fin identiques",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "BESU-001",
+      "statement": "Besu local et sa seconde chaîne démarrent avec leurs identités attendues.",
+      "scope": "simulation QBFT mono-validateur, pas TELA",
+      "hypotheses": [
+        "aucune compatibilité applicative du bridge affirmée"
+      ],
+      "code": [
+        "sandbox/compose.local-besu.yaml",
+        "sandbox/besu/qbft.json"
+      ],
+      "verification": "startup",
+      "environment": "local-besu",
+      "expected": "Besu 31339 et Anvil 31340 répondent",
+      "status": "implémenté",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "HOST-001",
+      "statement": "L'environnement doit utiliser une VM et un moteur dédiés au projet.",
+      "scope": "frontière hôte",
+      "hypotheses": [
+        "hôte initial partagé"
+      ],
+      "code": [
+        "docs/securite.md",
+        "docs/informations-manquantes.md"
+      ],
+      "verification": "host_dedicated",
+      "environment": "local-fast",
+      "expected": "VM dédiée attestée et ressources moteur limitées au projet",
+      "status": "bloqué",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "PROTO-001",
+      "statement": "Le bridge burn/mint doit transférer dans les deux sens avec effet idempotent.",
+      "scope": "jalons 2 et 3",
+      "hypotheses": [
+        "tokens dédiés, decimals identiques, relayer autorisé"
+      ],
+      "code": [
+        "docs/adr/0002-protocole.md",
+        "contracts/README.md",
+        "src/README.md"
+      ],
+      "verification": "bridge_roundtrip",
+      "environment": "local-fast",
+      "expected": "Soldes et réconciliation corrects après aller-retour",
+      "status": "proposé",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    },
+    {
+      "id": "TELA-001",
+      "statement": "Le véritable TELA de test doit être identifié et interrogé avant intégration.",
+      "scope": "jalon 5",
+      "hypotheses": [
+        "paramètres externes requis"
+      ],
+      "code": [
+        "sandbox/profiles/integration-testnet.json",
+        "docs/informations-manquantes.md"
+      ],
+      "verification": "tela_integration",
+      "environment": "integration-testnet",
+      "expected": "Identité, accès, rôles, gas et reçus réellement observés",
+      "status": "bloqué",
+      "observed": "Non exécuté dans une campagne finale à ce stade",
+      "evidence": null,
+      "date_utc": null,
+      "source_commit": null
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+name = "bridge_nonces"
+description = "Implémenter la réservation persistante des nonces par compte et chaîne."
+developer_instructions = """
+Rôle : Gestion des nonces de transaction.
+Lire AGENTS.md puis .agents/skills/bridge-nonces/SKILL.md lorsque disponible ; ce skill précise le workflow du rôle.
+Périmètre : Gestionnaire de nonces et tests attribués.
+Modifier uniquement les fichiers attribués dans la mission. Le dépôt est partagé : préserver les changements des autres agents et coordonner tout chevauchement.
+Comparer nonce confirmé/pending RPC aux réservations persistées. Réserver de façon concurrente et associer chaque nonce au transfert et aux remplacements autorisés. Traiter trous, restart et transaction externe avec intervention explicite si nécessaire.
+Livrable : Tests de réservation concurrente et réconciliation des nonces après timeout/redémarrage.
+Limite : Ne pas attribuer un nouveau nonce à chaque retry ambigu ni confondre remplacement et nouveau transfert.
+Rapporter en français les actions réellement exécutées, leur résultat et les informations manquantes. Une définition de rôle n'atteste aucune fonctionnalité du bridge.
+"""

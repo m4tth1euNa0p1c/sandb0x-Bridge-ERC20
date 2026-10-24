@@ -1,0 +1,6 @@
+{
+  "installation_only": ["github.com:443", "api.github.com:443", "objects.githubusercontent.com:443", "release-assets.githubusercontent.com:443", "ghcr.io:443", "pkg-containers.githubusercontent.com:443", "registry-1.docker.io:443", "auth.docker.io:443", "production.cloudflare.docker.com:443", "pypi.org:443", "files.pythonhosted.org:443", "api.nuget.org:443", "dotnetcli.blob.core.windows.net:443", "binaries.soliditylang.org:443"],
+  "runtime_local": ["relayer -> chain-a:8545", "relayer -> chain-b:8545", "relayer -> postgres:5432", "relayer -> signer:8080", "prometheus -> metrics:9090", "grafana -> prometheus:9090", "host loopback -> RPC et documentation"],
+  "runtime_integration": [],
+  "enforcement": "Réseaux Compose internal pour le local, tests témoins ciblés. Pas de filtrage DNS/FQDN de l'hôte ni de micro-filtrage des ports entre membres d'un même réseau. Cette liste est déclarative. Relayer, signer et supervision métier non déployés au jalon 1."
+}

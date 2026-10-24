@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+.local/
+.venv/
+site/
+__pycache__/
+*.pyc
+contracts/cache/
+contracts/out/
+contracts/lib/
+**/bin/
+**/obj/
+*.key
+*.pem
+*.pfx
+*.p12

@@ -1,0 +1,31 @@
+site_name: T3l4N Bridge ERC20 — laboratoire et preuves
+site_description: Démonstrateur de test, état réel et preuves par environnement
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+strict: true
+theme:
+  name: mkdocs
+  locale: fr
+  navigation_depth: 3
+nav:
+  - État et objectif: index.md
+  - Exigences: exigences.md
+  - Informations manquantes: informations-manquantes.md
+  - Architecture: architecture.md
+  - Installation: installation.md
+  - Sécurité et compartimentage: securite.md
+  - Tests et preuves: tests-preuves.md
+  - Résultats: resultats.md
+  - Exploitation: exploitation.md
+  - Limites et charge: limites.md
+  - Agents et skills: agents.md
+  - Journal: journal.md
+  - Décisions:
+      - Stack et profils: adr/0001-stack-profils.md
+      - Protocole et confiance: adr/0002-protocole.md
+      - Reprise et finalité: adr/0003-reprise-finalite.md
+  - Sources: sources.md
+markdown_extensions:
+  - tables
+  - fenced_code

@@ -1,0 +1,20 @@
+{
+  "reviewed_utc": "2026-10-24",
+  "platform": "linux/amd64",
+  "images": {
+    "foundry": "ghcr.io/foundry-rs/foundry:v1.3.1@sha256:2dbf3d0fc58593ad9d01ef57677f93f83f4987acd295d17f303448d82e3a3ae7",
+    "postgres": "postgres:17.11-alpine@sha256:eee6c6e1b0894fa4fe0075eb054af9fd1cf39a35321c2d4110626cfe506411fb",
+    "probe": "python:3.12.12-alpine3.22@sha256:848ba4413eb897e225159b8fc1b02094576cbae4aa73fc13142608ae2c8c0e32",
+    "besu": "hyperledger/besu:26.10.0@sha256:7ce78163f9de6733bb868c8bd2ebb4e6e90cc7cb950034ff8c333b1a0c27aace",
+    "gitleaks": "ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f",
+    "prometheus": "prom/prometheus:v3.13.1@sha256:3c42b892cf723fa54d2f262c37a0e1f80aa8c8ddb1da7b9b0df9455a35a7f893",
+    "grafana": "grafana/grafana:13.2.4@sha256:dbbc38ea21103cefb50396340cd88afec779c7e070b0a7bf5a75b4ce46651d3f"
+  },
+  "planned_dependencies_not_installed": {
+    "dotnet_sdk": "10.0.402",
+    "dotnet_runtime": "10.0.13",
+    "Nethereum.Web3": "6.1.0",
+    "OpenZeppelin.Contracts": "5.4.0",
+    "solc": "0.8.30"
+  }
+}

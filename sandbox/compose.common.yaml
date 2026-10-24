@@ -1,0 +1,126 @@
+x-restricted: &restricted
+  platform: linux/amd64
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 128
+  cpus: 1.0
+  mem_limit: 256m
+  restart: "no"
+  logging:
+    driver: json-file
+    options: {max-size: 5m, max-file: "2"}
+  tmpfs: ["/tmp:rw,noexec,nosuid,size=32m,mode=1777"]
+
+services:
+  postgres:
+    <<: *restricted
+    image: ${POSTGRES_IMAGE:?locked image required}
+    user: "70:70"
+    environment:
+      POSTGRES_USER: sandbox_admin
+      POSTGRES_DB: bridge
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=trust
+      PGDATA: /var/lib/postgresql/data/pgdata
+    secrets: [postgres_password]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=32m,mode=1777
+      - /var/run/postgresql:rw,noexec,nosuid,size=8m,uid=70,gid=70
+    networks: [database]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U sandbox_admin -d bridge]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  docs:
+    <<: *restricted
+    image: ${PROBE_IMAGE:?locked image required}
+    user: "10001:10001"
+    command: [python, -m, http.server, "8000", --bind, "0.0.0.0", --directory, /site]
+    volumes: ["${BRIDGE_ROOT:?}/site:/site:ro"]
+    networks: [documentation]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/', timeout=2)"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  rpc-a:
+    <<: *restricted
+    image: ${PROBE_IMAGE:?locked image required}
+    user: "10001:10001"
+    command: [python, /app/proxy.py, chain-a]
+    volumes: ["${BRIDGE_ROOT:?}/sandbox/loopback_proxy.py:/app/proxy.py:ro"]
+    networks: [chain_a, edge_a]
+    ports: ["127.0.0.1:${RPC_A_PORT:?}:8080"]
+    depends_on: [chain-a]
+  rpc-b:
+    <<: *restricted
+    image: ${PROBE_IMAGE:?locked image required}
+    user: "10001:10001"
+    command: [python, /app/proxy.py, chain-b]
+    volumes: ["${BRIDGE_ROOT:?}/sandbox/loopback_proxy.py:/app/proxy.py:ro"]
+    networks: [chain_b, edge_b]
+    ports: ["127.0.0.1:${RPC_B_PORT:?}:8080"]
+    depends_on: [chain-b]
+  docs-gateway:
+    <<: *restricted
+    image: ${PROBE_IMAGE:?locked image required}
+    user: "10001:10001"
+    command: [python, /app/proxy.py, docs]
+    volumes: ["${BRIDGE_ROOT:?}/sandbox/loopback_proxy.py:/app/proxy.py:ro"]
+    networks: [documentation, edge_docs]
+    ports: ["127.0.0.1:${DOCS_PORT:?}:8080"]
+    depends_on: [docs]
+  witness-signer:
+    <<: *restricted
+    profiles: [isolation]
+    image: ${PROBE_IMAGE:?locked image required}
+    user: "10001:10001"
+    command: [python, -m, http.server, "8080", --bind, "0.0.0.0", --directory, /tmp]
+    secrets: [signer_witness]
+    networks: [signing]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/', timeout=2)"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+networks:
+  chain_a:
+    internal: true
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.0/28"}]}
+  chain_b:
+    internal: true
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.16/28"}]}
+  database:
+    internal: true
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.32/28"}]}
+  signing:
+    internal: true
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.48/28"}]}
+  monitoring:
+    internal: true
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.64/28"}]}
+  documentation:
+    internal: true
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.80/28"}]}
+  edge_a:
+    driver_opts: {com.docker.network.bridge.enable_ip_masquerade: "false"}
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.96/28"}]}
+  edge_b:
+    driver_opts: {com.docker.network.bridge.enable_ip_masquerade: "false"}
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.112/28"}]}
+  edge_docs:
+    driver_opts: {com.docker.network.bridge.enable_ip_masquerade: "false"}
+    ipam: {config: [{subnet: "${NETWORK_PREFIX:?}.128/28"}]}
+volumes:
+  postgres_data:
+  chain_a_data:
+  chain_b_data:
+secrets:
+  postgres_password:
+    file: ${BRIDGE_RUNTIME:?}/postgres_password
+  signer_witness:
+    file: ${BRIDGE_RUNTIME:?}/signer_witness

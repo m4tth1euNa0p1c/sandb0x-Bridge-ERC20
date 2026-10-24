@@ -1,0 +1,60 @@
+services:
+  chain-a:
+    image: ${BESU_IMAGE:?locked image required}
+    platform: linux/amd64
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 256
+    cpus: 2.0
+    mem_limit: 1536m
+    environment: {JAVA_OPTS: "-Xms256m -Xmx768m"}
+    restart: "no"
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=64m,mode=1777"]
+    logging:
+      driver: json-file
+      options: {max-size: 5m, max-file: "2"}
+    command:
+      - --data-path=/opt/besu/data
+      - --genesis-file=/config/genesis.json
+      - --node-private-key-file=/run/secrets/besu_node_key
+      - --rpc-http-enabled=true
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-api=ETH,NET,WEB3,QBFT
+      - --host-allowlist=localhost,127.0.0.1,chain-a
+      - --discovery-enabled=false
+      - --min-gas-price=0
+      - --sync-mode=FULL
+    secrets: [besu_node_key]
+    volumes:
+      - chain_a_data:/opt/besu
+      - ${BRIDGE_RUNTIME:?}/genesis.json:/config/genesis.json:ro
+    networks: [chain_a]
+  chain-b:
+    image: ${FOUNDRY_IMAGE:?locked image required}
+    platform: linux/amd64
+    entrypoint: [anvil]
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    cpus: 1.0
+    mem_limit: 384m
+    restart: "no"
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m,mode=1777"]
+    logging:
+      driver: json-file
+      options: {max-size: 5m, max-file: "2"}
+    command: [--host, "0.0.0.0", --chain-id, "31340", --hardfork, london, --timestamp, "1700000000", --block-time, "2", --threads, "2", --no-cors, --quiet, --state, /home/foundry/state.json, --state-interval, "10"]
+    volumes: [chain_b_data:/home/foundry]
+    networks: [chain_b]
+    healthcheck:
+      test: [CMD, cast, chain-id, --rpc-url, "http://127.0.0.1:8545"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+secrets:
+  besu_node_key:
+    file: ${BRIDGE_RUNTIME:?}/besu_node_key

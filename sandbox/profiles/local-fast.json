@@ -1,0 +1,11 @@
+{
+  "name": "local-fast", "enabled": true, "test_only": true,
+  "description": "Deux Anvil locaux ; aucune connexion TELA ou Sepolia",
+  "compose_files": ["sandbox/compose.common.yaml", "sandbox/compose.local-fast.yaml"],
+  "chains": [
+    {"service": "chain-a", "chain_id": 31337, "rpc_host": "http://127.0.0.1:18545", "rpc_internal": "http://chain-a:8545", "client_prefix": "anvil", "finality": {"mode": "confirmations", "depth": 3, "meaning": "convention de test, pas de finalité économique"}},
+    {"service": "chain-b", "chain_id": 31338, "rpc_host": "http://127.0.0.1:28545", "rpc_internal": "http://chain-b:8545", "client_prefix": "anvil", "finality": {"mode": "confirmations", "depth": 3, "meaning": "convention de test, pas de finalité économique"}}
+  ],
+  "docs_port": 18080, "evm_target": "london", "token_decimals": 18,
+  "limits_proposed_not_enforced_by_relayer": {"max_amount_units": "1000000000000000000000", "max_gas": 500000, "max_gas_price_wei": "10000000000", "max_transfers_per_minute": 10, "max_attempts": 5, "rpc_timeout_seconds": 10}
+}

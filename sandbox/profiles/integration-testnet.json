@@ -1,0 +1,11 @@
+{
+  "name": "integration-testnet", "enabled": false, "test_only": true,
+  "description": "Réservé à Sepolia et au véritable TELA de test après vérification ; aucun service ni RPC activé au jalon 1",
+  "compose_files": [],
+  "chains": [
+    {"network": "sepolia", "chain_id": 11155111, "genesis_hash": null, "rpc_http": null, "rpc_ws": null, "token": null, "bridge": null, "finality": {"mode": "finalized", "fallback": "reject"}},
+    {"network": "tela-test", "chain_id": null, "genesis_hash": null, "rpc_http": null, "rpc_ws": null, "token": null, "bridge": null, "finality": null}
+  ],
+  "required": ["confirmation_test", "identity_and_genesis", "rpc_and_access", "evm_and_consensus", "token_abi_roles_decimals", "deployment_permissions", "dedicated_test_keys", "test_gas", "egress_enforcement"],
+  "verified_prerequisites": []
+}

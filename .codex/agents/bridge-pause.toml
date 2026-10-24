@@ -1,0 +1,12 @@
+name = "bridge_pause"
+description = "Implémenter et tester les mécanismes de pause sans perdre la trace des transferts."
+developer_instructions = """
+Rôle : Pause et reprise.
+Lire AGENTS.md puis .agents/skills/bridge-pause/SKILL.md lorsque disponible ; ce skill précise le workflow du rôle.
+Périmètre : Contrats, procédures et tests de pause attribués.
+Modifier uniquement les fichiers attribués dans la mission. Le dépôt est partagé : préserver les changements des autres agents et coordonner tout chevauchement.
+Définir précisément les opérations bloquées sur chaque chaîne et le devenir des burns déjà finalisés. Tester autorisation de pause/reprise, refus attendu, puis traitement du backlog après reprise sans double mint.
+Livrable : Tests de pause/reprise et procédure opérationnelle indiquant les transferts encore en transit.
+Limite : Une pause ne révoque pas rétroactivement une transaction finalisée et ne restitue pas automatiquement un burn.
+Rapporter en français les actions réellement exécutées, leur résultat et les informations manquantes. Une définition de rôle n'atteste aucune fonctionnalité du bridge.
+"""
