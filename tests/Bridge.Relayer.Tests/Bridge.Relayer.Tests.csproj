@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors><IsPackable>false</IsPackable><IsTestProject>true</IsTestProject>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile><NuGetAuditMode>all</NuGetAuditMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5"><PrivateAssets>all</PrivateAssets></PackageReference>
+    <ProjectReference Include="../../src/Bridge.Relayer/Bridge.Relayer.csproj" />
+    <None Include="../../contracts/vectors/transfer-id-v1.json" Link="transfer-id-v1.json" CopyToOutputDirectory="PreserveNewest" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+</Project>

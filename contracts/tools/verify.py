@@ -32,6 +32,30 @@ def snapshot():
             if p.is_file() and not any(part in EXCLUDED for part in p.relative_to(ROOT).parts)}
 
 
+def compiled_artifacts():
+    """Exact files plus canonical ABI and decoded bytecode fingerprints, never deployment guesses."""
+    artifacts = {}
+    for name in ("Bridge", "BridgeToken"):
+        relative = "out/" + name + ".sol/" + name + ".json"
+        raw = (ROOT / relative).read_bytes()
+        artifact = json.loads(raw)
+        metadata = artifact["metadata"]
+        artifacts[relative] = {
+            "sha256": sha256(raw),
+            "abi_sha256": sha256(json.dumps(artifact["abi"], sort_keys=True, separators=(",", ":"),
+                                           ensure_ascii=False).encode("utf-8")),
+            "abi_encoding": "UTF-8 JSON, sort_keys=true, separators=(',', ':'), ensure_ascii=false; no trailing newline",
+            "creation_bytecode_sha256": sha256(bytes.fromhex(artifact["bytecode"]["object"].removeprefix("0x"))),
+            "runtime_template_sha256": sha256(bytes.fromhex(artifact["deployedBytecode"]["object"].removeprefix("0x"))),
+            "runtime_template_limit": "Bridge constructor immutables are placeholders; deployed code hash must be read on-chain",
+            "compiler": metadata["compiler"]["version"],
+            "evm_version": metadata["settings"]["evmVersion"],
+            "optimizer": metadata["settings"]["optimizer"],
+            "metadata_settings": metadata["settings"].get("metadata", {}),
+        }
+    return artifacts
+
+
 def execute(command, timeout=240):
     started = utc()
     tick = time.monotonic()
@@ -95,6 +119,15 @@ def main():
                 report["passed"] = bool(results) and all(r["status"] == "Success" for r in results)
             except (json.JSONDecodeError, KeyError, TypeError) as exc:
                 report["parse_error"] = type(exc).__name__
+        try:
+            report["artifacts"] = compiled_artifacts()
+            if any(a["compiler"] != "0.8.30+commit.73712a01" or a["evm_version"] != "london"
+                   or a["optimizer"] != {"enabled": True, "runs": 200} for a in report["artifacts"].values()):
+                report["artifact_error"] = "Compiled settings differ from the expected pinned compiler, EVM or optimizer"
+                report["passed"] = False
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            report["artifact_error"] = type(exc).__name__
+            report["passed"] = False
     image = execute(["docker", "image", "inspect", IMAGE, "--format", "{{json .}}"], timeout=15)
     if image["exit_code"] == 0:
         observed = json.loads(image["stdout"])

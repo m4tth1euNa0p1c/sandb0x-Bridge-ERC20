@@ -11,6 +11,7 @@ contracts/out/
 contracts/lib/
 **/bin/
 **/obj/
+**/TestResults/
 *.key
 *.pem
 *.pfx
