@@ -8,6 +8,7 @@ theme:
   name: mkdocs
   locale: fr
   navigation_depth: 3
+  highlightjs: false
 nav:
   - État et objectif: index.md
   - Exigences: exigences.md
@@ -25,7 +26,15 @@ nav:
       - Stack et profils: adr/0001-stack-profils.md
       - Protocole et confiance: adr/0002-protocole.md
       - Reprise et finalité: adr/0003-reprise-finalite.md
+      - Interfaces applicatives et signature: adr/0004-interfaces-application.md
+      - Persistance historique Anvil: adr/0005-persistance-anvil.md
+  - Rendu des diagrammes: assets/mermaid.md
   - Sources: sources.md
 markdown_extensions:
   - tables
   - fenced_code
+extra_javascript:
+  - assets/vendor/mermaid-11.16.1/mermaid.min.js
+  - assets/mermaid-init.js
+extra_css:
+  - assets/mermaid.css
