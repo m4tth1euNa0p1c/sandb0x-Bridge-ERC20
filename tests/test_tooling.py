@@ -461,6 +461,49 @@ class CleanupBoundaryTests(unittest.TestCase):
             self.assertNotIn("unrelated.yaml", command)
 
 
+class SecretScannerLifecycleTests(unittest.TestCase):
+    def test_timeout_fails_and_removes_only_its_exact_container(self):
+        for check in (True, False):
+            calls = []
+            def fake_run(args, **kwargs):
+                calls.append((args, kwargs))
+                return {"exit_code": 124 if args[1] == "run" else 0, "stdout": "", "stderr": "TimeoutExpired"}
+            with self.subTest(check=check), patch.object(bridge, "run", side_effect=fake_run):
+                if check:
+                    with self.assertRaisesRegex(bridge.BridgeError, "124"):
+                        bridge.run_secret_scanner(Path("witness"), "/scan", timeout=300)
+                else:
+                    self.assertEqual(bridge.run_secret_scanner(Path("witness"), "/scan", timeout=300, check=False)["exit_code"], 124)
+            self.assertEqual(len(calls), 2)
+            command = calls[0][0]
+            name = command[command.index("--name") + 1]
+            self.assertRegex(name, r"^t3l4n-bridge-scan-[0-9a-f]{16}$")
+            self.assertIn("com.t3l4n.project=t3l4n-bridge-audit", command)
+            self.assertIn("--redact", command)
+            self.assertEqual(command[command.index("--network") + 1], "none")
+            self.assertEqual(command[command.index("-v") + 1], "witness:/scan:ro")
+            self.assertEqual(calls[0][1]["timeout"], 300)
+            self.assertEqual(calls[1], (["docker", "rm", "--force", name], {"timeout": 30, "check": False}))
+
+    def test_detection_is_not_promoted_to_success(self):
+        result = {"exit_code": 1, "stdout": "redacted finding", "stderr": "finding"}
+        with patch.object(bridge, "run", return_value=result) as run:
+            with self.assertRaisesRegex(bridge.BridgeError, "échec"):
+                bridge.run_secret_scanner(Path("witness"), "/scan", timeout=300)
+            self.assertEqual(run.call_count, 1)
+        with patch.object(bridge, "run", return_value=result) as run:
+            self.assertEqual(bridge.run_secret_scanner(Path("witness"), "/scan/evidence/scan-control", timeout=60, check=False)["exit_code"], 1)
+            self.assertEqual(run.call_count, 1)
+
+    def test_interruption_cleans_up_and_propagates(self):
+        with patch.object(bridge, "run", side_effect=[KeyboardInterrupt(), {"exit_code": 0}]) as run:
+            with self.assertRaises(KeyboardInterrupt):
+                bridge.run_secret_scanner(Path("witness"), "/scan", timeout=300)
+            first = run.call_args_list[0].args[0]
+            name = first[first.index("--name") + 1]
+            self.assertEqual(run.call_args_list[1].args[0], ["docker", "rm", "--force", name])
+
+
 class RpcIdentityTests(unittest.TestCase):
     def test_rpc_rejects_mismatched_id_errors_and_missing_result(self):
         for payload in ({"id": 2, "result": "0x1"}, {"id": 1, "error": {"code": -32000, "message": "test"}}, {"id": 1}):

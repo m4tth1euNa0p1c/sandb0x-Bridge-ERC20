@@ -13,6 +13,7 @@ description: "Inspecter les fichiers et flux T3l4N pour éviter clés, identifia
 2. Vérifier arguments de processus, variables sérialisées, URL RPC authentifiées et captures. Un secret masqué dans une console peut rester dans un artefact brut.
 3. Contrôler les montages par service et les permissions hôtes. Les secrets Compose sur fichiers ne sont pas un coffre ni une protection contre l'opérateur Docker.
 4. En cas de fuite réelle, retirer l'exposition immédiate et signaler la nécessité de révocation/rotation ; ne pas considérer la suppression du fichier comme réparation complète.
+5. Conserver un timeout comme échec de vérification. Dimensionner un budget borné pour le volume des preuves sans exclure ces fichiers du scan. Identifier chaque conteneur de scan par un nom unique et un label de projet ; après timeout ou interruption du client Docker, arrêter uniquement ce conteneur avant de retirer sa copie de travail. Rejouer un témoin de timeout et les témoins positifs de détection.
 
 **Livrable.** Rapport de scan sans valeurs sensibles et corrections des chemins d'exposition.
 

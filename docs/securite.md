@@ -113,8 +113,8 @@ démontre ce pouvoir, pas une propriété de preuve interchaîne. Des attestatio
 multiples, une vérification cryptographique de preuves ou un autre mécanisme
 de garde sont des options futures, non implémentées.
 
-Gitleaks complète la revue avec cinq témoins synthétiques éphémères : deux motifs
-GitHub et trois motifs génériques, y compris dans les champs d'empreintes.
+Gitleaks complète la revue avec six témoins synthétiques éphémères : deux motifs
+GitHub et quatre motifs génériques, y compris dans les champs d'empreintes.
 Les exceptions restent ciblées sur des empreintes publiques exactes de fichiers,
 d'une définition d'affirmation et du runtime ERC20 relu sur les deux profils.
 Seul le champ `tokenAddress` accepte une adresse hexadécimale de 20 octets, dans
@@ -122,3 +122,10 @@ les rapports JSON de preuves ; une clé Ethereum de 32 octets ne correspond pas.
 Aucun répertoire de preuves n'est exclu. Les autres règles restent actives, même
 sur ces champs. Un scan réussi
 ne démontre pas l'absence de toute catégorie de secret.
+
+Le scan complet dispose de cinq minutes, contre une minute pour les témoins.
+Cette limite a été révisée après une expiration de la CI sur environ 52 Mo de
+preuves ; les ressources du conteneur restent bornées à un CPU et 256 Mio.
+Un timeout reste un échec de vérification. Le conteneur porte un nom unique et
+un label de projet ; son nettoyage après interruption vise uniquement ce nom,
+avant suppression de la copie montée. Aucun nettoyage global Docker n'est utilisé.

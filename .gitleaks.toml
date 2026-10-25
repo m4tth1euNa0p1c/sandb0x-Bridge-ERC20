@@ -4,12 +4,12 @@ title = "T3l4N : regles par defaut, exception d'empreinte documentee"
 useDefault = true
 
 [[allowlists]]
-description = "SHA-256 public du fichier bridge-secrets.toml, pas une cle API"
+description = "SHA-256 publics des deux versions verifiees de bridge-secrets.toml, pas des cles API"
 targetRules = ["generic-api-key"]
 condition = "AND"
 paths = ['''(^|/)evidence/[^/]+/[^/]+\.json$''']
 regexTarget = "line"
-regexes = ['''^\s*"\.codex/agents/bridge-secrets\.toml": "8ff751c9a71c4d7084f7120e5dd37f8b3bba7e674446bfab176a75f49da21282",?\s*$''']
+regexes = ['''^\s*"\.codex/agents/bridge-secrets\.toml": "(8ff751c9a71c4d7084f7120e5dd37f8b3bba7e674446bfab176a75f49da21282|796bea12fc341bfe9edc9d2785d394849821f31382b20635811e1b77c8bbef11)",?\s*$''']
 
 [[allowlists]]
 description = "Deux SHA-256 publics des sources OpenZeppelin AccessControl/IAccessControl vendorees et verifiees"

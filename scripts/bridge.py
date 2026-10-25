@@ -462,6 +462,28 @@ def run_tests():
     return result
 
 
+def run_secret_scanner(directory, target, *, timeout, check=True):
+    # Le nom aléatoire appartient uniquement à cette invocation ; jamais de prune global.
+    name = "t3l4n-bridge-scan-" + secrets.token_hex(8)
+    args = ["docker", "run", "--rm", "--pull", "never", "--name", name,
+            "--label", "com.t3l4n.project=t3l4n-bridge-audit", "--network", "none", "--read-only",
+            "--user", "10001:10001", "--cap-drop", "ALL", "--security-opt", "no-new-privileges:true",
+            "--memory", "256m", "--cpus", "1", "--pids-limit", "64", "-v", f"{directory}:/scan:ro",
+            lock()["images"]["gitleaks"], "dir", target,
+            "--config", "/scan/.gitleaks.toml", "--redact", "--no-banner", "--verbose"]
+    result = None
+    try:
+        result = run(args, timeout=timeout, check=False)
+    finally:
+        # Tuer le client docker après timeout ne garantit pas l'arrêt du conteneur.
+        # Terminer celui-ci avant de supprimer la copie montée, même sur interruption.
+        if result is None or result["exit_code"] == 124:
+            run(["docker", "rm", "--force", name], timeout=30, check=False)
+    if check and result["exit_code"] != 0:
+        raise BridgeError(f"Scan de secrets incomplet ou en échec ({result['exit_code']}) : {result['stderr']}")
+    return result
+
+
 def scan_secrets():
     # Uniquement les fichiers versionnables ; aucun montage de .local ni des clés.
     with tempfile.TemporaryDirectory(prefix="t3l4n-scan-") as d:
@@ -473,24 +495,22 @@ def scan_secrets():
                 dst = Path(d) / name
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(src, dst)
-        scanner = ["docker", "run", "--rm", "--pull", "never", "--network", "none", "--read-only",
-                      "--user", "10001:10001", "--cap-drop", "ALL", "--security-opt", "no-new-privileges:true",
-                      "--memory", "256m", "--cpus", "1", "--pids-limit", "64", "-v", f"{d}:/scan:ro",
-                      lock()["images"]["gitleaks"], "dir"]
-        options = ["--config", "/scan/.gitleaks.toml", "--redact", "--no-banner", "--verbose"]
-        result = run(scanner + ["/scan", *options], timeout=60)
+        # 60 s a expiré en CI sur 52 Mo de sources/preuves. Budget borné de cinq
+        # minutes, sans réduction du périmètre ni augmentation des ressources.
+        result = run_secret_scanner(d, "/scan", timeout=300)
         # Faux credential sans validité, créé exclusivement dans la copie temporaire.
         # Le contrôle assure que l'exception d'empreinte ne masque pas les vrais motifs.
         control = Path(d) / "evidence/scan-control/manifest.json"
         fake_pat = lambda: "ghp_" + "".join(secrets.choice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") for _ in range(36))
         write_json(control, {"api_key": fake_pat(), "tokenAddress": fake_pat(),
                             "src/Bridge.Signer/FileKeySigner.cs": secrets.token_hex(32),
+                            ".codex/agents/bridge-secrets.toml": secrets.token_hex(32),
                             "tokenCodeHash": "0x" + secrets.token_hex(32), "KEY-001": secrets.token_hex(32)})
-        detection = run(scanner + ["/scan/evidence/scan-control", *options], timeout=60, check=False)
+        detection = run_secret_scanner(d, "/scan/evidence/scan-control", timeout=60, check=False)
         rule_counts = {rule: len(re.findall(r"RuleID:\s+" + rule + r"\b", detection["stdout"]))
                        for rule in ("github-pat", "generic-api-key")}
-        if detection["exit_code"] != 1 or rule_counts["github-pat"] < 2 or rule_counts["generic-api-key"] < 3:
-            raise BridgeError("Les cinq témoins du détecteur, y compris les champs d'exception, n'ont pas tous été reconnus")
+        if detection["exit_code"] != 1 or rule_counts["github-pat"] < 2 or rule_counts["generic-api-key"] < 4:
+            raise BridgeError("Les six témoins du détecteur, y compris les champs d'exception, n'ont pas tous été reconnus")
     return {"project_scan": result, "synthetic_positive_control": detection, "synthetic_detection_counts": rule_counts}
 
 
