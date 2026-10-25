@@ -1,0 +1,82 @@
+{
+  "checked_utc": "2026-10-24T23:54:36Z",
+  "html_url": "https://github.com/m4tth1euNa0p1c/T3l4N-Bridge-ERC20/actions/runs/40143787185",
+  "head_sha": "b015e387cbbfacc073b4cf0201bc08dae9f464c8",
+  "conclusion": "success",
+  "local_fast_job": "success",
+  "integration_testnet_job": "skipped",
+  "artifact_id": 12580170722,
+  "archive_sha256": "4da7ba7cb7928213680619c66aa551538fe1aebf2fddf91787c0b9587fc72ac3",
+  "expires_at": "2026-11-23T23:53:26Z",
+  "retained_campaign": "evidence/20261024T234430Z-local-fast/manifest.json",
+  "index_ref": "evidence/ci-b015e38/index.json",
+  "artifact_count": 16,
+  "retention": "Artefact Actions : 30 jours ; rapports du dépôt : durée de conservation du dépôt ; archive locale : jusqu’au nettoyage explicite du propriétaire.",
+  "note": "Archive reçue via le connecteur GitHub ; SHA-256 conforme au digest Actions. Seule la campagne du commit courant est extraite, octets inchangés. Les sources correspondent aux campagnes Windows.",
+  "files": [
+    {
+      "path": "evidence/20261024T234430Z-local-fast/anvil-history.json",
+      "sha256": "664eae49027767ed0e43ced3176b99230928681399cc32f5eff2c45a2dfc4fea"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/build.json",
+      "sha256": "ac5297144874e3c08a21f89b6c1ecd19e55c7a39a02ad952727044a36ca7cb56"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/commands.json",
+      "sha256": "4cd197f0371d7b96594ed4b778c0e82542638c2e3789a3c8027f23b9668150db"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/contracts-verification.json",
+      "sha256": "599703c12699b76bc6cdb3a4b32a89f70ec2fa8437ea70cdeeef719b1f9a06a1"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/deployment.json",
+      "sha256": "155b77dcf186bb73c00d07cee3d59683daa32d4f0f3ad1b0c229256ae1a927ac"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/doctor.json",
+      "sha256": "59cfbbdb4a6cf9c606696f3149e43285c2c6adc2d8c4004315b7800a2d357098"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/dotnet-tests.json",
+      "sha256": "4ec2cb62fccbd971dd018642e019f6fd9e6e957cd0704547b89ac244b1b4fb84"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/local-fast-demo.json",
+      "sha256": "632dbaec4aa43cf8d0ac03a47b0c336bd9daaa0b7b3863e6c36a1f6e9d09133e"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/local-fast-monitoring-live.json",
+      "sha256": "922f21a60d9b31e2b241c74480123515671f5a81233a24335b56a8482c6f341e"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/local-fast-monitoring-stale.json",
+      "sha256": "4c34320cccbd769cff6e50a43f37d961ef65defd79d22faaa5bf2ac6bb256c1b"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/local-fast-resilience.json",
+      "sha256": "8ec3d4c2722f9113b8e61ddcff261cf907bd53e94f5970af6c0359d6fd86c218"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/manifest.json",
+      "sha256": "05e0c7328bb5affe33021ede4bff7fbb9c9748d265e9c3be12dd309165435745"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/manifest.sha256",
+      "sha256": "40e0eb594225d828cc7a718ec85229fc45b5d1795ebae0d14d08fc78cfead0ed"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/monitoring-checks.json",
+      "sha256": "7bca388adc2cbc6ea507b4a64cdcd28f0a901824d04d80a157b897f568dc1c3b"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/relayer-tests.trx",
+      "sha256": "6b994769c5fe689791fdcd5144be93ee4427d503d756677e8bfd78e222a15186"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/signer-tests.trx",
+      "sha256": "5dd3a3dc9d6cb9bdffffdc9aa7cc8b0ac8c0da1b5352d4fbdb504ca2b250e011"
+    }
+  ]
+}

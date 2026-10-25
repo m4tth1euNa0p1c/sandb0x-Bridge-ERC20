@@ -1,0 +1,25 @@
+{
+  "recorded_utc": "2026-10-24T23:44:37Z",
+  "source_commit": "fd030c49d1e773676e1f3543fff93fa1b60d3c95",
+  "source_sha256": "181e570822aa138e937eedd4c3df0957e4d650f40e1f55b5d7fbfac7a354bf29",
+  "command": [
+    "powershell",
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "scripts/bridge.ps1",
+    "test",
+    "--profile",
+    "local-fast"
+  ],
+  "exit_code": 0,
+  "utc_end": "2026-10-24T23:35:32Z",
+  "scope": "Exécution historique complète du CLI test local avant correction de la garde integration-testnet ; ne valide pas les sources modifiées ensuite.",
+  "expected": "Sortie 0, suites locales, aller-retour et neuf injections réussies",
+  "observed": "67 tests Python, 27 Solidity, 64 signataire, 51 relayer ; aller-retour et neuf injections passés.",
+  "artifacts": {
+    "commands.json": "04c4ce31d19fcb35d7ceb16767c41c42a75bb91e663beaccbf47b213308726ae",
+    "resilience.json": "044a21ee34c6e442bf6de6ec25b47596d23a2701e517226ec3565191709b23cd"
+  }
+}

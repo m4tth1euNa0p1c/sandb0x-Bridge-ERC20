@@ -1,0 +1,95 @@
+{
+  "utc": "2026-10-24T23:59:43Z",
+  "passed": true,
+  "source_sha256": "a78ece60a84e8ebe159c1fd6f817b00ccda800f6002767e8c690126536e7e963",
+  "scope": "Intégrité des campagnes, index historiques, archive CI extraite et instantanés externes. Cet audit ne se valide pas lui-même ; son index de livraison porte son empreinte.",
+  "verified_hashes": 294,
+  "campaigns": [
+    {
+      "path": "evidence/20261024T202049Z-local-fast/manifest.json",
+      "passed": true,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T202323Z-local-besu/manifest.json",
+      "passed": false,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "passed": true,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T203035Z-local-besu/manifest.json",
+      "passed": true,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T223810Z-local-fast/manifest.json",
+      "passed": true,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T225246Z-local-fast/manifest.json",
+      "passed": true,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T230925Z-local-fast/manifest.json",
+      "passed": false,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T231050Z-local-besu/manifest.json",
+      "passed": true,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T231823Z-local-fast/manifest.json",
+      "passed": false,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T232235Z-local-fast/manifest.json",
+      "passed": true,
+      "current_sources": false,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T234158Z-local-fast/manifest.json",
+      "passed": true,
+      "current_sources": true,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/manifest.json",
+      "passed": true,
+      "current_sources": true,
+      "integrity": "verified"
+    },
+    {
+      "path": "evidence/20261024T234936Z-local-besu/manifest.json",
+      "passed": true,
+      "current_sources": true,
+      "integrity": "verified"
+    }
+  ],
+  "current_campaigns": 3,
+  "external_artifacts": 13,
+  "external_bytes": 191010878,
+  "claims": {
+    "vérifié_local": 21,
+    "vérifié_besu_local": 5,
+    "bloqué": 2
+  }
+}

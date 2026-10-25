@@ -212,7 +212,7 @@ Les données du bridge n’ont pas été supprimées pour relancer le test.
 
 La campagne 20261024T232235Z-local-fast a finalement réussi ses 18 contrôles,
 avec les neuf injections et un état persistant restauré, sur le même commit
-d030c49d1e773676e1f3543fff93fa1b60d3c95 que Besu et la CI.
+`fd030c49d1e773676e1f3543fff93fa1b60d3c95` que Besu et la CI.
 Le registre est recalculé : 21 affirmations vérifiées localement, cinq sur
 Besu local, deux bloquées et aucune obsolète. Les champs de définition n’ont
 pas changé ; les seuls fichiers de sources modifiés sont les comptes rendus
@@ -220,10 +220,10 @@ explicitement exclus de l’empreinte.
 
 ## Garde du CLI complet et amélioration des workflows
 
-La commande PowerShell 	est --profile local-fast a terminé avec succès sur
-d030c4 : 67 tests Python, 27 Solidity, 115 .NET, aller-retour et neuf
+La commande PowerShell `test --profile local-fast` a terminé avec succès sur
+`fd030c4` : 67 tests Python, 27 Solidity, 115 .NET, aller-retour et neuf
 injections. Une contre-vérification de main a ensuite reproduit un refus
-trop tardif de uild et 	est avec integration-testnet. Des sentinelles
+trop tardif de `build` et `test` avec integration-testnet. Des sentinelles
 bloquantes ont empêché toute exécution réelle de ces commandes ; aucun accès
 Sepolia ou TELA n’a eu lieu. Le test précédent de up() ne couvrait pas ces
 deux branches, donc la formulation NET-001 était trop large.
@@ -240,3 +240,51 @@ d’entrée complet, examen des verrous après interruption, et reprise opérate
 explicitement distincte d’une compensation. Le catalogue 50/50 reste valide.
 Les anciennes campagnes sont marquées obsolètes pour les sources modifiées ;
 elles restent conservées. De nouvelles campagnes sont requises avant promotion.
+
+## Campagnes finales du code b015e38 — 24 octobre 2026 UTC
+
+Le code figé `b015e387cbbfacc073b4cf0201bc08dae9f464c8` a réussi les
+18 contrôles de `prove --profile local-fast` entre 23:41:58 et 23:49:28 UTC,
+puis les 18 contrôles de `prove --profile local-besu` entre 23:49:36 et
+23:55:48 UTC. Les sources portent l’empreinte
+`a78ece60a84e8ebe159c1fd6f817b00ccda800f6002767e8c690126536e7e963`.
+Les rapports sont conservés dans `evidence/20261024T234158Z-local-fast/`
+et `evidence/20261024T234936Z-local-besu/`.
+
+Chaque campagne comprend 69 tests Python, 27 tests Solidity et 115 tests .NET,
+un transfert aller-retour, le cloisonnement, la persistance après arrêt propre,
+la supervision et le refus réel des sept commandes d’intégration désactivée.
+Les neuf scénarios de panne local-fast réussissent. Les sept exécutables sur
+le profil Besu réussissent ; gas forcé à zéro et réorganisation Anvil restent
+explicitement non exécutés sur Besu. Le catalogue de 50 rôles et 50 skills
+passe sa validation structurelle.
+
+La CI GitHub Actions `40143787185` a également réussi sur ce commit, depuis
+un clone Ubuntu neuf avec installation des dépendances. Son job d’intégration
+réelle est `skipped`. L’archive téléchargée correspond au SHA-256 publié
+par GitHub. Les 16 fichiers de la campagne `20261024T234430Z-local-fast`
+ont été extraits sans modifier leurs octets ; leurs empreintes et l’empreinte
+des sources ont été vérifiées. Les métadonnées sont conservées dans
+`evidence/ci-b015e38/index.json`.
+
+Le registre reflète désormais 21 affirmations vérifiées localement, cinq sur
+Besu local et deux blocages externes. Les anciennes campagnes restent
+accessibles avec leur version et leur résultat, y compris les échecs.
+Les caractères de contrôle introduits involontairement dans quelques lignes
+du journal ont été corrigés ; les rapports bruts n’ont pas été réécrits.
+
+Le contrôle final a vérifié les empreintes de toutes les campagnes conservées
+et le statut effectif des 28 affirmations. Huit pages HTTP des deux instances
+répondent avec succès. Les deux relayers sont prêts, les données récentes,
+les bridges non pausés, les interventions à zéro et les offres équilibrées.
+La capture Grafana local-fast a été inspectée : identités 31337/31338,
+horodatage UTC, absence de retard, réconciliation équilibrée et zéro alerte
+active au relevé. Les courbes de panne restent visibles dans l’historique.
+
+Le contrôle d’intégrité a vérifié 294 empreintes, dont les treize instantanés
+Anvil hors Git (191 010 878 octets) toujours accessibles à leurs emplacements
+référencés. Les trois campagnes complètes du code courant ont la même
+empreinte de sources. La validation du registre et des profils ainsi que le
+scan Gitleaks passent après ajout des nouveaux rapports ; les cinq témoins
+positifs du scanner restent détectés. La documentation stricte est reconstruite
+pour servir le registre, les résultats et leurs preuves conservées.
