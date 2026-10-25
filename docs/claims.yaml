@@ -19,10 +19,10 @@
       "environment": "local-fast",
       "expected": "Tous les tests unittest réussissent",
       "status": "vérifié_local",
-      "observed": "69 tests Python réussis ; aucun test ignoré.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "observed": "72 tests Python réussis ; aucun test ignoré.",
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "CAP-001",
@@ -41,9 +41,9 @@
       "expected": "50 agents et 50 skills valides au minimum",
       "status": "vérifié_local",
       "observed": "50 définitions d’agents et 50 skills : structure et associations vérifiées.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "CFG-001",
@@ -64,9 +64,9 @@
       "expected": "Validation Docker Compose et assertions de restriction réussies",
       "status": "vérifié_local",
       "observed": "Deux configurations Compose valides, restrictions statiques vérifiées.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "RUN-001",
@@ -84,9 +84,9 @@
       "expected": "Clients Anvil ; chain IDs 31337 et 31338",
       "status": "vérifié_local",
       "observed": "Deux identités réseau, bytecodes, paires et rôles vérifiés ; relayer prêt.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "ISO-001",
@@ -107,9 +107,9 @@
       "expected": "Non root, rootfs RO, capacités supprimées, quotas, no-new-privileges",
       "status": "vérifié_local",
       "observed": "14 services inspectés : non root, racine RO, capacités retirées, quotas et no-new-privileges.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "ISO-002",
@@ -127,9 +127,9 @@
       "expected": "Contrôles positifs réussis et tentatives interdites échouées",
       "status": "vérifié_local",
       "observed": "Communications autorisées réussies ; tentative inter-réseau par IP refusée ; fichiers et secrets témoins hors périmètre absents.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "DB-001",
@@ -147,10 +147,10 @@
       "environment": "local-fast",
       "expected": "Témoin SQL unique, genesis identique et hauteur non décroissante",
       "status": "vérifié_local",
-      "observed": "Témoin SQL et 72 transferts persistés conservés après arrêt propre/recréation ; identités et progression vérifiées.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "observed": "Témoin SQL et 84 transferts persistés conservés après arrêt propre/recréation ; identités et progression vérifiées.",
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "DOC-001",
@@ -168,9 +168,9 @@
       "expected": "Code de sortie 0 du build strict",
       "status": "vérifié_local",
       "observed": "MkDocs 1.6.1 : construction stricte, sortie 0.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "SEC-001",
@@ -187,10 +187,10 @@
       "environment": "local-fast",
       "expected": "Gitleaks sortie 0 avec redaction des résultats",
       "status": "vérifié_local",
-      "observed": "Aucune détection dans les sources/preuves ; deux témoins GitHub et trois génériques détectés, valeurs masquées.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "observed": "Aucune détection dans les sources/preuves ; deux témoins GitHub et quatre génériques détectés, valeurs masquées.",
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "NET-001",
@@ -208,9 +208,9 @@
       "expected": "Chaque entrée CLI réelle retourne 2 et conserve un journal sans commande exécutée",
       "status": "vérifié_local",
       "observed": "Sept commandes CLI réelles (bootstrap, build, up, down, demo, test, prove) refusées avec code 2 et journal sans processus enfant exécuté ; aucun RPC.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "EVD-001",
@@ -227,10 +227,10 @@
       "environment": "local-fast",
       "expected": "SHA-256 début/fin identiques",
       "status": "vérifié_local",
-      "observed": "SHA-256 inchangé pendant toute la campagne : a78ece60a84e8ebe159c1fd6f817b00ccda800f6002767e8c690126536e7e963",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "observed": "SHA-256 inchangé pendant toute la campagne : 8ef4e51a3dae091b530d29993fbdeef919431286264bb4e50d34f083258aec2e",
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "BESU-001",
@@ -248,9 +248,9 @@
       "expected": "Besu 31339 et Anvil 31340 répondent",
       "status": "vérifié_besu_local",
       "observed": "Deux identités réseau, bytecodes, paires et rôles vérifiés ; relayer prêt.",
-      "evidence": "evidence/20261024T234936Z-local-besu/manifest.json",
-      "date_utc": "2026-10-24T23:55:48Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T003358Z-local-besu/manifest.json",
+      "date_utc": "2026-10-25T00:40:29Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "HOST-001",
@@ -289,9 +289,9 @@
       "expected": "Soldes et réconciliation corrects après aller-retour",
       "status": "vérifié_local",
       "observed": "10 tokens aller puis retour, reçus réussis, un seul crédit par identifiant, destinataires/montants et soldes restaurés ; somme des offres exacte au repos.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "TELA-001",
@@ -331,9 +331,9 @@
       "expected": "Compilation Solidity/London et tous les tests réussis sans test ignoré",
       "status": "vérifié_local",
       "observed": "27 tests Solidity réussis, dont fuzzing et invariants ; artefacts London empreintés.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "SIGN-001",
@@ -351,9 +351,9 @@
       "expected": "Tous les tests de signature passent sans skip",
       "status": "vérifié_local",
       "observed": "64 tests signataire et 51 tests relayer réussis sans réseau, sans skip.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "RELAYER-001",
@@ -369,9 +369,9 @@
       "expected": "Tous les scénarios isolés de reprise et de refus passent sans skip",
       "status": "vérifié_local",
       "observed": "64 tests signataire et 51 tests relayer réussis sans réseau, sans skip.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "TRANSFER-001",
@@ -391,9 +391,9 @@
       "expected": "Reçus réussis, processed vrai, un seul événement de crédit et soldes restaurés",
       "status": "vérifié_local",
       "observed": "10 tokens aller puis retour, reçus réussis, un seul crédit par identifiant, destinataires/montants et soldes restaurés ; somme des offres exacte au repos.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "RESILIENCE-001",
@@ -412,9 +412,9 @@
       "expected": "Neuf scénarios réussis ; même nonce/hash après crash, pas de crédit double ni de crédit de branche rejetée",
       "status": "vérifié_local",
       "observed": "9 scénarios réellement réussis ; non exécutés : aucun. Sources inchangées.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "RECON-001",
@@ -432,9 +432,9 @@
       "expected": "Offre totale et soldes exactement conservés",
       "status": "vérifié_local",
       "observed": "10 tokens aller puis retour, reçus réussis, un seul crédit par identifiant, destinataires/montants et soldes restaurés ; somme des offres exacte au repos.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "OBS-001",
@@ -450,9 +450,9 @@
       "expected": "Règles testées ; arrêt/restauration du relayer, horodatages historiques, masquage métier, API et requêtes nominales vérifiés",
       "status": "vérifié_local",
       "observed": "12 règles, neuf scénarios promtool (51 assertions), contrôle réel arrêt/reprise, horodatages conservés, métier périmé masqué ; 26 contrôles nominaux API/requêtes réussis.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "KEY-001",
@@ -468,9 +468,9 @@
       "expected": "Clés absentes du relayer/base/docs ; route signataire interdite depuis database ; HTTP401 sans jeton",
       "status": "vérifié_local",
       "observed": "Montages de secrets vérifiés ; route interdite refusée ; signature sans authentification HTTP 401.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "BESU-PROTO-001",
@@ -490,9 +490,9 @@
       "expected": "Deux burns, deux crédits, soldes et offre restaurés",
       "status": "vérifié_besu_local",
       "observed": "10 tokens aller puis retour, reçus réussis, un seul crédit par identifiant, destinataires/montants et soldes restaurés ; somme des offres exacte au repos.",
-      "evidence": "evidence/20261024T234936Z-local-besu/manifest.json",
-      "date_utc": "2026-10-24T23:55:48Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T003358Z-local-besu/manifest.json",
+      "date_utc": "2026-10-25T00:40:29Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "ANVIL-001",
@@ -508,9 +508,9 @@
       "expected": "44 assertions réussies sur historique, identité, code, reçus et logs",
       "status": "vérifié_local",
       "observed": "44 assertions : 520 blocs, deux arrêts propres, historique/transactions/reçus/logs conservés.",
-      "evidence": "evidence/20261024T234158Z-local-fast/manifest.json",
-      "date_utc": "2026-10-24T23:49:28Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "date_utc": "2026-10-25T00:32:48Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "BESU-RESILIENCE-001",
@@ -526,9 +526,9 @@
       "expected": "Sept scénarios réussis, deux scénarios explicitement non exécutés",
       "status": "vérifié_besu_local",
       "observed": "7 scénarios réellement réussis ; non exécutés : insufficient_gas, reorg_before_finality. Sources inchangées.",
-      "evidence": "evidence/20261024T234936Z-local-besu/manifest.json",
-      "date_utc": "2026-10-24T23:55:48Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T003358Z-local-besu/manifest.json",
+      "date_utc": "2026-10-25T00:40:29Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "BESU-OBS-001",
@@ -544,9 +544,9 @@
       "expected": "Règles testées ; arrêt/restauration du relayer, horodatages historiques, masquage métier, API et requêtes nominales vérifiés",
       "status": "vérifié_besu_local",
       "observed": "12 règles, neuf scénarios promtool (51 assertions), contrôle réel arrêt/reprise, horodatages conservés, métier périmé masqué ; 26 contrôles nominaux API/requêtes réussis.",
-      "evidence": "evidence/20261024T234936Z-local-besu/manifest.json",
-      "date_utc": "2026-10-24T23:55:48Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T003358Z-local-besu/manifest.json",
+      "date_utc": "2026-10-25T00:40:29Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     },
     {
       "id": "BESU-ISO-001",
@@ -562,9 +562,9 @@
       "expected": "Non root, racines RO, capacités retirées, quotas et no-new-privileges",
       "status": "vérifié_besu_local",
       "observed": "14 services inspectés : non root, racine RO, capacités retirées, quotas et no-new-privileges.",
-      "evidence": "evidence/20261024T234936Z-local-besu/manifest.json",
-      "date_utc": "2026-10-24T23:55:48Z",
-      "source_commit": "b015e387cbbfacc073b4cf0201bc08dae9f464c8"
+      "evidence": "evidence/20261025T003358Z-local-besu/manifest.json",
+      "date_utc": "2026-10-25T00:40:29Z",
+      "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885"
     }
   ]
 }

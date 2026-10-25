@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-25T00:18:24Z",
+  "source_commit": "b394413fabf63f7ff338b14ab45a60997ca940a2",
+  "conclusion": "failure",
+  "html_url": "https://github.com/m4tth1euNa0p1c/T3l4N-Bridge-ERC20/actions/runs/40145077211",
+  "artifact_id": 12580886080,
+  "archive_sha256": "720c83697dce5caebccbda2cf756ccaa694300840c1115ce1af4b50b435bc6e0",
+  "expires_at": "2026-11-24T00:13:16Z",
+  "retained_campaign": "evidence/20261025T000424Z-local-fast/manifest.json",
+  "passed_checks": 17,
+  "failed_checks": [
+    {
+      "id": "secrets",
+      "expected": "Gitleaks : aucun secret détecté dans les fichiers versionnables",
+      "observed": "Échec (124) : ['docker', 'run', '--rm', '--pull', 'never']\nTimeoutExpired",
+      "passed": false,
+      "utc": "2026-10-25T00:05:25Z"
+    }
+  ],
+  "retention": "Archive Actions 30 jours ; campagne extraite, durée de vie du dépôt.",
+  "note": "Un timeout du scan ne valide ni une absence de secret ni la campagne globale. Les autres 17 contrôles réussissent."
+}

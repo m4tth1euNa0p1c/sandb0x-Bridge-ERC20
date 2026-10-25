@@ -1,0 +1,34 @@
+{
+  "utc": "2026-10-25T00:43:23Z",
+  "source_commit": "b97c541fd7cb64a85560ba693742a62304c84885",
+  "source_sha256": "8ef4e51a3dae091b530d29993fbdeef919431286264bb4e50d34f083258aec2e",
+  "scope": "Relevés historiques de livraison ; aucune actualisation automatique de ces fichiers.",
+  "verification": {
+    "command": [
+      "python",
+      ".local/check_delivery.py"
+    ],
+    "exit_code": 0,
+    "expected": "Empreintes intactes, 26 affirmations vérifiées et deux blocages, huit pages servies, relayers prêts et offres équilibrées.",
+    "observed": "Toutes les assertions du script conservé passent.",
+    "test_time": "2026-10-25T00:41:34Z"
+  },
+  "visual_review": {
+    "reviewed_utc": "2026-10-25T00:43:23Z",
+    "screenshot": "grafana-fast-b97c541-delivery.png",
+    "observed": "Capture effectivement relue : données récentes, relayer prêt, chain IDs 31337/31338, horodatages UTC, retard et interventions à zéro, bridges actifs, réconciliation balanced et zéro alerte. Les courbes restent explicitement historiques."
+  },
+  "retention": "Rapports et capture : durée de conservation du dépôt. Le script est conservé comme procédure exécutée ; les états courants peuvent différer.",
+  "artifacts": {
+    "delivery-check.py": "f608a052a6239d5fbbf753a827d3db504a7bc04b69b30a6e4255b73db5659851",
+    "delivery-docs-commands.json": "7d1e4e223033e339505cd1ef5c46554dc6bb15fa751e1f382ef0d151cf7a22d3",
+    "delivery-integrity-check.py": "04aec58602e469a3196c425bb35a6301454dfd6cfce6055fb0ff40662c9f1ad0",
+    "delivery-integrity.json": "1218f371e8ac038b7afe3665bec164050f13fe37e83dec1bf7f2e5c2b84934a3",
+    "delivery-lint-commands.json": "789cdb204962ddcf1c62115564806c6e4129ab4e7c0a3e9295459d17fd455f11",
+    "delivery-scan-commands.json": "bc86a35c58968830d4ef07adf2f8a5b431689930f5a71b2c2113697e51cb165a",
+    "delivery.json": "5c7458efb0fda37bafa1f4037b861a560a071c7ab54ac5ad07770dcedbff5a0d",
+    "doctor-delivery.json": "7e3b47d4e883a1abdf9e696fe873b3b8447ff86418e4774575193240fa9a19ce",
+    "grafana-fast-b97c541-delivery-capture.json": "124504e7063bfed48d7eed8e22a7816d01bd5a9b9816dda4b36f1a71a2f36cc2",
+    "grafana-fast-b97c541-delivery.png": "b5b404786eba92e68e3ebe9a2203d9b2b767264114a21c29a4b1089e8028c60d"
+  }
+}

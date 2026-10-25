@@ -1,0 +1,426 @@
+{
+  "utc": "2026-10-25T00:41:34Z",
+  "code_commit": "b97c541fd7cb64a85560ba693742a62304c84885",
+  "source_sha256": "8ef4e51a3dae091b530d29993fbdeef919431286264bb4e50d34f083258aec2e",
+  "scope": "Instantané de livraison ; les services et données peuvent changer après cette date.",
+  "passed": true,
+  "claims": [
+    {
+      "id": "TOOL-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "CAP-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "CFG-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "RUN-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "ISO-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "ISO-002",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "DB-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "DOC-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "SEC-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "NET-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "EVD-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "BESU-001",
+      "status": "vérifié_besu_local"
+    },
+    {
+      "id": "HOST-001",
+      "status": "bloqué"
+    },
+    {
+      "id": "PROTO-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "TELA-001",
+      "status": "bloqué"
+    },
+    {
+      "id": "CONTRACT-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "SIGN-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "RELAYER-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "TRANSFER-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "RESILIENCE-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "RECON-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "OBS-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "KEY-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "BESU-PROTO-001",
+      "status": "vérifié_besu_local"
+    },
+    {
+      "id": "ANVIL-001",
+      "status": "vérifié_local"
+    },
+    {
+      "id": "BESU-RESILIENCE-001",
+      "status": "vérifié_besu_local"
+    },
+    {
+      "id": "BESU-OBS-001",
+      "status": "vérifié_besu_local"
+    },
+    {
+      "id": "BESU-ISO-001",
+      "status": "vérifié_besu_local"
+    }
+  ],
+  "counts": {
+    "vérifié_local": 21,
+    "vérifié_besu_local": 5,
+    "bloqué": 2
+  },
+  "campaign_integrity": [
+    {
+      "path": "evidence/20261024T202049Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T202323Z-local-besu/manifest.json",
+      "integrity": "verified",
+      "passed": false,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T202910Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T203035Z-local-besu/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T223810Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T225246Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T230925Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": false,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T231050Z-local-besu/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T231823Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": false,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T232235Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T234158Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T234430Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261024T234936Z-local-besu/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261025T000424Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": false,
+      "current_sources": false
+    },
+    {
+      "path": "evidence/20261025T002452Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": true
+    },
+    {
+      "path": "evidence/20261025T002725Z-local-fast/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": true
+    },
+    {
+      "path": "evidence/20261025T003358Z-local-besu/manifest.json",
+      "integrity": "verified",
+      "passed": true,
+      "current_sources": true
+    }
+  ],
+  "served_pages": [
+    {
+      "url": "http://127.0.0.1:18080/",
+      "status": 200,
+      "bytes": 13807,
+      "sha256": "7e0d5775888a03a8a366fe4aadeca8da860a0fba9974dc609403ba46a93e48a9"
+    },
+    {
+      "url": "http://127.0.0.1:18080/resultats/",
+      "status": 200,
+      "bytes": 22520,
+      "sha256": "33b6110cf946675fd94076525fdef490997c36ad5518ed0ec54ea2098ec7f01d"
+    },
+    {
+      "url": "http://127.0.0.1:18080/status/",
+      "status": 200,
+      "bytes": 11203,
+      "sha256": "98e4b96017600bd59a63f3d955b1bb4ba5756015b365acee1e8ed31502d52c6b"
+    },
+    {
+      "url": "http://127.0.0.1:18080/claims.yaml",
+      "status": 200,
+      "bytes": 26375,
+      "sha256": "4ecd015257fd3c9c37cda467c8ace6d8b0eae3b86a9b0dbc545b7e932edcfbe6"
+    },
+    {
+      "url": "http://127.0.0.1:18081/",
+      "status": 200,
+      "bytes": 13807,
+      "sha256": "7e0d5775888a03a8a366fe4aadeca8da860a0fba9974dc609403ba46a93e48a9"
+    },
+    {
+      "url": "http://127.0.0.1:18081/resultats/",
+      "status": 200,
+      "bytes": 22520,
+      "sha256": "33b6110cf946675fd94076525fdef490997c36ad5518ed0ec54ea2098ec7f01d"
+    },
+    {
+      "url": "http://127.0.0.1:18081/status/",
+      "status": 200,
+      "bytes": 11203,
+      "sha256": "98e4b96017600bd59a63f3d955b1bb4ba5756015b365acee1e8ed31502d52c6b"
+    },
+    {
+      "url": "http://127.0.0.1:18081/claims.yaml",
+      "status": 200,
+      "bytes": 26375,
+      "sha256": "4ecd015257fd3c9c37cda467c8ace6d8b0eae3b86a9b0dbc545b7e932edcfbe6"
+    }
+  ],
+  "states": {
+    "local-fast": {
+      "running": true,
+      "ready": true,
+      "stale": false,
+      "profile": "local-fast",
+      "codeVersion": "f4a694dc9e765f00e0f1d86236b870e6fd5b3c27a2e6bd0eb8274ecc508f82f1",
+      "updatedUtc": "2026-10-25T00:41:33.6802998+00:00",
+      "errorCode": null,
+      "networks": [
+        {
+          "name": "a",
+          "chainId": 31337,
+          "head": 5099,
+          "finalized": 5096,
+          "nextBlock": 5100,
+          "lastCollectionUtc": "2026-10-25T00:41:33.6712+00:00",
+          "gasBalanceWei": "9998644484534515852",
+          "paused": false
+        },
+        {
+          "name": "b",
+          "chainId": 31338,
+          "head": 5016,
+          "finalized": 5013,
+          "nextBlock": 5017,
+          "lastCollectionUtc": "2026-10-25T00:41:33.67232+00:00",
+          "gasBalanceWei": "9993075838182062032",
+          "paused": false
+        }
+      ],
+      "transfers": {
+        "counts": {
+          "observed": 0,
+          "waiting_finality": 0,
+          "source_finalized": 0,
+          "destination_prepared": 0,
+          "destination_submitted": 0,
+          "destination_finalized": 78,
+          "waiting_gas": 0,
+          "waiting_pause": 0,
+          "waiting_rate": 0,
+          "retryable_failure": 0,
+          "rejected": 6,
+          "intervention_required": 0
+        },
+        "oldestPendingSeconds": 0,
+        "attempts": 0
+      },
+      "reconciliation": {
+        "state": "balanced",
+        "expectedSupply": "1000000000000000000000000",
+        "supplyA": "999931000000000000000000",
+        "supplyB": "69000000000000000000",
+        "inTransit": "0",
+        "difference": "0",
+        "cuts": {
+          "a": {
+            "number": 5095,
+            "hash": "0xc23fb9d2a16fc7765e768719944bbd01163060eb12a9c20134813e5116dad8c2",
+            "parentHash": "0xcd5f3766e104ac9bc5c821931ea0f2c7d6cbe25ca77d879a6efffe16d13db30e"
+          },
+          "b": {
+            "number": 5011,
+            "hash": "0xa7d509f56d24995f8da125b7247316521649aebe05896605390da1e3aa1e878d",
+            "parentHash": "0x563809cf761cfe08bcb80d4aef6ac83870abf716cae81fa4eb1baa4d8bc1a74d"
+          }
+        },
+        "updatedUtc": "2026-10-25T00:41:31.6415873+00:00",
+        "reason": null
+      }
+    },
+    "local-besu": {
+      "running": true,
+      "ready": true,
+      "stale": false,
+      "profile": "local-besu",
+      "codeVersion": "f4a694dc9e765f00e0f1d86236b870e6fd5b3c27a2e6bd0eb8274ecc508f82f1",
+      "updatedUtc": "2026-10-25T00:41:34.1266109+00:00",
+      "errorCode": null,
+      "networks": [
+        {
+          "name": "a",
+          "chainId": 31339,
+          "head": 5104,
+          "finalized": 5104,
+          "nextBlock": 5105,
+          "lastCollectionUtc": "2026-10-25T00:41:34.118706+00:00",
+          "gasBalanceWei": "9999233456000000000",
+          "paused": false
+        },
+        {
+          "name": "b",
+          "chainId": 31340,
+          "head": 4895,
+          "finalized": 4892,
+          "nextBlock": 4896,
+          "lastCollectionUtc": "2026-10-25T00:41:34.115092+00:00",
+          "gasBalanceWei": "9995653422128697916",
+          "paused": false
+        }
+      ],
+      "transfers": {
+        "counts": {
+          "observed": 0,
+          "waiting_finality": 0,
+          "source_finalized": 0,
+          "destination_prepared": 0,
+          "destination_submitted": 0,
+          "destination_finalized": 43,
+          "waiting_gas": 0,
+          "waiting_pause": 0,
+          "waiting_rate": 0,
+          "retryable_failure": 0,
+          "rejected": 0,
+          "intervention_required": 0
+        },
+        "oldestPendingSeconds": 0,
+        "attempts": 0
+      },
+      "reconciliation": {
+        "state": "balanced",
+        "expectedSupply": "1000000000000000000000000",
+        "supplyA": "999961000000000000000000",
+        "supplyB": "39000000000000000000",
+        "inTransit": "0",
+        "difference": "0",
+        "cuts": {
+          "a": {
+            "number": 5103,
+            "hash": "0x60d4d46f735d28062898065fa48dad62c7434430a0b467ac5802cecbe77430ee",
+            "parentHash": "0xdec5cf51ecd9fe1f7c50385b449629b376fad8cce3d2395b78a9fb8810219d1c"
+          },
+          "b": {
+            "number": 4891,
+            "hash": "0xfbf0f074f4ca8f684d73d90dd3f38988fe2f498e18b9349e1209514e2b939de5",
+            "parentHash": "0x1b57521cf7a3e3a82fdb9001888bb27b0d394f4acbf947ced924d69bca0fccfa"
+          }
+        },
+        "updatedUtc": "2026-10-25T00:41:33.0981866+00:00",
+        "reason": null
+      }
+    }
+  },
+  "external_integration": "Sepolia et TELA non exécutés ; activation refusée.",
+  "remaining": "VM dédiée, filtrage hôte effectif, dossier TELA/Sepolia et moyens de test."
+}

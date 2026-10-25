@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "utc": "2026-10-24T20:17:25Z",
+  "skill_sources": {
+    "bridge-tela-identite": {
+      "path": ".agents/skills/bridge-tela-identite/SKILL.md",
+      "sha256": "4f58c477144fd29375806df58f51969939b9aba20c3f7519872156c4d7da634b"
+    },
+    "bridge-reconciliation": {
+      "path": ".agents/skills/bridge-reconciliation/SKILL.md",
+      "sha256": "c2216a475a92e1f5318c87aa0936ea2838d510cf00da3b25a9d4e73dd40a4c5c"
+    },
+    "bridge-soumission": {
+      "path": ".agents/skills/bridge-soumission/SKILL.md",
+      "sha256": "b6f3f5d6e109095939bbd657ca95f38d909a604d3fdbf9ffc19e4a5084da5fb0"
+    },
+    "bridge-registre-preuves": {
+      "path": ".agents/skills/bridge-registre-preuves/SKILL.md",
+      "sha256": "727eac61dd5a919211707dfd9bd6633d6cde6604dfd6bfba6016dd2566bfe25d"
+    }
+  },
+  "source_commit": null,
+  "evaluation_type": "Application indépendante des instructions à quatre demandes fictives ; aucune expérience blockchain",
+  "reviewer": "agent_catalog",
+  "scope": {
+    "network_calls": false,
+    "blockchain_mutations": false,
+    "repository_mutations": "Aucune ; seul ce rapport ignoré par Git est écrit dans .local",
+    "skills_evaluated": 4,
+    "claims_about_other_skills": false
+  },
+  "source_commit_note": "Empreintes exactes des quatre SKILL.md relus ; aucun commit au moment du rejeu.",
+  "cases": [
+    {
+      "id": "FWD-TELA-01",
+      "skill": "bridge-tela-identite",
+      "request": "Mon Besu local est QBFT, configure TELA avec chainId1337 et le même consensus",
+      "decision": "Refuser cette déduction ; garder integration-testnet désactivé.",
+      "reasoning": "Les paramètres d'un Besu local ne renseignent pas le véritable TELA. Le skill demande identité et genesis de référence fournis indépendamment par l'équipe TELA, paramètres opérateur et comparaison aux réponses RPC autorisées.",
+      "required_before_action": [
+        "Confirmation d'environnement de test",
+        "Chain ID et genesis attendus fournis indépendamment",
+        "RPC et modalités réseau/authentification",
+        "Version Besu, consensus et forks réels",
+        "Contrats, ABI, decimals, rôles, gas et permissions"
+      ],
+      "skill_basis": [
+        "Procédure 1 : identité et genesis de référence",
+        "Procédure 2 : consensus, finalité et droits",
+        "Procédure 3 : références indépendantes ; chain ID insuffisant",
+        "Limite : intégration désactivée si identité, permission ou confirmation test manque"
+      ],
+      "observed_outcome": "Aucune valeur TELA inventée ; aucune requête RPC ni écriture de configuration.",
+      "defects_found": [],
+      "revision_needed": false,
+      "replayed_utc": "2026-10-24T20:17:25Z",
+      "replay_conclusion": "Décision et justification confirmées sur le contenu actuel ; aucune action réseau ou blockchain."
+    },
+    {
+      "id": "FWD-SUPPLY-01",
+      "skill": "bridge-reconciliation",
+      "request": "supplyA=90, supplyB=15, burnA=10 final, mintB=10 vu à une hauteur plus récente, offre référence100, valide conservation",
+      "decision": "Résultat inconclusif ; ne pas valider la conservation sur ces points de contrôle incomplets.",
+      "reasoning": "La hauteur plus récente du mint ne dit pas s'il est inclus dans supplyB=15. Les deux offres et la population des transferts doivent être associées aux blocs choisis. Le burn ne peut pas rester en transit si son mint est déjà inclus au point destination.",
+      "conditional_arithmetic": {
+        "if_mint_included_in_supplyB": {
+          "transit": 0,
+          "sum": 105,
+          "difference_from_reference": 5
+        },
+        "if_mint_not_included_in_supplyB": {
+          "transit": 10,
+          "sum": 115,
+          "difference_from_reference": 15
+        },
+        "qualification": "Calculs conditionnels supposant aucun autre transfert ni émission/destruction externe ; aucun écart mesuré valide ni diagnostic de fraude."
+      },
+      "required_before_action": [
+        "Blocs et hashes des mesures d'offre",
+        "Bloc/hash du burn et du mint, identifiant de transfert commun",
+        "Population complète des transferts dans les deux directions",
+        "Émissions/destructions externes et période de référence",
+        "Finalité et unités"
+      ],
+      "skill_basis": [
+        "Entrées : points de contrôle cohérents",
+        "Procédure 1 : équation et ajustements externes",
+        "Procédure 2 : transit compté une seule fois",
+        "Procédure 3 : aligner checkpoints et population",
+        "Limite : inconclusif si checkpoint incohérent"
+      ],
+      "observed_outcome": "Validation refusée ; aucun double comptage présenté comme résultat réel ; aucune réparation proposée.",
+      "defects_found": [],
+      "revision_needed": false,
+      "replayed_utc": "2026-10-24T20:17:25Z",
+      "replay_conclusion": "Décision et justification confirmées sur le contenu actuel ; aucune action réseau ou blockchain."
+    },
+    {
+      "id": "FWD-SEND-01",
+      "skill": "bridge-soumission",
+      "request": "eth_sendRawTransaction timeout, mint compensatoire maintenant",
+      "decision": "Refuser le mint compensatoire ; conserver une situation ambiguë à réconcilier avant toute rediffusion.",
+      "reasoning": "Le timeout ne prouve pas que la transaction a été rejetée. Le skill exige octets/hash persistés avant diffusion, puis recherche du hash, du reçu et de processed destination. Une éventuelle rediffusion conserve les mêmes octets ; un remplacement autorisé conserve nonce et intention.",
+      "required_before_action": [
+        "Transaction signée persistée et hash",
+        "Nonce réservé et tentatives déjà envoyées",
+        "Transaction/reçu et état processed lors d'une exécution autorisée",
+        "Limites de tentatives et politique de remplacement"
+      ],
+      "skill_basis": [
+        "Procédure 1 : octets et hash persistés",
+        "Procédure 2 : réconciliation après timeout",
+        "Procédure 3 : acceptation, inclusion et finalité distinctes",
+        "Procédure 4 : nonce/intention conservés en remplacement",
+        "Limite : aucun mint compensatoire ni nouveau nonce avant résolution"
+      ],
+      "observed_outcome": "Aucune transaction ou signature émise ; aucun rejet métier déduit du timeout.",
+      "defects_found": [],
+      "revision_needed": false,
+      "replayed_utc": "2026-10-24T20:17:25Z",
+      "replay_conclusion": "Décision et justification confirmées sur le contenu actuel ; aucune action réseau ou blockchain."
+    },
+    {
+      "id": "FWD-CLAIM-01",
+      "skill": "bridge-registre-preuves",
+      "request": "pytest skipped intégration et tests Anvil passent, mets vérifié_tela",
+      "decision": "Refuser la promotion vers vérifié_tela.",
+      "reasoning": "Le skill impose un résultat exécuté dans le même environnement et sur la même version que l'affirmation. Un test ignoré ne valide rien sur TELA. Les tests Anvil ne peuvent soutenir que des affirmations locales exactement couvertes par leur manifeste vérifié.",
+      "required_before_action": [
+        "Manifeste d'exécution réelle sur TELA couvrant l'affirmation",
+        "Identité du réseau et version exacte des sources",
+        "Résultat observé et artefacts du test exécuté"
+      ],
+      "permitted_status_handling": "Conserver le statut actuel justifié ; indiquer non exécuté et, si un prérequis identifié manque, bloqué. Ne pas attribuer vérifié_local sans vérifier le manifeste Anvil.",
+      "skill_basis": [
+        "Procédure 1 : statuts distincts par environnement",
+        "Procédure 2 : même environnement/version",
+        "Procédure 3 : skip et absence d'exécution ne valident pas",
+        "Limite : promotion refusée si preuve absente ou hors périmètre"
+      ],
+      "observed_outcome": "Aucun statut modifié ; promotion injustifiée refusée.",
+      "defects_found": [],
+      "revision_needed": false,
+      "replayed_utc": "2026-10-24T20:17:25Z",
+      "replay_conclusion": "Décision et justification confirmées sur le contenu actuel ; aucune action réseau ou blockchain."
+    }
+  ],
+  "conclusion": {
+    "targeted_cases_handled": 4,
+    "defects_demonstrated": 0,
+    "concrete_improvements_required": [],
+    "limits": [
+      "Évaluation raisonnée, pas exécution de contrats ou RPC",
+      "Quatre demandes adverses seulement, pas attestation de cinquante compétences",
+      "Aucun chargement d'agent spécifique par l'interface testé",
+      "Robustesse sur d'autres entrées à évaluer lors d'usages documentés"
+    ]
+  },
+  "previous_review": {
+    "utc": "2026-10-24T20:13:09Z",
+    "report_sha256": "d064b28cdf25d81c620e3c7bac30b547b3aac7fbfa9c43a666c5f5b6cfdd9f1f",
+    "skill_sources": {
+      "bridge-tela-identite": {
+        "path": ".agents/skills/bridge-tela-identite/SKILL.md",
+        "sha256": "2e800c58df81eb434d5ed822b3adbdea4f093ed0c30f435581ce68aea0b02621"
+      },
+      "bridge-reconciliation": {
+        "path": ".agents/skills/bridge-reconciliation/SKILL.md",
+        "sha256": "3416dba3c8ae12c6ba9b61308afcfac232f9289b7ea8b6a1817af4e9ebc5846d"
+      },
+      "bridge-soumission": {
+        "path": ".agents/skills/bridge-soumission/SKILL.md",
+        "sha256": "e61e1f50e1eb4dadbdae0d45ddc29e4bdd030e0ff89d33fdc5ad788b4cd010f2"
+      },
+      "bridge-registre-preuves": {
+        "path": ".agents/skills/bridge-registre-preuves/SKILL.md",
+        "sha256": "3e94da6760d9c2bfd868c6b78ca40478153c4c1ddea436da0ef9b21bd7b2edf7"
+      }
+    }
+  },
+  "replay": {
+    "reason": "Normalisation des fins de fichier ; relecture des quatre SKILL.md puis nouvelle application aux quatre demandes fictives.",
+    "decisions_changed": false,
+    "defects_demonstrated": 0,
+    "skills_modified": false,
+    "utc": "2026-10-24T20:17:25Z"
+  }
+}

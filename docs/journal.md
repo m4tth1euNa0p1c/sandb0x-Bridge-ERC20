@@ -288,3 +288,71 @@ empreinte de sources. La validation du registre et des profils ainsi que le
 scan Gitleaks passent après ajout des nouveaux rapports ; les cinq témoins
 positifs du scanner restent détectés. La documentation stricte est reconstruite
 pour servir le registre, les résultats et leurs preuves conservées.
+
+## Expiration du scan sur le dépôt enrichi — 25 octobre 2026 UTC
+
+Le commit de rapports `b394413` a déclenché la CI `40145077211`. Les tests
+de contrats, .NET, aller-retour, neuf pannes, cloisonnement, persistance et
+supervision réussissent ; le scan de secrets atteint sa limite de 60 secondes
+avec environ 52 Mo de preuves versionnées. La campagne conserve donc un
+résultat global en échec, 17 contrôles réussis sur 18, sans verdict de sécurité
+du scanner interrompu. L’archive téléchargée est conforme au digest GitHub
+et la campagne `20261025T000424Z-local-fast` est conservée sans modification.
+
+Décision : porter le budget normal du scan à cinq minutes, conserver une minute
+pour les cinq témoins positifs et garder les mêmes restrictions (un CPU,
+256 Mio, aucun réseau, montage en lecture seule). Aucun fichier de preuve
+n’est exclu pour accélérer le scan. Chaque conteneur reçoit un nom unique et
+un label de projet ; un timeout ou une interruption déclenche le nettoyage
+de ce seul conteneur avant suppression de sa copie de travail. Un client
+Docker interrompu ne garantit pas à lui seul l’arrêt du conteneur.
+
+Trois régressions supplémentaires vérifient le refus sur timeout, la détection
+conservée comme échec, et la propagation d’une interruption après nettoyage.
+Les 72 tests Python et le catalogue 50/50 passent. Le témoin réel avec limite
+injectée de deux secondes retourne 124, supprime son seul conteneur avec code 0,
+puis confirme son absence. Le rôle et le skill secrets intègrent ce retour.
+Les 26 affirmations précédemment vérifiées sont marquées obsolètes en attente
+des nouvelles campagnes ; les deux blocages externes restent inchangés.
+
+Le premier scan après modification a correctement signalé la nouvelle
+empreinte publique du rôle `bridge-secrets.toml` dans le témoin de timeout.
+La valeur a été comparée au SHA-256 réel du fichier, puis ajoutée à l’exception
+existante limitée à ce champ et à ces deux empreintes exactes. Un sixième
+témoin aléatoire placé dans ce même champ vérifie qu’une autre valeur reste
+détectée. Les cinq témoins précédents restent présents ; aucun élargissement
+à un répertoire ou à une classe arbitraire de secrets n’a été ajouté.
+
+## Validation du correctif du scanner — 25 octobre 2026 UTC
+
+Le commit `b97c541fd7cb64a85560ba693742a62304c84885`, d’empreinte
+`8ef4e51a3dae091b530d29993fbdeef919431286264bb4e50d34f083258aec2e`,
+a réussi les 18 contrôles local-fast entre 00:24:52 et 00:32:48 UTC,
+puis les 18 contrôles local-besu entre 00:33:58 et 00:40:29 UTC.
+Les 72 tests Python, 27 tests Solidity et 115 tests .NET passent, ainsi que
+les neuf scénarios de panne Anvil et les sept exécutés sur Besu. Les deux
+cas non exécutés sur Besu restent explicitement distincts des réussites.
+
+La CI `40146594435` du même commit a réussi ses 18 contrôles depuis un clone
+neuf. Son scan complet a duré 69,467 secondes, avec deux témoins GitHub et
+quatre génériques détectés : la durée observée dépasse effectivement l’ancienne
+limite. L’archive reçue a été comparée au digest GitHub, puis la campagne
+`20261025T002725Z-local-fast` extraite et ses artefacts vérifiés sans réécriture.
+La preuve et l’index sont dans `evidence/ci-b97c541/` ; les campagnes Windows
+sont `20261025T002452Z-local-fast` et `20261025T003358Z-local-besu`.
+
+Les sources sont restées inchangées pendant les trois campagnes. Les statuts
+effectifs redeviennent 21 vérifications locales, cinq vérifications Besu local
+et deux blocages externes. La capture Grafana du correctif a été relue :
+disponibilité et données récentes, identités 31337/31338, retard nul,
+interventions nulles, bridges actifs, offre équilibrée et aucune alerte active.
+L’échec CI antérieur et les deux témoins de timeout restent conservés.
+
+Le relevé de livraison du correctif vérifie les huit pages HTTP, les deux
+relayers prêts avec données récentes, les pauses désactivées, zéro intervention
+et les deux offres équilibrées. L’audit réalise 368 vérifications d’empreinte,
+y compris les treize instantanés hors Git. Le scan final incluant les nouveaux
+rapports réussit en 29,969 secondes sur cet hôte et détecte ses six témoins.
+Les résultats, commandes, procédures et capture sont indexés dans
+`evidence/finalization-b97c541/`. Le dépôt conserve séparément les sources du
+correctif et le commit ajoutant ces rapports.

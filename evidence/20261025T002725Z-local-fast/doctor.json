@@ -1,0 +1,184 @@
+{
+  "utc": "2026-10-25T00:27:24Z",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "cpu_logical": 2,
+  "disk_free_gib": 6.91,
+  "tools": {
+    "git": {
+      "command": [
+        "/usr/bin/git",
+        "--version"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 0,
+      "stdout": "git version 2.55.0",
+      "stderr": "",
+      "duration_seconds": 0.004
+    },
+    "docker": {
+      "command": [
+        "/usr/bin/docker",
+        "version",
+        "--format",
+        "{{json .}}"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 0,
+      "stdout": "{\"Client\":{\"Platform\":{\"Name\":\"Docker Engine - Community\"},\"Version\":\"28.0.4\",\"ApiVersion\":\"1.48\",\"DefaultAPIVersion\":\"1.48\",\"GitCommit\":\"b8034c0\",\"GoVersion\":\"go1.23.7\",\"Os\":\"linux\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Mar 25 15:07:16 2025\",\"Context\":\"default\"},\"Server\":{\"Platform\":{\"Name\":\"Docker Engine - Community\"},\"Components\":[{\"Name\":\"Engine\",\"Version\":\"28.0.4\",\"Details\":{\"ApiVersion\":\"1.48\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Mar 25 15:07:16 2025\",\"Experimental\":\"false\",\"GitCommit\":\"6430e49\",\"GoVersion\":\"go1.23.7\",\"KernelVersion\":\"6.17.0-1022-azure\",\"MinAPIVersion\":\"1.24\",\"Os\":\"linux\"}},{\"Name\":\"containerd\",\"Version\":\"v2.4.1\",\"Details\":{\"GitCommit\":\"f2551031d7276a770f65f98c9b52e57e7dad07e8\"}},{\"Name\":\"runc\",\"Version\":\"1.5.2\",\"Details\":{\"GitCommit\":\"v1.5.2-0-g29dd3dc2\"}},{\"Name\":\"docker-init\",\"Version\":\"0.19.0\",\"Details\":{\"GitCommit\":\"de40ad0\"}}],\"Version\":\"28.0.4\",\"ApiVersion\":\"1.48\",\"MinAPIVersion\":\"1.24\",\"GitCommit\":\"6430e49\",\"GoVersion\":\"go1.23.7\",\"Os\":\"linux\",\"Arch\":\"amd64\",\"KernelVersion\":\"6.17.0-1022-azure\",\"BuildTime\":\"2025-03-25T15:07:16.000000000+00:00\"}}",
+      "stderr": "",
+      "duration_seconds": 0.03
+    },
+    "dotnet": {
+      "command": [
+        "/usr/bin/dotnet",
+        "--list-sdks"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 0,
+      "stdout": "8.0.131 [/usr/share/dotnet/sdk]\n8.0.206 [/usr/share/dotnet/sdk]\n8.0.319 [/usr/share/dotnet/sdk]\n8.0.425 [/usr/share/dotnet/sdk]\n9.0.121 [/usr/share/dotnet/sdk]\n9.0.205 [/usr/share/dotnet/sdk]\n9.0.318 [/usr/share/dotnet/sdk]\n10.0.112 [/usr/share/dotnet/sdk]\n10.0.204 [/usr/share/dotnet/sdk]\n10.0.303 [/usr/share/dotnet/sdk]\n10.0.401 [/usr/share/dotnet/sdk]",
+      "stderr": "",
+      "duration_seconds": 0.248
+    },
+    "python": {
+      "command": [
+        "/opt/hostedtoolcache/Python/3.12.10/x64/bin/python",
+        "--version"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 0,
+      "stdout": "Python 3.12.10",
+      "stderr": "",
+      "duration_seconds": 0.002
+    },
+    "forge": {
+      "command": [
+        "forge",
+        "--version"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "FileNotFoundError",
+      "duration_seconds": 0.001
+    },
+    "anvil": {
+      "command": [
+        "anvil",
+        "--version"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "FileNotFoundError",
+      "duration_seconds": 0.0
+    },
+    "cast": {
+      "command": [
+        "cast",
+        "--version"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "FileNotFoundError",
+      "duration_seconds": 0.001
+    },
+    "uv": {
+      "command": [
+        "uv",
+        "--version"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "FileNotFoundError",
+      "duration_seconds": 0.0
+    },
+    "node": {
+      "command": [
+        "/usr/local/bin/node",
+        "--version"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 0,
+      "stdout": "v22.23.3",
+      "stderr": "",
+      "duration_seconds": 0.093
+    },
+    "java": {
+      "command": [
+        "/usr/bin/java",
+        "-version"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "openjdk version \"17.0.20.1\" 2026-08-18\nOpenJDK Runtime Environment Temurin-17.0.20.1+1 (build 17.0.20.1+1)\nOpenJDK 64-Bit Server VM Temurin-17.0.20.1+1 (build 17.0.20.1+1, mixed mode, sharing)",
+      "duration_seconds": 0.166
+    },
+    "podman": {
+      "command": [
+        "/usr/bin/podman",
+        "--version"
+      ],
+      "utc": "2026-10-25T00:27:24Z",
+      "exit_code": 0,
+      "stdout": "podman version 4.9.3",
+      "stderr": "",
+      "duration_seconds": 0.041
+    }
+  },
+  "session_declaration": "Lancement initial : danger-full-access, réseau activé, approval never ; pas une preuve de confinement.",
+  "compose": {
+    "command": [
+      "docker",
+      "compose",
+      "version"
+    ],
+    "utc": "2026-10-25T00:27:24Z",
+    "exit_code": 0,
+    "stdout": "Docker Compose version v2.38.2",
+    "stderr": "",
+    "duration_seconds": 0.363
+  },
+  "docker_context": "default",
+  "docker_info": {
+    "command": [
+      "docker",
+      "info",
+      "--format",
+      "{{json .}}"
+    ],
+    "utc": "2026-10-25T00:27:25Z",
+    "exit_code": 0,
+    "stdout": "{\"ContainersRunning\": 0, \"MemoryLimit\": true, \"CpuCfsQuota\": true, \"PidsLimit\": true, \"OSType\": \"linux\", \"Architecture\": \"x86_64\", \"NCPU\": 2, \"MemTotal\": 8323969024, \"ServerVersion\": \"28.0.4\", \"SecurityOptions\": [\"name=apparmor\", \"name=seccomp,profile=builtin\", \"name=cgroupns\"]}",
+    "stderr": "",
+    "duration_seconds": 0.07
+  },
+  "docker_subnets": [
+    "[{\"Subnet\":\"172.17.0.0/16\",\"Gateway\":\"172.17.0.1\"}]",
+    "null",
+    "null"
+  ],
+  "host_ipv4_routes": {
+    "command": [
+      "ip",
+      "-j",
+      "-4",
+      "route"
+    ],
+    "utc": "2026-10-25T00:27:25Z",
+    "exit_code": 0,
+    "stdout": "[{\"dst\":\"default\",\"gateway\":\"10.1.0.1\",\"dev\":\"eth0\",\"protocol\":\"dhcp\",\"prefsrc\":\"10.1.0.166\",\"metric\":100,\"flags\":[]},{\"dst\":\"10.1.0.0/20\",\"dev\":\"eth0\",\"protocol\":\"kernel\",\"scope\":\"link\",\"prefsrc\":\"10.1.0.166\",\"metric\":100,\"flags\":[]},{\"dst\":\"10.1.0.1\",\"dev\":\"eth0\",\"protocol\":\"dhcp\",\"scope\":\"link\",\"prefsrc\":\"10.1.0.166\",\"metric\":100,\"flags\":[]},{\"dst\":\"168.63.129.16\",\"gateway\":\"10.1.0.1\",\"dev\":\"eth0\",\"protocol\":\"dhcp\",\"prefsrc\":\"10.1.0.166\",\"metric\":100,\"flags\":[]},{\"dst\":\"169.254.169.254\",\"gateway\":\"10.1.0.1\",\"dev\":\"eth0\",\"protocol\":\"dhcp\",\"prefsrc\":\"10.1.0.166\",\"metric\":100,\"flags\":[]},{\"dst\":\"172.17.0.0/16\",\"dev\":\"docker0\",\"protocol\":\"kernel\",\"scope\":\"link\",\"prefsrc\":\"172.17.0.1\",\"flags\":[\"linkdown\"]}]",
+    "stderr": "",
+    "duration_seconds": 0.004
+  },
+  "host_child_can_read_outside_workspace": true,
+  "network_installation": [],
+  "limitations": [
+    "Hôte et moteur Docker partagés, pas de VM dédiée attestée",
+    "Aucun filtrage de destinations imposé au processus hôte",
+    "Accès au moteur Docker réservé par convention à l'orchestrateur, pas par ACL projet",
+    "L'installation des dépendances est distincte de l'exécution ; vérifier build.json pour les images applicatives disponibles"
+  ]
+}
