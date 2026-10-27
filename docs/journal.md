@@ -446,3 +446,20 @@ celui du log, pour refuser une réponse RPC incohérente renvoyant une autre
 transaction du même bloc. Ce contrôle et son test passent : 104 tests Python
 réussis. La CI historique de `2b2930c` a également réussi local-fast ; elle
 reste conservée séparément et ne valide pas cette nouvelle correction.
+
+## Scan des sous-dossiers de preuves — 27 octobre 2026 UTC
+
+La campagne `20261027T175230Z-local-fast` sur `ff91b0f` conserve 17/18 :
+tous les contrôles métier, pannes, persistance et supervision passent, mais
+le scan signale six empreintes de sources dans l'index imbriqué du diagnostic
+pagination. Les six valeurs correspondent aux fichiers publics exacts ;
+les exceptions existantes ne couvraient qu'un niveau de sous-dossier.
+Le correctif conserve ces valeurs et règles exactes et étend le chemin aux
+rapports imbriqués. Les sept témoins aléatoires sont désormais injectés dans
+un sous-dossier pour vérifier qu'ils restent détectés. Aucun rapport n'est
+exclu du périmètre du scan. Le skill secrets intègre ce cas observé.
+
+Le scan CLI du 27 octobre à 18:01:30 UTC réussit : aucune détection sur les
+fichiers versionnables, puis deux témoins GitHub et cinq témoins génériques
+détectés dans le sous-dossier. Le catalogue 50/50 reste valide. Le journal
+de commande masqué est conservé dans le dossier d'incident.

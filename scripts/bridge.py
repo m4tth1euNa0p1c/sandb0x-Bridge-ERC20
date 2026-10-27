@@ -500,7 +500,8 @@ def scan_secrets():
         result = run_secret_scanner(d, "/scan", timeout=300)
         # Faux credential sans validité, créé exclusivement dans la copie temporaire.
         # Le contrôle assure que l'exception d'empreinte ne masque pas les vrais motifs.
-        control = Path(d) / "evidence/scan-control/manifest.json"
+        # Les rapports d'incident sont imbriqués : exercer aussi ce chemin.
+        control = Path(d) / "evidence/scan-control/nested/manifest.json"
         fake_pat = lambda: "ghp_" + "".join(secrets.choice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") for _ in range(36))
         write_json(control, {"api_key": fake_pat(), "tokenAddress": fake_pat(),
                             "src/Bridge.Signer/FileKeySigner.cs": secrets.token_hex(32),
