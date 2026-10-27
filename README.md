@@ -11,6 +11,12 @@ Les résultats exécutés, les limites et le commit testé sont dans
 Un Besu local est une simulation technique ; il ne permet pas de déduire la
 configuration du véritable TELA. L'intégration réelle est désactivée.
 
+Les arrêts prolongés découverts le 27 octobre sont conservés dans
+`evidence/incident-20261027/`. Le correctif et sa portée sont décrits dans
+[ADR-0006](docs/adr/0006-arrets-prolonges.md) : blocs Anvil à la demande,
+confirmations explicites, lanceur Besu sans JFR implicite et contrôle RPC réel.
+Consulter les résultats courants avant de réutiliser une ancienne validation.
+
 ## Démarrage local
 
 Prérequis : Git, Python 3.12, Docker Engine Linux avec Compose v2.40 ou compatible,

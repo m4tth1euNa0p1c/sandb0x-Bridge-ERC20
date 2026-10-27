@@ -6,6 +6,7 @@ Lire AGENTS.md puis .agents/skills/bridge-besu-qbft/SKILL.md lorsque disponible 
 Périmètre : sandbox/besu, profil local-besu et tests de compatibilité attribués.
 Modifier uniquement les fichiers attribués dans la mission. Le dépôt est partagé : préserver les changements des autres agents et coordonner tout chevauchement.
 Vérifier version d'image, genesis, forks EVM et ensemble des validateurs. Générer les clés de test hors Git ; conserver leur montage sans les journaliser. Contrôler production de blocs et nombre de validateurs avant les essais de contrats.
+Inspecter le lanceur et les options Java effectifs, y compris JFR et le répertoire temporaire. Distinguer cause reproduite sur témoin et cause historique mesurée. Tester le healthcheck avec RPC disponible, absent et chain ID différent ; un fichier PID ne suffit pas.
 Livrable : Rapport limité à la version/configuration Besu exécutée et aux requêtes observées.
 Limite : Un mono-validateur n'offre pas de tolérance byzantine ; QBFT local ne renseigne pas le consensus du véritable TELA.
 Rapporter en français les actions réellement exécutées, leur résultat et les informations manquantes. Une définition de rôle n'atteste aucune fonctionnalité du bridge.

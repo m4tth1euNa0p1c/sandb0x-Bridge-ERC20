@@ -43,13 +43,13 @@ services:
     security_opt: [no-new-privileges:true]
     pids_limit: 128
     cpus: 1.0
-    mem_limit: 384m
+    mem_limit: 1024m
     restart: "no"
     tmpfs: ["/tmp:rw,noexec,nosuid,size=32m,mode=1777"]
     logging:
       driver: json-file
       options: {max-size: 5m, max-file: "2"}
-    command: [--host, "0.0.0.0", --chain-id, "31340", --hardfork, london, --timestamp, "1700000000", --block-time, "2", --threads, "2", --no-cors, --quiet, --state, /home/foundry/state.json, --state-interval, "10", --preserve-historical-states]
+    command: [--host, "0.0.0.0", --chain-id, "31340", --hardfork, london, --timestamp, "1700000000", --threads, "2", --no-cors, --quiet, --state, /home/foundry/state.json, --state-interval, "10", --preserve-historical-states]
     volumes: [chain_b_bridge_r2:/home/foundry]
     networks: [chain_b]
     healthcheck:

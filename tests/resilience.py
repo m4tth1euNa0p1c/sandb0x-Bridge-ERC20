@@ -132,8 +132,8 @@ class Campaign:
         return bool(int(rt.call(self.b, self.chains[index], self.networks[index]["bridgeAddress"],
                                 "processed(bytes32)", [transfer["transfer_id"]]), 16))
 
-    def transfer(self, amount=UNIT):
-        transfer = rt.transfer(self.b, self.name, 0, amount)
+    def transfer(self, amount=UNIT, *, confirm_source=True):
+        transfer = rt.transfer(self.b, self.name, 0, amount, confirm_source=confirm_source)
         self.current.setdefault("transfers", []).append(transfer)
         return transfer
 
@@ -371,7 +371,7 @@ class Campaign:
             snapshot = self.b.rpc(c["rpc_host"], "evm_snapshot")
             # Montant propre au scénario : une campagne suivante peut réutiliser le nonce restauré
             # pour un transfert normal sans confondre son ID avec celui de ce burn orphelin.
-            transfer = self.transfer(3 * UNIT)
+            transfer = self.transfer(3 * UNIT, confirm_source=False)
             old = self.state(transfer, ["waiting_finality"])
             before_counts = self.counts(transfer["transfer_id"])
             self.check("observed_unfinalized", "Burn observé sans nonce destination avant finalité", old,

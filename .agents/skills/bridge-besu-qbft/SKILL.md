@@ -11,6 +11,15 @@ un tmpfs exécutable dédié `/jni-tmp`, borné et réservé à uid1000, en cons
 `/tmp` noexec et la racine en lecture seule. Ne pas généraliser ce diagnostic
 à tout échec Java ; conserver la trace observée et retester le démarrage.
 
+Un arrêt code 1 sans trace terminale n'est pas un diagnostic de consensus.
+Le lanceur Besu 26.10.0 active implicitement JFR : vérifier le lanceur exact,
+les options Java, la capacité du répertoire et les logs masqués. L'incident
+du 27 octobre a reproduit une sortie sur saturation JFR dans un tmpfs témoin ;
+le remplissage du tmpfs historique n'a pas été mesuré. Le profil utilise
+désormais le lanceur officiel `besu-untuned`. Tester son absence d'enregistrement
+et les contrôles RPC positifs/négatifs ; l'existence d'un fichier PID seule
+ne prouve ni disponibilité RPC ni progression de la chaîne.
+
 # Préparer une simulation Besu QBFT
 
 **Entrées.** sandbox/besu/qbft.json, version Besu verrouillée, profil local-besu et répertoire local de clés ignoré par Git.

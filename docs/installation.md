@@ -65,6 +65,18 @@ les reçus et le journal avant une reprise manuelle.
 
 ## Profils et données
 
+Les Anvil minent à la demande. `demo` et les scénarios produisent explicitement
+les confirmations locales requises après vérification du reçu canonique.
+Un envoi direct avec un autre outil ne fait pas avancer trois blocs à lui seul.
+Sans activité, la hauteur reste stable ; cela ne signifie pas que le RPC est
+indisponible. Les relayers continuent leurs contrôles. Chaque Anvil dispose
+d'un plafond de 1 Gio, justifié par la reprise mesurée des instantanés de
+l'[incident du 27 octobre](adr/0006-arrets-prolonges.md).
+
+Besu utilise le lanceur officiel `besu-untuned` de la version verrouillée,
+sans activation implicite de JFR. Son healthcheck vérifie le RPC et le chain ID
+31339 ; la progression des blocs est observée séparément par le relayer.
+
 | Profil | RPC A / B | Documentation | Statut JSON | Grafana / Prometheus |
 |---|---|---|---|---|
 | local-fast (31337/31338) | 18545 / 28545 | 18080 | 18082/status | 13000 / 18090 |

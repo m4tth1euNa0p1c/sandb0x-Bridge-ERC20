@@ -2,4 +2,8 @@ ARG BESU_IMAGE
 FROM ${BESU_IMAGE}
 USER root
 RUN mkdir -p /var/lib/bridge-besu && chown 1000:1000 /var/lib/bridge-besu
+COPY --chmod=0555 sandbox/besu-healthcheck.sh /opt/besu/bin/bridge-healthcheck
 USER 1000:1000
+# Le lanceur officiel sans réglages implicites n'active pas JFR dans /jni-tmp.
+ENTRYPOINT ["/opt/besu/bin/besu-untuned"]
+HEALTHCHECK --interval=5s --timeout=4s --start-period=20s --retries=3 CMD ["/opt/besu/bin/bridge-healthcheck"]

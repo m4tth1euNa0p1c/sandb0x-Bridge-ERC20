@@ -12,7 +12,8 @@ import urllib.request
 
 def build_fingerprint(b):
     paths = [b.ROOT / "global.json", b.ROOT / "NuGet.config", b.ROOT / "sandbox/versions.lock.json",
-             b.ROOT / "sandbox/Dockerfile.dotnet", b.ROOT / "sandbox/Dockerfile.besu", b.ROOT / "sandbox/Dockerfile.tests"]
+             b.ROOT / "sandbox/Dockerfile.dotnet", b.ROOT / "sandbox/Dockerfile.besu", b.ROOT / "sandbox/Dockerfile.tests",
+             b.ROOT / "sandbox/besu-healthcheck.sh"]
     paths += [p for p in (b.ROOT / "src").rglob("*") if p.is_file() and not {"obj", "bin"}.intersection(p.parts)]
     return b.digest(b.canonical({p.relative_to(b.ROOT).as_posix(): b.digest(p.read_bytes()) for p in sorted(paths)}))
 
@@ -199,6 +200,86 @@ def receipt(b, c, tx_hash, timeout=90):
     raise b.BridgeError("Reçu non obtenu dans le délai ; résultat ambigu à réconcilier : " + tx_hash)
 
 
+def confirm_local_receipt(b, name, c, original):
+    """Avance bornée du témoin Anvil ; aucune finalité de réseau partagé.
+
+    Un reçu réussi et canonique doit déjà exister. Le relayer n'appelle pas ce
+    helper : seuls les scripts du laboratoire produisent les confirmations.
+    Une activité concurrente peut ajouter des blocs, jamais augmenter notre
+    budget d'au plus `depth` appels de minage.
+    """
+    p = b.profile(name, runnable=True)
+    if c not in p["chains"]:
+        raise b.BridgeError("Chaîne hors du profil local : confirmation refusée")
+    deployment = b.read_json(b.runtime(name) / "deployment.json")
+    networks = [n for n in deployment["networks"] if n["chainId"] == c["chain_id"]]
+    if deployment.get("profile") != name or len(networks) != 1:
+        raise b.BridgeError("Domaine du déploiement ambigu : confirmation refusée")
+    expected = networks[0]
+    if original.get("chainId", c["chain_id"]) != c["chain_id"]:
+        raise b.BridgeError("Reçu associé à une autre chaîne : confirmation refusée")
+    try:
+        height = int(original["blockNumber"], 16)
+        successful = int(original["status"], 16) == 1
+        tx_hash, block_hash = original["transactionHash"], original["blockHash"]
+    except (KeyError, TypeError, ValueError) as error:
+        raise b.BridgeError("Reçu incomplet : confirmation refusée") from error
+    if not successful or height < 0 or not all(isinstance(h, str) and b.re.fullmatch(r"0x[0-9a-fA-F]{64}", h)
+                                             for h in (tx_hash, block_hash)):
+        raise b.BridgeError("Reçu invalide ou reverted : confirmation refusée")
+
+    def canonical():
+        observation = b.chain_observation(c)
+        if observation["genesis_hash"].lower() != expected["genesisHash"].lower():
+            raise b.BridgeError("Genesis modifié : confirmation refusée")
+        actual = b.rpc(c["rpc_host"], "eth_getTransactionReceipt", [tx_hash])
+        block = b.rpc(c["rpc_host"], "eth_getBlockByNumber", [hex(height), False])
+        if (not actual or not block or actual.get("status") != "0x1"
+                or actual.get("transactionHash", "").lower() != tx_hash.lower()
+                or actual.get("blockHash", "").lower() != block_hash.lower()
+                or actual.get("blockNumber") != original["blockNumber"]
+                or block.get("hash", "").lower() != block_hash.lower()
+                or block.get("number") != original["blockNumber"]):
+            raise b.BridgeError("Reçu absent, remplacé ou non canonique : confirmation refusée")
+        if observation["head"] < height:
+            raise b.BridgeError("Tête antérieure au reçu : confirmation refusée")
+        return observation["head"]
+
+    mode = c["finality"]["mode"]
+    depth = c["finality"]["depth"] if mode == "confirmations" else 0
+    target = height + depth
+    head_before = head = canonical()
+    mined = 0
+    # Le validateur de profil lie confirmations à Anvil et QBFT au Besu local.
+    for _ in range(depth):
+        if head >= target:
+            break
+        b.rpc(c["rpc_host"], "evm_mine")
+        mined += 1
+        previous = head
+        head = canonical()
+        if head <= previous:
+            raise b.BridgeError("Le minage local n'a pas avancé : arrêt du budget")
+    head = canonical()
+    if head < target:
+        raise b.BridgeError("Profondeur locale non atteinte dans le budget de blocs")
+    return {"utc": b.utc(), "chain_id": c["chain_id"], "mode": mode,
+            "transaction_hash": tx_hash, "block_hash": block_hash, "block_number": height,
+            "target": target, "head_before": head_before, "head_after": head, "mined_blocks": mined}
+
+
+def confirm_deployment(b, name, deployment):
+    """Couvre aussi une reprise entre écriture du dossier et confirmations."""
+    selected = []
+    for c in b.profile(name, runnable=True)["chains"]:
+        receipts = [r for r in deployment["receipts"] if r.get("chainId") == c["chain_id"]]
+        if not receipts:
+            raise b.BridgeError("Aucun reçu de déploiement associé à cette chaîne")
+        last = max(receipts, key=lambda r: int(r["blockNumber"], 16))
+        selected.append((c, last))
+    return [confirm_local_receipt(b, name, c, last) for c, last in selected]
+
+
 def transaction(b, name, c, sender, to, data="0x", value=0, key_file=None, gas=500000):
     # Revalider avant toute émission, même si un port local a été réaffecté depuis up.
     b.profile(name, runnable=True)
@@ -268,6 +349,8 @@ def deploy(b, name):
         deployment["contractSourcesSha256"] = contract_fingerprint(b)
         deployment["contractArtifacts"] = verified
         b.write_json(path, deployment)
+        deployment["localConfirmations"] = confirm_deployment(b, name, deployment)
+        b.write_json(path, deployment)
         return deployment
     addresses = b.read_json(b.runtime(name) / "key-addresses.json")
     deployment = {"profile": name, "referenceSupply": str(1000000 * 10**18), "pollMilliseconds": 1000,
@@ -328,6 +411,8 @@ def deploy(b, name):
             key_file=None if c["client_prefix"] == "anvil" else b.runtime(name) / "operator_key"))
     b.write_json(path, deployment)
     progress.unlink()
+    deployment["localConfirmations"] = confirm_deployment(b, name, deployment)
+    b.write_json(path, deployment)
     return deployment
 
 
@@ -399,7 +484,7 @@ def full_up(b, name):
     raise b.BridgeError("Relayer non prêt après démarrage ; consulter status et les logs structurés")
 
 
-def transfer(b, name, source_index, amount, recipient=None):
+def transfer(b, name, source_index, amount, recipient=None, *, confirm_source=True):
     deployment = b.read_json(b.runtime(name) / "deployment.json")
     c = b.profile(name)["chains"][source_index]
     n, destination = deployment["networks"][source_index], deployment["networks"][1 - source_index]
@@ -413,8 +498,11 @@ def transfer(b, name, source_index, amount, recipient=None):
     logs = [log for log in burn["logs"] if log["address"].lower() == n["bridgeAddress"].lower() and log["topics"][0] == topic]
     if len(logs) != 1:
         raise b.BridgeError("Un événement de burn unique était attendu")
-    return {"transfer_id": logs[0]["topics"][1], "source": c["chain_id"], "amount": str(amount),
-            "recipient": recipient, "approval_receipt": approval, "burn_receipt": burn}
+    result = {"transfer_id": logs[0]["topics"][1], "source": c["chain_id"], "amount": str(amount),
+              "recipient": recipient, "approval_receipt": approval, "burn_receipt": burn}
+    if confirm_source:
+        result["source_confirmations"] = confirm_local_receipt(b, name, c, burn)
+    return result
 
 
 def await_mint(b, name, transfer, timeout=100):
@@ -430,9 +518,8 @@ def await_mint(b, name, transfer, timeout=100):
             if len(logs) != 1:
                 raise b.BridgeError("Le mint doit avoir exactement un événement canonique")
             r = receipt(b, c, logs[0]["transactionHash"])
-            target = int(r["blockNumber"], 16) + c["finality"].get("depth", 0)
-            if int(b.rpc(c["rpc_host"], "eth_blockNumber"), 16) >= target:
-                return r
+            transfer["destination_confirmations"] = confirm_local_receipt(b, name, c, r)
+            return r
         time.sleep(1)
     raise b.BridgeError("Mint non finalisé selon la politique locale dans le délai")
 

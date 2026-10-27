@@ -356,3 +356,46 @@ rapports réussit en 29,969 secondes sur cet hôte et détecte ses six témoins.
 Les résultats, commandes, procédures et capture sont indexés dans
 `evidence/finalization-b97c541/`. Le dépôt conserve séparément les sources du
 correctif et le commit ajoutant ces rapports.
+
+## Incident découvert à la reprise — 27 octobre 2026 UTC
+
+Le diagnostic constate les quatre chaînes arrêtées depuis le 25 octobre,
+avec les relayers encore actifs et `ready=false`. Les trois Anvil indiquent
+`OOMKilled=true` sous 384 Mio ; Besu sort avec code 1 sans OOM. Les sauvegardes
+et deux `pg_dump` sont conservés hors Git, avec empreintes et rétention locale
+au moins jusqu'au 27 janvier 2027. Le JSON Besu/Anvil est tronqué. Une copie
+candidate garde les champs métier complets et les seules entrées historiques
+complètes ; aucun original n'est supprimé.
+
+Les témoins Anvil comparent trois repos de 60 secondes : hauteur stable sans
+timer, trente blocs supplémentaires par repos avec l'ancien intervalle. Les
+212 et 210 assertions passent, avec deux reprises chacune. Besu reproduit
+une sortie 1 lors de la saturation du tmpfs JFR, masquée par le lanceur initial.
+Le lanceur officiel `besu-untuned` et le nouveau healthcheck RPC passent leurs
+témoins positifs et négatifs. L'attribution historique à JFR reste probable,
+car l'occupation du tmpfs réel n'a pas été mesurée avant l'arrêt.
+
+L'audit des copies passe 449 assertions : identités, code, reçus, effets,
+nonces, événements exhaustifs et coupes courantes. Le premier audit avait
+échoué sur les anciens états historiques absents ; son mauvais nom de sélecteur
+de nonce est corrigé dans la seconde procédure, sans réécrire le rapport initial.
+La reprise des nœuds conserve aussi un échec transitoire HTTP 502 et sa suite.
+L'intervention compare ensuite les observations canoniques et tous les effets
+recensés, mine explicitement 129 blocs Anvil sans transaction et vérifie les
+129 états récents. Les checkpoints et en-têtes sont actualisés sous verrous
+PostgreSQL, avec empreintes inchangées des quatre tables métier. Le premier
+passage Besu échoue sur une requête de logs trop étendue ; la suite utilise
+des lots de 512 blocs, comme le relayer, sans augmenter la limite RPC.
+
+Le correctif retire le timer Anvil, borne ses confirmations explicites et
+porte son plafond à 1 Gio ; les copies mesurées atteignent environ 519 Mo
+de pic cgroup. Dix-neuf tests de garde supplémentaires portent la suite Python
+à 91 tests réussis. Une contre-revue en lecture seule ne trouve pas de défaut
+bloquant des helpers. Les rôles et skills Anvil/Besu intègrent ces échecs observés ;
+le catalogue reste validé à 50/50. La nouvelle valeur publique du hash ERC20,
+nommée `token` dans un rapport brut, a déclenché quatre détections : l'exception
+reste limitée à cette valeur exacte, avec un septième témoin aléatoire détectable.
+
+Les rapports de diagnostic restent distincts des campagnes complètes à rejouer.
+Les affirmations antérieures sont marquées obsolètes. Aucun paramètre Sepolia
+ou TELA nouveau n'a été fourni ; ces intégrations restent désactivées.

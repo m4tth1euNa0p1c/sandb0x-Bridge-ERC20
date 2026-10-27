@@ -12,6 +12,7 @@
 !sandbox/
 !sandbox/Dockerfile.dotnet
 !sandbox/Dockerfile.besu
+!sandbox/besu-healthcheck.sh
 !sandbox/Dockerfile.tests
 **/bin/
 **/obj/

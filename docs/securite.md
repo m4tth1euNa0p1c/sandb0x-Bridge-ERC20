@@ -113,10 +113,12 @@ démontre ce pouvoir, pas une propriété de preuve interchaîne. Des attestatio
 multiples, une vérification cryptographique de preuves ou un autre mécanisme
 de garde sont des options futures, non implémentées.
 
-Gitleaks complète la revue avec six témoins synthétiques éphémères : deux motifs
-GitHub et quatre motifs génériques, y compris dans les champs d'empreintes.
+Gitleaks complète la revue avec sept témoins synthétiques éphémères : deux motifs
+GitHub et cinq motifs génériques, y compris dans les champs d'empreintes.
 Les exceptions restent ciblées sur des empreintes publiques exactes de fichiers,
 d'une définition d'affirmation et du runtime ERC20 relu sur les deux profils.
+Le rapport brut de reprise nomme ce dernier hash `token` ; seule sa valeur
+publique exacte est admise, et un témoin aléatoire dans ce champ reste détecté.
 Seul le champ `tokenAddress` accepte une adresse hexadécimale de 20 octets, dans
 les rapports JSON de preuves ; une clé Ethereum de 32 octets ne correspond pas.
 Aucun répertoire de preuves n'est exclu. Les autres règles restent actives, même

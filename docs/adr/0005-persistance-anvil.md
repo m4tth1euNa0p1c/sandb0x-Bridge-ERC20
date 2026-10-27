@@ -3,6 +3,10 @@
 Date : 2026-10-24. Statut : accepté après expériences isolées ; intégration et
 version vérifiée référencées dans [les résultats](../resultats.md).
 
+L'[ADR-0006](0006-arrets-prolonges.md) complète cette décision après les arrêts
+observés le 27 octobre : automine sans timer, confirmations explicites et
+diagnostic de sauvegarde interrompue. Les résultats ci-dessous restent historiques.
+
 **Exigence.** La collecte historique doit vérifier le nonce source et la
 réconciliation doit lire l'offre à des blocs explicites, y compris après reprise.
 

@@ -1,5 +1,12 @@
 # Résultats vérifiés et limites
 
+**27 octobre 2026 — nouvelle validation en cours.** Les campagnes du 25 octobre
+ci-dessous restent historiques. L'incident d'arrêt des nœuds, les diagnostics
+et la reprise sont conservés dans `evidence/incident-20261027/`. Le correctif
+modifie les sources ; les affirmations précédentes sont obsolètes jusqu'aux
+nouvelles campagnes complètes. Les relayers ont repris après audit explicite,
+sans modification des transferts, observations, nonces ni tentatives.
+
 Le démonstrateur local exécute les transferts burn/mint dans les deux sens,
 avec persistance, signature séparée, tests de panne et supervision. Les deux
 campagnes ci-dessous ont réussi sur les mêmes sources figées. Elles ne valident

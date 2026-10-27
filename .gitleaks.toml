@@ -30,6 +30,6 @@ regexes = [
   '''^\s*"src/Bridge\.Signer/FileKeySigner\.cs": "923e786e3e58a40ea26dd14f558dee0b30b992caae059c2a9575788cdbdb2bb3",?\s*$''',
   '''^\s*"tests/Bridge\.Signer\.Tests/ConfigurationAndKeyTests\.cs": "70c1635b90b40a26de43324cecad3ccd046f6bb8944aad684ca89bbc90e1407c",?\s*$''',
   '''^\s*"KEY-001": "8f16277273bffd4ab2ffd55714faf1d1ce07affc449b011d92c8b3806a869fdd",?\s*$''',
-  '''^\s*"tokenCodeHash": "0x53b39101e6877f0a78ba805a23ae99663f4973f421039ecfccd85dce82c405b7",?\s*$''',
+  '''^\s*"(tokenCodeHash|token)": "0x53b39101e6877f0a78ba805a23ae99663f4973f421039ecfccd85dce82c405b7",?\s*$''',
   '''^\s*"tokenAddress": "0x[0-9a-fA-F]{40}",?\s*$'''
 ]

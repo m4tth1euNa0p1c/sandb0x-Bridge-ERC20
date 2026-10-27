@@ -28,6 +28,7 @@ nav:
       - Reprise et finalité: adr/0003-reprise-finalite.md
       - Interfaces applicatives et signature: adr/0004-interfaces-application.md
       - Persistance historique Anvil: adr/0005-persistance-anvil.md
+      - Arrêts prolongés et ressources: adr/0006-arrets-prolonges.md
   - Rendu des diagrammes: assets/mermaid.md
   - Sources: sources.md
 markdown_extensions:

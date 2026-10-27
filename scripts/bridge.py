@@ -505,12 +505,13 @@ def scan_secrets():
         write_json(control, {"api_key": fake_pat(), "tokenAddress": fake_pat(),
                             "src/Bridge.Signer/FileKeySigner.cs": secrets.token_hex(32),
                             ".codex/agents/bridge-secrets.toml": secrets.token_hex(32),
-                            "tokenCodeHash": "0x" + secrets.token_hex(32), "KEY-001": secrets.token_hex(32)})
+                            "tokenCodeHash": "0x" + secrets.token_hex(32), "token": "0x" + secrets.token_hex(32),
+                            "KEY-001": secrets.token_hex(32)})
         detection = run_secret_scanner(d, "/scan/evidence/scan-control", timeout=60, check=False)
         rule_counts = {rule: len(re.findall(r"RuleID:\s+" + rule + r"\b", detection["stdout"]))
                        for rule in ("github-pat", "generic-api-key")}
-        if detection["exit_code"] != 1 or rule_counts["github-pat"] < 2 or rule_counts["generic-api-key"] < 4:
-            raise BridgeError("Les six témoins du détecteur, y compris les champs d'exception, n'ont pas tous été reconnus")
+        if detection["exit_code"] != 1 or rule_counts["github-pat"] < 2 or rule_counts["generic-api-key"] < 5:
+            raise BridgeError("Les sept témoins du détecteur, y compris les champs d'exception, n'ont pas tous été reconnus")
     return {"project_scan": result, "synthetic_positive_control": detection, "synthetic_detection_counts": rule_counts}
 
 
@@ -597,7 +598,7 @@ def prove(name):
         check("secrets", "Gitleaks : aucun secret détecté dans les fichiers versionnables", scan_secrets)
         check("contracts", "Compilation London et tous les tests/fuzz/invariants réussissent sans skip", lambda: run([sys.executable, "contracts/tools/verify.py"], timeout=300))
         check("dotnet", "Tous les tests .NET du signataire et du relayer réussissent sans réseau ni skip", lambda: app.tests(module))
-        check("anvil_history", "520 blocs, historique, logs et reçus conservés après deux arrêts propres du témoin Anvil", anvil_history)
+        check("anvil_history", "Repos sans blocs vides, confirmations explicites et historique conservé après 520 blocs et deux arrêts propres du témoin Anvil", anvil_history)
         ready = check("startup", "Identités des deux réseaux vérifiées, contrats appariés, relayer prêt", lambda: app.full_up(module, name))
         if ready:
             check("hardening", "Restrictions réellement appliquées aux services et passerelles", lambda: inspect_runtime(name))
