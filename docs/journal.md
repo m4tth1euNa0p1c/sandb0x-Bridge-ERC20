@@ -463,3 +463,28 @@ Le scan CLI du 27 octobre à 18:01:30 UTC réussit : aucune détection sur les
 fichiers versionnables, puis deux témoins GitHub et cinq témoins génériques
 détectés dans le sous-dossier. Le catalogue 50/50 reste valide. Le journal
 de commande masqué est conservé dans le dossier d'incident.
+
+## Attente de reprise Prometheus — 27 octobre 2026 UTC
+
+La CI `ff91b0f` conserve 17/18 pour une autre raison : `live.py` échoue sur
+le contrôle `bridge_ready` après la reprise du relayer. Le redémarrage commence
+à 18:01:49 UTC ; le test annonce la reprise à 18:01:51, avant son échec nominal
+à 18:01:51.813. L'attente vérifiait seulement `up=1` et la fraîcheur, alors que
+le relayer peut exposer un horodatage frais avec `Ready=false` au démarrage.
+L'absence d'attente de `bridge_ready=1` est confirmée dans le test. La valeur
+numérique et l'heure exacte du scrape fautif n'étaient pas enregistrées ;
+la course est fortement étayée, pas une reconstitution exhaustive de ce scrape.
+L'archive et ses 17/18 sont conservés dans `evidence/ci-ff91b0f-failed/`.
+
+La campagne Windows `20261027T180236Z-local-fast` du commit `fcf546a` réussit
+18/18, de 18:02:36 à 18:08:47 UTC. La course d'observation n'est donc pas
+systématique ; cette réussite n'annule pas l'échec CI antérieur. Le rôle et
+le skill Grafana sont précisés pour attendre la disponibilité métier collectée,
+conserver les observations et tester ce décalage de démarrage.
+
+Le correctif passe 108 tests Python. Le rejeu réel d'arrêt/reprise du relayer
+se termine à 18:12:27 UTC, sources inchangées. Il conserve six observations :
+l'API est déjà prête alors que Prometheus ne dispose pas encore de toutes les
+séries, puis `up`, fraîcheur et `bridge_ready` atteignent ensemble 1. Le test
+nominal HTTP passe ensuite. Le cas précis `up/fresh=1, ready=0` et son timeout
+persistant restent couverts par les tests contrôlés, distincts de ce rejeu réel.

@@ -17,6 +17,49 @@ import bridge as b
 import bridge_runtime as app
 
 
+def wait(predicate, timeout=60):
+    deadline = time.monotonic() + timeout
+    last_error = None
+    while time.monotonic() < deadline:
+        try:
+            if predicate():
+                return
+        except (OSError, urllib.error.URLError) as error:
+            # La passerelle peut répondre 502 durant le démarrage effectif.
+            # Attente bornée, sans transformer une absence persistante en succès.
+            last_error = type(error).__name__
+        time.sleep(2)
+    raise TimeoutError('État attendu non atteint ; dernier accès : ' + str(last_error))
+
+
+def wait_for_nominal(read_status, query, record, timeout=60):
+    """Attendre la disponibilité métier dans l'API et dans sa collecte Prometheus."""
+    record.update({'started_utc': b.utc(), 'passed': False, 'observations': [],
+                   'timestamp_semantics': 'evaluation_timestamp_unix_seconds est la date de la requête instantanée Prometheus, pas celle du scrape sous-jacent.'})
+
+    def nominal():
+        status = read_status()
+        observation = {'observed_utc': b.utc(), 'status_ready': status.get('ready'),
+                       'status_stale': status.get('stale'), 'status_updated_utc': status.get('updatedUtc'),
+                       'prometheus': {}}
+        record['observations'].append(observation)
+        for expr in ('up{job="bridge"}', 'bridge:telemetry_fresh', 'bridge_ready'):
+            result = query(expr)
+            assert len(result) <= 1, f'Série ambiguë : {expr}'
+            observation['prometheus'][expr] = {
+                'value': float(result[0]['value'][1]) if result else None,
+                'evaluation_timestamp_unix_seconds': result[0]['value'][0] if result else None,
+            }
+        return (status.get('ready') is True and status.get('stale') is False
+                and all(sample['value'] == 1 for sample in observation['prometheus'].values()))
+
+    try:
+        wait(nominal, timeout)
+        record['passed'] = True
+    finally:
+        record['ended_utc'] = b.utc()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile', choices=('local-fast', 'local-besu'), default='local-fast')
@@ -48,20 +91,6 @@ def main():
         report['checks'].append({'id': id_, 'expected': expected, 'observed': observed, 'passed': bool(passed)})
         assert passed, id_
 
-    def wait(predicate, timeout=60):
-        deadline = time.monotonic() + timeout
-        last_error = None
-        while time.monotonic() < deadline:
-            try:
-                if predicate():
-                    return
-            except (OSError, urllib.error.URLError) as error:
-                # La passerelle peut répondre 502 durant le démarrage effectif.
-                # Attente bornée, sans transformer une absence persistante en succès.
-                last_error = type(error).__name__
-            time.sleep(2)
-        raise TimeoutError('État attendu non atteint ; dernier accès : ' + str(last_error))
-
     try:
         assert app.read_status(b, args.profile)['ready'] is True
         b.container_id(args.profile, 'relayer')  # Refuse plusieurs réplicas ambigus.
@@ -70,7 +99,8 @@ def main():
         fields = lambda d: [{k: p.get(k) for k in ('id', 'targets', 'fieldConfig')} for p in d['panels']]
         check('served_dashboard', 'Requêtes et mappings réellement servis égaux aux fichiers', actual['uid'], fields(actual) == fields(expected))
         panels = {p['id']: p for p in expected['panels']}
-        wait(lambda: scalar('max(up{job="bridge"}) or vector(0)') == 1 and scalar('max(bridge:telemetry_fresh) or vector(0)') == 1)
+        report['initial_readiness'] = {}
+        wait_for_nominal(lambda: app.read_status(b, args.profile), query, report['initial_readiness'])
         b.compose(args.profile, ['--profile', 'bridge', 'stop', '--timeout', '20', 'relayer'], timeout=60)
         stopped = True
         report['stopped_utc'] = b.utc()
@@ -103,8 +133,8 @@ def main():
         try:
             if stopped:
                 b.compose(args.profile, ['--profile', 'bridge', 'start', 'relayer'], timeout=60)
-                wait(lambda: app.read_status(b, args.profile).get('ready') is True)
-                wait(lambda: scalar('max(up{job="bridge"}) or vector(0)') == 1 and scalar('max(bridge:telemetry_fresh) or vector(0)') == 1)
+                report['restoration_readiness'] = {}
+                wait_for_nominal(lambda: app.read_status(b, args.profile), query, report['restoration_readiness'])
                 report['restored_utc'] = b.utc()
         except Exception as error:
             report['passed'] = False

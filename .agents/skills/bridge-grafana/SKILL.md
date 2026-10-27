@@ -14,6 +14,7 @@ description: "Créer ou vérifier un dashboard Grafana T3l4N alimenté par des m
 3. Provisionner datasource et dashboard depuis des fichiers versionnés, sans secret ni identifiant de transfert dans les variables de série.
 4. Vérifier visuellement les états nominal, arrêt et dégradation avec une fenêtre temporelle adaptée ; conserver l'identifiant et la version du tableau.
 5. Une série instantanée disparaît après arrêt du scrape : conserver explicitement le dernier horodatage dans une fenêtre historique bornée, sans réutiliser les mesures métier périmées comme état courant. Tester marqueur stale et expiration de fenêtre. Mapper les valeurs nulles en couleur neutre ; une absence verte a été observée puis corrigée dans ce projet.
+6. Après démarrage ou reprise, attendre sous délai borné la disponibilité métier dans Prometheus, en plus de `up` et de la fraîcheur. Un endpoint prêt et un horodatage récent ne prouvent pas que le dernier scrape contient `bridge_ready=1`. Conserver les valeurs et heures de l'attente ; tester un scrape de démarrage frais mais non prêt, puis un scrape prêt, ainsi que l'expiration sans reprise.
 
 **Livrable.** Dashboard reproductible et résultats des scénarios visuels observés.
 
