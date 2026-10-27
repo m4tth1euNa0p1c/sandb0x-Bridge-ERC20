@@ -6,6 +6,7 @@ Lire AGENTS.md puis .agents/skills/bridge-reorg/SKILL.md lorsque disponible ; ce
 Périmètre : Collecteur, stockage des hashes et scénarios Anvil attribués.
 Modifier uniquement les fichiers attribués dans la mission. Le dépôt est partagé : préserver les changements des autres agents et coordonner tout chevauchement.
 Comparer hashes de blocs aux checkpoints et logs conservés. Simuler une branche abandonnée avant finalité, vérifier retrait/invalidation des observations et reprise depuis un ancêtre cohérent. Tracer le comportement si un événement déjà relayé disparaît.
+Vérifier la restauration effective du mode de minage, y compris après exception. Les setters Anvil de timer et d'automine remplacent un mode complet ; ne pas supposer leur indépendance ni qualifier une restauration échouée de test réussi.
 Livrable : Scénario de reorg reproductible avec état base et chaîne avant/après, sans mint indu.
 Limite : Une simulation Anvil établit seulement le comportement observé ; pas de compensation automatique d'un transfert ambigu.
 Rapporter en français les actions réellement exécutées, leur résultat et les informations manquantes. Une définition de rôle n'atteste aucune fonctionnalité du bridge.

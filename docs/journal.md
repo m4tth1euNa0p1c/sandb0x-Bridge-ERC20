@@ -399,3 +399,23 @@ reste limitée à cette valeur exacte, avec un septième témoin aléatoire dét
 Les rapports de diagnostic restent distincts des campagnes complètes à rejouer.
 Les affirmations antérieures sont marquées obsolètes. Aucun paramètre Sepolia
 ou TELA nouveau n'a été fourni ; ces intégrations restent désactivées.
+
+## Régression de restauration du minage — 27 octobre 2026 UTC
+
+Le commit `eaa5fd46259be53c208e93f1a00c8f3ce53eb172` est poussé, puis la
+campagne `20261027T172025Z-local-fast` réussit 17 contrôles sur 18. Le burn
+orphelin est observé avant finalité, disparaît de la branche canonique, reste
+conservé comme rejet `source_reorg` et ne produit aucun mint. Le contrôle de
+nettoyage échoue : automine était actif avant le test et reste désactivé après.
+Le setter `evm_setIntervalMining(0)` remplace le mode complet, alors que le
+scénario le traitait comme une propriété indépendante. Le rapport reste en
+échec ; l'arrêt/recréation du contrôle de persistance rétablit ensuite le mode
+déclaré dans Compose. Le rôle et le skill reorg intègrent cet échec observé.
+La correction distingue les modes automine, intervalle et manuel et doit
+passer le témoin isolé, les tests de garde et la nouvelle campagne complète.
+
+Le témoin isolé reproduit l'ancien ordre incorrect puis réussit 16 assertions
+sur les trois modes, avec et sans exception. Les 94 tests Python passent,
+dont 22 tests ciblés. Les getters de cette version ne distinguent pas totalement
+le mode CLI `Mixed`, exclu des profils contrôlés ; aucune capacité générale
+de détection de ce mode n'est revendiquée.

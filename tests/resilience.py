@@ -360,6 +360,8 @@ class Campaign:
         auto = self.b.rpc(c["rpc_host"], "anvil_getAutomine")
         interval_raw = self.b.rpc(c["rpc_host"], "anvil_getIntervalMining")
         interval = int(interval_raw, 16) if isinstance(interval_raw, str) else int(interval_raw or 0)
+        if type(auto) is not bool or interval < 0 or auto and interval:
+            raise CaseFailure("Mode de minage ambigu ou mixte : scénario refusé avant modification")
         before, source_before = self.balance(1), self.balance(0)
         self.current["mining_before"] = {"automine": auto, "interval_seconds": interval}
         self.current["method_reference"] = "https://foundry-rs.github.io/foundry/anvil/eth/api/struct.EthApi.html"
@@ -401,9 +403,12 @@ class Campaign:
             self.current["limit"] = "Scénario Anvil préfinalité uniquement ; ne démontre aucune finalité TELA."
         finally:
             try:
-                self.b.rpc(c["rpc_host"], "evm_setAutomine", [auto])
-            finally:
+                # Ces setters remplacent le mode entier. L'intervalle zéro
+                # désactive aussi l'automine ; restaurer Auto en dernier.
                 self.b.rpc(c["rpc_host"], "evm_setIntervalMining", [interval])
+            finally:
+                if auto:
+                    self.b.rpc(c["rpc_host"], "evm_setAutomine", [True])
             restored_auto = self.b.rpc(c["rpc_host"], "anvil_getAutomine")
             restored_interval = self.b.rpc(c["rpc_host"], "anvil_getIntervalMining")
             restored_interval = int(restored_interval, 16) if isinstance(restored_interval, str) else int(restored_interval or 0)

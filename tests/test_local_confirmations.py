@@ -4,11 +4,13 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import bridge
 import bridge_runtime as rt
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import resilience
 
 
 GENESIS = "0x" + "11" * 32
@@ -232,6 +234,78 @@ class TransferConfirmationWindowTests(unittest.TestCase):
                 self.assertEqual(confirm.call_count, int(enabled))
                 if enabled:
                     confirm.assert_called_once_with(bridge, "local-fast", chain, burn)
+
+
+class ReorgMiningRestorationTests(unittest.TestCase):
+    class InjectedFailure(RuntimeError):
+        pass
+
+    class MiningRpc:
+        # Sémantique constatée sur Anvil 1.8.4, et non deux booléens indépendants.
+        def __init__(self, auto, interval):
+            self.auto, self.interval = auto, interval
+            self.mutations = []
+
+        def __call__(self, url, method, params=None):
+            if method == "anvil_getAutomine":
+                return self.auto
+            if method == "anvil_getIntervalMining":
+                return self.interval or None
+            if method == "eth_blockNumber":
+                return "0xa"
+            if method == "evm_setIntervalMining":
+                self.mutations.append((method, params[0]))
+                self.auto, self.interval = False, params[0]
+                return None
+            if method == "evm_setAutomine":
+                self.mutations.append((method, params[0]))
+                if params[0]:
+                    self.auto, self.interval = True, 0
+                elif self.auto:
+                    self.auto, self.interval = False, 0
+                return None
+            raise AssertionError("RPC inattendu : " + method)
+
+    def campaign(self):
+        campaign = resilience.Campaign.__new__(resilience.Campaign)
+        campaign.b = bridge
+        campaign.chains = bridge.profile("local-fast")["chains"]
+        campaign.networks = [{}, {}]
+        campaign.current = {"checks": []}
+        campaign.balance = Mock(side_effect=[500, 700])
+        campaign.wait = Mock(side_effect=self.InjectedFailure("défaut injecté avant snapshot"))
+        return campaign
+
+    def test_exception_restores_each_supported_mode_and_propagates(self):
+        for auto, interval in ((True, 0), (False, 2), (False, 0)):
+            with self.subTest(auto=auto, interval=interval):
+                rpc = self.MiningRpc(auto, interval)
+                campaign = self.campaign()
+                with patch.object(bridge, "rpc", side_effect=rpc):
+                    with self.assertRaisesRegex(self.InjectedFailure, "défaut injecté"):
+                        campaign.reorg_before_finality()
+                self.assertEqual((rpc.auto, rpc.interval), (auto, interval))
+                self.assertEqual(campaign.current["checks"][-1]["id"], "mining_restored")
+                self.assertTrue(campaign.current["checks"][-1]["passed"])
+
+    def test_ambiguous_mixed_mode_refuses_before_mutation(self):
+        rpc = self.MiningRpc(True, 2)
+        campaign = self.campaign()
+        with patch.object(bridge, "rpc", side_effect=rpc):
+            with self.assertRaisesRegex(resilience.CaseFailure, "avant modification"):
+                campaign.reorg_before_finality()
+        self.assertEqual(rpc.mutations, [])
+        campaign.balance.assert_not_called()
+        campaign.wait.assert_not_called()
+
+    def test_invalid_mode_refuses_before_mutation(self):
+        for auto, interval in (("true", 0), (False, -1)):
+            with self.subTest(auto=auto, interval=interval):
+                rpc = self.MiningRpc(auto, interval)
+                with patch.object(bridge, "rpc", side_effect=rpc):
+                    with self.assertRaises(resilience.CaseFailure):
+                        self.campaign().reorg_before_finality()
+                self.assertEqual(rpc.mutations, [])
 
 
 if __name__ == "__main__":
