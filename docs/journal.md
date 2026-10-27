@@ -382,7 +382,8 @@ de nonce est corrigé dans la seconde procédure, sans réécrire le rapport ini
 La reprise des nœuds conserve aussi un échec transitoire HTTP 502 et sa suite.
 L'intervention compare ensuite les observations canoniques et tous les effets
 recensés, mine explicitement 129 blocs Anvil sans transaction et vérifie les
-129 états récents. Les checkpoints et en-têtes sont actualisés sous verrous
+lectures du bytecode du bridge et de `nextNonce()` aux 129 hauteurs récentes.
+Les checkpoints et en-têtes sont actualisés sous verrous
 PostgreSQL, avec empreintes inchangées des quatre tables métier. Le premier
 passage Besu échoue sur une requête de logs trop étendue ; la suite utilise
 des lots de 512 blocs, comme le relayer, sans augmenter la limite RPC.
@@ -419,3 +420,29 @@ sur les trois modes, avec et sans exception. Les 94 tests Python passent,
 dont 22 tests ciblés. Les getters de cette version ne distinguent pas totalement
 le mode CLI `Mixed`, exclu des profils contrôlés ; aucune capacité générale
 de détection de ce mode n'est revendiquée.
+
+## Limite RPC de la recherche de reçu — 27 octobre 2026 UTC
+
+Le correctif `2b2930c6191f9a515ef6aca07f3f323d56a970a1` réussit les 18
+contrôles local-fast (`20261027T172904Z-local-fast`). La campagne Besu
+`20261027T173504Z-local-besu` conserve 17/18 : seul le contrôle aller-retour
+échoue sur `eth_getLogs`. L'instance dépasse désormais 16 000 blocs ; le helper
+de recherche du mint interrogeait tout l'historique en une seule plage, refusée
+par Besu. Le relayer utilisait déjà des lots de 512 blocs. La correction étend
+cette lecture complète par lots au helper, avec une borne haute fixe et un
+délai contrôlé. Les sept scénarios Besu et la persistance réussissent dans la
+campagne en échec ; ils ne sont pas promus en livraison complète. Le rôle et
+le skill collecte sont précisés à partir de cet écart entre application et outil.
+
+Le rejeu ciblé du 27 octobre à 17:45:40 UTC réussit l'aller-retour Besu :
+la recherche du reçu destination Besu parcourt 34 lots et retrouve exactement
+un événement canonique. Les 103 tests Python passent, dont neuf nouveaux tests
+de pagination. Le catalogue contient toujours 50 agents et 50 skills valides.
+Le diagnostic ciblé est conservé dans `evidence/incident-20261027/paginated-mint/` ;
+les campagnes complètes sur commit figé restent nécessaires avant promotion.
+
+La contre-revue demande de comparer aussi le hash de transaction du reçu avec
+celui du log, pour refuser une réponse RPC incohérente renvoyant une autre
+transaction du même bloc. Ce contrôle et son test passent : 104 tests Python
+réussis. La CI historique de `2b2930c` a également réussi local-fast ; elle
+reste conservée séparément et ne valide pas cette nouvelle correction.

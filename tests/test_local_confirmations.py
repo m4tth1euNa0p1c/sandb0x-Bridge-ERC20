@@ -236,6 +236,142 @@ class TransferConfirmationWindowTests(unittest.TestCase):
                     confirm.assert_called_once_with(bridge, "local-fast", chain, burn)
 
 
+class PaginatedMintLookupTests(unittest.TestCase):
+    class LogsRpc(LocalRpc):
+        def __init__(self, chain, address, event_height=1500):
+            super().__init__(chain, head=1500)
+            self.receipt["blockNumber"] = hex(event_height)
+            self.event_height = event_height
+            self.log = {"address": address, "blockNumber": hex(event_height), "blockHash": BLOCK,
+                        "transactionHash": TX, "topics": [GENESIS, OTHER], "removed": False}
+            self.ranges, self.head_reads = [], 0
+            self.duplicate, self.missing = False, False
+            self.page_response = None
+
+        def __call__(self, url, method, params=None):
+            if method == "eth_blockNumber":
+                self.head_reads += 1
+                return hex(self.head)
+            if method == "eth_getLogs":
+                first, last = int(params[0]["fromBlock"], 16), int(params[0]["toBlock"], 16)
+                if last - first + 1 > 512:
+                    raise bridge.BridgeError("RPC fixture refuse une plage supérieure à 512")
+                self.ranges.append((first, last))
+                # La chaîne avance pendant la pagination : le dernier filtre
+                # doit néanmoins conserver la tête capturée à 1500.
+                self.head += 100
+                if self.page_response is not None:
+                    return self.page_response
+                if self.missing or not first <= self.event_height <= last:
+                    return []
+                return [deepcopy(self.log)] * (2 if self.duplicate else 1)
+            if method == "eth_getBlockByNumber" and params[0] == hex(self.event_height):
+                return {"hash": self.block_hash, "number": hex(self.event_height)}
+            return super().__call__(url, method, params)
+
+    def setUp(self):
+        self.folder = tempfile.TemporaryDirectory(prefix="t3l4n-mint-pages-test-")
+        self.addCleanup(self.folder.cleanup)
+        self.runtime = Path(self.folder.name)
+        self.runtime_patch = patch.object(bridge, "runtime", return_value=self.runtime)
+        self.runtime_patch.start()
+        self.addCleanup(self.runtime_patch.stop)
+        self.profile = bridge.profile("local-besu")
+        self.chain = self.profile["chains"][0]
+        self.address = "0x" + "55" * 20
+        self.deployment = {"profile": "local-besu", "networks": [
+            {"chainId": chain["chain_id"], "genesisHash": GENESIS,
+             "bridgeAddress": self.address, "startBlock": 2} for chain in self.profile["chains"]]}
+        bridge.write_json(self.runtime / "deployment.json", self.deployment)
+        self.transfer = {"source": 31340, "transfer_id": OTHER}
+        self.rpc = self.LogsRpc(self.chain, self.address)
+
+    def await_mint(self):
+        with patch.object(bridge, "rpc", side_effect=self.rpc), patch.object(rt, "call", return_value="0x1"), \
+                patch.object(rt, "keccak", return_value=GENESIS):
+            return rt.await_mint(bridge, "local-besu", self.transfer)
+
+    def test_event_in_second_or_third_page_reaches_canonical_confirmation(self):
+        for height in (514, 1500):
+            with self.subTest(height=height):
+                self.rpc = self.LogsRpc(self.chain, self.address, event_height=height)
+                receipt = self.await_mint()
+                self.assertEqual(receipt["transactionHash"], TX)
+                self.assertEqual(self.rpc.ranges, [(2, 513), (514, 1025), (1026, 1500)])
+                self.assertEqual(self.rpc.head_reads, 1)
+                self.assertEqual(self.transfer["destination_log_query"], {
+                    "from_block": 2, "to_block": 1500, "page_size": 512, "pages": 3, "log_count": 1})
+                self.assertEqual(self.transfer["destination_confirmations"]["transaction_hash"], TX)
+                self.assertEqual(self.rpc.mined, 0)
+
+    def test_no_event_after_full_pagination_is_an_explicit_failure(self):
+        self.rpc.missing = True
+        with self.assertRaisesRegex(bridge.BridgeError, "exactement un événement"):
+            self.await_mint()
+        self.assertEqual(len(self.rpc.ranges), 3)
+        self.assertEqual(self.transfer["destination_log_query"]["log_count"], 0)
+        self.assertNotIn("destination_confirmations", self.transfer)
+
+    def test_duplicate_event_is_not_silently_deduplicated(self):
+        self.rpc.duplicate = True
+        with self.assertRaisesRegex(bridge.BridgeError, "exactement un événement"):
+            self.await_mint()
+        self.assertEqual(self.transfer["destination_log_query"]["log_count"], 2)
+        self.assertNotIn("destination_confirmations", self.transfer)
+
+    def test_out_of_filter_or_range_log_fails_instead_of_being_dropped(self):
+        changes = ({"address": "0x" + "66" * 20}, {"topics": [BLOCK, OTHER]}, {"topics": [GENESIS, TX]},
+                   {"blockNumber": "0x1"}, {"removed": True}, {"transactionHash": "bad"})
+        for change in changes:
+            with self.subTest(change=change):
+                self.rpc = self.LogsRpc(self.chain, self.address)
+                self.rpc.log.update(change)
+                with self.assertRaisesRegex(bridge.BridgeError, "hors plage, hors filtre"):
+                    self.await_mint()
+                self.assertNotIn("destination_confirmations", self.transfer)
+
+    def test_non_array_page_is_an_explicit_failure(self):
+        self.rpc.page_response = {"logs": []}
+        with self.assertRaisesRegex(bridge.BridgeError, "Réponse de logs"):
+            self.await_mint()
+        self.assertEqual(len(self.rpc.ranges), 1)
+
+    def test_log_and_receipt_block_must_match(self):
+        self.rpc.log["blockHash"] = OTHER
+        with self.assertRaisesRegex(bridge.BridgeError, "ne correspond pas au reçu"):
+            self.await_mint()
+        self.assertEqual(self.rpc.mined, 0)
+
+    def test_other_transaction_receipt_in_same_block_refuses_before_confirmation(self):
+        self.rpc.receipt["transactionHash"] = OTHER
+        with patch.object(rt, "confirm_local_receipt") as confirm:
+            with self.assertRaisesRegex(bridge.BridgeError, "ne correspond pas au reçu"):
+                self.await_mint()
+            confirm.assert_not_called()
+        self.assertNotIn("destination_confirmations", self.transfer)
+
+    def test_reorg_after_pagination_still_fails_canonical_check(self):
+        self.rpc.block_hash = OTHER
+        with self.assertRaisesRegex(bridge.BridgeError, "non canonique"):
+            self.await_mint()
+        self.assertEqual(self.rpc.mined, 0)
+        self.assertNotIn("destination_confirmations", self.transfer)
+
+    def test_timeout_does_not_return_an_event_from_incomplete_pagination(self):
+        self.rpc = self.LogsRpc(self.chain, self.address, event_height=10)
+        with patch.object(rt.time, "monotonic", side_effect=[0, 0, 0, 101]):
+            with self.assertRaisesRegex(bridge.BridgeError, "incomplète dans le délai"):
+                self.await_mint()
+        self.assertEqual(self.rpc.ranges, [(2, 513)])
+        self.assertNotIn("destination_confirmations", self.transfer)
+
+    def test_head_before_start_refuses_without_a_log_request(self):
+        self.rpc.head = 1
+        with self.assertRaisesRegex(bridge.BridgeError, "Bornes de collecte"):
+            self.await_mint()
+        self.assertEqual(self.rpc.ranges, [])
+
+
 class ReorgMiningRestorationTests(unittest.TestCase):
     class InjectedFailure(RuntimeError):
         pass

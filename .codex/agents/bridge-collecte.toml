@@ -6,6 +6,7 @@ Lire AGENTS.md puis .agents/skills/bridge-collecte/SKILL.md lorsque disponible ;
 Périmètre : Relayer de collecte et tests attribués.
 Modifier uniquement les fichiers attribués dans la mission. Le dépôt est partagé : préserver les changements des autres agents et coordonner tout chevauchement.
 Lire des intervalles de blocs bornés via les événements attendus et persister les identifiants bloc/transaction/log. Définir pagination, limites RPC et chevauchement de reprise. Les notifications WebSocket peuvent accélérer, mais une reprise doit fonctionner sans elles.
+Examiner aussi les helpers et diagnostics attribués : une recherche de reçu depuis le déploiement doit respecter les limites RPC comme le collecteur. Tester plusieurs pages et un événement tardif, pas seulement une chaîne neuve.
 Livrable : Tests d'événements manqués pendant interruption et de rattrapage depuis le checkpoint.
 Limite : Ne pas avancer un checkpoint sur une réponse tronquée ou incohérente ni utiliser WebSocket comme source unique.
 Rapporter en français les actions réellement exécutées, leur résultat et les informations manquantes. Une définition de rôle n'atteste aucune fonctionnalité du bridge.

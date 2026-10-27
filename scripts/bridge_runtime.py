@@ -513,11 +513,46 @@ def await_mint(b, name, transfer, timeout=100):
     while time.monotonic() < deadline:
         if int(call(b, c, n["bridgeAddress"], "processed(bytes32)", [transfer["transfer_id"]]), 16):
             topic = keccak(b, c, b"TransferCompleted(bytes32,address,uint256)".hex())
-            logs = b.rpc(c["rpc_host"], "eth_getLogs", [{"address": n["bridgeAddress"], "fromBlock": hex(n["startBlock"]),
-                           "toBlock": "latest", "topics": [topic, transfer["transfer_id"]]}])
+            # Une tête capturée une fois : aucune page ne suit un `latest`
+            # mouvant. Besu borne la plage RPC même lorsque peu de logs existent.
+            head = int(b.rpc(c["rpc_host"], "eth_blockNumber"), 16)
+            start = n["startBlock"]
+            if type(start) is not int or start < 0 or head < start:
+                raise b.BridgeError("Bornes de collecte du mint incohérentes")
+            logs, pages = [], 0
+            for first in range(start, head + 1, 512):
+                if time.monotonic() >= deadline:
+                    raise b.BridgeError("Collecte historique du mint incomplète dans le délai")
+                last = min(first + 511, head)
+                page = b.rpc(c["rpc_host"], "eth_getLogs", [{"address": n["bridgeAddress"], "fromBlock": hex(first),
+                              "toBlock": hex(last), "topics": [topic, transfer["transfer_id"]]}])
+                if not isinstance(page, list):
+                    raise b.BridgeError("Réponse de logs du mint invalide")
+                for log in page:
+                    try:
+                        height = int(log["blockNumber"], 16)
+                        matches = (first <= height <= last and log.get("removed", False) is False
+                                   and log["address"].lower() == n["bridgeAddress"].lower()
+                                   and isinstance(log["topics"], list) and len(log["topics"]) >= 2
+                                   and log["topics"][0].lower() == topic.lower()
+                                   and log["topics"][1].lower() == transfer["transfer_id"].lower()
+                                   and all(b.re.fullmatch(r"0x[0-9a-fA-F]{64}", log[field])
+                                           for field in ("transactionHash", "blockHash")))
+                    except (KeyError, TypeError, ValueError, AttributeError):
+                        matches = False
+                    if not matches:
+                        raise b.BridgeError("Log de mint hors plage, hors filtre ou non canonique")
+                logs.extend(page)
+                pages += 1
+            transfer["destination_log_query"] = {"from_block": start, "to_block": head,
+                                                  "page_size": 512, "pages": pages, "log_count": len(logs)}
             if len(logs) != 1:
                 raise b.BridgeError("Le mint doit avoir exactement un événement canonique")
             r = receipt(b, c, logs[0]["transactionHash"])
+            if (r["transactionHash"].lower() != logs[0]["transactionHash"].lower()
+                    or r["blockHash"].lower() != logs[0]["blockHash"].lower()
+                    or r["blockNumber"] != logs[0]["blockNumber"]):
+                raise b.BridgeError("Le log du mint ne correspond pas au reçu courant")
             transfer["destination_confirmations"] = confirm_local_receipt(b, name, c, r)
             return r
         time.sleep(1)
