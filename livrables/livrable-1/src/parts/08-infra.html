@@ -1,0 +1,275 @@
+<h1 id="s7"><span class="num">7</span>Infrastructure et réseau</h1>
+
+<h2 id="s7-1"><span class="num">7.1</span>Faut-il un nœud Sepolia chez nous ?</h2>
+<p>Le relayer doit lire Sepolia (événements de burn, finalité, offre) et y envoyer des transactions de mint. Quatre façons d'y accéder ont été comparées au regard des contraintes du mail.</p>
+<table>
+  <thead><tr><th style="width:30mm">Critère</th><th>A. RPC public sans compte</th><th>B. Nœud interne Besu + Teku</th><th>C. Client léger (Helios) + RPC public</th><th>D. Fournisseur SaaS (Infura, Alchemy…)</th></tr></thead>
+  <tbody>
+    <tr><td><b>Contrat / budget</b></td><td><span class="tag ok">AUCUN</span> conditions d'utilisation à faire valider</td><td><span class="tag ok">AUCUN</span></td><td><span class="tag ok">AUCUN</span></td><td><span class="tag bad">COMPTE + CGU</span> exclu par le mail</td></tr>
+    <tr><td><b>Confiance</b></td><td><span class="tag bad">FAIBLE</span> le RPC peut mentir ; il entre dans la frontière de confiance</td><td><span class="tag ok">MAÎTRISÉE</span> validation locale de la chaîne</td><td><span class="tag warn">À ÉVALUER</span> vérification cryptographique des réponses ; support de <code>eth_getLogs</code> à confirmer</td><td><span class="tag warn">TIERS</span></td></tr>
+    <tr><td><b>Disponibilité</b></td><td>Sans engagement ; quotas ; plages <code>eth_getLogs</code> limitées</td><td>Dépend de nous ; supervisable</td><td>Dépend du RPC amont</td><td>Engagement payant</td></tr>
+    <tr><td><b>Effort</b></td><td>≈ 1 JH</td><td>≈ 5 JH + synchronisation</td><td>R&amp;D</td><td>≈ 1 JH</td></tr>
+    <tr><td><b>Infrastructure</b></td><td>Aucune</td><td>1 VM : 4 vCPU, 16 Go, SSD ≥ 1 To</td><td>Légère</td><td>Aucune</td></tr>
+    <tr><td><b>Réseau</b></td><td>HTTPS sortant via proxy</td><td>P2P sortant TCP/UDP 30303 et 9000, hors proxy HTTP</td><td>HTTPS sortant</td><td>HTTPS sortant</td></tr>
+    <tr><td><b>Recommandation</b></td><td><span class="tag info">PALIER 1</span> si la cyber l'autorise, avec contrôles</td><td><span class="tag ok">CIBLE · PALIER 2</span></td><td><span class="tag grey">VEILLE</span></td><td><span class="tag bad">EXCLU</span></td></tr>
+  </tbody>
+</table>
+<div class="callout bad">
+  <span class="ttl">Le point de sécurité qui tranche</span>
+  <p>Sens Sepolia → TELA : le relayer minte sur TELA parce qu'un RPC lui a montré un burn finalisé sur Sepolia. Si ce RPC est un tiers, <b>ce tiers peut fabriquer un faux burn</b> et provoquer un mint injustifié sur TELA (dans la limite des plafonds). Au palier 1, les contrôles atténuent ce risque : identité réseau (chain ID, hash genesis), code des contrats, cohérence du nonce source, comparaison avec un second RPC indépendant, plafonds bas. À l'industrialisation, un nœud interne le supprime.</p>
+</div>
+<p><b>Pourquoi Besu + Teku ?</b> Depuis la fusion d'Ethereum, un nœud complet associe un client d'exécution et un client de consensus. Besu est déjà la technologie de TELA : l'équipe capitalise sur les mêmes compétences, la même configuration et la même supervision. Teku, du même écosystème (Java), est documenté avec Besu pour Sepolia et supporte la synchronisation par point de contrôle. Le nœud ne valide pas de blocs : il se contente de suivre la chaîne.</p>
+<div class="callout warn">
+  <span class="ttl">Avant d'investir dans un nœud Sepolia</span>
+  <p>Vérifier au cadrage le statut de Sepolia (fin de vie annoncée au 30/09/2026, réseau toujours actif fin octobre 2026) et la date de bascule vers un éventuel successeur. Un nœud Sepolia synchronisé pour quelques mois seulement serait un mauvais investissement ; l'architecture permet de changer de testnet par configuration.</p>
+</div>
+
+<div class="wide">
+<h2 id="s7-2"><span class="num">7.2</span>Schéma d'infrastructure cible et flux réseau</h2>
+<figure style="margin-top:1mm">
+  <svg class="diagram" viewBox="0 0 1400 790" role="img" aria-label="Schéma d'infrastructure et des flux réseau">
+    <defs>
+      <marker id="in-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+      <marker id="in-v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6d28d9"/></marker>
+      <marker id="in-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0e7490"/></marker>
+      <marker id="in-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/></marker>
+      <marker id="in-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64748b"/></marker>
+    </defs>
+    <g font-family="InterDoc, DejaVu Sans" fill="#0f172a">
+      <!-- zones -->
+      <rect x="10" y="10" width="300" height="570" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="7 5" stroke-width="1.6"/>
+      <text x="26" y="34" font-size="13" font-weight="800" fill="#475569" letter-spacing="1">INTERNET</text>
+      <rect x="350" y="10" width="300" height="400" rx="12" fill="#faf5ff" stroke="#6d28d9" stroke-width="1.6"/>
+      <text x="366" y="34" font-size="13" font-weight="800" fill="#5b21b6" letter-spacing="1">TALAN · SEGMENT SORTANT</text>
+      <rect x="690" y="10" width="420" height="570" rx="12" fill="#f8fbff" stroke="#1d4ed8" stroke-width="2.2"/>
+      <text x="706" y="34" font-size="13" font-weight="800" fill="#1e3a8a" letter-spacing="1">TALAN · ZONE BRIDGE (VM DÉDIÉE)</text>
+      <rect x="1150" y="10" width="240" height="400" rx="12" fill="#f0fdff" stroke="#0e7490" stroke-width="1.6"/>
+      <text x="1166" y="34" font-size="13" font-weight="800" fill="#155e75" letter-spacing="1">TALAN · RÉSEAU TELA</text>
+      <rect x="350" y="610" width="1040" height="170" rx="12" fill="#f8fafc" stroke="#64748b" stroke-width="1.6"/>
+      <text x="366" y="634" font-size="13" font-weight="800" fill="#334155" letter-spacing="1">TALAN · SERVICES COMMUNS</text>
+
+      <!-- Internet -->
+      <g font-size="12.5">
+        <rect x="30" y="56" width="260" height="70" rx="8" fill="#f5f3ff" stroke="#6d28d9" stroke-width="1.6"/>
+        <text x="160" y="84" text-anchor="middle" font-weight="700">Réseau P2P Sepolia</text>
+        <text x="160" y="104" text-anchor="middle" font-size="11.5" fill="#475569">pairs publics Ethereum</text>
+        <rect x="30" y="150" width="260" height="62" rx="8" fill="#f5f3ff" stroke="#6d28d9" stroke-width="1.6"/>
+        <text x="160" y="176" text-anchor="middle" font-weight="700">Checkpoint sync Sepolia</text>
+        <text x="160" y="196" text-anchor="middle" font-size="11.5" fill="#475569">HTTPS · au démarrage</text>
+        <rect x="30" y="338" width="260" height="70" rx="8" fill="#fff" stroke="#6d28d9" stroke-width="1.6" stroke-dasharray="6 4"/>
+        <text x="160" y="366" text-anchor="middle" font-weight="700">RPC publics Sepolia</text>
+        <text x="160" y="386" text-anchor="middle" font-size="11.5" fill="#475569">option A · HTTPS · sans compte</text>
+        <rect x="30" y="426" width="260" height="56" rx="8" fill="#fff" stroke="#94a3b8"/>
+        <text x="160" y="450" text-anchor="middle" font-weight="700">Faucets Sepolia</text>
+        <text x="160" y="469" text-anchor="middle" font-size="11.5" fill="#475569">gas de test · navigateur admin</text>
+        <rect x="30" y="500" width="260" height="62" rx="8" fill="#fff" stroke="#94a3b8"/>
+        <text x="160" y="526" text-anchor="middle" font-weight="700">Registres et dépôts</text>
+        <text x="160" y="546" text-anchor="middle" font-size="11.5" fill="#475569">images, paquets · installation seule</text>
+      </g>
+
+      <!-- Noeud Sepolia -->
+      <rect x="370" y="52" width="260" height="304" rx="10" fill="#fff" stroke="#6d28d9" stroke-width="2"/>
+      <text x="500" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="#5b21b6">VM nœud Sepolia · palier 2</text>
+      <rect x="386" y="90" width="228" height="86" rx="8" fill="#f5f3ff" stroke="#a78bfa"/>
+      <text x="400" y="112" font-size="12.5" font-weight="700">Besu · client d'exécution</text>
+      <text x="400" y="132" font-size="11.5">JSON-RPC 8545 (interne)</text>
+      <text x="400" y="150" font-size="11.5">P2P 30303 TCP/UDP</text>
+      <text x="400" y="168" font-size="11.5" fill="#475569">métriques 9545</text>
+      <text x="500" y="194" text-anchor="middle" font-size="11" fill="#6d28d9" font-weight="600">⇅ Engine API 8551 · JWT · local (F6)</text>
+      <rect x="386" y="204" width="228" height="86" rx="8" fill="#f5f3ff" stroke="#a78bfa"/>
+      <text x="400" y="226" font-size="12.5" font-weight="700">Teku · client de consensus</text>
+      <text x="400" y="246" font-size="11.5">P2P 9000 TCP/UDP</text>
+      <text x="400" y="264" font-size="11.5">API beacon 5051 (interne)</text>
+      <text x="400" y="282" font-size="11.5" fill="#475569">métriques 8008</text>
+      <text x="500" y="316" text-anchor="middle" font-size="11.5" fill="#475569">4 vCPU · 16 Go RAM · SSD NVMe ≥ 1 To</text>
+      <text x="500" y="336" text-anchor="middle" font-size="11" fill="#475569">suit la chaîne, ne valide pas</text>
+
+      <!-- Zone bridge -->
+      <text x="706" y="54" font-size="11" fill="#475569">Docker Compose durci : non-root · racine en lecture seule · capacités retirées</text>
+      <rect x="730" y="68" width="360" height="98" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2.2"/>
+      <text x="910" y="94" text-anchor="middle" font-size="14" font-weight="800" fill="#1e3a8a">Relayer · .NET 10</text>
+      <text x="910" y="116" text-anchor="middle" font-size="11.5">identité · collecteur · processeur · réconciliateur</text>
+      <text x="910" y="136" text-anchor="middle" font-size="11.5">API /status · /metrics (interne)</text>
+      <text x="910" y="155" text-anchor="middle" font-size="10.5" fill="#475569">aucune clé privée</text>
+      <rect x="730" y="200" width="160" height="96" rx="10" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.8"/>
+      <text x="810" y="224" text-anchor="middle" font-size="13" font-weight="800" fill="#7f1d1d">Signataire</text>
+      <text x="810" y="244" text-anchor="middle" font-size="11.5">politique + clés</text>
+      <text x="810" y="262" text-anchor="middle" font-size="11">Web3Signer en P2</text>
+      <text x="810" y="282" text-anchor="middle" font-size="10.5" fill="#475569">réseau « signing » isolé</text>
+      <rect x="920" y="200" width="170" height="96" rx="10" fill="#fff" stroke="#1d4ed8" stroke-width="1.6"/>
+      <text x="1005" y="224" text-anchor="middle" font-size="13" font-weight="800">PostgreSQL 17</text>
+      <text x="1005" y="244" text-anchor="middle" font-size="11.5">état · nonces</text>
+      <text x="1005" y="262" text-anchor="middle" font-size="11.5">checkpoints</text>
+      <text x="1005" y="282" text-anchor="middle" font-size="10.5" fill="#475569">réseau « database »</text>
+      <rect x="730" y="330" width="160" height="70" rx="10" fill="#fff" stroke="#64748b"/>
+      <text x="810" y="358" text-anchor="middle" font-size="13" font-weight="700">Prometheus</text>
+      <text x="810" y="378" text-anchor="middle" font-size="11">séries · 12 règles</text>
+      <rect x="920" y="330" width="170" height="70" rx="10" fill="#fff" stroke="#64748b"/>
+      <text x="1005" y="358" text-anchor="middle" font-size="13" font-weight="700">Grafana</text>
+      <text x="1005" y="378" text-anchor="middle" font-size="11">tableau d'exploitation</text>
+      <rect x="730" y="420" width="160" height="62" rx="10" fill="#fff" stroke="#64748b" stroke-dasharray="6 4"/>
+      <text x="810" y="446" text-anchor="middle" font-size="13" font-weight="700">Alertmanager</text>
+      <text x="810" y="466" text-anchor="middle" font-size="11">à ajouter (P1)</text>
+      <text x="900" y="530" text-anchor="middle" font-size="11.5" fill="#475569">2 – 4 vCPU · 8 Go RAM · 100 Go SSD</text>
+      <text x="900" y="550" text-anchor="middle" font-size="11" fill="#475569">aucun port exposé hors zone ; consultation via bastion</text>
+
+      <!-- TELA -->
+      <rect x="1170" y="56" width="200" height="98" rx="10" fill="#ecfeff" stroke="#0e7490" stroke-width="2"/>
+      <text x="1270" y="82" text-anchor="middle" font-size="13" font-weight="800" fill="#155e75">Nœud RPC Besu</text>
+      <text x="1270" y="102" text-anchor="middle" font-size="11.5">JSON-RPC HTTPS</text>
+      <text x="1270" y="120" text-anchor="middle" font-size="11">TLS / auth à confirmer</text>
+      <text x="1270" y="138" text-anchor="middle" font-size="11">permissionnement ?</text>
+      <rect x="1170" y="186" width="200" height="90" rx="10" fill="#ecfeff" stroke="#0e7490"/>
+      <text x="1270" y="212" text-anchor="middle" font-size="13" font-weight="700" fill="#155e75">Validateurs TELA</text>
+      <text x="1270" y="232" text-anchor="middle" font-size="11">consensus à confirmer</text>
+      <text x="1270" y="250" text-anchor="middle" font-size="11">(QBFT ?)</text>
+      <rect x="1170" y="306" width="200" height="74" rx="10" fill="#fff" stroke="#0e7490" stroke-dasharray="6 4"/>
+      <text x="1270" y="332" text-anchor="middle" font-size="12" font-weight="700">Contrats déployés</text>
+      <text x="1270" y="352" text-anchor="middle" font-size="11">ERC20 + Bridge</text>
+      <line x1="1270" y1="154" x2="1270" y2="186" stroke="#0e7490" stroke-width="1.6"/>
+
+      <!-- Services communs -->
+      <g font-size="12.5" text-anchor="middle">
+        <rect x="370" y="650" width="150" height="92" rx="8" fill="#fff" stroke="#64748b"/><text x="445" y="684" font-weight="700">Proxy HTTP</text><text x="445" y="702" font-size="11">sortant</text><text x="445" y="722" font-size="10.5" fill="#475569">F2-A · F12</text>
+        <rect x="540" y="650" width="150" height="92" rx="8" fill="#fff" stroke="#64748b"/><text x="615" y="684" font-weight="700">DNS · NTP</text><text x="615" y="702" font-size="11">internes</text><text x="615" y="722" font-size="10.5" fill="#475569">F11 · toutes les VM</text>
+        <rect x="710" y="650" width="150" height="92" rx="8" fill="#fff" stroke="#64748b"/><text x="785" y="684" font-weight="700">SMTP interne</text><text x="785" y="702" font-size="11">alertes</text><text x="785" y="722" font-size="10.5" fill="#475569">F9</text>
+        <rect x="880" y="650" width="150" height="92" rx="8" fill="#fef2f2" stroke="#b91c1c" stroke-dasharray="6 4"/><text x="955" y="684" font-weight="700">Coffre / HSM</text><text x="955" y="702" font-size="11">si existant (P2)</text><text x="955" y="722" font-size="10.5" fill="#475569">F13</text>
+        <rect x="1050" y="650" width="150" height="92" rx="8" fill="#fff" stroke="#64748b" stroke-dasharray="6 4"/><text x="1125" y="684" font-weight="700">Sauvegarde</text><text x="1125" y="702" font-size="11">PostgreSQL (P2)</text><text x="1125" y="722" font-size="10.5" fill="#475569">F14</text>
+        <rect x="1220" y="650" width="150" height="92" rx="8" fill="#fff" stroke="#0f172a"/><text x="1295" y="684" font-weight="700">Poste admin</text><text x="1295" y="702" font-size="11">VPN / bastion</text><text x="1295" y="722" font-size="10.5" fill="#475569">F10</text>
+      </g>
+
+      <!-- Flux -->
+      <g stroke-width="2" fill="none">
+        <path d="M1090 110 L1168 105" stroke="#0e7490" marker-end="url(#in-t)"/>
+        <path d="M730 112 L616 132" stroke="#6d28d9" marker-end="url(#in-v)"/>
+        <path d="M730 152 H670 V388 H292" stroke="#6d28d9" stroke-dasharray="7 5" marker-end="url(#in-v)"/>
+        <path d="M386 128 L292 94" stroke="#6d28d9" marker-start="url(#in-v)" marker-end="url(#in-v)"/>
+        <path d="M386 236 L292 114" stroke="#6d28d9" marker-start="url(#in-v)" marker-end="url(#in-v)"/>
+        <path d="M386 266 L292 190" stroke="#6d28d9" marker-end="url(#in-v)"/>
+        <path d="M810 166 V198" stroke="#b91c1c" marker-end="url(#in-r)"/>
+        <path d="M1005 166 V198" stroke="#334155" marker-end="url(#in-a)"/>
+        <path d="M712 330 V140 H728" stroke="#64748b" stroke-width="1.6" marker-end="url(#in-g)"/>
+        <path d="M730 380 H676 V300 L632 300" stroke="#64748b" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#in-g)"/>
+        <path d="M810 400 V418" stroke="#64748b" stroke-width="1.6" marker-end="url(#in-g)"/>
+        <path d="M790 482 V648" stroke="#64748b" stroke-width="1.6" marker-end="url(#in-g)"/>
+        <path d="M1295 650 V520 H1005 V402" stroke="#0f172a" stroke-width="1.6" marker-end="url(#in-a)"/>
+        <path d="M890 280 H905 V648" stroke="#b91c1c" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#in-r)"/>
+        <path d="M1090 260 H1130 V648" stroke="#64748b" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#in-g)"/>
+        <path d="M370 700 H330 V532 H292" stroke="#64748b" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#in-g)"/>
+      </g>
+      <!-- Etiquettes de flux -->
+      <g font-size="11" font-weight="700" text-anchor="middle">
+        <g><circle cx="1129" cy="84" r="12" fill="#0e7490"/><text x="1129" y="88" fill="#fff">F1</text></g>
+        <text x="1129" y="128" font-size="10" font-weight="600" fill="#155e75">HTTPS</text>
+        <g><circle cx="672" cy="104" r="12" fill="#6d28d9"/><text x="672" y="108" fill="#fff">F2</text></g>
+        <g><rect x="420" y="377" width="158" height="22" rx="11" fill="#6d28d9"/><text x="499" y="392" fill="#fff">F2-A · 443 via proxy</text></g>
+        <g><rect x="316" y="74" width="66" height="20" rx="10" fill="#6d28d9"/><text x="349" y="88" fill="#fff">F3 30303</text></g>
+        <g><rect x="306" y="148" width="62" height="20" rx="10" fill="#6d28d9"/><text x="337" y="162" fill="#fff">F4 9000</text></g>
+        <g><rect x="306" y="214" width="60" height="20" rx="10" fill="#6d28d9"/><text x="336" y="228" fill="#fff">F5 443</text></g>
+        <g><circle cx="830" cy="182" r="11" fill="#b91c1c"/><text x="830" y="186" fill="#fff" font-size="10">F7</text></g>
+        <g><circle cx="1025" cy="182" r="11" fill="#334155"/><text x="1025" y="186" fill="#fff" font-size="10">F7</text></g>
+        <g><circle cx="712" cy="312" r="11" fill="#64748b"/><text x="712" y="316" fill="#fff" font-size="10">F8</text></g>
+        <g><circle cx="790" cy="596" r="11" fill="#64748b"/><text x="790" y="600" fill="#fff" font-size="10">F9</text></g>
+        <g><circle cx="1240" cy="520" r="12" fill="#0f172a"/><text x="1240" y="524" fill="#fff" font-size="10">F10</text></g>
+        <g><circle cx="905" cy="596" r="12" fill="#b91c1c"/><text x="905" y="600" fill="#fff" font-size="10">F13</text></g>
+        <g><circle cx="1130" cy="596" r="12" fill="#64748b"/><text x="1130" y="600" fill="#fff" font-size="10">F14</text></g>
+        <g><circle cx="330" cy="600" r="12" fill="#64748b"/><text x="330" y="604" fill="#fff" font-size="10">F12</text></g>
+      </g>
+      <!-- Légende -->
+      <g font-size="11.5">
+        <rect x="10" y="600" width="300" height="180" rx="10" fill="#fff" stroke="#cbd5e1"/>
+        <text x="26" y="624" font-weight="800" font-size="12">Légende</text>
+        <line x1="26" y1="646" x2="70" y2="646" stroke="#334155" stroke-width="2"/><text x="80" y="650">flux métier (palier 1)</text>
+        <line x1="26" y1="670" x2="70" y2="670" stroke="#334155" stroke-width="2" stroke-dasharray="7 5"/><text x="80" y="674">option, palier 2 ou ponctuel</text>
+        <line x1="26" y1="694" x2="70" y2="694" stroke="#6d28d9" stroke-width="2"/><text x="80" y="698">flux Sepolia</text>
+        <line x1="26" y1="718" x2="70" y2="718" stroke="#0e7490" stroke-width="2"/><text x="80" y="722">flux TELA</text>
+        <line x1="26" y1="742" x2="70" y2="742" stroke="#b91c1c" stroke-width="2"/><text x="80" y="746">flux portant des secrets</text>
+        <text x="26" y="768" font-weight="700" fill="#15803d">Aucun flux entrant depuis Internet</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption><b>Figure 13 — Schéma d'infrastructure cible (diagramme de déploiement) et flux réseau F1 à F14.</b> Sepolia à gauche, TELA à droite. Les ports TELA, l'emplacement exact des zones et les outils communs sont à confirmer avec Victor.</figcaption>
+</figure>
+</div>
+
+<h2 id="s7-3"><span class="num">7.3</span>Matrice des flux réseau</h2>
+<table class="compact">
+  <thead><tr><th style="width:9mm">#</th><th style="width:28mm">Source</th><th style="width:30mm">Destination</th><th style="width:30mm">Protocole · port</th><th style="width:24mm">Sens</th><th style="width:10mm">Palier</th><th>Justification</th></tr></thead>
+  <tbody>
+    <tr><td>F1</td><td>Relayer</td><td>Nœud RPC Besu TELA</td><td>HTTPS JSON-RPC (port à confirmer)</td><td>Interne</td><td class="c">P1</td><td>Lire logs et états TELA, envoyer les mints TELA</td></tr>
+    <tr><td>F2</td><td>Relayer</td><td>Besu Sepolia interne</td><td>HTTP(S) JSON-RPC 8545</td><td>Interne</td><td class="c">P2</td><td>Lire Sepolia, envoyer les mints Sepolia</td></tr>
+    <tr><td>F2-A</td><td>Relayer</td><td>RPC public Sepolia</td><td>HTTPS 443 via proxy</td><td>Sortant Internet</td><td class="c">P1</td><td>Idem F2 tant que le nœud interne n'existe pas</td></tr>
+    <tr><td>F3</td><td>Besu Sepolia</td><td>Pairs Sepolia</td><td>TCP + UDP 30303</td><td>Sortant (entrant facultatif)</td><td class="c">P2</td><td>Synchronisation de la couche d'exécution</td></tr>
+    <tr><td>F4</td><td>Teku</td><td>Pairs Sepolia</td><td>TCP + UDP 9000</td><td>Sortant (entrant facultatif)</td><td class="c">P2</td><td>Synchronisation de la couche de consensus</td></tr>
+    <tr><td>F5</td><td>Teku</td><td>Point de contrôle Sepolia</td><td>HTTPS 443</td><td>Sortant, ponctuel</td><td class="c">P2</td><td>Démarrage rapide ; sources multiples comparées</td></tr>
+    <tr><td>F6</td><td>Teku</td><td>Besu Sepolia</td><td>Engine API 8551 + JWT</td><td>Local VM</td><td class="c">P2</td><td>Couplage exécution / consensus</td></tr>
+    <tr><td>F7</td><td>Relayer</td><td>Signataire ; PostgreSQL</td><td>HTTP 8080 ; TCP 5432</td><td>Réseaux Compose</td><td class="c">P1</td><td>Signature ; état persistant</td></tr>
+    <tr><td>F8</td><td>Prometheus</td><td>Relayer, nœuds</td><td>HTTP /metrics</td><td>Interne</td><td class="c">P1</td><td>Supervision</td></tr>
+    <tr><td>F9</td><td>Alertmanager</td><td>SMTP interne</td><td>TCP 25 / 587</td><td>Interne</td><td class="c">P1</td><td>Notification des alertes</td></tr>
+    <tr><td>F10</td><td>Poste admin</td><td>Grafana ; VM</td><td>HTTPS 443 ; SSH 22</td><td>Via VPN / bastion</td><td class="c">P1</td><td>Exploitation</td></tr>
+    <tr><td>F11</td><td>Toutes les VM</td><td>DNS ; NTP internes</td><td>53 ; 123/UDP</td><td>Interne</td><td class="c">P1</td><td>Résolution ; horloge fiable (horodatages, fraîcheur)</td></tr>
+    <tr><td>F12</td><td>VM (installation)</td><td>Registres d'images et paquets</td><td>HTTPS 443 via proxy</td><td>Sortant, ponctuel</td><td class="c">P1</td><td>Phase d'installation distincte ; miroir interne possible</td></tr>
+    <tr><td>F13</td><td>Signataire</td><td>Coffre / HSM</td><td>HTTPS (TLS mutuel)</td><td>Interne</td><td class="c">P2</td><td>Clés hors disque de la VM</td></tr>
+    <tr><td>F14</td><td>PostgreSQL</td><td>Sauvegarde</td><td>Selon outil Talan</td><td>Interne</td><td class="c">P2</td><td>Restauration testée</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s7-4"><span class="num">7.4</span>Impact réseau</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>Palier 1 — impact faible</h4>
+    <ul>
+      <li>Aucune ouverture entrante.</li>
+      <li>Un flux HTTPS sortant (F2-A) vers un ou deux RPC Sepolia, compatible avec le proxy ; volume faible (requêtes JSON-RPC toutes les quelques secondes).</li>
+      <li>Flux internes vers TELA (F1) et services communs.</li>
+      <li>Installation : accès ponctuel aux registres (F12), remplaçable par un miroir.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Palier 2 — impact à instruire</h4>
+    <ul>
+      <li>Flux pair-à-pair sortants <b>TCP et UDP</b> 30303 et 9000 vers des adresses Internet variables : non filtrables par nom, non compatibles avec un proxy HTTP.</li>
+      <li>Ouverture entrante <b>facultative</b> (plus de pairs) : non demandée.</li>
+      <li>Bande passante continue : prévoir au moins 25 Mbit/s et plusieurs centaines de Go par mois, à mesurer pendant la synchronisation (nombre de pairs limitable).</li>
+      <li>Synchronisation initiale : de quelques heures à quelques jours, gros volume ponctuel.</li>
+    </ul>
+  </div>
+</div>
+<p><b>Points de vigilance réseau</b> : horloge (NTP) fiable pour les horodatages et la fraîcheur des métriques ; résolution DNS des RPC ; TLS d'interception du proxy (certificat Talan à injecter dans les clients) ; pas de WebSocket requis ; limitation des réponses <code>eth_getLogs</code> par les RPC publics (pagination déjà implémentée par lots de 32 à 512 blocs).</p>
+
+<h2 id="s7-5"><span class="num">7.5</span>Dimensionnement</h2>
+<table>
+  <thead><tr><th>VM</th><th class="num">vCPU</th><th class="num">RAM</th><th class="num">Disque</th><th>Croissance et commentaire</th><th style="width:12mm">Palier</th></tr></thead>
+  <tbody>
+    <tr><td><b>Bridge</b> (relayer, signataire, PostgreSQL, supervision)</td><td class="num">2 – 4</td><td class="num">8 Go</td><td class="num">100 Go SSD</td><td>Faible : quelques Mo par millier de transferts ; rétention Prometheus 15 jours</td><td class="c">P1</td></tr>
+    <tr><td><b>Nœud Sepolia</b> (Besu + Teku)</td><td class="num">4</td><td class="num">16 Go</td><td class="num">≥ 1 To NVMe</td><td>Continue ; taille exacte à mesurer à la synchronisation (ordre de grandeur : quelques centaines de Go) ; alerte à 80 %</td><td class="c">P2</td></tr>
+    <tr><td><b>TELA</b></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>Existant : aucun nœud supplémentaire, sous réserve que le RPC TELA serve l'historique des logs</td><td class="c">—</td></tr>
+  </tbody>
+</table>
+<p class="small">Ces valeurs sont des points de départ prudents, non des mesures : le démonstrateur a montré qu'une ressource sous-dimensionnée (mémoire Anvil) se traduit par un arrêt silencieux sans supervision adaptée (incident du 27/10, ADR-0006).</p>
+
+<h2 id="s7-6"><span class="num">7.6</span>Environnements</h2>
+<table class="compact">
+  <thead><tr><th style="width:34mm">Environnement</th><th>Réseaux</th><th>Usage</th><th style="width:30mm">Statut</th></tr></thead>
+  <tbody>
+    <tr><td><b>Local</b> <code>local-fast</code></td><td>Deux Anvil (31337 / 31338)</td><td>Développement, protocole, pannes</td><td><span class="tag info">IMPLÉMENTÉ</span></td></tr>
+    <tr><td><b>Local</b> <code>local-besu</code></td><td>Besu QBFT local + Anvil</td><td>Compatibilité client Besu</td><td><span class="tag info">IMPLÉMENTÉ</span></td></tr>
+    <tr><td><b>Intégration</b> <code>integration-testnet</code></td><td>Sepolia (11155111) + TELA de test</td><td>Premier pont réel, recette</td><td><span class="tag bad">BLOQUÉ</span> accès</td></tr>
+    <tr><td><b>Production</b></td><td>—</td><td>Hors périmètre : aucun mainnet ni actif réel</td><td><span class="tag grey">HORS PÉRIMÈTRE</span></td></tr>
+  </tbody>
+</table>
+
+<h2 id="s7-7"><span class="num">7.7</span>Exigences cyber à valider avec Victor</h2>
+<table class="compact">
+  <thead><tr><th style="width:40mm">Domaine</th><th>Mesure proposée</th><th style="width:28mm">État</th></tr></thead>
+  <tbody>
+    <tr><td>Exposition</td><td>Aucun service exposé à Internet ; consultations via bastion/VPN ; ports liés à l'interface interne</td><td><span class="tag info">IMPLÉMENTÉ</span> (local)</td></tr>
+    <tr><td>Conteneurs</td><td>Non-root, racine en lecture seule, capacités retirées, <code>no-new-privileges</code>, ressources bornées, pas de socket Docker monté</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span></td></tr>
+    <tr><td>Secrets</td><td>Aucun secret dans Git (scan Gitleaks) ; clés uniquement dans le signataire ; mots de passe en fichiers montés ; coffre en P2</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span></td></tr>
+    <tr><td>Chaîne d'approvisionnement</td><td>Images épinglées par empreinte, dépendances verrouillées (NuGet, Python), OpenZeppelin vendoré avec SHA-256</td><td><span class="tag info">IMPLÉMENTÉ</span></td></tr>
+    <tr><td>Journalisation</td><td>Journaux JSON sans secret ni payload signé ; export vers le SIEM Talan si requis</td><td><span class="tag grey">PROPOSÉ</span></td></tr>
+    <tr><td>Flux internes</td><td>TLS entre relayer, signataire et base (aujourd'hui en clair sur réseaux internes du laboratoire)</td><td><span class="tag grey">PROPOSÉ</span> P2</td></tr>
+    <tr><td>Gouvernance des rôles</td><td>Admin multisig, séparation pauser / exécuteur / admin, procédure de rotation</td><td><span class="tag grey">PROPOSÉ</span> P2</td></tr>
+    <tr><td>Hôte</td><td>VM dédiée au projet, durcie selon le standard Talan ; l'administrateur Docker reste une autorité étendue</td><td><span class="tag bad">BLOQUÉ</span> VM</td></tr>
+  </tbody>
+</table>

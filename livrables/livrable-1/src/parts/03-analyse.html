@@ -1,0 +1,76 @@
+<h1 id="s2"><span class="num">2</span>Analyse de la demande</h1>
+
+<h2 id="s2-1"><span class="num">2.1</span>Le mail d'Alain, décomposé</h2>
+<p>Le mail « Bridge TELA – SEPOLIA » (Victor en copie) propose de participer au projet TELA sur un sujet d'étude pouvant aller jusqu'à une mise en production. Ses éléments structurants sont les suivants.</p>
+<table>
+  <thead><tr><th style="width:36mm">Élément</th><th>Ce que dit le mail</th><th style="width:58mm">Conséquence pour l'architecture</th></tr></thead>
+  <tbody>
+    <tr><td><span class="tag tela">À DROITE</span><br/><b>TELA</b></td><td>« Blockchain privée EVM reposant sur des nœuds Besu et déployée dans notre infra. On peut te donner un accès au réseau et le droit de déployer des smartcontracts. »</td><td>Contrats Solidity standards ; accès RPC interne ; droits de déploiement et comptes à obtenir (TELA-01 à 06).</td></tr>
+    <tr><td><span class="tag sep">À GAUCHE</span><br/><b>Sepolia</b></td><td>« Réseau public. Tu pourras trouver des faucets pour te créer des ETH, et donc interagir avec la blockchain. »</td><td>Gas de test gratuit mais limité ; nécessité d'un accès à un nœud Sepolia (RPC ou nœud propre).</td></tr>
+    <tr><td><b>Mission</b></td><td>« Définir une infra pour bridger des tokens. » ERC20 « Stablecoin Euro Talan » déployé sur les deux chaînes.</td><td>Token existant à analyser : droits de mint/burn, decimals, évolutivité.</td></tr>
+    <tr><td><b>Principe</b></td><td>« Mint &amp; burn. S'il bridge 100 tokens de TELA vers Sepolia, on burn 100 tokens côté TELA, on les mint côté Sepolia. »</td><td>Conservation de l'offre totale ; pas de verrouillage de collatéral ; anti-rejeu indispensable.</td></tr>
+    <tr><td><b>Ambition</b></td><td>« On veut industrialiser cela. »</td><td>Reprise sur incident, supervision, exploitation, sécurité des clés, documentation.</td></tr>
+    <tr><td><b>Livrable 1</b></td><td>Document d'architecture interne : sujets infra, archi, applicatifs ; analyse de risque ; estimation des charges et compétences. Ensuite, activation probable de l'étape 2 « Let's do it ! ».</td><td>Le présent document ; il prépare un go/no-go.</td></tr>
+    <tr><td><b>Contraintes</b></td><td>Contraintes cyber et infra Talan (cf. Victor). Pas de SaaS ni de prestataire avec contrat ou budget. Pas de budget. Sujet non prioritaire : uniquement après le travail demandé par Talan et le client.</td><td>Open source auto-hébergé ; réutilisation de l'existant ; paliers courts ; chiffrage en jours et en calendrier.</td></tr>
+    <tr><td><b>Suite</b></td><td>Prendre rendez-vous avec Victor pour comprendre ce qu'est TELA.</td><td>Questionnaire préparé en §13.2.</td></tr>
+  </tbody>
+</table>
+<div class="callout">
+  <span class="ttl">Limite de l'analyse</span>
+  <p>Les captures reçues couvrent le début du mail (jusqu'à « …on les mint côté SEPOLIA. ») et sa fin (à partir de « On veut industrialiser cela. »). Une éventuelle partie intermédiaire n'était pas visible : ce document ne suppose rien de son contenu et devra être complété si elle apporte des exigences supplémentaires.</p>
+</div>
+
+<h2 id="s2-2"><span class="num">2.2</span>Traçabilité : ce qui est demandé et où c'est traité</h2>
+<table class="compact">
+  <thead><tr><th style="width:12mm">Réf.</th><th>Attente du livrable 1</th><th style="width:30mm">Section</th><th style="width:22mm">Couverture</th></tr></thead>
+  <tbody>
+    <tr><td>A-01</td><td>Infra : avons-nous besoin d'un nœud Sepolia chez nous ?</td><td>§7.1, §7.5</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+    <tr><td>A-02</td><td>Infra : quel impact réseau ?</td><td>§7.2 à §7.4</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+    <tr><td>A-03</td><td>Archi : comment le mint/burn est fait ?</td><td>§4.3, §5, §6.4</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+    <tr><td>A-04</td><td>Archi : on-chain / off-chain ?</td><td>§6.9, §6.10</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+    <tr><td>A-05</td><td>Archi : comment même être notifié ?</td><td>§6.2, §6.3</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+    <tr><td>A-06</td><td>Applicatif : quels composants logiciels requis ?</td><td>§6.1, §8</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+    <tr><td>A-07</td><td>Analyse du risque projet</td><td>§10</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+    <tr><td>A-08</td><td>Estimation des charges pour la réalisation</td><td>§11</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+    <tr><td>A-09</td><td>Compétences requises</td><td>§12</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+    <tr><td>A-10</td><td>Contraintes cyber et infra Talan</td><td>§7.7, §13.2</td><td><span class="tag warn">PARTIEL</span> à valider avec Victor</td></tr>
+    <tr><td>A-11</td><td>Préparer l'étape 2 « Let's do it ! »</td><td>§13</td><td><span class="tag ok">TRAITÉ</span></td></tr>
+  </tbody>
+</table>
+
+<h2 id="s2-3"><span class="num">2.3</span>Des contraintes aux exigences d'architecture</h2>
+<table>
+  <thead><tr><th style="width:40mm">Contrainte</th><th>Exigence d'architecture retenue</th><th style="width:34mm">Effet visible</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pas de SaaS, pas de contrat</b></td><td>Composants open source auto-hébergeables sous licence permissive ; aucun compte chez un fournisseur de nœuds (Infura, Alchemy…) ni de protocole de bridge opéré par un tiers (CCIP, LayerZero…).</td><td>Bridge maison ; nœud Sepolia interne en cible.</td></tr>
+    <tr><td><b>Pas de budget</b></td><td>Réutiliser l'infrastructure Talan (VM, proxy, SMTP, supervision) ; gas Sepolia par faucets ; aucun achat de licence, de HSM ou de service.</td><td>Coût direct nul ; coût en temps chiffré (§11.5).</td></tr>
+    <tr><td><b>Cyber et infra Talan</b></td><td>Aucun flux entrant Internet ; cloisonnement par zones ; moindre privilège ; secrets hors code ; journaux sans secret ; versions épinglées ; validation des flux avant ouverture.</td><td>Matrice des flux, zones (§7).</td></tr>
+    <tr><td><b>Sujet non prioritaire</b></td><td>Paliers courts et autonomes ; automatisation (une commande pour démarrer, tester, prouver) ; documentation continue ; reprise facile après plusieurs semaines d'interruption.</td><td>Paliers, scénarios de calendrier.</td></tr>
+    <tr><td><b>Industrialiser</b></td><td>Reprise sans perte ni double mint ; supervision honnête (donnée périmée visible) ; procédures d'exploitation ; tests de panne ; preuves conservées.</td><td>Relayer persistant, runbooks.</td></tr>
+    <tr><td><b>Réseau privé + réseau public</b></td><td>Politique de finalité par réseau ; aucune hypothèse TELA déduite d'un Besu local ; identité réseau vérifiée à chaque cycle.</td><td>Profils séparés.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s2-4"><span class="num">2.4</span>Hypothèses et inconnues</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>Hypothèses de travail</h4>
+    <ul>
+      <li>Tokens <b>de test, sans valeur</b> ; aucun mainnet, aucun actif réel.</li>
+      <li>Même nombre de decimals sur les deux chaînes (18), pas de frais de transfert ni de rebase.</li>
+      <li>Une offre de référence connue ; pas d'émission hors bridge pendant les tests.</li>
+      <li>TELA accepte le déploiement de contrats standards (London ou plus récent).</li>
+      <li>Le bridge est opéré par Talan ; un seul relayer au palier 1.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Inconnues à lever (détail en §13.2)</h4>
+    <ul>
+      <li>Identité du TELA de test : chain ID, hash genesis, version Besu, consensus, forks EVM.</li>
+      <li>Accès RPC TELA : URL, TLS, authentification, VPN, ACL, permissionnement des comptes.</li>
+      <li>Token existant : adresses, ABI, rôles, administrateur, évolutivité.</li>
+      <li>Flux réseau autorisés, coffre de secrets, supervision et SMTP réutilisables.</li>
+      <li>Statut de Sepolia et de son successeur à la date de démarrage.</li>
+    </ul>
+  </div>
+</div>

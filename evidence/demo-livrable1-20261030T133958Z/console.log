@@ -1,0 +1,40 @@
+Compilation des contrats (copie temporaire)
+Tests Solidity (unitaires, fuzzing, invariants)
+  [OK] tests Solidity : code de sortie
+  [OK] tests Solidity : 27 réussis, 0 échec, 0 ignoré
+  [OK] identité chaîne 31337
+  [OK] identité chaîne 31338
+Déploiement : jetons de test et bridges
+  [OK] offre initiale A + B = référence
+S1 — aller A→B : 100 tEUR
+  [OK] S1 : offre A après burn
+  [OK] S1 : transit non minté = 100 tEUR
+  [OK] S1 : 3 blocs successeurs ≥ 3
+  [OK] S1 : ID recalculé hors chaîne = ID de l'événement
+  [OK] S1 : transaction de mint réussie
+  [OK] S1 : processed[ID] = true
+  [OK] S1 : solde Bob sur B
+  [OK] S1 : offre A + B = référence (transit nul)
+S2 — rejeu du même transfert
+  [OK] S2 : simulation du rejeu refusée
+  [OK] S2 : transaction de rejeu incluse mais annulée (status 0)
+  [OK] S2 : aucun second mint
+S3 — exécuteur non autorisé
+  [OK] S3 : Alice ne peut pas minter
+S4 — plafond par transfert
+  [OK] S4 : 1 001 tEUR refusés
+S5 — pause d'urgence
+  [OK] S5 : burn refusé pendant la pause
+  [OK] S5 : le pauser ne peut pas lever la pause
+  [OK] S5 : bridge A actif
+S6 — retour B→A : 40 tEUR
+  [OK] S6 : 3 blocs successeurs ≥ 3
+  [OK] S6 : ID recalculé hors chaîne = ID de l'événement
+  [OK] S6 : transaction de mint réussie
+  [OK] S6 : processed[ID] = true
+  [OK] S6 : offre B = 60 tEUR
+  [OK] S7 : réconciliation offre A + offre B + transit = référence
+S8 — limite de confiance : mint fabriqué par l'exécuteur
+  [OK] S8 : le contrat accepte le mint fabriqué (confiance dans l'exécuteur)
+  [OK] S8 : la réconciliation détecte un écart de +5 tEUR
+29/29 contrôles réussis ; code 0

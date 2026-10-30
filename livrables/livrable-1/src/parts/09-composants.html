@@ -1,0 +1,49 @@
+<h1 id="s8"><span class="num">8</span>Composants logiciels requis</h1>
+
+<h2 id="s8-1"><span class="num">8.1</span>Inventaire</h2>
+<table>
+  <thead><tr><th style="width:8mm">#</th><th style="width:36mm">Composant</th><th>Responsabilité</th><th style="width:34mm">Technologie · licence</th><th style="width:26mm">État · palier</th></tr></thead>
+  <tbody>
+    <tr><td>C1</td><td><b>Token ERC20</b> (×2)</td><td>Soldes ; <code>mint</code> et <code>burnFrom</code> réservés au Bridge</td><td>Solidity, OpenZeppelin 5.4 · MIT</td><td><span class="tag info">EXISTANT</span> à adapter au token Talan (P1)</td></tr>
+    <tr><td>C2</td><td><b>Contrat Bridge</b> (×2)</td><td>Burn + événement ; mint anti-rejeu ; plafonds ; pause ; rôles</td><td>Solidity 0.8.30, Foundry · MIT</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span></td></tr>
+    <tr><td>C3</td><td><b>Relayer</b></td><td>Identité, collecte, finalité, nonces, soumission, reprise, réconciliation, API</td><td>.NET 10 LTS, Nethereum 6.1 · MIT</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span> profil testnet à activer (P1)</td></tr>
+    <tr><td>C4</td><td><b>Signataire</b></td><td>Seul détenteur des clés ; politique de signature</td><td>.NET 10 ; Web3Signer (Apache-2.0) en P2</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span> durcissement P2</td></tr>
+    <tr><td>C5</td><td><b>Base d'état</b></td><td>Observations, transferts, nonces, checkpoints, tentatives, réconciliations</td><td>PostgreSQL 17 · licence PostgreSQL</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span> sauvegarde P2</td></tr>
+    <tr><td>C6</td><td><b>Accès TELA</b></td><td>RPC Besu TELA existant</td><td>Hyperledger Besu · Apache-2.0</td><td><span class="tag bad">BLOQUÉ</span> accès (P1)</td></tr>
+    <tr><td>C7</td><td><b>Accès Sepolia</b></td><td>RPC public contrôlé (P1) puis nœud Besu + Teku (P2)</td><td>Besu, Teku · Apache-2.0</td><td><span class="tag grey">PROPOSÉ</span></td></tr>
+    <tr><td>C8</td><td><b>Supervision</b></td><td>Métriques, tableaux, règles, notification</td><td>Prometheus, Alertmanager · Apache-2.0 ; Grafana · AGPL-3.0</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span> Alertmanager P1</td></tr>
+    <tr><td>C9</td><td><b>Outillage et preuves</b></td><td>Commandes <code>bootstrap/up/test/prove</code>, manifestes, CI</td><td>Python 3.12, Docker Compose</td><td><span class="tag info">IMPLÉMENTÉ</span></td></tr>
+    <tr><td>C10</td><td><b>IHM de suivi</b> (option)</td><td>Bridger depuis un navigateur, suivre un identifiant</td><td>Page statique + bibliothèque web3 (MIT)</td><td><span class="tag grey">OPTION</span> 3 – 6 JH</td></tr>
+    <tr><td>C11</td><td><b>Multisig d'administration</b></td><td>Admin des contrats à plusieurs signatures</td><td>Safe (contrats open source)</td><td><span class="tag grey">PROPOSÉ</span> P2</td></tr>
+  </tbody>
+</table>
+<p class="small">Grafana est sous AGPL-3.0 : usage interne non modifié sans contrainte particulière ; à signaler à la cyber si une politique de licences existe. Aucune licence commerciale n'est requise.</p>
+
+<h2 id="s8-2"><span class="num">8.2</span>Interfaces</h2>
+<table class="compact">
+  <thead><tr><th style="width:44mm">Interface</th><th>Contrat</th><th style="width:34mm">Sécurité</th></tr></thead>
+  <tbody>
+    <tr><td><code>requestTransfer(dest, recipient, amount)</code></td><td>Appel utilisateur après <code>approve</code> ; retourne l'identifiant ; émet <code>TransferInitiated</code></td><td>Pause, plafond, paire</td></tr>
+    <tr><td><code>completeTransfer(src, srcBridge, srcToken, nonce, amount, recipient)</code></td><td>Appel de l'exécuteur ; émet <code>TransferCompleted</code></td><td>Rôle, paire, plafonds, anti-rejeu</td></tr>
+    <tr><td><code>POST /sign</code> (signataire)</td><td>JSON : <code>chainId</code>, <code>nonce</code>, <code>gasPriceWei</code>, <code>gasLimit</code>, <code>to</code>, <code>data</code> → transaction brute, hash, adresse</td><td>Jeton de service, corps ≤ 4 096 octets, politique ; 401 / 400 / 403 / 429</td></tr>
+    <tr><td><code>GET /status</code>, <code>/health</code> (relayer)</td><td>État prêt/périmé, réseaux, comptes par état, réconciliation</td><td>Réseau interne</td></tr>
+    <tr><td><code>GET /metrics</code> (relayer)</td><td>16 métriques Prometheus</td><td>Réseau interne</td></tr>
+    <tr><td><code>GET /transfers/{id}</code></td><td>État d'un transfert pour l'utilisateur ou l'IHM</td><td><span class="tag grey">PROPOSÉ</span> P1</td></tr>
+    <tr><td>Configuration <code>BRIDGE_CONFIG</code></td><td>JSON : réseaux, chain ID, hash genesis, adresses, empreintes de code, finalité, plafonds, gas</td><td>Aucun secret ; secrets en fichiers séparés</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s8-3"><span class="num">8.3</span>Pile technique et versions</h2>
+<table class="compact">
+  <thead><tr><th>Élément</th><th>Version épinglée</th><th>Pourquoi</th></tr></thead>
+  <tbody>
+    <tr><td>Solidity / cible EVM</td><td>0.8.30 · London</td><td>Compatible avec Besu sans supposer PUSH0/Cancun ; à confirmer selon les forks TELA</td></tr>
+    <tr><td>OpenZeppelin Contracts</td><td>5.4.0 (vendoré, SHA-256)</td><td>Rôles, ERC20, pause, réentrance éprouvés</td></tr>
+    <tr><td>Foundry (forge) / Anvil</td><td>1.3.1 / 1.8.4</td><td>Tests, fuzzing, invariants ; nœuds locaux</td></tr>
+    <tr><td>.NET SDK / runtime</td><td>10.0.402 / 10.0.13 (LTS)</td><td>Support long ; compétences Talan</td></tr>
+    <tr><td>Nethereum · Npgsql</td><td>6.1.0 · 10.0.3</td><td>Client Ethereum .NET ; pilote PostgreSQL</td></tr>
+    <tr><td>Besu (local)</td><td>26.10.0</td><td>Même client que TELA ; version TELA à confirmer</td></tr>
+    <tr><td>PostgreSQL · Prometheus · Grafana</td><td>17.11 · 3.13.1 · 13.2.4</td><td>Verrous et transactions ; supervision</td></tr>
+  </tbody>
+</table>
+<p class="small">Les images sont épinglées par empreinte dans <code>sandbox/versions.lock.json</code> ; toute montée de version invalide les preuves précédentes et impose une nouvelle campagne.</p>

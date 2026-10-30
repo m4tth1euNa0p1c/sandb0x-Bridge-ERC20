@@ -488,3 +488,25 @@ l'API est déjà prête alors que Prometheus ne dispose pas encore de toutes les
 séries, puis `up`, fraîcheur et `bridge_ready` atteignent ensemble 1. Le test
 nominal HTTP passe ensuite. Le cas précis `up/fresh=1, ready=0` et son timeout
 persistant restent couverts par les tests contrôlés, distincts de ce rejeu réel.
+
+## Livrable 1 pour Alain — 30 octobre 2026 UTC
+
+**Exigence reçue.** Analyser le mail « Bridge TELA – SEPOLIA » et produire le
+livrable 1 : document d'architecture interne (infra, archi, applicatif), analyse
+des risques, charges et compétences, avec diagrammes UML, schémas et démonstration.
+
+**Réalisation.** Le document est généré depuis `livrables/livrable-1/` (sources HTML,
+CSS, polices, script de rendu) en PDF de 54 pages. Il reste une proposition : aucune
+intégration Sepolia ou TELA n'est exécutée et le registre n'est pas modifié.
+
+**Démonstration.** `livrables/livrable-1/demo/demo_burn_mint.py`, figé au commit
+`2f05504`, a été exécuté le 30 octobre de 13:39:58 à 13:40:11 UTC dans un conteneur
+cloud sans moteur Docker : 27 tests Solidity puis aller-retour sur deux Anvil locaux,
+relayer joué pas à pas, 29 contrôles sur 29. Les outils proviennent des archives
+Foundry officielles (solc vérifié contre `contracts/solc.lock.json`), pas des images
+épinglées. Preuves : `evidence/demo-livrable1-20261030T133958Z/`. Cette exécution ne
+remplace ni `prove` ni les affirmations TRANSFER-001 et RESILIENCE-001, toujours obsolètes.
+
+**Fait externe relevé.** L'annonce de l'Ethereum Foundation de mars 2025 prévoyait la
+fin de vie de Sepolia au 30 septembre 2026 ; le réseau reste actif fin octobre 2026.
+Le choix du testnet public est remonté comme décision de cadrage (D3, R05).

@@ -1,0 +1,368 @@
+<h1 id="s6"><span class="num">6</span>Architecture off-chain et applicative</h1>
+
+<h2 id="s6-1"><span class="num">6.1</span>Architecture logique</h2>
+<p>Le diagramme logique ci-dessous répartit les composants en quatre couches. Les flèches indiquent qui appelle qui ; aucune couche supérieure n'accède directement aux clés.</p>
+<figure>
+  <svg class="diagram" viewBox="0 0 1000 640" role="img" aria-label="Diagramme logique en couches">
+    <defs>
+      <marker id="lg-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+      <marker id="lg-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/></marker>
+    </defs>
+    <g font-family="InterDoc, DejaVu Sans" fill="#0f172a">
+      <!-- couche accès -->
+      <rect x="20" y="10" width="960" height="102" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="32" y="30" font-size="11" font-weight="800" fill="#475569" letter-spacing="1">ACCÈS</text>
+      <rect x="60" y="38" width="240" height="62" rx="8" fill="#fff" stroke="#334155"/>
+      <text x="180" y="64" text-anchor="middle" font-size="13" font-weight="700">Portefeuille utilisateur</text>
+      <text x="180" y="84" text-anchor="middle" font-size="11" fill="#475569">MetaMask · CLI</text>
+      <rect x="380" y="38" width="240" height="62" rx="8" fill="#fff" stroke="#334155" stroke-dasharray="6 4"/>
+      <text x="500" y="64" text-anchor="middle" font-size="13" font-weight="700">IHM de suivi (option)</text>
+      <text x="500" y="84" text-anchor="middle" font-size="11" fill="#475569">page statique</text>
+      <rect x="700" y="38" width="240" height="62" rx="8" fill="#fff" stroke="#334155"/>
+      <text x="820" y="64" text-anchor="middle" font-size="13" font-weight="700">Exploitant</text>
+      <text x="820" y="84" text-anchor="middle" font-size="11" fill="#475569">Grafana et runbooks, via bastion</text>
+      <!-- chaînes -->
+      <rect x="20" y="150" width="160" height="330" rx="10" fill="#f5f3ff" stroke="#6d28d9" stroke-width="2"/>
+      <text x="100" y="176" text-anchor="middle" font-size="14" font-weight="800" fill="#5b21b6">SEPOLIA</text>
+      <text x="100" y="194" text-anchor="middle" font-size="10.5" fill="#6d28d9">sur chaîne · à gauche</text>
+      <rect x="35" y="210" width="130" height="48" rx="7" fill="#fff" stroke="#c4b5fd"/>
+      <text x="100" y="239" text-anchor="middle" font-size="12" font-weight="600">ERC20</text>
+      <rect x="35" y="272" width="130" height="78" rx="7" fill="#fff" stroke="#c4b5fd"/>
+      <text x="100" y="298" text-anchor="middle" font-size="12" font-weight="600">Bridge</text>
+      <text x="100" y="317" text-anchor="middle" font-size="10">requestTransfer</text>
+      <text x="100" y="333" text-anchor="middle" font-size="10">completeTransfer</text>
+      <text x="100" y="392" text-anchor="middle" font-size="10.5" fill="#5b21b6">finalité : finalized</text>
+      <text x="100" y="410" text-anchor="middle" font-size="10.5" fill="#5b21b6">≈ 13 min</text>
+      <rect x="820" y="150" width="160" height="330" rx="10" fill="#ecfeff" stroke="#0e7490" stroke-width="2"/>
+      <text x="900" y="176" text-anchor="middle" font-size="14" font-weight="800" fill="#155e75">TELA</text>
+      <text x="900" y="194" text-anchor="middle" font-size="10.5" fill="#0e7490">sur chaîne · à droite</text>
+      <rect x="835" y="210" width="130" height="48" rx="7" fill="#fff" stroke="#67e8f9"/>
+      <text x="900" y="239" text-anchor="middle" font-size="12" font-weight="600">ERC20</text>
+      <rect x="835" y="272" width="130" height="78" rx="7" fill="#fff" stroke="#67e8f9"/>
+      <text x="900" y="298" text-anchor="middle" font-size="12" font-weight="600">Bridge</text>
+      <text x="900" y="317" text-anchor="middle" font-size="10">requestTransfer</text>
+      <text x="900" y="333" text-anchor="middle" font-size="10">completeTransfer</text>
+      <text x="900" y="392" text-anchor="middle" font-size="10.5" fill="#155e75">finalité : QBFT</text>
+      <text x="900" y="410" text-anchor="middle" font-size="10.5" fill="#155e75">(à confirmer)</text>
+      <!-- applicatif -->
+      <rect x="230" y="142" width="540" height="350" rx="10" fill="#f8fbff" stroke="#1d4ed8" stroke-dasharray="7 5"/>
+      <text x="242" y="160" font-size="11" font-weight="800" fill="#1e3a8a" letter-spacing="1">APPLICATIF HORS CHAÎNE · VM BRIDGE</text>
+      <rect x="245" y="170" width="510" height="196" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2.2"/>
+      <text x="500" y="190" text-anchor="middle" font-size="13.5" font-weight="800" fill="#1e3a8a">Relayer (.NET 10)</text>
+      <g stroke="#93c5fd" fill="#fff">
+        <rect x="260" y="202" width="150" height="66" rx="7"/><rect x="425" y="202" width="150" height="66" rx="7"/>
+        <rect x="590" y="202" width="150" height="66" rx="7"/><rect x="260" y="284" width="315" height="66" rx="7"/>
+        <rect x="590" y="284" width="150" height="66" rx="7"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="335" y="228" font-size="12" font-weight="700">Contrôle d'identité</text>
+        <text x="335" y="246" font-size="10">chain ID · genesis</text><text x="335" y="260" font-size="10">code · rôles</text>
+        <text x="500" y="228" font-size="12" font-weight="700">Collecteur</text>
+        <text x="500" y="246" font-size="10">eth_getLogs</text><text x="500" y="260" font-size="10">checkpoint durable</text>
+        <text x="665" y="228" font-size="12" font-weight="700">Réconciliateur</text>
+        <text x="665" y="246" font-size="10">offre A + B + transit</text><text x="665" y="260" font-size="10">à hauteur fixe</text>
+        <text x="417" y="310" font-size="12" font-weight="700">Processeur</text>
+        <text x="417" y="328" font-size="10">finalité · nonce · persistance avant diffusion</text>
+        <text x="417" y="342" font-size="10">soumission · reprise · tentatives</text>
+        <text x="665" y="310" font-size="12" font-weight="700">API</text>
+        <text x="665" y="328" font-size="10">/status · /metrics</text><text x="665" y="342" font-size="10">/transfers/{id}</text>
+      </g>
+      <rect x="530" y="392" width="225" height="82" rx="10" fill="#fef2f2" stroke="#b91c1c" stroke-width="2"/>
+      <text x="642" y="416" text-anchor="middle" font-size="13" font-weight="800" fill="#7f1d1d">Signataire</text>
+      <text x="642" y="436" text-anchor="middle" font-size="10.5">processus séparé · seul à détenir les clés</text>
+      <text x="642" y="454" text-anchor="middle" font-size="10.5">politique de signature · réseau isolé</text>
+      <!-- données -->
+      <rect x="230" y="512" width="540" height="116" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="242" y="530" font-size="11" font-weight="800" fill="#475569" letter-spacing="1">DONNÉES</text>
+      <rect x="260" y="540" width="230" height="74" rx="8" fill="#fff" stroke="#334155"/>
+      <text x="375" y="566" text-anchor="middle" font-size="13" font-weight="700">PostgreSQL</text>
+      <text x="375" y="584" text-anchor="middle" font-size="10.5" fill="#475569">état · nonces · checkpoints</text>
+      <text x="375" y="600" text-anchor="middle" font-size="10.5" fill="#475569">tentatives · réconciliations</text>
+      <rect x="530" y="540" width="225" height="74" rx="8" fill="#fff" stroke="#334155"/>
+      <text x="642" y="566" text-anchor="middle" font-size="13" font-weight="700">Prometheus · Grafana</text>
+      <text x="642" y="584" text-anchor="middle" font-size="10.5" fill="#475569">séries · règles d'alerte</text>
+      <text x="642" y="600" text-anchor="middle" font-size="10.5" fill="#475569">tableau d'exploitation</text>
+      <!-- flux -->
+      <g stroke="#334155" stroke-width="1.8" fill="none">
+        <path d="M110 100 V146" stroke="#6d28d9" marker-end="url(#lg-a)"/>
+        <path d="M200 100 V128 H900 V146" stroke="#0e7490" marker-end="url(#lg-a)"/>
+        <path d="M560 100 V168" marker-end="url(#lg-a)"/>
+        <path d="M182 232 H243" marker-end="url(#lg-a)"/>
+        <path d="M243 322 H182" marker-end="url(#lg-a)"/>
+        <path d="M818 232 H757" marker-end="url(#lg-a)"/>
+        <path d="M757 322 H818" marker-end="url(#lg-a)"/>
+        <path d="M545 352 V390" stroke="#b91c1c" marker-end="url(#lg-r)"/>
+        <path d="M330 368 V538" marker-start="url(#lg-a)" marker-end="url(#lg-a)"/>
+        <path d="M755 576 H763 V318 H742" stroke="#64748b" stroke-dasharray="5 4" marker-end="url(#lg-a)"/>
+      </g>
+      <g font-size="10" fill="#334155">
+        <text x="212" y="226" text-anchor="middle">logs</text>
+        <text x="212" y="316" text-anchor="middle">tx mint</text>
+        <text x="788" y="226" text-anchor="middle">logs</text>
+        <text x="788" y="316" text-anchor="middle">tx mint</text>
+        <text x="214" y="122" font-size="10.5" fill="#334155">approve + requestTransfer (burn), directement sur Sepolia ou TELA</text>
+        <text x="568" y="150" font-size="10">GET /transfers/{id}</text>
+        <text x="553" y="382">POST /sign</text>
+        <text x="338" y="456">SQL : transactions, verrous</text>
+        <text x="770" y="506" text-anchor="end">scrape /metrics</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption><b>Figure 7 — Diagramme logique en couches.</b> Le relayer regroupe identité, collecte, traitement, réconciliation et API ; le signataire est un processus séparé ; les utilisateurs brûlent directement sur la chaîne.</figcaption>
+</figure>
+
+<h2 id="s6-2"><span class="num">6.2</span>Comment être notifié d'un burn ?</h2>
+<p>La question du mail est centrale : un bridge qui « rate » un événement laisse des tokens brûlés sans contrepartie. Cinq mécanismes ont été comparés.</p>
+<table>
+  <thead><tr><th style="width:34mm">Mécanisme</th><th>Atouts</th><th>Limites</th><th style="width:26mm">Verdict</th></tr></thead>
+  <tbody>
+    <tr><td><b>Interrogation historique</b> <code>eth_getLogs</code> + checkpoint durable</td><td>Aucune perte : on reprend au dernier bloc lu, même après des jours d'arrêt ; idempotent ; HTTPS simple, compatible proxy ; vérifiable (hash de bloc, nonce source)</td><td>Latence = intervalle d'interrogation ; plages de blocs limitées par certains RPC (pagination nécessaire)</td><td><span class="tag ok">RETENU</span> source de vérité</td></tr>
+    <tr><td><b>Abonnement WebSocket</b> <code>eth_subscribe</code></td><td>Réactivité immédiate</td><td>Événements perdus pendant une déconnexion ; pas de rattrapage ; WebSocket difficile derrière un proxy</td><td><span class="tag grey">OPTION</span> simple « réveil »</td></tr>
+    <tr><td><b>Filtres côté nœud</b> <code>eth_newFilter</code></td><td>Simple</td><td>État perdu au redémarrage du nœud, expiration des filtres</td><td><span class="tag bad">ÉCARTÉ</span></td></tr>
+    <tr><td><b>Indexeur</b> (The Graph auto-hébergé, Ponder…)</td><td>Requêtes riches, historique</td><td>Composant lourd de plus à exploiter et sécuriser</td><td><span class="tag bad">ÉCARTÉ</span> palier 1–2</td></tr>
+    <tr><td><b>Plugin Besu</b> côté TELA</td><td>Notification native par le nœud</td><td>Installation sur les nœuds TELA (gouvernance de Victor) ; inutile côté Sepolia</td><td><span class="tag grey">À DISCUTER</span></td></tr>
+  </tbody>
+</table>
+<div class="callout tela">
+  <span class="ttl">Pourquoi l'interrogation suffit</span>
+  <p>Le délai dominant est la <b>finalité</b>, pas la détection : on ne minte pas avant que le burn soit irréversible. Sur Sepolia, la finalité prend environ 13 minutes ; interroger toutes les quelques secondes ne change rien à l'expérience utilisateur, alors qu'un abonnement seul ferait courir un risque de perte.</p>
+</div>
+<figure data-maxh="150mm">
+  <pre class="mermaid">
+flowchart TD
+  S(["Cycle du relayer — toutes les N secondes"]) --> I{"Identités réseau, code<br/>des contrats et rôles conformes ?"}
+  I -- non --> D["Cycle dégradé : aucune collecte, aucune soumission<br/>API ready=false · alerte"]
+  I -- oui --> H["Lire la tête et la frontière de finalité<br/>finalized (Sepolia) · politique TELA"]
+  H --> L["eth_getLogs par lots<br/>du checkpoint à la frontière"]
+  L --> V{"Variation de nextNonce source<br/>= nombre d'événements lus ?"}
+  V -- non --> E["Erreur explicite<br/>checkpoint inchangé"]
+  V -- oui --> R{"Hash parent cohérent ?<br/>(réorganisation)"}
+  R -- non --> O["Observations orphelines canonical=false<br/>recul du checkpoint (≤ 128 blocs)"]
+  R -- oui --> W["Transaction SQL unique :<br/>observations + blocs + checkpoint"]
+  W --> P["Processeur : transferts finalisés → mint"]
+  O --> P
+  P --> S
+  WS[("Option : WebSocket newHeads")] -. "réveil anticipé" .-> S
+  classDef bad fill:#fef2f2,stroke:#b91c1c,color:#0f172a
+  class D,E bad
+  </pre>
+  <figcaption><b>Figure 8 — Diagramme d'activité de la détection.</b> Le checkpoint et les observations d'un lot sont commis dans la même transaction : une coupure ne peut ni perdre ni dupliquer un événement.</figcaption>
+</figure>
+
+<h3>Et pour les humains ?</h3>
+<ul>
+  <li><b>Utilisateur</b> : l'identifiant du transfert est dans l'événement de burn ; une IHM ou un script interroge <code>processed(id)</code> ou l'événement <code>TransferCompleted</code> sur la destination. Une route <code>GET /transfers/{id}</code> est prévue au palier 1.</li>
+  <li><b>Exploitant</b> : tableau Grafana, règles Prometheus (transfert ancien, intervention requise, écart d'offre, gas bas, donnée périmée), notification par l'Alertmanager vers la messagerie interne Talan (SMTP), sans service externe.</li>
+</ul>
+
+<h2 id="s6-3"><span class="num">6.3</span>Finalité : à partir de quand peut-on minter ?</h2>
+<table>
+  <thead><tr><th style="width:30mm">Réseau</th><th>Mécanisme</th><th style="width:46mm">Politique proposée</th><th style="width:26mm">Délai indicatif</th></tr></thead>
+  <tbody>
+    <tr><td><span class="tag sep">SEPOLIA</span></td><td>Preuve d'enjeu Ethereum : un bloc est <i>finalisé</i> après deux époques justifiées (64 créneaux de 12 s)</td><td>Bloc ≤ tag <code>finalized</code> du client de consensus ; jamais <code>latest</code></td><td>≈ 13 – 15 min en conditions normales</td></tr>
+    <tr><td><span class="tag tela">TELA</span></td><td>Si QBFT : finalité immédiate dès qu'un bloc est validé par plus des 2/3 des validateurs (pas de fork)</td><td>Bloc inclus, sous réserve de confirmation du consensus et de la version (TELA-03)</td><td>≈ 1 période de bloc (quelques secondes)</td></tr>
+    <tr><td><span class="tag grey">LOCAL</span></td><td>Anvil : convention de 3 blocs ; Besu local : tête QBFT mono-validateur</td><td>Tests uniquement</td><td>—</td></tr>
+  </tbody>
+</table>
+<p><b>Latences de bout en bout estimées</b> (non mesurées) : TELA → Sepolia ≈ finalité TELA + intervalle de collecte + inclusion Sepolia, soit <b>moins d'une minute</b> ; Sepolia → TELA ≈ finalité Sepolia + collecte + inclusion TELA, soit <b>environ 15 minutes</b>. Une politique inconnue ou une lecture historique impossible provoque une erreur, jamais un repli silencieux vers <code>latest</code>.</p>
+
+<div class="wide">
+<h2 id="s6-4"><span class="num">6.4</span>Séquence nominale : 100 tokens de TELA vers Sepolia</h2>
+<figure data-maxw="100%" data-maxh="138mm" style="margin-top:1mm">
+  <pre class="mermaid">
+sequenceDiagram
+  autonumber
+  actor U as Alice
+  participant T as Bridge + ERC20 TELA
+  participant R as Relayer
+  participant DB as PostgreSQL
+  participant S as Signataire
+  participant P as Bridge + ERC20 Sepolia
+  U->>T: approve(Bridge, 100)
+  U->>T: requestTransfer(Sepolia, Bob, 100)
+  T->>T: burnFrom(Alice, 100) + TransferInitiated
+  loop toutes les N secondes
+    R->>T: eth_getLogs(checkpoint → finalisé)
+  end
+  R->>DB: observation + checkpoint (1 transaction)
+  Note over R,DB: observed → source_finalized
+  R->>DB: réserver le nonce Sepolia
+  R->>S: POST /sign completeTransfer
+  S-->>R: transaction signée
+  R->>DB: persister octets + hash
+  R->>P: eth_sendRawTransaction
+  P->>P: contrôles, processed[id], mint(Bob, 100)
+  P-->>R: reçu + TransferCompleted(id)
+  R->>DB: destination_finalized (tag finalized)
+  </pre>
+  <figcaption><b>Figure 9 — Diagramme UML de séquence, cas nominal.</b> Le sens Sepolia → TELA est symétrique, avec la finalité Sepolia (≈ 13 min) avant le mint sur TELA.</figcaption>
+</figure>
+</div>
+
+<h2 id="s6-5"><span class="num">6.5</span>Reprise après incident : jamais deux mints</h2>
+<p>Le cas le plus délicat est la <b>réponse perdue</b> : la transaction de mint a peut-être été diffusée, peut-être pas. La règle est de ne jamais signer une seconde transaction pour le même transfert, mais de réconcilier puis, si nécessaire, de rediffuser <b>les mêmes octets</b>.</p>
+<figure data-maxh="150mm">
+  <pre class="mermaid">
+sequenceDiagram
+  participant P as Processeur
+  participant DB as PostgreSQL
+  participant R as RPC destination
+  P->>DB: lire le transfert destination_prepared
+  P->>R: eth_sendRawTransaction(octets)
+  R--xP: timeout : réponse perdue
+  Note over P: état ambigu : aucune nouvelle signature
+  P->>R: eth_getTransactionReceipt(hash)
+  alt reçu trouvé, bloc canonique
+    P->>R: processed(id) ?
+    P->>DB: destination_submitted puis finalized
+  else aucun reçu
+    P->>R: eth_getTransactionCount(latest / pending)
+    alt nonce non consommé
+      P->>R: rediffuser les mêmes octets
+    else nonce consommé par une autre transaction
+      P->>DB: intervention_required + alerte
+    end
+  end
+  </pre>
+  <figcaption><b>Figure 10 — Séquence de reprise.</b> Testée sur les deux profils locaux : crash après signature persistée (sortie 91), crash après diffusion (sortie 92), RPC suspendu, concurrence de deux processus.</figcaption>
+</figure>
+<table class="compact">
+  <thead><tr><th>Paramètre de reprise (valeur par défaut)</th><th style="width:70mm">Rôle</th></tr></thead>
+  <tbody>
+    <tr><td>12 tentatives, délai exponentiel plafonné à 30 s</td><td>Borne les réessais sur erreur RPC</td></tr>
+    <tr><td>Timeout RPC 5 s ; 10 tentatives/minute/destination</td><td>Évite l'emballement</td></tr>
+    <tr><td>Transaction pending > 300 s → intervention</td><td>Nonce bloqué : décision humaine, pas de remplacement de frais automatique</td></tr>
+    <tr><td>Recherche d'ancêtre limitée à 128 blocs</td><td>Réorganisation plus profonde : échec explicite</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s6-6"><span class="num">6.6</span>Signature et gestion des clés</h2>
+<p>Le relayer ne détient <b>aucune clé</b>. Il demande la signature au signataire, qui applique une politique stricte : seule la méthode <code>completeTransfer</code> vers le Bridge configuré, valeur native nulle, montant ≤ plafond, gas borné, fréquence limitée, authentification par jeton de service.</p>
+<table>
+  <thead><tr><th style="width:36mm">Option de stockage</th><th>Description</th><th style="width:30mm">Coût / contrat</th><th style="width:20mm">Palier</th></tr></thead>
+  <tbody>
+    <tr><td>Fichier de laboratoire</td><td>Clé en clair montée en lecture seule dans le seul conteneur signataire (état actuel)</td><td>Aucun</td><td>Local</td></tr>
+    <tr><td>Keystore chiffré</td><td>Format standard Ethereum (scrypt) ; mot de passe injecté au démarrage</td><td>Aucun</td><td><span class="tag info">P1</span></td></tr>
+    <tr><td><b>Web3Signer</b> (Consensys, Apache-2.0)</td><td>Service de signature distant, compatible Besu ; clés en keystore ou dans un coffre (HashiCorp Vault KV v2, cloud KMS)</td><td>Aucun</td><td><span class="tag info">P2</span></td></tr>
+    <tr><td>Coffre OpenBao / Vault Talan</td><td>Coffre open source (OpenBao, MPL-2.0) ou coffre existant chez Talan</td><td>Aucun si existant</td><td><span class="tag info">P2</span></td></tr>
+    <tr><td>HSM Talan</td><td>Si un HSM existe déjà, signature secp256k1 via PKCS#11 à vérifier</td><td>Hors budget s'il faut l'acheter</td><td>À explorer</td></tr>
+  </tbody>
+</table>
+<table class="compact">
+  <thead><tr><th style="width:34mm">Clé</th><th>Usage</th><th style="width:30mm">Stockage cible</th><th style="width:36mm">Rotation</th></tr></thead>
+  <tbody>
+    <tr><td>Déployeur</td><td>Déploiement des contrats (ponctuel)</td><td>Hors ligne</td><td>Inutilisée après déploiement</td></tr>
+    <tr><td>Admin (multisig)</td><td>Rôles, paires, levée de pause</td><td>Signataires distincts, hors ligne</td><td>Remplacement d'un signataire</td></tr>
+    <tr><td>Pauser</td><td>Arrêt d'urgence</td><td>Poste d'astreinte, keystore</td><td>Révocation par l'admin</td></tr>
+    <tr><td>Exécuteur Sepolia / TELA</td><td>Mints (une clé par chaîne)</td><td>Signataire / Web3Signer</td><td><code>grantRole</code> nouvelle clé puis <code>revokeRole</code></td></tr>
+  </tbody>
+</table>
+
+<h2 id="s6-7"><span class="num">6.7</span>Persistance et modèle de données</h2>
+<figure data-maxh="165mm">
+  <pre class="mermaid">
+erDiagram
+  NETWORKS ||--o{ BLOCKS : "conserve"
+  NETWORKS ||--o{ OBSERVATIONS : "source"
+  OBSERVATIONS }o--|| TRANSFERS : "transfer_id"
+  TRANSFERS ||--o{ ATTEMPTS : "tentatives"
+  NONCES ||--o{ TRANSFERS : "réserve"
+  NETWORKS {
+    bigint chain_id PK
+    text identity_hash
+    bigint next_block "checkpoint"
+    bigint head
+    bigint finalized
+  }
+  BLOCKS {
+    bigint chain_id PK
+    bigint block_number PK
+    text block_hash
+    text parent_hash
+  }
+  OBSERVATIONS {
+    bigint source_chain PK
+    text block_hash PK
+    text transaction_hash PK
+    bigint log_index PK
+    text transfer_id
+    boolean canonical
+  }
+  TRANSFERS {
+    text id PK
+    bigint source_chain
+    bigint destination_chain
+    numeric amount "78 chiffres"
+    text state "12 états"
+    bigint destination_nonce UK
+    text signed_raw "avant diffusion"
+    text destination_hash
+    integer attempts
+  }
+  NONCES {
+    bigint chain_id PK
+    text signer PK
+    bigint next_nonce
+  }
+  ATTEMPTS {
+    text transfer_id PK
+    integer attempt PK
+    timestamptz attempted_at
+  }
+  RECONCILIATIONS {
+    bigint id PK
+    text state
+    jsonb report
+  }
+  </pre>
+  <figcaption><b>Figure 11 — Modèle de données</b> (<code>src/Bridge.Relayer/schema.sql</code>). Unicité : identifiant de transfert, observation (bloc, tx, index de log), triplet (chaîne, signataire, nonce).</figcaption>
+</figure>
+<p>La base n'est pas la source de vérité comptable : les chaînes le sont. Une base perdue peut être reconstruite en recollectant l'historique, à condition de disposer d'un nœud qui le sert ; mais les transactions signées non diffusées seraient perdues. D'où une <b>sauvegarde testée</b> au palier 2.</p>
+
+<h2 id="s6-8"><span class="num">6.8</span>Supervision, alertes et exploitation</h2>
+<p>Le relayer expose 16 métriques au format Prometheus, sans donnée personnelle ni hash en étiquette. Douze règles d'alerte existent ; le palier 1 ajoute l'Alertmanager et la notification par la messagerie interne. Principe d'honnêteté : une valeur indisponible ou périmée est affichée comme telle, jamais en vert ; les montants exacts sont contrôlés en entiers, jamais sur les flottants de Grafana.</p>
+<table class="compact">
+  <thead><tr><th style="width:70mm">Indicateur clé</th><th>Alerte et action</th></tr></thead>
+  <tbody>
+    <tr><td><code>bridge_ready</code>, fraîcheur de l'instantané</td><td>Relayer arrêté ou figé : redémarrer, vérifier les identités réseau</td></tr>
+    <tr><td><code>bridge_finalized_lag_blocks</code></td><td>Collecte en retard : RPC lent ou indisponible</td></tr>
+    <tr><td><code>bridge_oldest_pending_seconds</code></td><td>Transfert bloqué : runbook « transaction en attente »</td></tr>
+    <tr><td><code>bridge_transfers{state="intervention_required"}</code></td><td>Intervention humaine ; pause si nécessaire</td></tr>
+    <tr><td><code>bridge_reconciliation_state</code></td><td><code>mismatch</code> : enquête, pause</td></tr>
+    <tr><td><code>bridge_gas_balance_wei</code></td><td>Gas de test à recharger (faucet)</td></tr>
+    <tr><td><code>bridge_paused</code></td><td>Bridge en pause : information des utilisateurs</td></tr>
+  </tbody>
+</table>
+<figure>
+  <div class="shot" style="height:118mm"><img src="../../../evidence/finalization-b97c541/grafana-fast-b97c541-delivery.png" alt="Tableau Grafana d'exploitation du relayer" style="width:84mm"/></div>
+  <figcaption><b>Figure 12 — Tableau d'exploitation réel</b> (profil local-fast, 25/10/2026 00:38 UTC, observation historique) : relayer prêt, données fraîches, réconciliation <code>balanced</code>, aucune intervention.</figcaption>
+</figure>
+
+<h2 id="s6-9"><span class="num">6.9</span>Répartition on-chain / off-chain</h2>
+<table>
+  <thead><tr><th style="width:44mm">Responsabilité</th><th style="width:22mm" class="c">On-chain</th><th style="width:22mm" class="c">Off-chain</th><th>Justification</th></tr></thead>
+  <tbody>
+    <tr><td>Soldes, burn, mint</td><td class="c">●</td><td class="c"></td><td>Seule source de vérité comptable</td></tr>
+    <tr><td>Anti-rejeu (<code>processed</code>)</td><td class="c">●</td><td class="c">○</td><td>Le contrat refuse ; la base évite de tenter</td></tr>
+    <tr><td>Plafonds, pause, rôles</td><td class="c">●</td><td class="c">○</td><td>Bornes indépendantes du relayer ; le signataire les double</td></tr>
+    <tr><td>Détection du burn</td><td class="c"></td><td class="c">●</td><td>Une chaîne ne lit pas l'autre</td></tr>
+    <tr><td>Décision de finalité</td><td class="c"></td><td class="c">●</td><td>Dépend du consensus de chaque réseau</td></tr>
+    <tr><td>Preuve que le burn a eu lieu</td><td class="c">—</td><td class="c">●</td><td><b>Confiance dans le relayer</b> (palier 3 : signatures multiples vérifiées on-chain)</td></tr>
+    <tr><td>Gestion des nonces et du gas</td><td class="c"></td><td class="c">●</td><td>Comptes externes du relayer</td></tr>
+    <tr><td>Réconciliation de l'offre</td><td class="c"></td><td class="c">●</td><td>Lecture des deux chaînes à hauteur fixe</td></tr>
+  </tbody>
+</table>
+<p class="small">● responsabilité principale · ○ contrôle complémentaire</p>
+
+<h2 id="s6-10"><span class="num">6.10</span>Alternatives étudiées</h2>
+<table>
+  <thead><tr><th style="width:34mm">Option</th><th>Fonctionne avec TELA privée ?</th><th>Contrat / SaaS</th><th>Modèle de confiance</th><th style="width:22mm">Verdict</th></tr></thead>
+  <tbody>
+    <tr><td><b>Bridge maison</b> (démonstrateur)</td><td>Oui</td><td>Aucun</td><td>Relayer autorisé + plafonds ; évolutif vers M-de-N</td><td><span class="tag ok">RETENU</span></td></tr>
+    <tr><td><b>Hyperlane</b> auto-hébergé</td><td>Oui : déploiement sans permission ; validateurs et relayer à opérer soi-même</td><td>Aucun (open source)</td><td>Module de sécurité multisig configurable ; routes « synthétiques » burn/mint</td><td><span class="tag grey">PALIER 3</span> à étudier</td></tr>
+    <tr><td><b>Chainlink CCIP</b></td><td>Non : réseaux pris en charge par l'opérateur uniquement</td><td>Oui</td><td>Réseau d'oracles tiers</td><td><span class="tag bad">EXCLU</span></td></tr>
+    <tr><td><b>LayerZero, Axelar, Wormhole</b></td><td>Pas sans intégration par l'éditeur ou vérificateurs tiers</td><td>Dépendance à un tiers</td><td>Vérificateurs externes</td><td><span class="tag bad">EXCLU</span></td></tr>
+    <tr><td><b>Client léger / preuves ZK</b></td><td>Théoriquement</td><td>Aucun</td><td>Cryptographique</td><td><span class="tag grey">R&amp;D</span> hors portée</td></tr>
+  </tbody>
+</table>
+<p><b>Pourquoi garder le bridge maison ?</b> Il est déjà écrit, testé et compris ; il respecte les contraintes (ni contrat, ni budget) ; sa surface est petite (≈ 280 lignes Solidity). Hyperlane deviendrait pertinent si l'on voulait un modèle à validateurs multiples éprouvé plutôt que de le développer.</p>

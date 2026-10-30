@@ -1,0 +1,45 @@
+<h1 id="s12"><span class="num">12</span>Compétences requises</h1>
+
+<h2 id="s12-1"><span class="num">12.1</span>Matrice des compétences</h2>
+<p>La colonne « couverture actuelle » s'appuie sur ce que le démonstrateur met déjà en œuvre ; elle ne constitue pas une évaluation individuelle.</p>
+<table class="compact">
+  <thead><tr><th style="width:44mm">Compétence</th><th style="width:18mm">Niveau requis</th><th>Utilisée pour</th><th style="width:32mm">Couverture actuelle</th><th style="width:28mm">Appui</th></tr></thead>
+  <tbody>
+    <tr><td><b>Solidity, EVM, OpenZeppelin, Foundry</b></td><td>Avancé</td><td>Contrats, adaptation au token, tests, fuzzing, invariants</td><td><span class="tag ok">PRATIQUÉE</span> démonstrateur</td><td>Relecteur</td></tr>
+    <tr><td><b>Sécurité des smart contracts</b> (rôles, rejeu, réentrance)</td><td>Avancé</td><td>Revue, modèle de menaces, choix de plafonds</td><td><span class="tag warn">À APPROFONDIR</span></td><td>Relecteur, cyber</td></tr>
+    <tr><td><b>.NET / C#, Nethereum</b></td><td>Confirmé</td><td>Relayer, signataire</td><td><span class="tag ok">PRATIQUÉE</span></td><td>—</td></tr>
+    <tr><td><b>PostgreSQL transactionnel</b></td><td>Confirmé</td><td>Verrous, nonces, reprise ; sauvegarde/restauration</td><td><span class="tag ok">PRATIQUÉE</span> (sauvegarde à acquérir)</td><td>Infra</td></tr>
+    <tr><td><b>Exploitation de nœuds Ethereum</b> (client d'exécution + consensus, synchro, P2P)</td><td>Confirmé</td><td>Nœud Sepolia Besu + Teku</td><td><span class="tag bad">À ACQUÉRIR</span></td><td>Victor (Besu)</td></tr>
+    <tr><td><b>Besu en réseau privé</b> (QBFT, permissionnement)</td><td>Intermédiaire</td><td>Intégration TELA, finalité</td><td><span class="tag warn">À APPROFONDIR</span> Besu local</td><td>Victor</td></tr>
+    <tr><td><b>Linux, Docker Compose, durcissement</b></td><td>Confirmé</td><td>VM, conteneurs, cloisonnement</td><td><span class="tag ok">PRATIQUÉE</span></td><td>Infra</td></tr>
+    <tr><td><b>Réseau et sécurité périmétrique</b></td><td>Intermédiaire</td><td>Matrice des flux, proxy, pare-feu, TLS</td><td><span class="tag warn">À APPROFONDIR</span></td><td>Infra, cyber</td></tr>
+    <tr><td><b>Gestion de clés</b> (keystore, Web3Signer, coffre, HSM)</td><td>Confirmé</td><td>Signataire durci, rotation</td><td><span class="tag bad">À ACQUÉRIR</span></td><td>Cyber</td></tr>
+    <tr><td><b>Observabilité</b> (Prometheus, Grafana, Alertmanager)</td><td>Intermédiaire</td><td>Supervision, alertes</td><td><span class="tag ok">PRATIQUÉE</span></td><td>—</td></tr>
+    <tr><td><b>Analyse de risques, modèle de menaces</b></td><td>Intermédiaire</td><td>Sécurité, go/no-go</td><td><span class="tag warn">À APPROFONDIR</span></td><td>Cyber</td></tr>
+    <tr><td><b>Pilotage de projet</b></td><td>Intermédiaire</td><td>Paliers, jalons, arbitrages</td><td><span class="tag warn">À APPROFONDIR</span></td><td>Alain</td></tr>
+    <tr><td><b>Cadre réglementaire</b> (MiCA, DORA)</td><td>Notions</td><td>Délimiter le périmètre « test »</td><td><span class="tag grey">NOTIONS</span></td><td>Juridique (hors projet)</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s12-2"><span class="num">12.2</span>Profils et montée en compétence</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>Répartition recommandée</h4>
+    <ul>
+      <li><b>Porteur</b> (alternant) : conception, développement, tests, preuves, documentation, exploitation du bridge en test.</li>
+      <li><b>Référent TELA</b> (Victor) : réseau, Besu, droits, déploiements, flux.</li>
+      <li><b>Cyber Talan</b> : validation des flux, des secrets et de l'architecture.</li>
+      <li><b>Relecteur indépendant</b> : pair développeur Solidity/.NET, distinct de l'auteur.</li>
+      <li><b>Commanditaire</b> (Alain) : priorités, go/no-go.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Plan de montée en compétence (≈ 3 JH, inclus dans les lots)</h4>
+    <ul>
+      <li>Documentation Besu « Run Besu and Teku on a testnet » et synchronisation par point de contrôle (M1).</li>
+      <li>Documentation Web3Signer : stockage des clés en coffre (M2).</li>
+      <li>Session de travail avec Victor sur l'exploitation de TELA (L0).</li>
+      <li>Revue croisée des contrats avec un pair (M5).</li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+<h1 id="s5"><span class="num">5</span>Architecture on-chain : les contrats</h1>
+
+<p class="lead">Sur chaque chaîne, deux contrats : le <b>token ERC20</b> et le <b>contrat Bridge</b>. Le Bridge est le seul à pouvoir minter et brûler ; il porte les règles de sécurité (anti-rejeu, plafonds, pause, appariement).</p>
+
+<h2 id="s5-1"><span class="num">5.1</span>Modèle de classes (UML)</h2>
+<figure data-maxw="100%" data-maxh="150mm">
+  <pre class="mermaid">
+classDiagram
+  direction TB
+  class ERC20 {
+    &lt;&lt;OpenZeppelin 5.4&gt;&gt;
+    +totalSupply() uint256
+    +balanceOf(account) uint256
+    +approve(spender, amount) bool
+  }
+  class AccessControl {
+    &lt;&lt;OpenZeppelin 5.4&gt;&gt;
+    +grantRole(role, account)
+    +revokeRole(role, account)
+  }
+  class Pausable {
+    &lt;&lt;OpenZeppelin 5.4&gt;&gt;
+    +paused() bool
+  }
+  class ReentrancyGuard {
+    &lt;&lt;OpenZeppelin 5.4&gt;&gt;
+  }
+  class BridgeToken {
+    +BRIDGE_ROLE
+    +decimals() 18
+    +mint(to, amount)
+    +burnFrom(from, amount)
+  }
+  class Bridge {
+    +EXECUTOR_ROLE, PAUSER_ROLE
+    +token, localChainId : immuables
+    +maxTransfer, epochMintCap : immuables
+    +nextNonce : uint256
+    +processed : id → bool
+    +configurePair(chain, bridge, token, 18)
+    +requestTransfer(dest, to, amount) id
+    +completeTransfer(src, bridge, token, nonce, amount, to)
+    +pause()
+    +unpause()
+  }
+  class Pair {
+    +remoteBridge
+    +remoteToken
+  }
+  ERC20 <|-- BridgeToken
+  AccessControl <|-- BridgeToken
+  AccessControl <|-- Bridge
+  Pausable <|-- Bridge
+  ReentrancyGuard <|-- Bridge
+  Bridge --> BridgeToken : mint / burnFrom
+  Bridge "1" *-- "0..*" Pair : pairs
+  </pre>
+  <figcaption><b>Figure 5 — Diagramme UML de classes des contrats</b> (<code>contracts/src/Bridge.sol</code>, <code>BridgeToken.sol</code>). Rôles requis : <code>mint</code>/<code>burnFrom</code> → BRIDGE ; <code>completeTransfer</code> → EXECUTOR ; <code>pause</code> → PAUSER ; <code>configurePair</code>/<code>unpause</code> → ADMIN. Aucun proxy : le code déployé est immuable.</figcaption>
+</figure>
+
+<h3>Événements émis</h3>
+<table class="compact">
+  <thead><tr><th style="width:40mm">Événement</th><th>Champs</th><th style="width:44mm">Usage</th></tr></thead>
+  <tbody>
+    <tr><td><code>TransferInitiated</code></td><td><code>transferId</code> (indexé), <code>destinationChainId</code> (indexé), <code>sender</code> (indexé), <code>recipient</code>, <code>sourceToken</code>, <code>destinationToken</code>, <code>destinationBridge</code>, <code>nonce</code>, <code>amount</code></td><td>Notification du burn ; lu par le relayer</td></tr>
+    <tr><td><code>TransferCompleted</code></td><td><code>transferId</code> (indexé), <code>recipient</code> (indexé), <code>amount</code></td><td>Preuve du mint ; suivi utilisateur</td></tr>
+    <tr><td><code>PairConfigured</code></td><td><code>remoteChainId</code> (indexé), <code>remoteBridge</code>, <code>remoteToken</code></td><td>Audit de la configuration</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s5-2"><span class="num">5.2</span>Rôles et séparation des pouvoirs</h2>
+<table>
+  <thead><tr><th style="width:36mm">Rôle</th><th>Pouvoir effectif</th><th style="width:40mm">Porteur recommandé</th><th style="width:18mm">Exposition</th></tr></thead>
+  <tbody>
+    <tr><td><b>Admin du Bridge</b><br/><code>DEFAULT_ADMIN_ROLE</code></td><td>Configurer une paire (une seule fois), attribuer/retirer les rôles, lever la pause</td><td>Multisig 2 sur 3 (Safe, open source) en palier 2 ; clé hors ligne au palier 1</td><td><span class="tag ok">FROIDE</span></td></tr>
+    <tr><td><b>Pauser</b><br/><code>PAUSER_ROLE</code></td><td>Mettre en pause burns et mints ; ne peut pas lever la pause</td><td>Exploitant d'astreinte</td><td><span class="tag warn">TIÈDE</span></td></tr>
+    <tr><td><b>Exécuteur</b><br/><code>EXECUTOR_ROLE</code></td><td>Appeler <code>completeTransfer</code> sur la paire configurée, dans les plafonds</td><td>Signataire du relayer, une clé par chaîne</td><td><span class="tag bad">CHAUDE</span></td></tr>
+    <tr><td><b>Bridge du token</b><br/><code>BRIDGE_ROLE</code></td><td><code>mint</code> et <code>burnFrom</code> (ce dernier dépense l'allowance du détenteur)</td><td>Le contrat Bridge uniquement</td><td><span class="tag info">CONTRAT</span></td></tr>
+    <tr><td><b>Admin du token</b></td><td>Attribuer <code>BRIDGE_ROLE</code>, donc autoriser des émissions hors bridge</td><td>Même multisig que l'admin du Bridge</td><td><span class="tag ok">FROIDE</span></td></tr>
+  </tbody>
+</table>
+
+<h2 id="s5-3"><span class="num">5.3</span>Identifiant de transfert et anti-rejeu</h2>
+<p>Chaque transfert a un identifiant unique, calculé de façon identique par le contrat source, le relayer et le contrat destination. Il est <b>séparé par domaine</b> : tout changement de chaîne, de contrat, de token, de montant ou de destinataire produit un autre identifiant, ce qui empêche de rejouer une preuve d'un contexte dans un autre.</p>
+<pre class="code"><span class="f">transferId</span> = keccak256(abi.encode(
+    keccak256(<span class="s">"T3L4N_BRIDGE_BURN_MINT"</span>), uint256(<span class="k">1</span>),       <span class="c">// domaine et version du protocole</span>
+    sourceChainId, sourceBridge, destinationChainId, destinationBridge,
+    sourceToken, destinationToken, nonce, amount, recipient))       <span class="c">// nonce source : 0, 1, 2…</span></pre>
+<p>Sur la chaîne de destination, <code>processed[transferId]</code> passe à <code>true</code> dans la même transaction que le mint ; un second appel échoue avec <code>TransferAlreadyProcessed</code>. Un vecteur de test indépendant (<code>contracts/vectors/transfer-id-v1.json</code>) fige ce calcul ; la démonstration le recalcule hors chaîne et obtient le même résultat (§9).</p>
+
+<h2 id="s5-4"><span class="num">5.4</span>Garde-fous on-chain</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>Limites de montant</h4>
+    <ul>
+      <li><b>Par transfert</b> : 1 000 tokens (paramètre immuable).</li>
+      <li><b>Par époque</b> : 100 000 tokens mintés par heure et par bridge de destination (fenêtre fixe).</li>
+      <li>Montants entiers en unités minimales (10<sup>18</sup>) : aucun arrondi.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Configuration</h4>
+    <ul>
+      <li><b>Paire définitive</b> : impossible de rediriger un burn en transit vers un autre contrat.</li>
+      <li>Decimals imposés à 18 des deux côtés ; tokens à frais ou rebase refusés.</li>
+      <li>Détection d'un changement de chaîne (<code>NetworkChanged</code>).</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Arrêt d'urgence</h4>
+    <ul>
+      <li><code>pause()</code> bloque burns et mints, séparément sur chaque chaîne.</li>
+      <li>Levée de pause réservée à l'administrateur (deux personnes distinctes).</li>
+      <li>Un burn en transit reste mintable après la levée.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Robustesse du code</h4>
+    <ul>
+      <li>Protection contre la réentrance sur les deux chemins métier.</li>
+      <li>Effets atomiques : si le mint échoue, <code>processed</code> et le quota sont annulés.</li>
+      <li>Pas de proxy ni de fonction d'administration des plafonds.</li>
+    </ul>
+  </div>
+</div>
+<div class="callout warn">
+  <span class="ttl">Ce que les contrats ne font pas</span>
+  <p>Le contrat de destination ne vérifie <b>aucune preuve</b> du burn : il fait confiance à l'exécuteur. Les plafonds limitent l'impact d'une clé compromise (au plus 100 000 tokens par heure et par sens), la pause l'arrête, la réconciliation le détecte. Ce n'est pas une garantie cryptographique.</p>
+</div>
+
+<h2 id="s5-5"><span class="num">5.5</span>Intégrer le token « Stablecoin Euro Talan » existant</h2>
+<p>Le démonstrateur utilise son propre token de test. Le mail indique qu'un ERC20 « Stablecoin Euro Talan » est <b>déjà déployé sur les deux chaînes</b>. Le choix de l'option dépend de ses capacités, inconnues à ce jour (TELA-04).</p>
+<figure data-maxh="140mm">
+  <pre class="mermaid">
+flowchart TD
+  A["Token « Stablecoin Euro Talan » existant<br/>sur Sepolia et sur TELA"] --> B{"Adresse, ABI, code<br/>et administrateur connus ?"}
+  B -- non --> X["Bloquant : obtenir ces éléments<br/>auprès du propriétaire du token"]
+  B -- oui --> C{"Fonctions mint et burnFrom<br/>protégées par un rôle ?"}
+  C -- oui --> D{"Peut-on accorder ce rôle<br/>au contrat Bridge ?"}
+  D -- oui --> E["Option 1 — burn &amp; mint natif<br/>rôle accordé au Bridge, aucun redéploiement"]
+  D -- non --> F{"Redéploiement ou mise à jour<br/>du token autorisés ?"}
+  C -- non --> F
+  F -- oui --> G["Option 2 — nouvelle version du token<br/>avec rôle Bridge, réémission des soldes de test"]
+  F -- non --> H["Option 3 — lock &amp; mint<br/>verrouillage d'un côté, jeton représentatif de l'autre"]
+  E --> T["Adapter Bridge.sol : accepter le code du token cible,<br/>vérifier decimals, absence de frais et de rebase"]
+  G --> T
+  H --> U["Nouvel ADR + nouveaux tests :<br/>coffre de verrouillage, invariant différent"]
+  classDef ok fill:#f0fdf4,stroke:#15803d,color:#0f172a
+  classDef warn fill:#fffbeb,stroke:#b45309,color:#0f172a
+  classDef bad fill:#fef2f2,stroke:#b91c1c,color:#0f172a
+  class E,G ok
+  class H,U warn
+  class X bad
+  </pre>
+  <figcaption><b>Figure 6 — Arbre de décision pour le token existant.</b> L'option 1 est la plus simple ; l'option 3 change le modèle et l'invariant.</figcaption>
+</figure>
+<table class="compact">
+  <thead><tr><th style="width:30mm">Option</th><th>Avantages</th><th>Inconvénients</th><th style="width:20mm">Effort</th></tr></thead>
+  <tbody>
+    <tr><td><b>1. Rôle au Bridge</b></td><td>Respecte exactement le mail ; token inchangé ; offre totale conservée</td><td>Suppose un token à rôles ; le Bridge doit accepter un autre code que <code>BridgeToken</code></td><td>2 – 4 JH</td></tr>
+    <tr><td><b>2. Nouvelle version</b></td><td>Token conçu pour le bridge ; contrôle total des rôles</td><td>Nouvelles adresses ; soldes de test à réémettre ; communication aux utilisateurs</td><td>3 – 6 JH</td></tr>
+    <tr><td><b>3. Lock &amp; mint</b></td><td>Aucune modification du token d'origine</td><td>S'écarte du principe burn &amp; mint ; collatéral verrouillé à protéger ; nouveau modèle de risque</td><td>6 – 10 JH</td></tr>
+  </tbody>
+</table>

@@ -1,0 +1,81 @@
+<h1 id="s1"><span class="num">1</span>Synthèse pour décision</h1>
+
+<p class="lead">Alain demande un document d'architecture expliquant comment « bridger » l'ERC20 <b>Stablecoin Euro Talan</b> entre <b>Sepolia</b> (testnet public Ethereum) et <b>TELA</b> (blockchain privée EVM sur nœuds Besu), selon un principe de <b>burn &amp; mint</b>, puis de l'industrialiser, sans SaaS, sans contrat, sans budget, et en dehors des priorités de l'alternance.</p>
+
+<h2 id="s1-1"><span class="num">1.1</span>L'essentiel en une page</h2>
+<div class="grid3" style="margin-bottom:4mm">
+  <div class="kpi ok"><div class="v">0 €</div><div class="l">budget direct : 100 % open source auto-hébergé, testnets, infrastructure Talan existante</div></div>
+  <div class="kpi"><div class="v">≈ 28 JH</div><div class="l">palier 1 « premier pont réel » Sepolia ⇄ TELA de test (fourchette 17 – 45 JH)</div></div>
+  <div class="kpi"><div class="v">≈ 57 JH</div><div class="l">paliers 1 + 2 « industrialisé » (fourchette 33 – 90 JH), hors temps des autres équipes</div></div>
+  <div class="kpi ok"><div class="v">29 / 29</div><div class="l">contrôles réussis par la démonstration rejouée le 30/10/2026 (dont 27 tests Solidity)</div></div>
+  <div class="kpi warn"><div class="v">18 / 18</div><div class="l">contrôles par profil des campagnes complètes du 25/10 (Anvil et Besu locaux) — historiques, à rejouer</div></div>
+  <div class="kpi bad"><div class="v">2</div><div class="l">blocages externes : accès au véritable TELA de test et VM dédiée au projet</div></div>
+</div>
+
+<div class="callout ok">
+  <span class="ttl">On ne part pas de zéro</span>
+  <p>Un démonstrateur complet existe déjà dans le dépôt : contrats Solidity burn/mint avec anti-rejeu, plafonds et pause ; relayer .NET persistant (PostgreSQL) ; signataire séparé ; supervision Prometheus/Grafana ; tests de panne. Il a exécuté des allers-retours réels entre deux chaînes locales, dont une chaîne <b>Besu QBFT</b> — la technologie de TELA. L'étape 2 consiste donc à <b>raccorder et durcir</b>, pas à tout construire.</p>
+</div>
+
+<p><b>Recommandation.</b> Activer l'étape 2 en <b>deux paliers courts avec go/no-go</b> : (1) un premier pont réel Sepolia ⇄ TELA de test avec le modèle « relayer autorisé » existant et un accès Sepolia contrôlé, puis (2) l'industrialisation : nœud Sepolia interne, signature durcie, exploitation et revue sécurité. Un palier 3 optionnel (attestations multiples) renforcerait la confiance si un usage au-delà du test était envisagé.</p>
+
+<h2 id="s1-2"><span class="num">1.2</span>Réponses directes aux questions du mail</h2>
+<div class="qa">
+  <div class="q">Avons-nous besoin d'un nœud Sepolia chez nous ?</div>
+  <div class="a"><p><b>Pas pour démarrer, oui pour industrialiser.</b> Le palier 1 peut lire Sepolia via un RPC public gratuit sans compte (si la cyber l'autorise), avec contrôle d'identité réseau. Mais le relayer croit ce que dit le RPC : un RPC tiers malveillant pourrait faire minter sur TELA des tokens jamais brûlés. La cible est donc un <b>nœud Sepolia interne Besu + Teku</b> (≈ 4 vCPU, 16 Go RAM, SSD ≥ 1 To, à mesurer). <span class="see">→ §7.1</span></p></div>
+</div>
+<div class="qa">
+  <div class="q">Quel impact réseau ?</div>
+  <div class="a"><p><b>Aucun flux entrant depuis Internet.</b> Palier 1 : HTTPS sortant (443) via le proxy Talan vers un RPC Sepolia. Palier 2 : flux pair-à-pair sortants <b>TCP/UDP 30303</b> (Besu) et <b>9000</b> (Teku), non compatibles avec un proxy HTTP — c'est le point à instruire avec Victor. Côté TELA, flux interne relayer → RPC Besu. Douze flux sont décrits dans la matrice. <span class="see">→ §7.3 – 7.4</span></p></div>
+</div>
+<div class="qa">
+  <div class="q">Comment le mint/burn est-il fait ?</div>
+  <div class="a"><p><b>Sur la chaîne, par deux contrats par réseau</b> (le token et un contrat Bridge). Burn : l'utilisateur appelle <code>requestTransfer</code>, qui brûle ses tokens et émet un événement dans la même transaction. Mint : le relayer appelle <code>completeTransfer</code> sur l'autre chaîne, qui vérifie rôle, paire, plafonds et anti-rejeu, puis minte — atomiquement. <span class="see">→ §4.3, §5</span></p></div>
+</div>
+<div class="qa">
+  <div class="q">On-chain ou off-chain ?</div>
+  <div class="a"><p><b>Hybride.</b> La comptabilité (soldes, burn, mint, anti-rejeu, plafonds, pause) est <b>on-chain</b>. La décision de minter — « j'ai vu un burn final sur l'autre chaîne » — est prise <b>off-chain</b> par un relayer autorisé : c'est un point de confiance assumé, encadré par des plafonds et une réconciliation de l'offre, et améliorable par des attestations multiples. <span class="see">→ §6.9, §6.10</span></p></div>
+</div>
+<div class="qa">
+  <div class="q">Comment même être notifié ?</div>
+  <div class="a"><p>Par l'<b>événement <code>TransferInitiated</code></b> émis lors du burn. Le relayer le lit par <b>interrogation historique <code>eth_getLogs</code> avec un point de reprise durable</b> : aucun événement n'est perdu après une coupure. Un abonnement WebSocket peut accélérer la détection, jamais la remplacer. On ne minte qu'après <b>finalité</b> : tag <code>finalized</code> sur Sepolia (≈ 13 min), finalité QBFT immédiate sur TELA (à confirmer). Humains : API de statut, Grafana, alertes. <span class="see">→ §6.2 – 6.3</span></p></div>
+</div>
+<div class="qa">
+  <div class="q">Quels composants logiciels ?</div>
+  <div class="a"><p>Sept briques, toutes open source : <b>contrats</b> (Solidity/OpenZeppelin), <b>relayer</b> (.NET/Nethereum), <b>signataire</b> séparé (puis Web3Signer), <b>PostgreSQL</b>, <b>accès aux nœuds</b> (RPC TELA, nœud Sepolia), <b>supervision</b> (Prometheus, Grafana, Alertmanager), et en option une <b>IHM</b> de suivi. Cinq existent déjà. <span class="see">→ §8</span></p></div>
+</div>
+<div class="qa">
+  <div class="q">Risques, charges, compétences ?</div>
+  <div class="a"><p>18 risques cotés ; les plus critiques : disponibilité du porteur, flux réseau refusés, compromission de la clé du relayer, RPC tiers non fiable, pérennité de Sepolia. Charges : ≈ 28 JH (palier 1) + ≈ 29 JH (palier 2), soit ≈ 6 à 7 mois par palier à 1 jour/semaine. Compétences : Solidity sécurité, .NET, exploitation de nœuds Ethereum/Besu, réseau, gestion de clés. <span class="see">→ §10 – 12</span></p></div>
+</div>
+
+<h2 id="s1-3"><span class="num">1.3</span>Points d'attention majeurs</h2>
+<div class="callout bad">
+  <span class="ttl">① Pérennité de Sepolia</span>
+  <p>L'Ethereum Foundation avait annoncé en mars 2025 une fin de vie de Sepolia prévue au <b>30 septembre 2026</b>, avec un réseau successeur. Au 30 octobre 2026, Sepolia reste actif : la presse spécialisée rapporte son passage à la mise à niveau <i>Glamsterdam</i> le 6 octobre 2026, et aucun successeur officiel n'a pu être confirmé lors de nos recherches. <b>Décision à prendre au cadrage</b> : maintenir Sepolia ou viser son successeur. L'architecture proposée est indépendante du testnet (identité réseau en configuration).</p>
+</div>
+<div class="callout warn">
+  <span class="ttl">② Le relayer est un tiers de confiance</span>
+  <p>Avec le modèle burn &amp; mint « relayer autorisé », la chaîne de destination ne vérifie pas cryptographiquement le burn. Une clé d'exécution compromise peut minter sans burn, dans la limite des plafonds. La démonstration le prouve volontairement (scénario S8) et montre que la réconciliation détecte l'écart. Acceptable pour des tokens de test ; à renforcer pour tout autre usage.</p>
+</div>
+<div class="callout warn">
+  <span class="ttl">③ Le token « Stablecoin Euro Talan » existant</span>
+  <p>Le burn/mint suppose que le bridge puisse brûler et minter ce token. Son ABI, ses rôles, ses decimals et son éventuelle évolutivité (proxy) sont inconnus à ce jour. Trois options sont décrites (§5.5) ; la plus simple est d'accorder un rôle de mint/burn au contrat Bridge.</p>
+</div>
+<div class="callout">
+  <span class="ttl">④ Réglementaire : uniquement du test</span>
+  <p>Un « stablecoin euro » réel relèverait du règlement européen MiCA (jetons de monnaie électronique), avec agrément. Ce projet se limite à des tokens <b>sans valeur sur réseaux de test</b> ; toute idée de production réelle exigerait une analyse juridique préalable, hors du périmètre de ce livrable.</p>
+</div>
+
+<h2 id="s1-4"><span class="num">1.4</span>Décisions attendues</h2>
+<table class="compact">
+  <thead><tr><th style="width:9mm">#</th><th>Décision</th><th style="width:44mm">Proposition</th><th style="width:22mm">Qui</th></tr></thead>
+  <tbody>
+    <tr><td>D1</td><td>Activer l'étape 2 sur le périmètre du palier 1 uniquement, avec go/no-go avant le palier 2</td><td>Oui</td><td>Alain</td></tr>
+    <tr><td>D2</td><td>Accepter le modèle « relayer autorisé » pour des tokens de test</td><td>Oui, plafonds bas</td><td>Alain, cyber</td></tr>
+    <tr><td>D3</td><td>Testnet public cible : Sepolia ou son successeur</td><td>Trancher au cadrage</td><td>Alain, Victor</td></tr>
+    <tr><td>D4</td><td>Mode d'accès Sepolia au palier 1 (RPC public sans compte ou nœud interne d'emblée)</td><td>RPC public contrôlé</td><td>Victor, cyber</td></tr>
+    <tr><td>D5</td><td>Disponibilité réaliste du porteur (JH/semaine) pour fixer le calendrier</td><td>1 JH/semaine</td><td>Alain</td></tr>
+    <tr><td>D6</td><td>Désigner un relecteur indépendant (Solidity/.NET) pour le palier 2</td><td>Un pair Talan</td><td>Alain</td></tr>
+  </tbody>
+</table>

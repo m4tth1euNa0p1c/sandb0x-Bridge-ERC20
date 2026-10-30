@@ -1,0 +1,73 @@
+No files changed, compilation skipped
+
+Ran 2 tests for test/BridgeDomain.t.sol:BridgeDomainTest
+[PASS] testEveryMutableDomainFieldChangesTheId() (gas: 25455)
+[PASS] testProtocolV1MatchesIndependentCastGoldenVector() (gas: 8741)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 674.71µs (168.75µs CPU time)
+
+Ran 22 tests for test/Bridge.t.sol:BridgeTest
+[PASS] testAllowanceIsRequiredAndFailureKeepsNonceAndSupply() (gas: 62580)
+[PASS] testBurnFailureEmitsNoBridgeEventAndConsumesNoNonce() (gas: 66503)
+[PASS] testChangedChainIdentityIsRejected() (gas: 17418)
+[PASS] testConfigurationRejectsUnknownTokenAndDecimalsAndRemapping() (gas: 87926)
+[PASS] testDuplicateObservationCannotMintTwice() (gas: 196117)
+[PASS] testEpochCapBoundaryAndReset() (gas: 228070)
+[PASS] testEventContainsExactTransferIntentAndNonceZero() (gas: 80553)
+[PASS] testExecutorCannotGrantRoleAndAdminCanRevokeIt() (gas: 152706)
+[PASS] testFiniteAllowanceIsConsumedExactly() (gas: 76935)
+[PASS] testFuzzAboveTransferLimitHasNoEffect(uint256) (runs: 1000, μ: 33608, ~: 33608)
+[PASS] testFuzzRoundTripPreservesIntegerUnits(uint96,address) (runs: 1000, μ: 250226, ~: 250217)
+[PASS] testInsufficientBalanceRollsBackAllowanceSpend() (gas: 85843)
+[PASS] testInvalidAmountsAndRecipientsAreRejected() (gas: 84719)
+[PASS] testInvalidConstructorAddressesAndLimitsRejected() (gas: 392573)
+[PASS] testPauseStopsBurnAndMintAdminResumes() (gas: 235239)
+[PASS] testProcessedAndEpochQuotaRollbackWhenMintRoleMissing() (gas: 268546)
+[PASS] testRevokedPauserLosesPowerAndAdminCanAssignReplacement() (gas: 70031)
+[PASS] testRolesAreSeparateAndConfigurationRequiresAdmin() (gas: 35219)
+[PASS] testRoundTripConservesSupplyAndRecipientBalances() (gas: 260845)
+[PASS] testTrustedExecutorCanFabricateMintWithoutSourceBurn() (gas: 132925)
+[PASS] testUnauthorizedExecutorAndTokenMinterAreRejected() (gas: 92284)
+[PASS] testWrongSourceBridgeTokenAndChainCannotReplay() (gas: 129133)
+Suite result: ok. 22 passed; 0 failed; 0 skipped; finished in 4.57s (230.59ms CPU time)
+
+Ran 3 tests for test/BridgeInvariant.t.sol:BridgeInvariantTest
+[PASS] invariantSupplyPlusTransitEqualsBootstrapReference() (runs: 256, calls: 16384, reverts: 0)
+
+╭---------------+-----------------+-------+---------+----------╮
+| Contract      | Selector        | Calls | Reverts | Discards |
++==============================================================+
+| BridgeHandler | deliver         | 2615  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | duplicate       | 2663  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | pausedRequest   | 2795  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | revokedExecutor | 2760  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | sendA           | 2767  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | sendB           | 2784  | 0       | 0        |
+╰---------------+-----------------+-------+---------+----------╯
+
+[PASS] invariantUniqueEffectsAndPendingPopulation() (runs: 256, calls: 16384, reverts: 0)
+
+╭---------------+-----------------+-------+---------+----------╮
+| Contract      | Selector        | Calls | Reverts | Discards |
++==============================================================+
+| BridgeHandler | deliver         | 2680  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | duplicate       | 2777  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | pausedRequest   | 2765  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | revokedExecutor | 2704  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | sendA           | 2692  | 0       | 0        |
+|---------------+-----------------+-------+---------+----------|
+| BridgeHandler | sendB           | 2766  | 0       | 0        |
+╰---------------+-----------------+-------+---------+----------╯
+
+[PASS] testAllHandlerActionsAreReachable() (gas: 287492)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 4.57s (6.83s CPU time)
+
+Ran 3 test suites in 4.57s (9.13s CPU time): 27 tests passed, 0 failed, 0 skipped (27 total tests)

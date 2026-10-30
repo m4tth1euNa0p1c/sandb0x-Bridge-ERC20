@@ -1,0 +1,114 @@
+<h1 id="s11"><span class="num">11</span>Estimation des charges</h1>
+
+<h2 id="s11-1"><span class="num">11.1</span>Hypothèses de chiffrage</h2>
+<ul>
+  <li><b>Unité</b> : jour-homme (JH) de 7 heures de travail effectif du porteur.</li>
+  <li><b>Méthode</b> : estimation à trois points (optimiste, probable, pessimiste) par lot, combinée par la formule PERT <code>(O + 4P + Pe) / 6</code>, puis 10 % de pilotage et d'imprévus.</li>
+  <li><b>Inclus</b> : conception, code, tests, preuves, documentation et démonstration de chaque lot.</li>
+  <li><b>Exclu</b> : délais d'attente externes (accès, validations), temps des autres équipes (chiffré à part), palier 3.</li>
+  <li><b>Point de départ</b> : le démonstrateur existant (§3). Sans lui, la charge serait nettement supérieure.</li>
+  <li><b>Incertitude</b> : forte tant que TELA, le token existant et les règles réseau ne sont pas connus. La réalisation du démonstrateur ne constitue pas une mesure de productivité transposable. Le chiffrage est réévalué à la fin du cadrage (L0).</li>
+</ul>
+
+<h2 id="s11-2"><span class="num">11.2</span>Charges par lot</h2>
+<h3>Palier 1 — premier pont réel Sepolia ⇄ TELA de test</h3>
+<table class="compact">
+  <thead><tr><th style="width:10mm">Lot</th><th style="width:40mm">Intitulé</th><th>Contenu</th><th class="num">Opt.</th><th class="num">Prob.</th><th class="num">Pess.</th><th class="num">PERT</th></tr></thead>
+  <tbody>
+    <tr><td>L0</td><td>Cadrage et accès</td><td>Rendez-vous Victor, questionnaire, accès TELA de test, choix Sepolia/successeur, dossier de flux, analyse du token existant</td><td class="num">2</td><td class="num">3</td><td class="num">5</td><td class="num">3,2</td></tr>
+    <tr><td>L1</td><td>Socle VM dédiée</td><td>VM durcie, Docker Compose, déploiement du démonstrateur, nouvelle campagne <code>prove</code> sur les deux profils</td><td class="num">2</td><td class="num">3</td><td class="num">5</td><td class="num">3,2</td></tr>
+    <tr><td>L2</td><td>Accès Sepolia contrôlé</td><td>RPC public validé, identité réseau, double source, limites de plage, proxy et certificat</td><td class="num">1</td><td class="num">1,5</td><td class="num">3</td><td class="num">1,7</td></tr>
+    <tr><td>L3</td><td>Contrats et token</td><td>Adaptation au token « Stablecoin Euro Talan » (option 1 ou 2), tests, déploiement sur les deux testnets</td><td class="num">2</td><td class="num">4</td><td class="num">8</td><td class="num">4,3</td></tr>
+    <tr><td>L4</td><td>Relayer testnets</td><td>Profil <code>integration-testnet</code>, finalité <code>finalized</code> et TELA, TLS/authentification RPC, transactions EIP-1559, route <code>/transfers/{id}</code></td><td class="num">4</td><td class="num">6</td><td class="num">10</td><td class="num">6,3</td></tr>
+    <tr><td>L5</td><td>Clés et gas de test</td><td>Keystores chiffrés, comptes séparés, provision de SepoliaETH, Alertmanager + SMTP</td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">2,0</td></tr>
+    <tr><td>L6</td><td>Recette nominale</td><td>Allers-retours réels, réconciliation, preuves scellées, rapport</td><td class="num">2</td><td class="num">3</td><td class="num">5</td><td class="num">3,2</td></tr>
+    <tr><td>L7</td><td>Documentation et démo</td><td>Mise à jour de ce document, démonstration à Alain et Victor</td><td class="num">1</td><td class="num">1,5</td><td class="num">2</td><td class="num">1,5</td></tr>
+    <tr class="sub"><td colspan="3">Sous-total</td><td class="num">15</td><td class="num">24</td><td class="num">41</td><td class="num">25,3</td></tr>
+    <tr class="sub"><td colspan="6">Pilotage et imprévus (10 %)</td><td class="num">2,5</td></tr>
+    <tr class="total"><td colspan="3">Total palier 1</td><td class="num">17</td><td class="num"></td><td class="num">45</td><td class="num">≈ 28</td></tr>
+  </tbody>
+</table>
+
+<h3>Palier 2 — industrialisation</h3>
+<table class="compact">
+  <thead><tr><th style="width:10mm">Lot</th><th style="width:40mm">Intitulé</th><th>Contenu</th><th class="num">Opt.</th><th class="num">Prob.</th><th class="num">Pess.</th><th class="num">PERT</th></tr></thead>
+  <tbody>
+    <tr><td>M1</td><td>Nœud Sepolia interne</td><td>Besu + Teku, synchronisation, supervision, bascule du relayer, procédure de resynchronisation</td><td class="num">3</td><td class="num">5</td><td class="num">8</td><td class="num">5,2</td></tr>
+    <tr><td>M2</td><td>Signature durcie</td><td>Web3Signer + coffre (OpenBao ou existant Talan), rotation des clés, admin multisig</td><td class="num">3</td><td class="num">5</td><td class="num">8</td><td class="num">5,2</td></tr>
+    <tr><td>M3</td><td>Exploitation</td><td>Sauvegarde/restauration testées, runbooks (pause, nonce bloqué, réorganisation, rotation), astreinte « au mieux »</td><td class="num">3</td><td class="num">5</td><td class="num">8</td><td class="num">5,2</td></tr>
+    <tr><td>M4</td><td>Pannes et campagne testnets</td><td>Injections de panne sur testnets, campagne de preuves scellée, tableau de bord projet</td><td class="num">3</td><td class="num">5</td><td class="num">8</td><td class="num">5,2</td></tr>
+    <tr><td>M5</td><td>Sécurité</td><td>Modèle de menaces, durcissement, TLS interne, corrections issues de la relecture</td><td class="num">2</td><td class="num">4</td><td class="num">6</td><td class="num">4,0</td></tr>
+    <tr><td>M6</td><td>Passation</td><td>Documentation d'exploitation, transfert à l'équipe qui opérera le bridge</td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">2,0</td></tr>
+    <tr class="sub"><td colspan="3">Sous-total</td><td class="num">15</td><td class="num">26</td><td class="num">41</td><td class="num">26,7</td></tr>
+    <tr class="sub"><td colspan="6">Pilotage et imprévus (10 %)</td><td class="num">2,7</td></tr>
+    <tr class="total"><td colspan="3">Total palier 2</td><td class="num">17</td><td class="num"></td><td class="num">45</td><td class="num">≈ 29</td></tr>
+  </tbody>
+</table>
+<div class="grid2">
+  <div class="kpi"><div class="v">≈ 57 JH</div><div class="l">paliers 1 + 2 (fourchette 33 – 90 JH), porteur seul</div></div>
+  <div class="kpi warn"><div class="v">≈ 26 JH</div><div class="l">palier 3 optionnel « confiance renforcée » (attestations multiples ou Hyperlane), à rechiffrer après étude</div></div>
+</div>
+
+<h2 id="s11-3"><span class="num">11.3</span>Charges des autres contributeurs</h2>
+<table class="compact">
+  <thead><tr><th>Contributeur</th><th>Contribution attendue</th><th class="num">Palier 1</th><th class="num">Palier 2</th></tr></thead>
+  <tbody>
+    <tr><td>Victor (référent TELA)</td><td>Présentation de TELA, accès, revue d'architecture, déploiements TELA</td><td class="num">2 – 3 JH</td><td class="num">1 – 2 JH</td></tr>
+    <tr><td>Infrastructure / réseau Talan</td><td>VM, flux, proxy, DNS/NTP, SMTP, sauvegarde</td><td class="num">1 – 2 JH</td><td class="num">1 – 3 JH</td></tr>
+    <tr><td>Cybersécurité Talan</td><td>Validation des flux et de l'architecture, secrets, revue</td><td class="num">1 – 2 JH</td><td class="num">1 – 3 JH</td></tr>
+    <tr><td>Relecteur indépendant</td><td>Relecture du code Solidity et .NET, des tests et des preuves</td><td class="num">—</td><td class="num">3 – 5 JH</td></tr>
+    <tr><td>Alain</td><td>Arbitrages, jalons, go/no-go</td><td class="num">0,5 – 1 JH</td><td class="num">0,5 – 1 JH</td></tr>
+    <tr class="total"><td colspan="2">Total autres contributeurs</td><td class="num">4,5 – 8 JH</td><td class="num">6,5 – 14 JH</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s11-4"><span class="num">11.4</span>Planning indicatif et scénarios de disponibilité</h2>
+<p>Le sujet passe après les missions de Talan et du client : la durée calendaire dépend d'abord de la disponibilité réelle du porteur.</p>
+<table class="compact">
+  <thead><tr><th>Disponibilité moyenne du porteur</th><th class="num">Palier 1 (≈ 28 JH)</th><th class="num">Palier 2 (≈ 29 JH)</th><th class="num">Paliers 1 + 2</th></tr></thead>
+  <tbody>
+    <tr><td>½ jour par semaine (≈ 3 à 4 h)</td><td class="num">≈ 56 semaines · 13 mois</td><td class="num">≈ 58 semaines</td><td class="num">> 2 ans</td></tr>
+    <tr><td><b>1 jour par semaine</b> (hypothèse retenue)</td><td class="num"><b>≈ 28 semaines · 6,5 mois</b></td><td class="num">≈ 29 semaines</td><td class="num">≈ 13 mois</td></tr>
+    <tr><td>2 jours par semaine</td><td class="num">≈ 14 semaines · 3,5 mois</td><td class="num">≈ 15 semaines</td><td class="num">≈ 7 mois</td></tr>
+  </tbody>
+</table>
+<p class="small">Hors congés, périodes d'examens et délais externes. Les attentes d'accès se recouvrent avec le travail local mais peuvent bloquer L3 et L4.</p>
+<figure>
+  <pre class="mermaid">
+gantt
+  title Palier 1 — hypothèse 1 JH par semaine (indicatif)
+  dateFormat YYYY-MM-DD
+  axisFormat %d/%m
+  tickInterval 1month
+  section Cadrage
+  L0 Cadrage et accès                 :l0, 2026-11-16, 21d
+  Attente accès TELA et flux (externe) :crit, ext, 2026-11-23, 56d
+  section Socle
+  L1 VM dédiée et campagne prove      :l1, after l0, 21d
+  L2 Accès Sepolia contrôlé           :l2, after l1, 12d
+  section Développement
+  L3 Contrats et token                :l3, after l2, 30d
+  L4 Relayer testnets                 :l4, after l3, 44d
+  L5 Clés et gas de test              :l5, after l4, 14d
+  section Recette
+  L6 Recette nominale                 :l6, after l5, 22d
+  L7 Documentation et démo            :l7, after l6, 10d
+  Go / no-go palier 2                 :milestone, m1, after l7, 0d
+  </pre>
+  <figcaption><b>Figure 15 — Planning indicatif du palier 1</b> à partir du 16/11/2026 : fin vers mi-mai 2027 à 1 JH par semaine, avant pilotage et congés.</figcaption>
+</figure>
+
+<h2 id="s11-5"><span class="num">11.5</span>« Zéro budget » ne veut pas dire « zéro coût »</h2>
+<table class="compact">
+  <thead><tr><th style="width:42mm">Poste</th><th>Nature</th><th style="width:44mm">Ordre de grandeur</th><th style="width:30mm">Porté par</th></tr></thead>
+  <tbody>
+    <tr><td>Temps du porteur</td><td>Paliers 1 et 2</td><td>≈ 57 JH</td><td>Accord d'Alain</td></tr>
+    <tr><td>Temps des autres équipes</td><td>Victor, infra, cyber, relecteur, Alain</td><td>≈ 11 – 22 JH</td><td>Équipes Talan</td></tr>
+    <tr><td>VM bridge</td><td>2 – 4 vCPU, 8 Go, 100 Go</td><td>Capacité existante</td><td>Infra Talan</td></tr>
+    <tr><td>VM nœud Sepolia (P2)</td><td>4 vCPU, 16 Go, SSD ≥ 1 To</td><td>Le stockage est le poste le plus significatif</td><td>Infra Talan</td></tr>
+    <tr><td>Bande passante (P2)</td><td>Trafic P2P continu</td><td>Plusieurs centaines de Go par mois (à mesurer)</td><td>Réseau Talan</td></tr>
+    <tr><td>SepoliaETH</td><td>Gas des mints Sepolia</td><td>0 € (faucets)</td><td>—</td></tr>
+    <tr><td>Gas TELA</td><td>Selon configuration du réseau privé</td><td>0 € (à confirmer)</td><td>TELA</td></tr>
+    <tr><td>Licences, SaaS, prestataires</td><td>—</td><td>0 €</td><td>—</td></tr>
+  </tbody>
+</table>

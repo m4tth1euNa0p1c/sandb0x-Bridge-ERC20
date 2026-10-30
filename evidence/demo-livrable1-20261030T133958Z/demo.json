@@ -1,0 +1,807 @@
+{
+  "title": "Démonstration ponctuelle burn/mint v1 sur deux Anvil locaux",
+  "scope": "Protocole on-chain et relayer joué manuellement ; ni relayer .NET, ni PostgreSQL, ni Sepolia, ni TELA",
+  "started_utc": "2026-10-30T13:39:58Z",
+  "source_commit": "2f05504386b08a31be2270fed378a237c7185393",
+  "git_status": "",
+  "sources": {
+    "contracts/src/Bridge.sol": "7841ea842bb58e93923992a15852ee6abc8ff5536a7c0068eebf6cf0ca02047b",
+    "contracts/src/BridgeToken.sol": "ce02efa89b02a711363e59b4d372e130c7deb9ac25d2fcda2901c1bcce7db951",
+    "livrables/livrable-1/demo/demo_burn_mint.py": "3a5c24c0f837790622eeebe80c7fbb44e21c29f8211d444095a076e0c88a6571"
+  },
+  "tools": {
+    "forge": {
+      "version": "forge Version: 1.3.1-v1.3.1",
+      "sha256": "31ae96be318b20597be78e65a22b01d6b40b1cfc38b13b4157bef3d07e2b37c7"
+    },
+    "anvil": {
+      "version": "anvil Version: 1.8.4",
+      "sha256": "be5129d636ea18440d43908536f13ba6578859b695f2ca33f1f09a00aa9dc176"
+    },
+    "cast": {
+      "version": "cast Version: 1.8.4",
+      "sha256": "9c8a003737cf7cb90e899c77ec31b2153e9f1c90f3448b0c94e51cea5b2517cc"
+    },
+    "solc": {
+      "sha256": "f3e987dc6ecebd4bd350c48edcbc320b46cf9e3109bd3fc3d88f1acaf4c428f7"
+    }
+  },
+  "finished_utc": "2026-10-30T13:40:11Z",
+  "chains": {
+    "A": 31337,
+    "B": 31338
+  },
+  "addresses": {
+    "admin": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "pauser": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "executor": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+    "alice": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+    "bob": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+    "erc20A": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    "erc20B": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    "bridgeA": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+    "bridgeB": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512"
+  },
+  "parameters": {
+    "maxTransfer": "1000000000000000000000",
+    "epochMintCap": "100000000000000000000000",
+    "epochSeconds": 3600,
+    "referenceSupply": "1000000000000000000000000",
+    "confirmations": 3,
+    "decimals": 18
+  },
+  "transfers": [
+    {
+      "label": "S1",
+      "source_chain": 31337,
+      "burnTransaction": "0xf3be5d22c3ed969dae5ae0d0f306b6e6b376cbaa040195dae296ec8b5bc67d01",
+      "mintTransaction": "0x91afae79bfe3052971b059c27cd34c1e7b985cd565c8654458c7af3ae9492397",
+      "mintBlock": 5,
+      "transferId": "0x4192a37889d59ad3c96c0da2282e207ea3d8a5b53dfcbd3dc9f6a0b280bae643",
+      "destinationChainId": 31338,
+      "sender": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+      "recipient": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+      "sourceErc20": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+      "destinationErc20": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+      "destinationBridge": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      "nonce": 0,
+      "amount": 100000000000000000000,
+      "blockNumber": 6,
+      "blockHash": "0xba3f8008fb5bf49089e3c64a1146fcb4de1f22e085b132f08f20ddfce25438ae",
+      "logIndex": 1
+    },
+    {
+      "label": "S6",
+      "source_chain": 31338,
+      "burnTransaction": "0x245459cee77e47eb643f1480e216040a41ee1ed84ccea8701610dcfd2fd7f1df",
+      "mintTransaction": "0x3827b572c9f4908c2e27e414c9a23439f46aebaf13d1b28dd58c1a18174c31dd",
+      "mintBlock": 12,
+      "transferId": "0x9a8fae30fa6b6b14f44b1fab4a16a2fe5de7af29bb24ebbc2aed504cc3d5e2a6",
+      "destinationChainId": 31337,
+      "sender": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+      "recipient": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+      "sourceErc20": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+      "destinationErc20": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+      "destinationBridge": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      "nonce": 0,
+      "amount": 40000000000000000000,
+      "blockNumber": 8,
+      "blockHash": "0x1de4ddaa4e55663591cfd7ce81c3a5257d6e9a3fd79cc4870e3eede601d5289a",
+      "logIndex": 1
+    }
+  ],
+  "steps": [
+    {
+      "utc": "2026-10-30T13:39:59Z",
+      "command": [
+        "forge",
+        "build",
+        "--root",
+        "contracts",
+        "--use",
+        "solc",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "label": "forge build (London, solc 0.8.30)"
+    },
+    {
+      "utc": "2026-10-30T13:40:00Z",
+      "command": [
+        "forge",
+        "test",
+        "--root",
+        "contracts",
+        "--use",
+        "solc",
+        "--offline",
+        "--fuzz-seed",
+        "0x20261024"
+      ],
+      "exit_code": 0,
+      "label": "forge test (27 tests attendus)",
+      "summary": "Ran 3 test suites in 4.57s (9.13s CPU time): 27 tests passed, 0 failed, 0 skipped (27 total tests)"
+    },
+    {
+      "utc": "2026-10-30T13:40:05Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28545",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "--create",
+        "<bytecode BridgeToken + arguments>"
+      ],
+      "exit_code": 0,
+      "label": "déploiement jeton A",
+      "chain_id": 31337,
+      "from_role": "admin",
+      "transactionHash": "0xa5a65bf1c565562e4f54b19ff5c24ae0263093815944bd4286db8317652f96b6",
+      "contractAddress": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+      "status": 1,
+      "gasUsed": 846720
+    },
+    {
+      "utc": "2026-10-30T13:40:05Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28546",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "--create",
+        "<bytecode BridgeToken + arguments>"
+      ],
+      "exit_code": 0,
+      "label": "déploiement jeton B",
+      "chain_id": 31338,
+      "from_role": "admin",
+      "transactionHash": "0x91cf1d38e1343315915caa15cee7b516de28ed875b1e25df7227b00fac9cd060",
+      "contractAddress": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+      "status": 1,
+      "gasUsed": 806836
+    },
+    {
+      "utc": "2026-10-30T13:40:05Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28545",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "--create",
+        "<bytecode Bridge + arguments>"
+      ],
+      "exit_code": 0,
+      "label": "déploiement bridgeA",
+      "chain_id": 31337,
+      "from_role": "admin",
+      "transactionHash": "0x39108b75092652e323484cdf1a4856a9958aacbb595c10225c966533dc4bb2dd",
+      "contractAddress": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      "status": 1,
+      "gasUsed": 1250368
+    },
+    {
+      "utc": "2026-10-30T13:40:06Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28545",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "grantRole(bytes32,address)",
+        "0x52ba824bfabc2bcfcdf7f0edbb486ebb05e1836c90e78047efeb949990f72e5f",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512"
+      ],
+      "exit_code": 0,
+      "label": "BRIDGE_ROLE accordé à bridgeA",
+      "chain_id": 31337,
+      "from_role": "admin",
+      "transactionHash": "0x8924b57990c23eeebbc95bf7c654a59bc9becfefa912d17ab5cb5fdf4669f8e3",
+      "blockNumber": 3,
+      "gasUsed": 51520,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:06Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28546",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "--create",
+        "<bytecode Bridge + arguments>"
+      ],
+      "exit_code": 0,
+      "label": "déploiement bridgeB",
+      "chain_id": 31338,
+      "from_role": "admin",
+      "transactionHash": "0xb23cc1e151e22fa45bb34f0f1090e6122e8a4df83d2f7c1245060b406aa61cae",
+      "contractAddress": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      "status": 1,
+      "gasUsed": 1250368
+    },
+    {
+      "utc": "2026-10-30T13:40:06Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28546",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "grantRole(bytes32,address)",
+        "0x52ba824bfabc2bcfcdf7f0edbb486ebb05e1836c90e78047efeb949990f72e5f",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512"
+      ],
+      "exit_code": 0,
+      "label": "BRIDGE_ROLE accordé à bridgeB",
+      "chain_id": 31338,
+      "from_role": "admin",
+      "transactionHash": "0xf31a48b22b53d30b11b4e5005b9dc98efc990776fc4a1b309f0cd9d6371e8f7f",
+      "blockNumber": 3,
+      "gasUsed": 51520,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:06Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28545",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "configurePair(uint256,address,address,uint8)",
+        "31338",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "18"
+      ],
+      "exit_code": 0,
+      "label": "paire A→B (définitive)",
+      "chain_id": 31337,
+      "from_role": "admin",
+      "transactionHash": "0x04ef9119c1e5be641b8d6d2b9478b0d9e1a19486cb5030759ba1fad9a305e6b5",
+      "blockNumber": 4,
+      "gasUsed": 71616,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:07Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28546",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "configurePair(uint256,address,address,uint8)",
+        "31337",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "18"
+      ],
+      "exit_code": 0,
+      "label": "paire B→A (définitive)",
+      "chain_id": 31338,
+      "from_role": "admin",
+      "transactionHash": "0xe51cb13f4b0fe134d55a7ebd0a3791f23dbe483282da239c350df724feea1596",
+      "blockNumber": 4,
+      "gasUsed": 71616,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:07Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28545",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "approve(address,uint256)",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "100000000000000000000"
+      ],
+      "exit_code": 0,
+      "label": "S1 : approve Alice → bridge A",
+      "chain_id": 31337,
+      "from_role": "alice",
+      "transactionHash": "0x849831ec809a87fc80cbf319f537aab706a7c37af9bdb7b67c1808c17e6f9b5c",
+      "blockNumber": 5,
+      "gasUsed": 46413,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:07Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28545",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "requestTransfer(uint256,address,uint256)",
+        "31338",
+        "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+        "100000000000000000000"
+      ],
+      "exit_code": 0,
+      "label": "S1 : requestTransfer (burn)",
+      "chain_id": 31337,
+      "from_role": "alice",
+      "transactionHash": "0xf3be5d22c3ed969dae5ae0d0f306b6e6b376cbaa040195dae296ec8b5bc67d01",
+      "blockNumber": 6,
+      "gasUsed": 76691,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "label": "confirmations locales chaîne 31337",
+      "chain_id": 31337,
+      "command": [
+        "rpc",
+        "anvil_mine",
+        "3"
+      ],
+      "exit_code": 0,
+      "head": 9,
+      "inclusion_block": 6
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28546",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "completeTransfer(uint256,address,address,uint256,uint256,address)",
+        "31337",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "0",
+        "100000000000000000000",
+        "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65"
+      ],
+      "exit_code": 0,
+      "label": "S1 : completeTransfer (mint)",
+      "chain_id": 31338,
+      "from_role": "executor",
+      "transactionHash": "0x91afae79bfe3052971b059c27cd34c1e7b985cd565c8654458c7af3ae9492397",
+      "blockNumber": 5,
+      "gasUsed": 134296,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "command": [
+        "cast",
+        "send",
+        "--gas-limit",
+        "300000",
+        "--rpc-url",
+        "http://127.0.0.1:28546",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "completeTransfer(uint256,address,address,uint256,uint256,address)",
+        "31337",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "0",
+        "100000000000000000000",
+        "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65"
+      ],
+      "exit_code": 0,
+      "label": "S2 : rejeu forcé on-chain (gas fixé, sans estimation)",
+      "chain_id": 31338,
+      "from_role": "executor",
+      "transactionHash": "0x401a551a861b6ffe8c67391c03ea4b43e9595184770d2596288322729d251c14",
+      "blockNumber": 6,
+      "gasUsed": 40471,
+      "status": 0
+    },
+    {
+      "utc": "2026-10-30T13:40:09Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28545",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "pause()"
+      ],
+      "exit_code": 0,
+      "label": "S5 : pause par PAUSER_ROLE",
+      "chain_id": 31337,
+      "from_role": "pauser",
+      "transactionHash": "0x103dd039bfdf214839a51c5c0ace0e25aefce20dd077df5f5298e90f11e0bd0e",
+      "blockNumber": 10,
+      "gasUsed": 47066,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:09Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28545",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "unpause()"
+      ],
+      "exit_code": 0,
+      "label": "S5 : levée de pause par l'admin",
+      "chain_id": 31337,
+      "from_role": "admin",
+      "transactionHash": "0x8f1dc248a3cf5ae4d2d185df44b09f8218b5041d9ca7e82bc10346e316750a6d",
+      "blockNumber": 11,
+      "gasUsed": 25125,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:09Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28546",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "approve(address,uint256)",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "40000000000000000000"
+      ],
+      "exit_code": 0,
+      "label": "S6 : approve Bob → bridge B",
+      "chain_id": 31338,
+      "from_role": "bob",
+      "transactionHash": "0xeda2691b2a77ff53b574decc5daec28b9654f3cb70d55db73b82e079407b433b",
+      "blockNumber": 7,
+      "gasUsed": 46413,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28546",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "requestTransfer(uint256,address,uint256)",
+        "31337",
+        "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+        "40000000000000000000"
+      ],
+      "exit_code": 0,
+      "label": "S6 : requestTransfer (burn)",
+      "chain_id": 31338,
+      "from_role": "bob",
+      "transactionHash": "0x245459cee77e47eb643f1480e216040a41ee1ed84ccea8701610dcfd2fd7f1df",
+      "blockNumber": 8,
+      "gasUsed": 76691,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "label": "confirmations locales chaîne 31338",
+      "chain_id": 31338,
+      "command": [
+        "rpc",
+        "anvil_mine",
+        "3"
+      ],
+      "exit_code": 0,
+      "head": 11,
+      "inclusion_block": 8
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28545",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "completeTransfer(uint256,address,address,uint256,uint256,address)",
+        "31338",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "0",
+        "40000000000000000000",
+        "0x90f79bf6eb2c4f870365e785982e1f101e93b906"
+      ],
+      "exit_code": 0,
+      "label": "S6 : completeTransfer (mint)",
+      "chain_id": 31337,
+      "from_role": "executor",
+      "transactionHash": "0x3827b572c9f4908c2e27e414c9a23439f46aebaf13d1b28dd58c1a18174c31dd",
+      "blockNumber": 12,
+      "gasUsed": 100096,
+      "status": 1
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "command": [
+        "cast",
+        "send",
+        "--rpc-url",
+        "http://127.0.0.1:28546",
+        "--private-key",
+        "<clé locale Anvil masquée>",
+        "--json",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "completeTransfer(uint256,address,address,uint256,uint256,address)",
+        "31337",
+        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+        "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "999",
+        "5000000000000000000",
+        "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+      ],
+      "exit_code": 0,
+      "label": "S8 : completeTransfer sans burn source (fraude simulée)",
+      "chain_id": 31338,
+      "from_role": "executor",
+      "transactionHash": "0x4352e90d99e66b7e634f684243e85f932ff2201a4654c3acd4a92256e6b28e04",
+      "blockNumber": 12,
+      "gasUsed": 100096,
+      "status": 1
+    }
+  ],
+  "checks": [
+    {
+      "utc": "2026-10-30T13:40:04Z",
+      "check": "tests Solidity : code de sortie",
+      "observed": "0",
+      "expected": "0",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:04Z",
+      "check": "tests Solidity : 27 réussis, 0 échec, 0 ignoré",
+      "observed": "True",
+      "expected": "True",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:05Z",
+      "check": "identité chaîne 31337",
+      "observed": "31337",
+      "expected": "31337",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:05Z",
+      "check": "identité chaîne 31338",
+      "observed": "31338",
+      "expected": "31338",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:07Z",
+      "check": "offre initiale A + B = référence",
+      "observed": "1000000000000000000000000",
+      "expected": "1000000000000000000000000",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S1 : offre A après burn",
+      "observed": "999900000000000000000000",
+      "expected": "999900000000000000000000",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S1 : transit non minté = 100 tEUR",
+      "observed": "100000000000000000000",
+      "expected": "100000000000000000000",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S1 : 3 blocs successeurs ≥ 3",
+      "observed": "True",
+      "expected": "True",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S1 : ID recalculé hors chaîne = ID de l'événement",
+      "observed": "0x4192a37889d59ad3c96c0da2282e207ea3d8a5b53dfcbd3dc9f6a0b280bae643",
+      "expected": "0x4192a37889d59ad3c96c0da2282e207ea3d8a5b53dfcbd3dc9f6a0b280bae643",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S1 : transaction de mint réussie",
+      "observed": "1",
+      "expected": "1",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S1 : processed[ID] = true",
+      "observed": "true",
+      "expected": "true",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S1 : solde Bob sur B",
+      "observed": "100000000000000000000",
+      "expected": "100000000000000000000",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S1 : offre A + B = référence (transit nul)",
+      "observed": "1000000000000000000000000",
+      "expected": "1000000000000000000000000",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S2 : simulation du rejeu refusée",
+      "observed": "TransferAlreadyProcessed",
+      "expected": "TransferAlreadyProcessed",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S2 : transaction de rejeu incluse mais annulée (status 0)",
+      "observed": "0",
+      "expected": "0",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:08Z",
+      "check": "S2 : aucun second mint",
+      "observed": "1000000000000000000000000",
+      "expected": "1000000000000000000000000",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:09Z",
+      "check": "S3 : Alice ne peut pas minter",
+      "observed": "AccessControlUnauthorizedAccount",
+      "expected": "AccessControlUnauthorizedAccount",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:09Z",
+      "check": "S4 : 1 001 tEUR refusés",
+      "observed": "InvalidAmount",
+      "expected": "InvalidAmount",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:09Z",
+      "check": "S5 : burn refusé pendant la pause",
+      "observed": "EnforcedPause",
+      "expected": "EnforcedPause",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:09Z",
+      "check": "S5 : le pauser ne peut pas lever la pause",
+      "observed": "AccessControlUnauthorizedAccount",
+      "expected": "AccessControlUnauthorizedAccount",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:09Z",
+      "check": "S5 : bridge A actif",
+      "observed": "false",
+      "expected": "false",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "check": "S6 : 3 blocs successeurs ≥ 3",
+      "observed": "True",
+      "expected": "True",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "check": "S6 : ID recalculé hors chaîne = ID de l'événement",
+      "observed": "0x9a8fae30fa6b6b14f44b1fab4a16a2fe5de7af29bb24ebbc2aed504cc3d5e2a6",
+      "expected": "0x9a8fae30fa6b6b14f44b1fab4a16a2fe5de7af29bb24ebbc2aed504cc3d5e2a6",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "check": "S6 : transaction de mint réussie",
+      "observed": "1",
+      "expected": "1",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "check": "S6 : processed[ID] = true",
+      "observed": "true",
+      "expected": "true",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "check": "S6 : offre B = 60 tEUR",
+      "observed": "60000000000000000000",
+      "expected": "60000000000000000000",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:10Z",
+      "check": "S7 : réconciliation offre A + offre B + transit = référence",
+      "observed": "1000000000000000000000000",
+      "expected": "1000000000000000000000000",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:11Z",
+      "check": "S8 : le contrat accepte le mint fabriqué (confiance dans l'exécuteur)",
+      "observed": "1",
+      "expected": "1",
+      "result": "réussi"
+    },
+    {
+      "utc": "2026-10-30T13:40:11Z",
+      "check": "S8 : la réconciliation détecte un écart de +5 tEUR",
+      "observed": "5000000000000000000",
+      "expected": "5000000000000000000",
+      "result": "réussi"
+    }
+  ],
+  "summary": {
+    "checks": 29,
+    "passed": 29,
+    "failed": 0
+  },
+  "exit_code": 0
+}

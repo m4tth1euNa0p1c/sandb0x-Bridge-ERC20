@@ -1,0 +1,64 @@
+<h1 id="s13"><span class="num">13</span>Feuille de route et prochaines étapes</h1>
+
+<h2 id="s13-1"><span class="num">13.1</span>Jalons et critères de passage</h2>
+<table class="compact">
+  <thead><tr><th style="width:12mm">Jalon</th><th style="width:44mm">Objectif</th><th>Critère d'acceptation (vérifiable)</th><th style="width:22mm">Lots</th></tr></thead>
+  <tbody>
+    <tr><td>J0</td><td>Livrable 1 validé</td><td>Décisions D1 à D6 prises ; rendez-vous avec Victor planifié</td><td>—</td></tr>
+    <tr><td>J1</td><td>Cadrage terminé</td><td>Questionnaire §13.2 renseigné ; accès TELA de test obtenus ; flux F1, F2-A et F12 validés ; option token choisie ; chiffrage réévalué</td><td>L0</td></tr>
+    <tr><td>J2</td><td>Socle prêt</td><td>VM dédiée ; campagnes <code>prove</code> 18/18 rejouées sur les deux profils locaux, sources figées</td><td>L1, L2</td></tr>
+    <tr><td>J3</td><td>Contrats sur testnets</td><td>Contrats déployés et appariés sur Sepolia et TELA ; identités et codes vérifiés par le relayer</td><td>L3</td></tr>
+    <tr><td>J4</td><td>Premier pont réel</td><td>Aller-retour réel Sepolia ⇄ TELA ; réconciliation <code>balanced</code> ; preuves scellées (hash des transactions, finalité, commit)</td><td>L4 – L6</td></tr>
+    <tr><td>J5</td><td>Go / no-go palier 2</td><td>Démonstration à Alain et Victor ; registre des risques révisé</td><td>L7</td></tr>
+    <tr><td>J6</td><td>Industrialisé</td><td>Nœud Sepolia interne ; Web3Signer + coffre ; restauration testée ; runbooks rejoués ; relecture indépendante soldée</td><td>M1 – M6</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s13-2"><span class="num">13.2</span>Préparer le rendez-vous avec Victor</h2>
+<p>Questions à poser, regroupées par thème. Les réponses alimentent directement le profil <code>integration-testnet</code> et la matrice des flux. Aucune réponse ne doit contenir de secret : les accès s'échangent par le canal prévu par la cyber.</p>
+<div class="grid2">
+  <div class="card">
+    <h4>Réseau TELA</h4>
+    <ol>
+      <li>Quel environnement TELA de test utiliser ? Chain ID et hash du bloc genesis ?</li>
+      <li>Version de Besu, algorithme de consensus (QBFT, IBFT 2.0, Clique), période de bloc, nombre de validateurs ?</li>
+      <li>Forks EVM activés (London, Shanghai, Cancun…) ?</li>
+      <li>Prix du gas (nul ?) et obtention du jeton natif pour les comptes du bridge ?</li>
+      <li>Permissionnement des comptes et des nœuds : procédure pour autoriser le déployeur et l'exécuteur ?</li>
+      <li>Accès RPC : URL, HTTP/WebSocket, TLS, authentification, VPN, filtrage ?</li>
+      <li>Historique servi par le RPC : <code>eth_getLogs</code> sur de longues plages, lectures d'état à une hauteur passée ?</li>
+      <li>Fenêtres de maintenance, réinitialisations éventuelles du réseau de test ?</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h4>Token « Stablecoin Euro Talan »</h4>
+    <ol start="9">
+      <li>Adresses sur TELA et sur Sepolia, code source et ABI ?</li>
+      <li>Decimals, frais de transfert, rebase, contrat évolutif (proxy) ?</li>
+      <li>Rôles mint/burn existants, administrateur, possibilité d'accorder un rôle au Bridge ?</li>
+      <li>Offre en circulation sur chaque chaîne et détenteurs : quelle offre de référence ?</li>
+    </ol>
+    <h4>Infrastructure et cyber</h4>
+    <ol start="13">
+      <li>Où héberger la VM du bridge (zone, image système, standard de durcissement) ?</li>
+      <li>Flux autorisés : HTTPS sortant vers des RPC publics ? P2P 30303/9000 à terme ?</li>
+      <li>Coffre de secrets ou HSM existant utilisable ?</li>
+      <li>Supervision centrale, SIEM, SMTP, sauvegarde : que réutiliser ?</li>
+      <li>Miroir interne pour images Docker et paquets ?</li>
+      <li>Processus et délais de validation d'architecture par la cyber ?</li>
+    </ol>
+    <h4>Gouvernance</h4>
+    <ol start="19">
+      <li>Qui opérera le bridge à terme ? Niveau de service attendu (au mieux) ?</li>
+      <li>Qui détient les rôles d'administration et de pause ?</li>
+    </ol>
+  </div>
+</div>
+
+<h2 id="s13-3"><span class="num">13.3</span>Décisions attendues et validation</h2>
+<p>Les décisions D1 à D6 sont détaillées en §1.4. En résumé : <b>activer le palier 1</b> de l'étape 2, accepter le modèle « relayer autorisé » pour des tokens de test, trancher Sepolia ou successeur, valider l'accès Sepolia du palier 1, confirmer une disponibilité réaliste et désigner un relecteur.</p>
+<div class="signoff">
+  <div><b>Commanditaire — Alain</b>Décision : ☐ go palier 1 ☐ ajustements ☐ no-go<br/>Date et visa :</div>
+  <div><b>Référent TELA — Victor</b>Contraintes infra et cyber prises en compte : ☐ oui ☐ réserves<br/>Date et visa :</div>
+  <div><b>Auteur — Matthieu Barraque</b>Version 1.0 du 30/10/2026<br/>Prochaine révision : fin du cadrage (J1)</div>
+</div>

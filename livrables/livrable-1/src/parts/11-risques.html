@@ -1,0 +1,56 @@
+<h1 id="s10"><span class="num">10</span>Analyse des risques projet</h1>
+
+<h2 id="s10-1"><span class="num">10.1</span>Méthode</h2>
+<p>Chaque risque est coté en <b>probabilité</b> (1 rare, 2 possible, 3 probable, 4 quasi certain) et en <b>impact</b> (1 mineur, 2 retard limité, 3 retard important ou incident de test, 4 échec du projet ou incident de sécurité). La criticité est le produit : <span class="crit c-hi">≥ 12</span> critique, <span class="crit" style="background:#fed7aa;color:#7c2d12">8 – 9</span> élevée, <span class="crit c-md">4 – 6</span> modérée, <span class="crit c-lo">≤ 3</span> faible. Les cotations reflètent l'état au 30/10/2026 et seront revues à chaque jalon.</p>
+
+<h2 id="s10-2"><span class="num">10.2</span>Cartographie</h2>
+<table class="heat">
+  <tr><th rowspan="5" style="writing-mode:vertical-rl;transform:rotate(180deg);padding:0 2mm">Probabilité</th>
+      <th>4 · quasi certain</th><td class="cell h2c"></td><td class="cell h3c"></td><td class="cell h4c">R01</td><td class="cell h4c"></td></tr>
+  <tr><th>3 · probable</th><td class="cell h1c"></td><td class="cell h2c">R10 · R11 · R13</td><td class="cell h3c">R05 · R06 · R07<br/>R15 · R17</td><td class="cell h4c">R02</td></tr>
+  <tr><th>2 · possible</th><td class="cell h1c"></td><td class="cell h2c">R18</td><td class="cell h2c">R12 · R14</td><td class="cell h3c">R03 · R04<br/>R08 · R09</td></tr>
+  <tr><th>1 · rare</th><td class="cell h1c"></td><td class="cell h1c"></td><td class="cell h1c"></td><td class="cell h2c">R16</td></tr>
+  <tr><th></th><th>1 · mineur</th><th>2 · limité</th><th>3 · important</th><th>4 · majeur</th></tr>
+  <tr><td></td><td></td><th colspan="4">Impact</th></tr>
+</table>
+<p class="caption" style="text-align:center;margin-top:2mm">Figure 14 — Matrice probabilité × impact des 18 risques identifiés.</p>
+
+<h2 id="s10-3"><span class="num">10.3</span>Registre des risques</h2>
+<table class="compact">
+  <thead><tr><th style="width:9mm">Id</th><th style="width:44mm">Risque</th><th style="width:16mm">Catégorie</th><th class="c" style="width:6mm">P</th><th class="c" style="width:6mm">I</th><th class="c" style="width:9mm">Crit.</th><th>Mesures de réduction</th><th style="width:15mm">Porteur</th></tr></thead>
+  <tbody>
+    <tr><td>R01</td><td>Disponibilité insuffisante du porteur (sujet non prioritaire, alternance, examens)</td><td>Projet</td><td class="c">4</td><td class="c">3</td><td class="c"><span class="crit c-hi">12</span></td><td>Paliers courts et autonomes ; tâches de 1 à 3 jours ; documentation continue ; automatisation ; calendrier fondé sur une disponibilité déclarée (D5)</td><td>Alain, porteur</td></tr>
+    <tr><td>R02</td><td>Flux réseau refusés ou très retardés (P2P Sepolia, RPC sortant)</td><td>Infra</td><td class="c">3</td><td class="c">4</td><td class="c"><span class="crit c-hi">12</span></td><td>Dossier de flux au cadrage ; option A sans P2P ; aucun flux entrant ; alternatives B/C</td><td>Victor, cyber</td></tr>
+    <tr><td>R03</td><td>Compromission de la clé exécuteur ou de l'accès au signataire : mints sans burn</td><td>Sécurité</td><td class="c">2</td><td class="c">4</td><td class="c"><span class="crit" style="background:#fed7aa;color:#7c2d12">8</span></td><td>Clés hors relayer ; politique du signataire ; plafonds bas ; pause ; réconciliation et alerte ; Web3Signer + coffre (P2) ; attestations multiples (P3)</td><td>Porteur, cyber</td></tr>
+    <tr><td>R04</td><td>RPC Sepolia tiers mensonger ou incohérent (palier 1)</td><td>Sécurité</td><td class="c">2</td><td class="c">4</td><td class="c"><span class="crit" style="background:#fed7aa;color:#7c2d12">8</span></td><td>Contrôle d'identité ; cohérence du nonce source ; double source comparée ; plafonds ; nœud interne au palier 2</td><td>Porteur</td></tr>
+    <tr><td>R05</td><td>Pérennité de Sepolia (fin de vie annoncée au 30/09/2026, successeur à confirmer)</td><td>Projet</td><td class="c">3</td><td class="c">3</td><td class="c"><span class="crit" style="background:#fed7aa;color:#7c2d12">9</span></td><td>Vérifier au cadrage ; architecture indépendante du testnet ; pas de nœud Sepolia avant décision ; migration ≈ 2 – 4 JH</td><td>Alain, Victor</td></tr>
+    <tr><td>R06</td><td>Token « Stablecoin Euro Talan » incompatible avec le burn/mint</td><td>Archi</td><td class="c">3</td><td class="c">3</td><td class="c"><span class="crit" style="background:#fed7aa;color:#7c2d12">9</span></td><td>Analyse dès le cadrage ; arbre de décision §5.5 ; options 2 ou 3 chiffrées</td><td>Porteur, Victor</td></tr>
+    <tr><td>R07</td><td>Accès TELA tardif ou incomplet (RPC, comptes, droits de déploiement)</td><td>Projet</td><td class="c">3</td><td class="c">3</td><td class="c"><span class="crit" style="background:#fed7aa;color:#7c2d12">9</span></td><td>Questionnaire §13.2 ; demandes groupées ; travail local en parallèle ; profil Besu local comme substitut technique</td><td>Victor</td></tr>
+    <tr><td>R08</td><td>Finalité mal paramétrée (réorganisation Sepolia, consensus TELA mal compris)</td><td>Archi</td><td class="c">2</td><td class="c">4</td><td class="c"><span class="crit" style="background:#fed7aa;color:#7c2d12">8</span></td><td>Tag <code>finalized</code> uniquement ; aucun repli silencieux ; confirmation écrite du consensus TELA ; tests de réorganisation</td><td>Porteur, Victor</td></tr>
+    <tr><td>R09</td><td>Défaut dans les contrats (logique, rôles, cas limites)</td><td>Sécurité</td><td class="c">2</td><td class="c">4</td><td class="c"><span class="crit" style="background:#fed7aa;color:#7c2d12">8</span></td><td>27 tests dont fuzzing et invariants ; code court sans proxy ; relecture indépendante (P2) ; plafonds immuables</td><td>Porteur, relecteur</td></tr>
+    <tr><td>R10</td><td>Transaction bloquée : nonce en attente, pic de frais Sepolia</td><td>Exploitation</td><td class="c">3</td><td class="c">2</td><td class="c"><span class="crit c-md">6</span></td><td>Plafond de frais et attente ; alerte à 300 s ; runbook ; remplacement de frais assisté (évolution)</td><td>Porteur</td></tr>
+    <tr><td>R11</td><td>Pénurie de SepoliaETH (faucets limités, pas de budget)</td><td>Exploitation</td><td class="c">3</td><td class="c">2</td><td class="c"><span class="crit c-md">6</span></td><td>Faucet à preuve de travail sans compte ; réserve constituée à l'avance ; alerte de solde ; faible consommation (≈ 0,13 M gas par mint)</td><td>Porteur</td></tr>
+    <tr><td>R12</td><td>Perte ou corruption de la base PostgreSQL</td><td>Exploitation</td><td class="c">2</td><td class="c">3</td><td class="c"><span class="crit c-md">6</span></td><td>Sauvegarde et restauration testées (P2) ; recollecte depuis les chaînes ; contraintes d'unicité</td><td>Porteur, infra</td></tr>
+    <tr><td>R13</td><td>Saturation ou désynchronisation du nœud Sepolia (disque, mémoire)</td><td>Infra</td><td class="c">3</td><td class="c">2</td><td class="c"><span class="crit c-md">6</span></td><td>Supervision disque et retard ; alerte à 80 % ; repli en lecture sur RPC public contrôlé</td><td>Infra</td></tr>
+    <tr><td>R14</td><td>Émission hors bridge par un administrateur du token</td><td>Gouvernance</td><td class="c">2</td><td class="c">3</td><td class="c"><span class="crit c-md">6</span></td><td>Admin multisig ; inventaire des rôles ; réconciliation ; journal des changements de rôles</td><td>Alain, cyber</td></tr>
+    <tr><td>R15</td><td>Dérive de périmètre vers une « production » prématurée</td><td>Projet</td><td class="c">3</td><td class="c">3</td><td class="c"><span class="crit" style="background:#fed7aa;color:#7c2d12">9</span></td><td>Paliers et go/no-go ; critères d'acceptation écrits ; mention « test » sur tous les artefacts</td><td>Alain</td></tr>
+    <tr><td>R16</td><td>Confusion entre test et réel ; enjeu réglementaire d'un stablecoin euro</td><td>Conformité</td><td class="c">1</td><td class="c">4</td><td class="c"><span class="crit c-md">4</span></td><td>Testnets uniquement, tokens sans valeur ; avis juridique avant tout usage réel</td><td>Alain</td></tr>
+    <tr><td>R17</td><td>Dépendance à une seule personne (porteur) et à un seul référent TELA</td><td>Projet</td><td class="c">3</td><td class="c">3</td><td class="c"><span class="crit" style="background:#fed7aa;color:#7c2d12">9</span></td><td>Dépôt documenté ; ADR ; runbooks ; démonstration rejouable en une commande ; binôme pour la revue</td><td>Alain</td></tr>
+    <tr><td>R18</td><td>Vulnérabilités ou obsolescence des dépendances (Nethereum, images, évolutions EVM)</td><td>Sécurité</td><td class="c">2</td><td class="c">2</td><td class="c"><span class="crit c-md">4</span></td><td>Versions épinglées ; audit NuGet ; scans ; cible London ; mise à jour planifiée avec nouvelle campagne</td><td>Porteur</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s10-4"><span class="num">10.4</span>Modèle de menaces (synthèse)</h2>
+<table class="compact">
+  <thead><tr><th style="width:36mm">Compromission ou défaut</th><th>Conséquence possible</th><th>Protection existante</th><th style="width:34mm">Renforcement proposé</th></tr></thead>
+  <tbody>
+    <tr><td>Clé d'exécution</td><td>Mints frauduleux dans les plafonds</td><td>Plafonds immuables, pause, réconciliation</td><td>Coffre, rotation, M-de-N</td></tr>
+    <tr><td>Relayer ou jeton du signataire</td><td>Demandes frauduleuses conformes à la politique</td><td>Politique stricte, fréquence limitée</td><td>Signataire qui vérifie le burn sur son propre nœud</td></tr>
+    <tr><td>RPC malveillant</td><td>Faux burn, faux reçus</td><td>Contrôles d'identité et de cohérence</td><td>Nœud interne, double source</td></tr>
+    <tr><td>Administrateur du Bridge</td><td>Rôles réattribués, pause levée</td><td>Paire immuable, rôles séparés</td><td>Multisig, journal d'administration</td></tr>
+    <tr><td>Administrateur du token</td><td>Émission hors bridge</td><td>Réconciliation (partielle)</td><td>Multisig, inventaire des rôles</td></tr>
+    <tr><td>Base de données</td><td>Perte de l'état de reprise, falsification</td><td>Contraintes, compte applicatif non admin</td><td>Sauvegarde, TLS, contrôle d'accès</td></tr>
+    <tr><td>Hôte ou moteur Docker</td><td>Accès aux clés et volumes</td><td>Conteneurs durcis (insuffisant seul)</td><td>VM dédiée, coffre, durcissement Talan</td></tr>
+    <tr><td>Finalité invalidée</td><td>Mint d'un burn annulé</td><td>Finalité par réseau, détection de réorganisation</td><td>Tag <code>finalized</code>, intervention documentée</td></tr>
+  </tbody>
+</table>

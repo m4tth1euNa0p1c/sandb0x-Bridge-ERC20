@@ -1,0 +1,59 @@
+<h1 id="s3"><span class="num">3</span>Point de départ : le démonstrateur existant</h1>
+
+<p class="lead">Le dépôt <code>T3l4N-Bridge-ERC20</code> contient un démonstrateur de bridge ERC20 bidirectionnel, construit avant ce livrable pour éprouver le protocole. Il fixe le socle technique proposé et réduit fortement le risque de l'étape 2.</p>
+
+<h2 id="s3-1"><span class="num">3.1</span>Ce qui existe déjà</h2>
+<table>
+  <thead><tr><th style="width:36mm">Brique</th><th>Contenu</th><th style="width:34mm">Technologie</th><th style="width:24mm">Statut</th></tr></thead>
+  <tbody>
+    <tr><td><b>Contrats</b></td><td><code>BridgeToken</code> (ERC20 de test, 18 decimals, rôle <code>BRIDGE_ROLE</code>) et <code>Bridge</code> (burn, mint, anti-rejeu, plafonds, pause, rôles séparés). ≈ 280 lignes, 777 lignes de tests (unitaires, fuzzing, invariants).</td><td>Solidity 0.8.30, OpenZeppelin 5.4.0, Foundry</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span></td></tr>
+    <tr><td><b>Relayer</b></td><td>Collecte historique avec checkpoint, contrôle d'identité réseau, machine à états à 12 états, réservation de nonces, persistance avant diffusion, reprise, réconciliation d'offre, API <code>/status</code>, <code>/metrics</code>. ≈ 1 140 lignes.</td><td>.NET 10, Nethereum 6.1, Npgsql</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span></td></tr>
+    <tr><td><b>Signataire</b></td><td>Service séparé, seul à détenir les clés ; politique stricte (méthode, domaine, montant, gas, fréquence) ; jeton de service ; aucune connexion RPC. ≈ 590 lignes.</td><td>.NET 10, Nethereum.Signer</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span></td></tr>
+    <tr><td><b>Persistance</b></td><td>Schéma <code>bridge</code> : réseaux, blocs, observations, transferts, nonces, tentatives, réconciliations ; compte applicatif non administrateur.</td><td>PostgreSQL 17</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span></td></tr>
+    <tr><td><b>Supervision</b></td><td>16 métriques, 12 règles d'alerte, tableau de bord d'exploitation ; donnée périmée explicitement signalée.</td><td>Prometheus 3, Grafana 13</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span></td></tr>
+    <tr><td><b>Environnements</b></td><td>Profils <code>local-fast</code> (deux Anvil) et <code>local-besu</code> (Besu 26.10 QBFT + Anvil) ; conteneurs durcis ; profil <code>integration-testnet</code> volontairement refusé.</td><td>Docker Compose</td><td><span class="tag ok">VÉRIFIÉ LOCAL</span></td></tr>
+    <tr><td><b>Preuves</b></td><td>Interface <code>bootstrap / up / demo / test / prove / status / down</code> ; manifestes de campagne avec empreintes ; registre de 28 affirmations ; CI GitHub Actions.</td><td>Python 3.12</td><td><span class="tag info">IMPLÉMENTÉ</span></td></tr>
+    <tr><td><b>Décisions</b></td><td>Six ADR : stack et profils, protocole et confiance, reprise et finalité, interfaces, persistance Anvil, arrêts prolongés.</td><td>MkDocs</td><td><span class="tag info">IMPLÉMENTÉ</span></td></tr>
+  </tbody>
+</table>
+
+<h2 id="s3-2"><span class="num">3.2</span>Ce qui a été démontré, et avec quelle portée</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>Campagnes complètes du 25 octobre 2026 <span class="tag warn">HISTORIQUE</span></h4>
+    <p>Sur le commit <code>b97c541</code>, deux campagnes <code>prove</code> ont réussi <b>18 contrôles sur 18</b> chacune : <code>local-fast</code> (00:24 → 00:32 UTC) et <code>local-besu</code> (00:33 → 00:40 UTC), plus la CI sur clone neuf.</p>
+    <ul>
+      <li>Aller-retour réel de 10 tokens dans les deux sens, offre restaurée.</li>
+      <li>9 scénarios de panne sur Anvil, 7 sur Besu (relecture, pause, RPC suspendu, gas, concurrence, crashs, réorganisation).</li>
+      <li>Cloisonnement réseau, fichiers et secrets vérifié sur 14 services.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Démonstration du 30 octobre 2026 <span class="tag ok">VÉRIFIÉ LOCAL</span></h4>
+    <p>Rejouée pour ce livrable sur le commit <code>2f05504</code> : <b>29 contrôles sur 29</b> en 13 secondes.</p>
+    <ul>
+      <li>27 tests Solidity : 22 tests de protocole dont 2 fuzz (1 000 exécutions), 2 tests de domaine, 2 invariants (256 séquences × 64 appels) et 1 test d'atteignabilité.</li>
+      <li>Aller-retour 100 puis 40 tokens, rejeu, rôle, plafond, pause, réconciliation.</li>
+      <li>Mint fabriqué par l'exécuteur : accepté par le contrat, détecté par la réconciliation.</li>
+    </ul>
+  </div>
+</div>
+<div class="callout warn">
+  <span class="ttl">Pourquoi « historique » ?</span>
+  <p>Le 27 octobre, un arrêt des nœuds locaux (mémoire Anvil, enregistreur JFR de Besu) a conduit à des correctifs (ADR-0006). Toute modification des sources rend les preuves antérieures <b>obsolètes</b> jusqu'à une nouvelle campagne complète : le registre compte aujourd'hui 26 affirmations obsolètes et 2 bloquées. Les campagnes citées au journal du 27 octobre ne sont pas versionnées dans <code>evidence/</code> et ne sont pas reprises ici. Rejouer <code>prove</code> sur les deux profils est la première tâche technique du palier 1.</p>
+</div>
+
+<h2 id="s3-3"><span class="num">3.3</span>Ce qui sépare le démonstrateur d'un pont Sepolia ⇄ TELA</h2>
+<table class="compact">
+  <thead><tr><th>Écart</th><th style="width:60mm">Traitement proposé</th><th style="width:16mm">Palier</th></tr></thead>
+  <tbody>
+    <tr><td>Profil <code>integration-testnet</code> désactivé, aucune identité Sepolia/TELA configurée</td><td>Activer le profil avec identités vérifiées (chain ID, genesis, code des contrats)</td><td class="c">1</td></tr>
+    <tr><td>Finalité : conventions locales uniquement (3 blocs Anvil, tête QBFT locale)</td><td>Tag <code>finalized</code> Sepolia ; politique TELA selon consensus confirmé</td><td class="c">1</td></tr>
+    <tr><td>RPC locaux en HTTP sans authentification ; client limité aux hôtes locaux</td><td>HTTPS, authentification, proxy, limites de plage <code>eth_getLogs</code></td><td class="c">1</td></tr>
+    <tr><td>Transactions « legacy » à prix de gas fixe</td><td>Transactions EIP-1559 avec plafond de frais (Sepolia)</td><td class="c">1</td></tr>
+    <tr><td>Bridge limité au bytecode exact de <code>BridgeToken</code></td><td>Adapter au token « Stablecoin Euro Talan » (§5.5)</td><td class="c">1</td></tr>
+    <tr><td>Clés en fichiers de laboratoire</td><td>Keystore chiffré (P1), Web3Signer + coffre ou HSM (P2)</td><td class="c">1 → 2</td></tr>
+    <tr><td>VM dédiée non fournie (hôte Windows partagé)</td><td>VM Talan dédiée et durcie</td><td class="c">1</td></tr>
+    <tr><td>Pas de sauvegarde/restauration testée, pas de runbooks</td><td>Procédures d'exploitation et tests de restauration</td><td class="c">2</td></tr>
+  </tbody>
+</table>

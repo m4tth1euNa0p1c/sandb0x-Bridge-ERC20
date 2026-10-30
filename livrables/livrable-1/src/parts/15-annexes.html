@@ -1,0 +1,99 @@
+<h1 id="sA"><span class="num">A</span>Annexes</h1>
+
+<h2 id="sA-1"><span class="num">A.1</span>Glossaire</h2>
+<table class="compact" style="font-size:7.6pt">
+  <tbody>
+    <tr><th style="width:36mm">Bridge (pont)</th><td>Mécanisme qui fait passer la valeur d'un token d'une blockchain à une autre.</td></tr>
+    <tr><th>Burn &amp; mint</th><td>Le token est détruit (burn) sur la chaîne source et créé (mint) en même quantité sur la chaîne de destination ; l'offre totale est conservée.</td></tr>
+    <tr><th>Lock &amp; mint</th><td>Variante : le token est verrouillé dans un contrat sur la source et un jeton représentatif est minté sur la destination.</td></tr>
+    <tr><th>ERC20</th><td>Standard de token fongible sur les chaînes compatibles Ethereum (EVM).</td></tr>
+    <tr><th>EVM</th><td>Machine virtuelle d'Ethereum ; TELA (Besu) et Sepolia l'implémentent toutes deux.</td></tr>
+    <tr><th>Sepolia</th><td>Réseau de test public d'Ethereum (chain ID 11155111), en preuve d'enjeu ; ses ETH n'ont pas de valeur.</td></tr>
+    <tr><th>TELA</th><td>Talan Enterprise Ledger Architecture : blockchain privée EVM sur nœuds Hyperledger Besu, opérée par Talan.</td></tr>
+    <tr><th>Besu · Teku</th><td>Clients Ethereum open source en Java : Besu pour l'exécution, Teku pour le consensus.</td></tr>
+    <tr><th>QBFT</th><td>Consensus à tolérance byzantine utilisé par les réseaux Besu privés ; finalité immédiate si moins d'un tiers des validateurs est défaillant.</td></tr>
+    <tr><th>Finalité</th><td>Moment où un bloc ne peut plus être annulé selon les règles du réseau. Sur Sepolia, tag <code>finalized</code> (≈ 13 min).</td></tr>
+    <tr><th>Réorganisation</th><td>Remplacement de blocs récents par une autre branche ; un événement observé peut disparaître.</td></tr>
+    <tr><th>Relayer</th><td>Service hors chaîne qui observe une chaîne et soumet des transactions sur l'autre.</td></tr>
+    <tr><th>RPC (JSON-RPC)</th><td>Interface d'accès à un nœud : lecture d'état, d'événements, envoi de transactions.</td></tr>
+    <tr><th>Faucet</th><td>Service qui distribue gratuitement des jetons natifs de test pour payer le gas.</td></tr>
+    <tr><th>Gas</th><td>Unité de coût d'exécution d'une transaction, payée en jeton natif de la chaîne.</td></tr>
+    <tr><th>Nonce</th><td>Compteur. Nonce de compte : ordonne les transactions d'un émetteur. Nonce source du Bridge : numérote les burns.</td></tr>
+    <tr><th>Checkpoint</th><td>Prochain bloc à lire par le collecteur, persisté avec les événements du lot.</td></tr>
+    <tr><th>Multisig</th><td>Compte dont les actions exigent plusieurs signatures (par exemple 2 sur 3).</td></tr>
+    <tr><th>HSM · coffre</th><td>Matériel ou logiciel qui protège les clés et signe sans les exposer.</td></tr>
+    <tr><th>MiCA</th><td>Règlement (UE) 2023/1114 sur les marchés de crypto-actifs, qui encadre notamment les jetons de monnaie électronique.</td></tr>
+    <tr><th>JH</th><td>Jour-homme : 7 heures de travail effectif.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="sA-2"><span class="num">A.2</span>Extraits de code commentés</h2>
+<pre class="code"><span class="c">// contracts/src/Bridge.sol — côté source : burn et notification dans la même transaction</span>
+<span class="k">function</span> <span class="f">requestTransfer</span>(uint256 destinationChainId, address recipient, uint256 amount)
+    external whenNotPaused nonReentrant returns (bytes32 transferId)
+{
+    Pair memory pair = _pair(destinationChainId);          <span class="c">// paire configurée et chaîne inchangée</span>
+    _validateTransfer(recipient, amount);                  <span class="c">// destinataire non nul, 0 &lt; montant ≤ maxTransfer</span>
+    uint256 nonce = nextNonce++;                           <span class="c">// 0, 1, 2… vérifié par le collecteur</span>
+    transferId = _transferId(block.chainid, address(this), destinationChainId, pair.remoteBridge,
+                             address(token), pair.remoteToken, nonce, amount, recipient);
+    token.burnFrom(_msgSender(), amount);                  <span class="c">// dépense l'allowance puis brûle</span>
+    <span class="k">emit</span> TransferInitiated(transferId, destinationChainId, _msgSender(), recipient,
+                           address(token), pair.remoteToken, pair.remoteBridge, nonce, amount);
+}</pre>
+<pre class="code"><span class="c">// côté destination : contrôles, anti-rejeu, quota, puis mint — atomique</span>
+<span class="k">function</span> <span class="f">completeTransfer</span>(uint256 sourceChainId, address sourceBridge, address sourceToken,
+                          uint256 nonce, uint256 amount, address recipient)
+    external onlyRole(EXECUTOR_ROLE) whenNotPaused nonReentrant
+{
+    Pair memory pair = _pair(sourceChainId);
+    <span class="k">if</span> (pair.remoteBridge != sourceBridge || pair.remoteToken != sourceToken) <span class="k">revert</span> PairMismatch();
+    _validateTransfer(recipient, amount);
+    bytes32 transferId = _transferId(sourceChainId, sourceBridge, block.chainid, address(this),
+                                     sourceToken, address(token), nonce, amount, recipient);
+    <span class="k">if</span> (processed[transferId]) <span class="k">revert</span> TransferAlreadyProcessed(transferId);
+    uint256 epoch = block.timestamp / epochSeconds;
+    uint256 total = mintedInEpoch[epoch] + amount;
+    <span class="k">if</span> (total &gt; epochMintCap) <span class="k">revert</span> EpochMintCapExceeded(epoch, total);
+    processed[transferId] = true;                          <span class="c">// annulé avec le reste si le mint échoue</span>
+    mintedInEpoch[epoch] = total;
+    token.mint(recipient, amount);
+    <span class="k">emit</span> TransferCompleted(transferId, recipient, amount);
+}</pre>
+
+<h2 id="sA-3"><span class="num">A.3</span>Traçabilité des preuves</h2>
+<table class="compact">
+  <thead><tr><th style="width:34mm">Preuve</th><th>Chemin dans le dépôt</th><th style="width:16mm">Commit</th><th style="width:18mm">Résultat</th><th style="width:48mm">SHA-256</th></tr></thead>
+  <tbody>
+    <tr><td>Démonstration livrable 1</td><td><code>evidence/demo-livrable1-20261030T133958Z/demo.json</code></td><td><code>2f05504</code></td><td>29 / 29</td><td class="hash">0cfb06bb3ed4188a9340bb178237f642955a28069c34bb14ba9619467e109785</td></tr>
+    <tr><td>Index de la démonstration</td><td><code>evidence/demo-livrable1-20261030T133958Z/index.json</code></td><td><code>2f05504</code></td><td>—</td><td class="hash">7b62e11b65f60120b140377a85dbfa6464b7812fc48baad4a3d60dc4dde110dc</td></tr>
+    <tr><td>Campagne local-fast</td><td><code>evidence/20261025T002452Z-local-fast/manifest.json</code></td><td><code>b97c541</code></td><td>18 / 18</td><td class="hash">f4d0a64da04cd7a32e7219f584fc2f87992f3f0f8be464130f54bd5195b70461</td></tr>
+    <tr><td>Campagne local-besu</td><td><code>evidence/20261025T003358Z-local-besu/manifest.json</code></td><td><code>b97c541</code></td><td>18 / 18</td><td class="hash">b9943ee6bceea6196eedd4e0bf74a7908514242ada18659902686139fc5b5d63</td></tr>
+    <tr><td>CI GitHub Actions</td><td><code>evidence/ci-b97c541/index.json</code></td><td><code>b97c541</code></td><td>succès</td><td class="hash">6df219d29ee1f0168b7b464aa0be0533cdb0268b4cbdc225720b67be06501b84</td></tr>
+    <tr><td>Capture Grafana</td><td><code>evidence/finalization-b97c541/grafana-fast-b97c541-delivery.png</code></td><td><code>b97c541</code></td><td>observation</td><td class="hash">b5b404786eba92e68e3ebe9a2203d9b2b767264114a21c29a4b1089e8028c60d</td></tr>
+    <tr><td>Registre des affirmations</td><td><code>docs/claims.yaml</code></td><td>—</td><td>26 obsolètes · 2 bloquées</td><td class="hash">1ab32cd212837583b9f095ee4c7384d972ca6e41bfac3a05d98a118579c6df95</td></tr>
+    <tr><td>Contrat Bridge testé</td><td><code>contracts/src/Bridge.sol</code></td><td><code>2f05504</code></td><td>—</td><td class="hash">7841ea842bb58e93923992a15852ee6abc8ff5536a7c0068eebf6cf0ca02047b</td></tr>
+    <tr><td>Token de test</td><td><code>contracts/src/BridgeToken.sol</code></td><td><code>2f05504</code></td><td>—</td><td class="hash">ce02efa89b02a711363e59b4d372e130c7deb9ac25d2fcda2901c1bcce7db951</td></tr>
+  </tbody>
+</table>
+<p class="small">Le PDF est produit par <code>livrables/livrable-1/build_pdf.py</code> à partir des sources HTML du même dossier ; il ne contient aucun secret. Les décisions techniques détaillées sont dans <code>docs/adr/0001</code> à <code>0006</code>, les limites dans <code>docs/limites.md</code> et les prérequis manquants dans <code>docs/informations-manquantes.md</code>.</p>
+
+<h2 id="sA-4"><span class="num">A.4</span>Sources et références</h2>
+<p class="small">Consultées le 30 octobre 2026. Certaines pages n'étaient pas accessibles depuis l'environnement d'exécution et ont été lues au travers de résultats de recherche : à revérifier avant toute décision engageante.</p>
+<table class="compact" style="font-size:7.4pt">
+  <thead><tr><th style="width:70mm">Source</th><th>Utilisée pour</th></tr></thead>
+  <tbody>
+    <tr><td>Ethereum Foundation, « Holesky and Hoodi Testnet Updates », 18/03/2025 — blog.ethereum.org/2025/03/18/hoodi-holesky</td><td>Fin de vie attendue de Sepolia au 30/09/2026 et annonce d'un successeur</td></tr>
+    <tr><td>Cointelegraph, « Ethereum schedules Glamsterdam upgrade on Sepolia for Oct. 6 », 2026 — cointelegraph.com/news/ethereum-glamsterdam-upgrade-sepolia ; 24/7 Wall St., « What Is Glamsterdam, and Why Did Ethereum Just Delay Its Testnet Launch? », 23/10/2026 — 247wallst.com</td><td>Activité de Sepolia en octobre 2026 (mise à niveau programmée puis rapportée activée le 6/10)</td></tr>
+    <tr><td>Ethereum Foundation, « Partial history expiry », 08/07/2025 — blog.ethereum.org/2025/07/08/partial-history-exp</td><td>Historique pré-fusion de Sepolia, options d'expiration d'historique de Geth et Besu</td></tr>
+    <tr><td>Hyperledger Besu, « Run Besu and Teku on a testnet » — besu.hyperledger.org/public-networks/tutorials/besu-teku-testnet</td><td>Nœud Sepolia Besu + Teku, synchronisation par point de contrôle</td></tr>
+    <tr><td>Geth, « Hardware requirements » — geth.ethereum.org/docs/getting-started/hardware-requirements</td><td>Ordres de grandeur de ressources et de bande passante</td></tr>
+    <tr><td>Consensys, Web3Signer — docs.web3signer.consensys.io (dont « Use Web3Signer with HashiCorp Vault »)</td><td>Signature distante, licence Apache-2.0, coffre KV v2</td></tr>
+    <tr><td>Hyperlane, « Deploy Hyperlane » — docs.hyperlane.xyz/docs/guides/chains/deploy-hyperlane</td><td>Déploiement sans permission, validateurs et relayer auto-hébergés</td></tr>
+    <tr><td>pk910, PoWFaucet — github.com/pk910/PoWFaucet</td><td>Faucet Sepolia à preuve de travail, sans compte</td></tr>
+    <tr><td>OpenZeppelin Contracts 5.x — docs.openzeppelin.com/contracts/5.x</td><td>ERC20, AccessControl, Pausable, ReentrancyGuard</td></tr>
+    <tr><td>PostgreSQL 17, « Explicit Locking » — postgresql.org/docs/17/explicit-locking.html</td><td>Verrous consultatifs, réservation de nonces</td></tr>
+    <tr><td>Règlement (UE) 2023/1114 (MiCA) — eur-lex.europa.eu/eli/reg/2023/1114/oj</td><td>Cadre des jetons de monnaie électronique (mention, sans analyse juridique)</td></tr>
+    <tr><td>Règlement (UE) 2022/2554 (DORA) — eur-lex.europa.eu/eli/reg/2022/2554/oj</td><td>Référence à examiner selon le périmètre réel (sans analyse juridique)</td></tr>
+  </tbody>
+</table>

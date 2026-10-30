@@ -1,0 +1,126 @@
+<h1 id="s9"><span class="num">9</span>Démonstration</h1>
+
+<p class="lead">Deux niveaux de démonstration : une exécution <b>rejouée le jour de ce document</b>, centrée sur le protocole on-chain, et les <b>campagnes complètes</b> du démonstrateur (relayer, base, signataire, supervision, pannes), qui sont historiques.</p>
+
+<h2 id="s9-1"><span class="num">9.1</span>Démonstration rejouée le 30 octobre 2026</h2>
+<div class="grid3" style="margin-bottom:3mm">
+  <div class="kpi ok"><div class="v">29 / 29</div><div class="l">contrôles réussis, code de sortie 0</div></div>
+  <div class="kpi"><div class="v">13 s</div><div class="l">13:39:58 → 13:40:11 UTC, compilation et tests inclus</div></div>
+  <div class="kpi"><div class="v">18</div><div class="l">transactions réelles sur deux chaînes locales</div></div>
+</div>
+<table class="compact">
+  <tbody>
+    <tr><th style="width:40mm">Commande</th><td><code>python3 livrables/livrable-1/demo/demo_burn_mint.py --tools &lt;Foundry&gt; --solc &lt;solc 0.8.30&gt; --out evidence/demo-livrable1-20261030T133958Z</code></td></tr>
+    <tr><th>Commit testé</th><td><code>2f05504386b08a31be2270fed378a237c7185393</code>, arbre propre ; le rapport est ajouté dans un commit ultérieur</td></tr>
+    <tr><th>Outils</th><td>forge 1.3.1 (tests), anvil et cast 1.8.4 (commit <code>50af4efe</code>, identique au build retenu par l'ADR-0006), solc 0.8.30 vérifié par SHA-256 contre <code>contracts/solc.lock.json</code></td></tr>
+    <tr><th>Réseaux</th><td>Deux Anvil locaux, chaîne A = 31337, chaîne B = 31338, hardfork London, liés à 127.0.0.1 ; comptes Anvil publics, jamais utilisables sur un réseau partagé</td></tr>
+    <tr><th>Rôle du relayer</th><td>Joué pas à pas par le script : lecture du log, 3 confirmations locales, recalcul indépendant de l'identifiant, soumission par le compte exécuteur</td></tr>
+    <tr><th>Preuves</th><td><code>evidence/demo-livrable1-20261030T133958Z/</code> : <code>demo.json</code>, <code>forge-test.log</code>, <code>console.log</code>, <code>index.json</code>, <code>SHA256SUMS</code></td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <span class="ttl">Portée</span>
+  <p>Cette démonstration valide le protocole on-chain et la logique du relayer de façon manuelle. Elle n'exerce ni le relayer .NET, ni PostgreSQL, ni le signataire, ni la supervision, et <b>ne valide ni Sepolia ni TELA</b>. Les outils proviennent des archives officielles et non des images Docker épinglées (moteur Docker indisponible dans l'environnement d'exécution).</p>
+</div>
+
+<h3>Scénarios et résultats</h3>
+<table class="compact">
+  <thead><tr><th style="width:10mm">Id</th><th>Scénario</th><th>Attendu et observé</th><th style="width:18mm">Résultat</th></tr></thead>
+  <tbody>
+    <tr><td>T</td><td>27 tests Solidity (unitaires, fuzzing, invariants)</td><td>27 réussis, 0 échec, 0 ignoré</td><td><span class="tag ok">RÉUSSI</span></td></tr>
+    <tr><td>S1</td><td>Aller A → B de 100 tEUR (Alice → Bob)</td><td>Burn, transit = 100, 3 blocs, ID recalculé identique, mint, <code>processed</code> = true, solde Bob = 100</td><td><span class="tag ok">RÉUSSI</span></td></tr>
+    <tr><td>S2</td><td>Rejeu du même transfert</td><td>Simulation refusée (<code>TransferAlreadyProcessed</code>) ; transaction forcée incluse avec statut 0 ; aucun second mint</td><td><span class="tag ok">RÉUSSI</span></td></tr>
+    <tr><td>S3</td><td>Mint par un compte non autorisé</td><td><code>AccessControlUnauthorizedAccount</code></td><td><span class="tag ok">RÉUSSI</span></td></tr>
+    <tr><td>S4</td><td>Transfert de 1 001 tEUR (plafond 1 000)</td><td><code>InvalidAmount</code></td><td><span class="tag ok">RÉUSSI</span></td></tr>
+    <tr><td>S5</td><td>Pause d'urgence</td><td>Burn refusé (<code>EnforcedPause</code>) ; le pauser ne peut pas lever la pause ; l'admin la lève</td><td><span class="tag ok">RÉUSSI</span></td></tr>
+    <tr><td>S6</td><td>Retour B → A de 40 tEUR (Bob → Alice)</td><td>Burn, 3 blocs, ID identique, mint, offre B = 60</td><td><span class="tag ok">RÉUSSI</span></td></tr>
+    <tr><td>S7</td><td>Réconciliation au repos</td><td>Offre A + offre B + transit = 1 000 000 tEUR</td><td><span class="tag ok">RÉUSSI</span></td></tr>
+    <tr><td>S8</td><td><b>Limite de confiance</b> : mint de 5 tEUR fabriqué par l'exécuteur, sans burn</td><td>Le contrat <b>accepte</b> (attendu, c'est la limite du modèle) ; la réconciliation mesure un écart de +5 tEUR</td><td><span class="tag ok">RÉUSSI</span></td></tr>
+  </tbody>
+</table>
+
+<h3>Évolution de l'offre</h3>
+<table class="compact">
+  <thead><tr><th>Étape</th><th class="num">Offre A</th><th class="num">Offre B</th><th class="num">Transit</th><th class="num">Total</th><th style="width:26mm">Réconciliation</th></tr></thead>
+  <tbody>
+    <tr><td>Initial (1 000 000 tEUR mintés à Alice sur A)</td><td class="num">1 000 000</td><td class="num">0</td><td class="num">0</td><td class="num">1 000 000</td><td><span class="tag ok">balanced</span></td></tr>
+    <tr><td>S1 — burn de 100 sur A</td><td class="num">999 900</td><td class="num">0</td><td class="num">100</td><td class="num">1 000 000</td><td><span class="tag ok">balanced</span></td></tr>
+    <tr><td>S1 — mint de 100 sur B</td><td class="num">999 900</td><td class="num">100</td><td class="num">0</td><td class="num">1 000 000</td><td><span class="tag ok">balanced</span></td></tr>
+    <tr><td>S2 — rejeu refusé</td><td class="num">999 900</td><td class="num">100</td><td class="num">0</td><td class="num">1 000 000</td><td><span class="tag ok">balanced</span></td></tr>
+    <tr><td>S6 — burn de 40 sur B</td><td class="num">999 900</td><td class="num">60</td><td class="num">40</td><td class="num">1 000 000</td><td><span class="tag ok">balanced</span></td></tr>
+    <tr><td>S6 — mint de 40 sur A</td><td class="num">999 940</td><td class="num">60</td><td class="num">0</td><td class="num">1 000 000</td><td><span class="tag ok">balanced</span></td></tr>
+    <tr><td>S8 — mint fabriqué de 5 sur B</td><td class="num">999 940</td><td class="num">65</td><td class="num">0</td><td class="num">1 000 005</td><td><span class="tag bad">mismatch +5</span></td></tr>
+  </tbody>
+</table>
+
+<h3>Transactions exécutées</h3>
+<table class="compact">
+  <thead><tr><th>Action</th><th class="c" style="width:9mm">Ch.</th><th style="width:16mm">Compte</th><th style="width:44mm">Hash</th><th class="num" style="width:10mm">Bloc</th><th class="num" style="width:18mm">Gas</th><th style="width:20mm">Statut</th></tr></thead>
+  <tbody>
+<tr><td>Déploiement jeton A</td><td class="c">A</td><td>admin</td><td class="hash">0xa5a65bf1c565562e…2f96b6</td><td class="num">—</td><td class="num">846 720</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>Déploiement jeton B</td><td class="c">B</td><td>admin</td><td class="hash">0x91cf1d38e1343315…9cd060</td><td class="num">—</td><td class="num">806 836</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>Déploiement bridge A</td><td class="c">A</td><td>admin</td><td class="hash">0x39108b75092652e3…4bb2dd</td><td class="num">—</td><td class="num">1 250 368</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>BRIDGE_ROLE accordé au bridge A</td><td class="c">A</td><td>admin</td><td class="hash">0x8924b57990c23eee…69f8e3</td><td class="num">3</td><td class="num">51 520</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>Déploiement bridge B</td><td class="c">B</td><td>admin</td><td class="hash">0xb23cc1e151e22fa4…a61cae</td><td class="num">—</td><td class="num">1 250 368</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>BRIDGE_ROLE accordé au bridge B</td><td class="c">B</td><td>admin</td><td class="hash">0xf31a48b22b53d30b…1e8f7f</td><td class="num">3</td><td class="num">51 520</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>Paire A → B (définitive)</td><td class="c">A</td><td>admin</td><td class="hash">0x04ef9119c1e5be64…05e6b5</td><td class="num">4</td><td class="num">71 616</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>Paire B → A (définitive)</td><td class="c">B</td><td>admin</td><td class="hash">0xe51cb13f4b0fe134…ea1596</td><td class="num">4</td><td class="num">71 616</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>S1 : approve Alice → bridge A</td><td class="c">A</td><td>alice</td><td class="hash">0x849831ec809a87fc…6f9b5c</td><td class="num">5</td><td class="num">46 413</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>S1 : requestTransfer (burn)</td><td class="c">A</td><td>alice</td><td class="hash">0xf3be5d22c3ed969d…c67d01</td><td class="num">6</td><td class="num">76 691</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>S1 : completeTransfer (mint)</td><td class="c">B</td><td>exécuteur</td><td class="hash">0x91afae79bfe30529…492397</td><td class="num">5</td><td class="num">134 296</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>S2 : rejeu forcé (gas fixé, sans estimation)</td><td class="c">B</td><td>exécuteur</td><td class="hash">0x401a551a861b6ffe…251c14</td><td class="num">6</td><td class="num">40 471</td><td><span class="tag bad">0 · annulée</span></td></tr>
+<tr><td>S5 : pause</td><td class="c">A</td><td>pauser</td><td class="hash">0x103dd039bfdf2148…e0bd0e</td><td class="num">10</td><td class="num">47 066</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>S5 : levée de pause</td><td class="c">A</td><td>admin</td><td class="hash">0x8f1dc248a3cf5ae4…750a6d</td><td class="num">11</td><td class="num">25 125</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>S6 : approve Bob → bridge B</td><td class="c">B</td><td>bob</td><td class="hash">0xeda2691b2a77ff53…7b433b</td><td class="num">7</td><td class="num">46 413</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>S6 : requestTransfer (burn)</td><td class="c">B</td><td>bob</td><td class="hash">0x245459cee77e47eb…d7f1df</td><td class="num">8</td><td class="num">76 691</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>S6 : completeTransfer (mint)</td><td class="c">A</td><td>exécuteur</td><td class="hash">0x3827b572c9f4908c…4c31dd</td><td class="num">12</td><td class="num">100 096</td><td><span class="tag ok">1 · succès</span></td></tr>
+<tr><td>S8 : completeTransfer sans burn (fraude simulée)</td><td class="c">B</td><td>exécuteur</td><td class="hash">0x4352e90d99e66b7e…b28e04</td><td class="num">12</td><td class="num">100 096</td><td><span class="tag ok">1 · succès</span></td></tr>
+  </tbody>
+</table>
+<p class="small">Identifiants de transfert : S1 <span class="hash">0x4192a37889d59ad3c96c0da2282e207ea3d8a5b53dfcbd3dc9f6a0b280bae643</span> ; S6 <span class="hash">0x9a8fae30fa6b6b14f44b1fab4a16a2fe5de7af29bb24ebbc2aed504cc3d5e2a6</span>. Les deux chaînes ayant le même déployeur, les contrats ont les mêmes adresses sur A et B : seule l'identité de chaîne les distingue, d'où son contrôle systématique.</p>
+
+<div class="callout">
+  <span class="ttl">Ce que la démonstration apprend pour Sepolia</span>
+  <p>Gas mesuré : burn ≈ 77 k, approve ≈ 46 k, mint ≈ 100 à 134 k (le premier mint d'une époque écrit un nouvel emplacement). Un transfert coûte donc ≈ 0,22 à 0,26 M de gas (approve + burn + mint), dont ≈ 0,10 à 0,13 M payé par le relayer pour le mint. À 1 à 10 gwei, un mint coûte entre 0,0001 et 0,0013 SepoliaETH : quelques dixièmes de SepoliaETH suffisent pour des centaines de transferts de test.</p>
+</div>
+
+<h2 id="s9-2"><span class="num">9.2</span>Campagnes complètes du démonstrateur (25 octobre 2026)</h2>
+<p>La commande <code>prove</code> exécute, sur un profil, l'ensemble des contrôles et scelle un manifeste (commandes, codes de sortie, versions, images, empreintes). Les deux campagnes ci-dessous portent sur le commit <code>b97c541</code> et sont <span class="tag warn">HISTORIQUES</span> : le code a changé depuis (§3.2).</p>
+<table class="compact">
+  <thead><tr><th style="width:30mm">Contrôle</th><th>Attendu</th><th class="c" style="width:18mm">local-fast</th><th class="c" style="width:18mm">local-besu</th></tr></thead>
+  <tbody>
+    <tr><td>tooling</td><td>Tests d'outillage Python sans skip</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>capabilities</td><td>50 agents et 50 skills valides</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>compose</td><td>Configurations durcies, sans port public</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>docs</td><td>Documentation MkDocs stricte</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>secrets</td><td>Gitleaks : aucun secret détecté</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>contracts</td><td>Compilation London, tests, fuzz et invariants</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>dotnet</td><td>64 tests signataire, 51 tests relayer, sans réseau</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>anvil_history</td><td>520 blocs, historique conservé après deux arrêts</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>startup</td><td>Identités vérifiées, contrats appariés, relayer prêt</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>hardening</td><td>Restrictions effectivement appliquées</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>isolation</td><td>Accès permis réussis, accès interdits refusés</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>application_isolation</td><td>Clés au seul signataire, signature non authentifiée refusée</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>roundtrip</td><td>Aller-retour réel de 10 tokens, offre au repos conservée</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>resilience</td><td>Scénarios de panne (9 sur Anvil, 7 applicables sur Besu)</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>persistence</td><td>Données et progression conservées après arrêt/relance</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>monitoring</td><td>Règles, requêtes et tableau sur métriques réelles</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>integration_gate</td><td>Intégration réelle refusée avant toute commande</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr><td>source_unchanged</td><td>Sources inchangées pendant la campagne</td><td class="c">✔</td><td class="c">✔</td></tr>
+    <tr class="total"><td colspan="2">Total — 2026-10-25, 00:24:52 → 00:32:48 UTC et 00:33:58 → 00:40:29 UTC</td><td class="c">18 / 18</td><td class="c">18 / 18</td></tr>
+  </tbody>
+</table>
+<p class="small">Non exécutés et non validés : intégration Sepolia, intégration TELA ; sur Besu, gas forcé à zéro et réorganisation (scénarios propres à Anvil). La CI GitHub Actions du même commit est également réussie (18 contrôles local-fast sur clone neuf).</p>
+
+<h2 id="s9-3"><span class="num">9.3</span>Scénario de démonstration proposé à Alain (20 minutes)</h2>
+<table class="compact">
+  <thead><tr><th style="width:16mm">Durée</th><th>Séquence</th><th style="width:56mm">Ce qu'on montre</th></tr></thead>
+  <tbody>
+    <tr><td>3 min</td><td>Schéma de contexte et principe burn &amp; mint (figures 1 et 3)</td><td>Qui fait quoi, où est la confiance</td></tr>
+    <tr><td>3 min</td><td><code>python3 livrables/livrable-1/demo/demo_burn_mint.py …</code></td><td>29 contrôles en direct, dont le rejeu refusé et la fraude détectée</td></tr>
+    <tr><td>6 min</td><td><code>python scripts/bridge.py up --profile local-besu</code> puis <code>demo</code> (préparé avec <code>bootstrap</code>)</td><td>Relayer réel, PostgreSQL, Besu QBFT ; état sur <code>/status</code></td></tr>
+    <tr><td>4 min</td><td>Tableau Grafana pendant un transfert, puis arrêt du relayer</td><td>Supervision honnête : donnée périmée signalée, reprise sans double mint</td></tr>
+    <tr><td>4 min</td><td>Limites et prochaines étapes (§13)</td><td>Décisions attendues</td></tr>
+  </tbody>
+</table>
+<p class="small">Prérequis : poste ou VM Linux avec Docker, images préparées la veille (<code>bootstrap</code> utilise le réseau), environ 8 Go de RAM libres pour <code>local-besu</code>.</p>

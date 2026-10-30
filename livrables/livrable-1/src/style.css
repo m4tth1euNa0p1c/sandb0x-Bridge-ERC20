@@ -1,0 +1,190 @@
+/* Livrable 1 — mise en page A4 imprimable (Chromium, CSS Paged Media). */
+/* Inter 4 (OFL-1.1, fonts/OFL-Inter.txt), fichiers TrueType WOFF2 de @fontsource/inter 5.2.8 :
+   embarqués en TrueType par Chromium, contrairement aux OTF/CFF système rendus en Type 3. */
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 400; font-display: block; src: url('../fonts/inter-latin-400-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 400; font-display: block; src: url('../fonts/inter-latin-ext-400-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 500; font-display: block; src: url('../fonts/inter-latin-500-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 500; font-display: block; src: url('../fonts/inter-latin-ext-500-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 600; font-display: block; src: url('../fonts/inter-latin-600-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 600; font-display: block; src: url('../fonts/inter-latin-ext-600-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 700; font-display: block; src: url('../fonts/inter-latin-700-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 700; font-display: block; src: url('../fonts/inter-latin-ext-700-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 800; font-display: block; src: url('../fonts/inter-latin-800-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'InterDoc'; font-style: normal; font-weight: 800; font-display: block; src: url('../fonts/inter-latin-ext-800-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'InterDoc'; font-style: italic; font-weight: 400; font-display: block; src: url('../fonts/inter-latin-400-italic.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'InterDoc'; font-style: italic; font-weight: 400; font-display: block; src: url('../fonts/inter-latin-ext-400-italic.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+:root {
+  --ink: #0f172a; --text: #1e293b; --muted: #475569; --faint: #64748b;
+  --line: #cbd5e1; --line-soft: #e2e8f0; --soft: #f1f5f9; --paper: #ffffff;
+  --tela: #0e7490; --tela-soft: #ecfeff; --tela-mid: #a5f3fc;
+  --sep: #6d28d9; --sep-soft: #f5f3ff; --sep-mid: #ddd6fe;
+  --off: #1d4ed8; --off-soft: #eff6ff; --off-mid: #bfdbfe;
+  --ok: #15803d; --ok-soft: #f0fdf4;
+  --warn: #b45309; --warn-soft: #fffbeb;
+  --bad: #b91c1c; --bad-soft: #fef2f2;
+  --accent: #0f766e;
+}
+
+@page {
+  size: A4;
+  margin: 22mm 17mm 20mm 17mm;
+  @top-left { content: "Bridge ERC20 Sepolia – TELA · Livrable 1"; font: 500 7.5pt InterDoc, sans-serif; color: #64748b; vertical-align: bottom; padding-bottom: 3mm; }
+  @top-right { content: "Interne Talan — diffusion restreinte"; font: 500 7.5pt InterDoc, sans-serif; color: #b45309; vertical-align: bottom; padding-bottom: 3mm; }
+  @bottom-left { content: "Version 1.0 · 30 octobre 2026"; font: 7.5pt InterDoc, sans-serif; color: #64748b; vertical-align: top; padding-top: 3mm; }
+  @bottom-right { content: counter(page) " / " counter(pages); font: 600 8pt InterDoc, sans-serif; color: #0f172a; vertical-align: top; padding-top: 3mm; }
+}
+@page cover { margin: 0; @top-left { content: none } @top-right { content: none } @bottom-left { content: none } @bottom-right { content: none } }
+@page wide {
+  size: A4 landscape;
+  margin: 18mm 16mm 16mm 16mm;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0; font-family: InterDoc, "DejaVu Sans", sans-serif; font-size: 9.4pt; line-height: 1.5;
+  color: var(--text); background: var(--paper);
+  hyphens: auto; text-align: left; orphans: 3; widows: 3;
+}
+p { margin: 0 0 2.4mm; }
+strong { color: var(--ink); font-weight: 650; }
+code, .mono { font-family: "JetBrains Mono", monospace; font-size: 0.86em; }
+code { background: var(--soft); border: 0.2mm solid var(--line-soft); border-radius: 1mm; padding: 0 0.8mm; color: #0f172a; word-break: break-word; }
+a { color: var(--off); text-decoration: none; }
+ul, ol { margin: 0 0 2.6mm; padding-left: 5mm; }
+li { margin: 0 0 0.8mm; }
+li::marker { color: var(--faint); }
+sup.ref { font-size: 6.8pt; color: var(--faint); }
+
+/* ---------- Couverture ---------- */
+.cover {
+  page: cover; height: 297mm; width: 210mm; position: relative; overflow: hidden;
+  background: #0b1220; color: #e2e8f0; break-after: page;
+}
+.cover .band { position: absolute; inset: 0; }
+.cover .inner { position: absolute; left: 20mm; right: 20mm; top: 30mm; }
+.cover .kicker { font: 600 9pt InterDoc; letter-spacing: 0.18em; text-transform: uppercase; color: #5eead4; }
+.cover h1 { break-before: avoid; border: none; padding: 0; font: 800 31pt/1.08 InterDoc; color: #ffffff; margin: 8mm 0 4mm; letter-spacing: -0.01em; }
+.cover h1 span { color: #a78bfa; }
+.cover h1 em { font-style: normal; color: #67e8f9; }
+.cover .subtitle { font: 400 13pt/1.45 InterDoc; color: #cbd5e1; max-width: 150mm; }
+.cover .meta { position: absolute; left: 20mm; right: 20mm; bottom: 22mm; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm; }
+.cover .meta div { border-top: 0.4mm solid #334155; padding-top: 3mm; font-size: 8.4pt; color: #94a3b8; }
+.cover .meta b { display: block; color: #f1f5f9; font-weight: 600; font-size: 9.2pt; margin-top: 1mm; }
+.cover .stamp { position: absolute; right: 20mm; top: 14mm; border: 0.4mm solid #f59e0b; color: #fbbf24; font: 700 8pt InterDoc; letter-spacing: 0.12em; padding: 2mm 3mm; border-radius: 1mm; text-transform: uppercase; }
+.cover .chains { position: absolute; left: 20mm; right: 20mm; top: 128mm; }
+
+/* ---------- Titres ---------- */
+h1, h2, h3, h4 { color: var(--ink); font-family: InterDoc, sans-serif; break-after: avoid; }
+h1 {
+  break-before: page; font-size: 20pt; font-weight: 750; letter-spacing: -0.01em; line-height: 1.15;
+  margin: 0 0 5mm; padding-bottom: 3mm; border-bottom: 0.6mm solid var(--ink);
+}
+h1 .num { color: var(--accent); margin-right: 3mm; }
+h2 { font-size: 13pt; font-weight: 700; margin: 6.5mm 0 2.6mm; }
+h2 .num { color: var(--accent); margin-right: 2mm; }
+h3 { font-size: 10.6pt; font-weight: 650; margin: 4.6mm 0 1.8mm; color: #0f172a; }
+h4 { font-size: 9.6pt; font-weight: 650; margin: 3.4mm 0 1.2mm; color: var(--muted); }
+.lead { font-size: 10.6pt; line-height: 1.55; color: var(--ink); margin-bottom: 4mm; }
+
+/* ---------- Sommaire ---------- */
+.toc { break-before: page; }
+.toc h1 { break-before: avoid; }
+.toc ol { list-style: none; padding: 0; margin: 0; }
+.toc li { margin: 0; }
+.toc a { color: var(--text); display: grid; grid-template-columns: 11mm 1fr 10mm; align-items: baseline; padding: 0.42mm 0; }
+.toc .l1 > a { font-weight: 650; color: var(--ink); padding-top: 1.7mm; border-bottom: 0.2mm solid var(--line-soft); }
+.toc .l2 > a { font-size: 8.3pt; color: var(--muted); grid-template-columns: 11mm 1fr 10mm; }
+.toc .l2 > a .t { padding-left: 0; }
+.toc .n { color: var(--accent); font-variant-numeric: tabular-nums; }
+.toc .p { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+.toc .t { position: relative; overflow: hidden; white-space: nowrap; }
+.toc .l2 .t::after { content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."; color: #cbd5e1; }
+
+/* ---------- Blocs ---------- */
+.callout { border-left: 1.2mm solid var(--off); background: var(--off-soft); padding: 2.6mm 3.6mm; margin: 3mm 0 3.6mm; border-radius: 0 1.4mm 1.4mm 0; break-inside: avoid; }
+.callout > :last-child { margin-bottom: 0; }
+.callout .ttl { display: block; font-weight: 700; color: var(--ink); margin-bottom: 1mm; font-size: 9.2pt; }
+.callout.warn { border-color: var(--warn); background: var(--warn-soft); }
+.callout.bad { border-color: var(--bad); background: var(--bad-soft); }
+.callout.ok { border-color: var(--ok); background: var(--ok-soft); }
+.callout.tela { border-color: var(--tela); background: var(--tela-soft); }
+.callout.sep { border-color: var(--sep); background: var(--sep-soft); }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3.4mm; }
+.card { border: 0.25mm solid var(--line); border-radius: 1.6mm; padding: 3mm 3.4mm; break-inside: avoid; background: #fff; }
+.card h4 { margin-top: 0; color: var(--ink); }
+.card p:last-child, .card ul:last-child { margin-bottom: 0; }
+.kpi { border: 0.25mm solid var(--line); border-radius: 1.6mm; padding: 2.6mm 3mm; break-inside: avoid; }
+.kpi .v { font: 750 17pt/1.1 InterDoc; color: var(--ink); }
+.kpi .l { font-size: 8pt; color: var(--muted); margin-top: 1mm; }
+.kpi.ok .v { color: var(--ok); } .kpi.warn .v { color: var(--warn); } .kpi.bad .v { color: var(--bad); }
+
+.qa { display: grid; grid-template-columns: 46mm 1fr; border-top: 0.25mm solid var(--line); break-inside: avoid; }
+.qa:last-child { border-bottom: 0.25mm solid var(--line); }
+.qa .q { font-weight: 650; color: var(--ink); padding: 2.4mm 3mm 2.4mm 0; }
+.qa .a { padding: 2.4mm 0; }
+.qa .a p:last-child { margin-bottom: 0; }
+.qa .see { color: var(--faint); font-size: 8pt; }
+
+/* ---------- Tableaux ---------- */
+table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 8.4pt; line-height: 1.4; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { text-align: left; font-weight: 650; color: var(--ink); background: var(--soft); border-bottom: 0.4mm solid var(--ink); padding: 1.6mm 2mm; vertical-align: bottom; }
+td { border-bottom: 0.2mm solid var(--line-soft); padding: 1.5mm 2mm; vertical-align: top; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.c, th.c { text-align: center; }
+tr.total td { font-weight: 700; border-top: 0.4mm solid var(--ink); background: var(--soft); color: var(--ink); }
+tr.sub td { background: #fafafa; font-weight: 600; color: var(--muted); }
+table.compact { font-size: 7.9pt; }
+table.compact td, table.compact th { padding: 1.1mm 1.6mm; }
+.caption { font-size: 7.8pt; color: var(--faint); margin: -2mm 0 4mm; }
+
+.tag { display: inline-block; font: 650 6.8pt/1.6 InterDoc; letter-spacing: 0.02em; padding: 0 1.6mm; border-radius: 0.8mm; white-space: nowrap; vertical-align: 0.2mm; }
+.tag.ok { background: #dcfce7; color: #166534; } .tag.warn { background: #fef3c7; color: #92400e; }
+.tag.bad { background: #fee2e2; color: #991b1b; } .tag.info { background: #dbeafe; color: #1e40af; }
+.tag.grey { background: #e2e8f0; color: #334155; } .tag.tela { background: #cffafe; color: #155e75; }
+.tag.sep { background: #ede9fe; color: #5b21b6; }
+.crit { display: inline-block; min-width: 7mm; text-align: center; font-weight: 700; border-radius: 0.8mm; padding: 0 1mm; }
+.c-hi { background: #fecaca; color: #7f1d1d; } .c-md { background: #fde68a; color: #78350f; } .c-lo { background: #bbf7d0; color: #14532d; }
+
+/* ---------- Figures ---------- */
+figure { margin: 3mm 0 4.4mm; break-inside: avoid; }
+figure .canvas { display: flex; justify-content: center; }
+figure svg { max-width: 100%; height: auto; }
+figcaption { font-size: 7.9pt; color: var(--muted); margin-top: 2mm; text-align: center; }
+figcaption b { color: var(--ink); }
+.mermaid-src { display: none; }
+.diagram { width: 100%; }
+.shot { border: 0.25mm solid var(--line); border-radius: 1.4mm; overflow: hidden; height: 168mm; display: flex; justify-content: center; background: #111217; }
+.shot img { width: 118mm; object-fit: cover; object-position: top; }
+
+pre.code { font: 7.6pt/1.45 "JetBrains Mono", monospace; background: #0f172a; color: #e2e8f0; border-radius: 1.6mm; padding: 3mm 3.4mm; white-space: pre-wrap; break-inside: avoid; margin: 2mm 0 3.6mm; }
+pre.code .k { color: #93c5fd; } pre.code .c { color: #94a3b8; } pre.code .s { color: #86efac; } pre.code .f { color: #fcd34d; }
+
+.wide { page: wide; }
+.wide h1 { break-before: page; }
+.avoid { break-inside: avoid; }
+.pb { break-before: page; }
+.small { font-size: 8pt; color: var(--muted); }
+.muted { color: var(--muted); }
+.right { text-align: right; }
+.nowrap { white-space: nowrap; }
+.hash { font-family: "JetBrains Mono", monospace; font-size: 7.2pt; color: #334155; word-break: break-all; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 7.8pt; color: var(--muted); margin: -1mm 0 3mm; }
+.legend i { display: inline-block; width: 3mm; height: 3mm; border-radius: 0.6mm; margin-right: 1.2mm; vertical-align: -0.4mm; }
+
+.heat { border-collapse: separate; border-spacing: 1mm; width: auto; margin: 0 auto; font-size: 8pt; }
+.heat td, .heat th { border: none; text-align: center; vertical-align: middle; }
+.heat td.cell { width: 30mm; height: 15mm; border-radius: 1.2mm; font-weight: 650; color: var(--ink); font-size: 7.6pt; }
+.heat th { background: none; color: var(--muted); font-weight: 600; }
+.h1c { background: #dcfce7; } .h2c { background: #fef9c3; } .h3c { background: #fed7aa; } .h4c { background: #fecaca; }
+
+.signoff { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; margin-top: 4mm; }
+.signoff div { border: 0.25mm solid var(--line); border-radius: 1.4mm; padding: 3mm; height: 26mm; font-size: 8pt; color: var(--muted); }
+.signoff b { display: block; color: var(--ink); font-size: 8.6pt; }
+
+.wide figure svg.diagram { max-height: 136mm; }
+.toc h1 { margin-bottom: 3mm; }
