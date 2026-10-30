@@ -4,7 +4,7 @@ Réponse au mail d'Alain « Bridge TELA – SEPOLIA » : architecture interne du
 burn & mint de l'ERC20 « Stablecoin Euro Talan » entre Sepolia et TELA, démonstration,
 analyse des risques, estimation des charges et compétences requises.
 
-**Document à diffuser :** `Livrable-1_Architecture_Bridge_Sepolia-TELA_v1.0.pdf`
+**Document à diffuser :** `Livrable-1_Architecture_Bridge_Sepolia-TELA_v1.0.pdf`, à la racine du dépôt
 (54 pages A4, signets, sommaire paginé, interne Talan — diffusion restreinte).
 Il s'agit d'une **proposition** soumise à validation ; elle ne déclare ni Sepolia,
 ni TELA, ni une quelconque préparation à la production comme validés.
@@ -22,7 +22,7 @@ ni TELA, ni une quelconque préparation à la production comme validés.
 
 ## Régénérer le PDF
 
-Prérequis : Node.js 22 avec Playwright et Chromium, Python 3.12+ avec `pypdf`.
+Prérequis : Node.js 22 avec Playwright et Chromium, Python 3.12+ avec `pypdf`. Le PDF est écrit à la racine du dépôt.
 
 ```sh
 python3 livrables/livrable-1/build_pdf.py

@@ -68,8 +68,8 @@ distincts dans le rapport. `up --profile integration-testnet` échoue explicitem
 - [Décisions](docs/adr/0001-stack-profils.md), [installation détaillée](docs/installation.md).
 - [50 agents et 50 skills](docs/agents.md), spécialisés et maintenus sur retours observés.
 - [Prérequis TELA/Sepolia](docs/informations-manquantes.md), [limites](docs/limites.md).
-- [Livrable 1 : document d'architecture Sepolia ⇄ TELA (PDF)](livrables/livrable-1/README.md),
-  proposition soumise à Alain avec démonstration, risques, charges et compétences.
+- [Livrable 1 : document d'architecture Sepolia ⇄ TELA (PDF)](Livrable-1_Architecture_Bridge_Sepolia-TELA_v1.0.pdf),
+  proposition soumise à Alain ; sources et génération dans [livrables/livrable-1](livrables/livrable-1/README.md).
 
 Boucle de travail : exigence → choix → code → test → preuve → documentation.
 Le [journal](docs/journal.md) distingue les incidents corrigés et les vérifications

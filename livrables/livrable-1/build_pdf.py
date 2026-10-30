@@ -17,7 +17,7 @@ import tempfile
 from pypdf import PdfReader, PdfWriter
 
 HERE = Path(__file__).resolve().parent
-OUTPUT = HERE / "Livrable-1_Architecture_Bridge_Sepolia-TELA_v1.0.pdf"
+OUTPUT = HERE.parents[1] / "Livrable-1_Architecture_Bridge_Sepolia-TELA_v1.0.pdf"  # racine du dépôt
 METADATA = {
     "/Title": "Bridge ERC20 Sepolia – TELA · Livrable 1 · Document d'architecture",
     "/Author": "Matthieu Barraque",
