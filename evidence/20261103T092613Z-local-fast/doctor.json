@@ -1,0 +1,226 @@
+{
+  "utc": "2026-11-03T09:15:30Z",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cpu_logical": 12,
+  "disk_free_gib": 51.19,
+  "tools": {
+    "git": {
+      "command": [
+        "C:\\Program Files\\Git\\cmd\\git.EXE",
+        "--version"
+      ],
+      "utc": "2026-11-03T09:15:31Z",
+      "exit_code": 0,
+      "stdout": "git version 2.51.0.windows.1",
+      "stderr": "",
+      "duration_seconds": 0.098
+    },
+    "docker": {
+      "command": [
+        "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.EXE",
+        "version",
+        "--format",
+        "{{json .}}"
+      ],
+      "utc": "2026-11-03T09:15:31Z",
+      "exit_code": 0,
+      "stdout": "{\"Client\":{\"Version\":\"28.3.2\",\"ApiVersion\":\"1.51\",\"DefaultAPIVersion\":\"1.51\",\"GitCommit\":\"578ccf6\",\"GoVersion\":\"go1.24.5\",\"Os\":\"windows\",\"Arch\":\"amd64\",\"BuildTime\":\"Wed Jul  9 16:12:31 2025\",\"Context\":\"desktop-linux\"},\"Server\":{\"Platform\":{\"Name\":\"Docker Desktop 4.44.3 (202357)\"},\"Components\":[{\"Name\":\"Engine\",\"Version\":\"28.3.2\",\"Details\":{\"ApiVersion\":\"1.51\",\"Arch\":\"amd64\",\"BuildTime\":\"Wed Jul  9 16:13:55 2025\",\"Experimental\":\"false\",\"GitCommit\":\"e77ff99\",\"GoVersion\":\"go1.24.5\",\"KernelVersion\":\"6.6.87.2-microsoft-standard-WSL2\",\"MinAPIVersion\":\"1.24\",\"Os\":\"linux\"}},{\"Name\":\"containerd\",\"Version\":\"1.7.27\",\"Details\":{\"GitCommit\":\"05044ec0a9a75232cad458027ca83437aae3f4da\"}},{\"Name\":\"runc\",\"Version\":\"1.2.5\",\"Details\":{\"GitCommit\":\"v1.2.5-0-g59923ef\"}},{\"Name\":\"docker-init\",\"Version\":\"0.19.0\",\"Details\":{\"GitCommit\":\"de40ad0\"}}],\"Version\":\"28.3.2\",\"ApiVersion\":\"1.51\",\"MinAPIVersion\":\"1.24\",\"GitCommit\":\"e77ff99\",\"GoVersion\":\"go1.24.5\",\"Os\":\"linux\",\"Arch\":\"amd64\",\"KernelVersion\":\"6.6.87.2-microsoft-standard-WSL2\",\"BuildTime\":\"2025-07-09T16:13:55.000000000+00:00\"}}",
+      "stderr": "",
+      "duration_seconds": 0.213
+    },
+    "dotnet": {
+      "command": [
+        "C:\\Program Files\\dotnet\\dotnet.EXE",
+        "--list-sdks"
+      ],
+      "utc": "2026-11-03T09:15:31Z",
+      "exit_code": 0,
+      "stdout": "9.0.304 [C:\\Program Files\\dotnet\\sdk]",
+      "stderr": "",
+      "duration_seconds": 0.05
+    },
+    "python": {
+      "command": [
+        "C:\\Users\\matth\\AppData\\Local\\Programs\\Python\\Python313\\python.EXE",
+        "--version"
+      ],
+      "utc": "2026-11-03T09:15:31Z",
+      "exit_code": 0,
+      "stdout": "Python 3.13.7",
+      "stderr": "",
+      "duration_seconds": 0.055
+    },
+    "forge": {
+      "command": [
+        "forge",
+        "--version"
+      ],
+      "utc": "2026-11-03T09:15:31Z",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "FileNotFoundError",
+      "duration_seconds": 0.002
+    },
+    "anvil": {
+      "command": [
+        "anvil",
+        "--version"
+      ],
+      "utc": "2026-11-03T09:15:31Z",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "FileNotFoundError",
+      "duration_seconds": 0.002
+    },
+    "cast": {
+      "command": [
+        "cast",
+        "--version"
+      ],
+      "utc": "2026-11-03T09:15:31Z",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "FileNotFoundError",
+      "duration_seconds": 0.002
+    },
+    "uv": {
+      "command": [
+        "C:\\Users\\matth\\.local\\bin\\uv.EXE",
+        "--version"
+      ],
+      "utc": "2026-11-03T09:15:31Z",
+      "exit_code": 0,
+      "stdout": "uv 0.8.15 (8473ecba1 2025-09-03)",
+      "stderr": "",
+      "duration_seconds": 0.277
+    },
+    "node": {
+      "command": [
+        "C:\\nvm4w\\nodejs\\node.EXE",
+        "--version"
+      ],
+      "utc": "2026-11-03T09:15:32Z",
+      "exit_code": 0,
+      "stdout": "v20.19.5",
+      "stderr": "",
+      "duration_seconds": 0.062
+    },
+    "java": {
+      "command": [
+        "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path\\java.EXE",
+        "-version"
+      ],
+      "utc": "2026-11-03T09:15:32Z",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "java version \"1.8.0_481\"\nJava(TM) SE Runtime Environment (build 1.8.0_481-b10)\nJava HotSpot(TM) 64-Bit Server VM (build 25.481-b10, mixed mode)",
+      "duration_seconds": 0.889
+    },
+    "podman": {
+      "command": [
+        "podman",
+        "--version"
+      ],
+      "utc": "2026-11-03T09:15:32Z",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "FileNotFoundError",
+      "duration_seconds": 0.002
+    }
+  },
+  "session_declaration": "Lancement initial : danger-full-access, réseau activé, approval never ; pas une preuve de confinement.",
+  "compose": {
+    "command": [
+      "docker",
+      "compose",
+      "version"
+    ],
+    "utc": "2026-11-03T09:15:32Z",
+    "exit_code": 0,
+    "stdout": "Docker Compose version v2.39.1-desktop.1",
+    "stderr": "",
+    "duration_seconds": 0.174
+  },
+  "docker_context": "desktop-linux",
+  "docker_info": {
+    "command": [
+      "docker",
+      "info",
+      "--format",
+      "{{json .}}"
+    ],
+    "utc": "2026-11-03T09:15:33Z",
+    "exit_code": 0,
+    "stdout": "{\"ContainersRunning\": 1, \"MemoryLimit\": true, \"CpuCfsQuota\": true, \"PidsLimit\": true, \"OSType\": \"linux\", \"Architecture\": \"x86_64\", \"NCPU\": 12, \"MemTotal\": 16619089920, \"ServerVersion\": \"28.3.2\", \"SecurityOptions\": [\"name=seccomp,profile=builtin\", \"name=cgroupns\"]}",
+    "stderr": "",
+    "duration_seconds": 1.92
+  },
+  "docker_subnets": [
+    "[{\"Subnet\":\"172.19.0.0/16\",\"Gateway\":\"172.19.0.1\"}]",
+    "[{\"Subnet\":\"172.22.0.0/16\",\"Gateway\":\"172.22.0.1\"}]",
+    "[{\"Subnet\":\"172.25.0.0/16\",\"Gateway\":\"172.25.0.1\"}]",
+    "[{\"Subnet\":\"172.20.0.0/16\",\"Gateway\":\"172.20.0.1\"}]",
+    "[{\"Subnet\":\"172.17.0.0/16\",\"Gateway\":\"172.17.0.1\"}]",
+    "[{\"Subnet\":\"172.21.0.0/16\",\"Gateway\":\"172.21.0.1\"}]",
+    "[{\"Subnet\":\"172.27.0.0/16\",\"Gateway\":\"172.27.0.1\"}]",
+    "[{\"Subnet\":\"172.29.0.0/16\",\"Gateway\":\"172.29.0.1\"}]",
+    "[{\"Subnet\":\"172.30.0.0/16\",\"Gateway\":\"172.30.0.1\"}]",
+    "[{\"Subnet\":\"172.23.0.0/16\",\"Gateway\":\"172.23.0.1\"}]",
+    "null",
+    "null",
+    "[{\"Subnet\":\"172.26.0.0/16\",\"Gateway\":\"172.26.0.1\"}]",
+    "[{\"Subnet\":\"172.18.0.0/16\",\"Gateway\":\"172.18.0.1\"}]",
+    "[{\"Subnet\":\"172.28.0.0/16\",\"Gateway\":\"172.28.0.1\"}]",
+    "[{\"Subnet\":\"172.24.0.0/16\",\"Gateway\":\"172.24.0.1\"}]",
+    "[{\"Subnet\":\"192.168.0.0/20\",\"Gateway\":\"192.168.0.1\"}]",
+    "[{\"Subnet\":\"172.31.0.0/16\",\"Gateway\":\"172.31.0.1\"}]",
+    "[{\"Subnet\":\"192.168.16.0/20\",\"Gateway\":\"192.168.16.1\"}]"
+  ],
+  "host_policy": {
+    "command": [
+      "powershell",
+      "-NoProfile",
+      "-Command",
+      "$os=Get-CimInstance Win32_OperatingSystem; [pscustomobject]@{language_mode=[string]$ExecutionContext.SessionState.LanguageMode; memory_free_kib=$os.FreePhysicalMemory; memory_total_kib=$os.TotalVisibleMemorySize; is_admin=([System.Security.Principal.WindowsPrincipal]::new([System.Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator))} | ConvertTo-Json -Compress"
+    ],
+    "utc": "2026-11-03T09:15:36Z",
+    "exit_code": 0,
+    "stdout": "{\"language_mode\":\"FullLanguage\",\"memory_free_kib\":10174364,\"memory_total_kib\":33256760,\"is_admin\":false}",
+    "stderr": "",
+    "duration_seconds": 1.608
+  },
+  "host_ipv4_routes": {
+    "command": [
+      "powershell",
+      "-NoProfile",
+      "-Command",
+      "Get-NetRoute -AddressFamily IPv4 | Select-Object -ExpandProperty DestinationPrefix | ConvertTo-Json -Compress"
+    ],
+    "utc": "2026-11-03T09:15:38Z",
+    "exit_code": 0,
+    "stdout": "[\"255.255.255.255/32\",\"255.255.255.255/32\",\"255.255.255.255/32\",\"255.255.255.255/32\",\"255.255.255.255/32\",\"255.255.255.255/32\",\"255.255.255.255/32\",\"255.255.255.255/32\",\"224.0.0.0/4\",\"224.0.0.0/4\",\"224.0.0.0/4\",\"224.0.0.0/4\",\"224.0.0.0/4\",\"224.0.0.0/4\",\"224.0.0.0/4\",\"224.0.0.0/4\",\"192.168.56.255/32\",\"192.168.56.1/32\",\"192.168.56.0/24\",\"172.20.63.255/32\",\"172.20.48.1/32\",\"172.20.48.0/20\",\"127.255.255.255/32\",\"127.0.0.1/32\",\"127.0.0.0/8\",\"10.19.175.255/32\",\"10.19.175.178/32\",\"10.19.175.0/24\",\"0.0.0.0/0\"]",
+    "stderr": "",
+    "duration_seconds": 10.389
+  },
+  "host_child_can_read_outside_workspace": true,
+  "network_installation": [
+    {
+      "url": "https://github.com",
+      "http_status": 200
+    },
+    {
+      "url": "https://pypi.org/simple/mkdocs/",
+      "http_status": 200
+    },
+    {
+      "url": "https://api.nuget.org/v3/index.json",
+      "http_status": 200
+    }
+  ],
+  "limitations": [
+    "Hôte et moteur Docker partagés, pas de VM dédiée attestée",
+    "Aucun filtrage de destinations imposé au processus hôte",
+    "Accès au moteur Docker réservé par convention à l'orchestrateur, pas par ACL projet",
+    "L'installation des dépendances est distincte de l'exécution ; vérifier build.json pour les images applicatives disponibles"
+  ]
+}

@@ -20,6 +20,14 @@ regexTarget = "secret"
 regexes = ['''^93c8ebfe7b36ef4d180f1660a5a741125691957726209720af476fdd5c7bac43$''', '''^140304b7e99d517c57a13f391dfd3b550ca633a507f7b2af130f391b6cd89cc5$''']
 
 [[allowlists]]
+description = "SHA-256 public du fichier Cloudflare verifie dans les deux artefacts de campagne"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(^|/)evidence/20261103T092613Z-local-fast/(manifest|local-fast-monitoring-stale)\.json$''']
+regexTarget = "line"
+regexes = ['''^\s*"\.claude/skills/security-audit/WEB-PROTOCOL-AND-AUTH\.md": "4f3066dffa23c5635859187be9b96c32f2aff29a688186b91ff0c63e47d62b5c",?\s*$''']
+
+[[allowlists]]
 description = "Empreintes exactes publiques de sources et de KEY-001 ; hash runtime ERC20 relu sur les deux profils ; adresses ERC20 strictement sur 20 octets"
 targetRules = ["generic-api-key"]
 condition = "AND"

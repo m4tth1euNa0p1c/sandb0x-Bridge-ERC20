@@ -64,6 +64,7 @@ distincts dans le rapport. `up --profile integration-testnet` échoue explicitem
 
 ## Contenu et méthode
 
+- [Guide technique du dépôt](docs/guide-technique.md) et [guide de la factory agentique](docs/factory-agentique.md).
 - [Règles du dépôt](AGENTS.md), [exigences](docs/exigences.md), [journal](docs/journal.md).
 - [Décisions](docs/adr/0001-stack-profils.md), [installation détaillée](docs/installation.md).
 - [50 agents et 50 skills](docs/agents.md), spécialisés et maintenus sur retours observés.

@@ -14,6 +14,8 @@ nav:
   - Exigences: exigences.md
   - Informations manquantes: informations-manquantes.md
   - Architecture: architecture.md
+  - Guide technique: guide-technique.md
+  - Factory agentique: factory-agentique.md
   - Installation: installation.md
   - Sécurité et compartimentage: securite.md
   - Tests et preuves: tests-preuves.md
